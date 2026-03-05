@@ -34,6 +34,9 @@ const highlights = [
   },
 ];
 
+const profileImageUrl =
+  'https://georgevalandis.com/wp-content/uploads/2024/08/Bildschirmfoto-2024-08-14-um-22.10.29-1-1009x1024.png';
+
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
   visible: (i: number) => ({
@@ -124,27 +127,47 @@ export default function About() {
             </div>
           </div>
 
-          {/* Right: highlight cards */}
-          <div className="grid sm:grid-cols-2 gap-4">
-            {highlights.map((item, i) => (
-              <motion.div
-                key={item.title}
-                custom={i}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={fadeUp}
-                className="group p-6 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-indigo-500/30 hover:bg-white/[0.04] transition-all duration-500"
-              >
-                <div className="w-12 h-12 rounded-xl bg-indigo-500/10 flex items-center justify-center mb-4 group-hover:bg-indigo-500/20 transition-colors duration-500">
-                  <item.icon size={22} className="text-indigo-400" />
-                </div>
-                <h3 className="text-lg font-semibold mb-2">{item.title}</h3>
-                <p className="text-gray-500 text-sm leading-relaxed">
-                  {item.description}
-                </p>
-              </motion.div>
-            ))}
+          {/* Right: profile image + highlight cards */}
+          <div className="space-y-4">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="relative rounded-2xl overflow-hidden border border-white/10 bg-white/[0.02]"
+            >
+              <img
+                src={profileImageUrl}
+                alt="George Valandis"
+                className="w-full h-80 object-cover object-center"
+                loading="lazy"
+              />
+              <div className="absolute inset-x-0 bottom-0 p-5 bg-gradient-to-t from-gray-950/90 via-gray-950/40 to-transparent">
+                <p className="text-sm text-gray-300">George Valandis</p>
+              </div>
+            </motion.div>
+
+            <div className="grid sm:grid-cols-2 gap-4">
+              {highlights.map((item, i) => (
+                <motion.div
+                  key={item.title}
+                  custom={i}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  variants={fadeUp}
+                  className="group p-6 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-indigo-500/30 hover:bg-white/[0.04] transition-all duration-500"
+                >
+                  <div className="w-12 h-12 rounded-xl bg-indigo-500/10 flex items-center justify-center mb-4 group-hover:bg-indigo-500/20 transition-colors duration-500">
+                    <item.icon size={22} className="text-indigo-400" />
+                  </div>
+                  <h3 className="text-lg font-semibold mb-2">{item.title}</h3>
+                  <p className="text-gray-500 text-sm leading-relaxed">
+                    {item.description}
+                  </p>
+                </motion.div>
+              ))}
+            </div>
           </div>
         </div>
       </div>

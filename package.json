@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "preview:static": "npx serve@latest out -l 3005",
+    "stage": "npm run build && npm run preview:static"
   },
   "dependencies": {
     "framer-motion": "^12.35.0",

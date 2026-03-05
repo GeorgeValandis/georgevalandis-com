@@ -1,52 +1,9 @@
 'use client';
 
+import { blogPosts } from '@/content/blogPosts';
 import { motion } from 'framer-motion';
 import { ArrowUpRight, Calendar } from 'lucide-react';
-
-const blogPosts = [
-  {
-    title: 'Focus on Marketing',
-    date: 'October 19, 2025',
-    excerpt:
-      'Quick update on what I\'ve been diving into lately. I\'ve started shifting gears towards marketing my apps...',
-    link: 'https://georgevalandis.com/focus-on-marketing/',
-  },
-  {
-    title: 'Many Apps, Many Ideas, and Juggling Life',
-    date: 'September 24, 2025',
-    excerpt:
-      'Quick update on where I\'m at right now. I\'ve been leaning more into building multiple apps simultaneously...',
-    link: 'https://georgevalandis.com/many-apps-many-ideas-and-juggling-life/',
-  },
-  {
-    title: 'A Little Content Reset and GlanceAway Is Live',
-    date: 'September 4, 2025',
-    excerpt:
-      'Quick life-and-project update. I recently renamed my "LookAway" app to GlanceAway and it\'s now live...',
-    link: 'https://georgevalandis.com/a-little-content-reset-and-glanceaway-is-live/',
-  },
-  {
-    title: 'Slowing Down to Speed Up — Shipping Perfect Day and Building LookAway',
-    date: 'August 9, 2025',
-    excerpt:
-      'I\'ve intentionally dialed things down a notch to focus on quality over quantity...',
-    link: 'https://georgevalandis.com/slowing-down-to-speed-up-shipping-perfect-day-and-building-lookaway/',
-  },
-  {
-    title: 'Pushing Content & Building Community',
-    date: 'May 5, 2025',
-    excerpt:
-      'Since my last update, I\'ve been shifting gears — not just building apps, but growing communities around them...',
-    link: 'https://georgevalandis.com/pushing-content-building-community-the-next-chapter-for-flowa-perfect-day-beyond/',
-  },
-  {
-    title: 'Flowa is Live — My First Paid App on the App Store!',
-    date: 'February 16, 2025',
-    excerpt:
-      'Big news — Flowa is officially live on the App Store! After months of work, my first paid app is out...',
-    link: 'https://georgevalandis.com/flowa-is-live-my-first-paid-app-on-the-app-store/',
-  },
-];
+import Link from 'next/link';
 
 export default function Blog() {
   return (
@@ -75,10 +32,8 @@ export default function Blog() {
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {blogPosts.map((post, i) => (
             <motion.a
-              key={post.title}
-              href={post.link}
-              target="_blank"
-              rel="noopener noreferrer"
+              key={post.slug}
+              href={`/blog/${post.slug}`}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -118,17 +73,15 @@ export default function Blog() {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="mt-16 text-center"
         >
-          <a
-            href="https://georgevalandis.com/"
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link
+            href="/blog"
             className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors duration-300 group/link"
           >
             <span className="text-sm font-medium">View all posts</span>
             <span className="group-hover/link:translate-x-1 transition-transform duration-300">
               &rarr;
             </span>
-          </a>
+          </Link>
         </motion.div>
       </div>
     </section>

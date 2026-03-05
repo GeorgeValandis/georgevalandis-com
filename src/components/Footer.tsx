@@ -79,17 +79,13 @@ export default function Footer() {
           <div className="flex items-center gap-4 text-xs text-gray-600">
             <span>&copy; {new Date().getFullYear()} George Valandis.</span>
             <a
-              href="https://georgevalandis.com/privacy-datenschutzerklaerung/"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="/privacy-statement"
               className="hover:text-gray-400 transition-colors"
             >
               Privacy Statement
             </a>
             <a
-              href="https://georgevalandis.com/legal-notice-impressum/"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="/imprint"
               className="hover:text-gray-400 transition-colors"
             >
               Imprint
