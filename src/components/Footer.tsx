@@ -27,7 +27,7 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <a href="#home" className="text-2xl font-bold tracking-tight">
-              george<span className="text-indigo-400">.</span>
+              george<span className="text-amber-400">.</span>
             </a>
             <p className="text-gray-500 text-sm mt-4 max-w-xs leading-relaxed">
               iOS Developer &amp; Solopreneur. Building apps from 5 to 9.

@@ -37,9 +37,9 @@ export default function Navbar() {
           <a href="#home" className="relative group">
             <span className="text-2xl font-bold tracking-tight">
               george
-              <span className="text-indigo-400">.</span>
+              <span className="text-amber-400">.</span>
             </span>
-            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-indigo-400 transition-all duration-300 group-hover:w-full" />
+            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-amber-400 transition-all duration-300 group-hover:w-full" />
           </a>
 
           <div className="hidden md:flex items-center gap-1">
@@ -50,12 +50,12 @@ export default function Navbar() {
                 className="relative px-4 py-2 text-sm text-gray-400 hover:text-white transition-colors duration-300 group"
               >
                 {link.label}
-                <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-px bg-indigo-400 transition-all duration-300 group-hover:w-3/4" />
+                <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-px bg-amber-400 transition-all duration-300 group-hover:w-3/4" />
               </a>
             ))}
             <a
               href="#contact"
-              className="ml-4 px-5 py-2.5 text-sm font-medium bg-indigo-500 hover:bg-indigo-400 text-white rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-indigo-500/25"
+              className="ml-4 px-5 py-2.5 text-sm font-medium bg-amber-500 hover:bg-amber-400 text-white rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-amber-500/25"
             >
               Let&apos;s Talk
             </a>

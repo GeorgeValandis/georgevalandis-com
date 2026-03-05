@@ -58,8 +58,8 @@ const apps = [
     description:
       'A focus timer app because everybody has to have one in their app portfolio. Built with love and simplicity.',
     tags: ['Swift', 'SwiftUI', 'Pomodoro', 'Focus'],
-    gradient: 'from-indigo-500/20 to-purple-500/20',
-    accentBorder: 'group-hover:border-indigo-500/40',
+    gradient: 'from-blue-500/20 to-cyan-500/20',
+    accentBorder: 'group-hover:border-blue-500/40',
     link: 'https://apps.apple.com/us/app/frokus-focus-timer/id6737744446?uo=4',
     logo:
       'https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/12/3b/91/123b9169-f680-37c6-bb2a-aee05279f039/AppIcon-0-0-1x_U007ephone-0-1-85-220.jpeg/512x512bb.jpg',
@@ -101,7 +101,7 @@ export default function Apps() {
           transition={{ duration: 0.6 }}
           className="mb-20"
         >
-          <p className="text-indigo-400 font-mono text-sm mb-3 tracking-wider uppercase">
+          <p className="text-amber-400 font-mono text-sm mb-3 tracking-wider uppercase">
             01 &mdash; Apps
           </p>
           <h2 className="text-4xl md:text-5xl font-bold tracking-tight">
@@ -149,7 +149,7 @@ export default function Apps() {
                   />
                 </div>
 
-                <p className="text-indigo-400/70 text-sm font-medium mb-4">
+                <p className="text-amber-400/70 text-sm font-medium mb-4">
                   {app.subtitle}
                 </p>
 

@@ -1,6 +1,6 @@
+import { ArrowLeft } from 'lucide-react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { ArrowLeft } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'Privacy Statement - George Valandis',
@@ -20,7 +20,7 @@ export default function PrivacyStatementPage() {
         </Link>
 
         <header className="mt-8 mb-10">
-          <p className="text-indigo-400 font-mono text-sm tracking-wider uppercase mb-3">
+          <p className="text-amber-400 font-mono text-sm tracking-wider uppercase mb-3">
             Legal
           </p>
           <h1 className="text-4xl md:text-5xl font-bold tracking-tight">Privacy Statement</h1>
@@ -50,7 +50,7 @@ export default function PrivacyStatementPage() {
               Email:{' '}
               <a
                 href="mailto:info@georgevalandis.com"
-                className="text-indigo-300 hover:text-indigo-200 transition-colors"
+                className="text-amber-300 hover:text-amber-200 transition-colors"
               >
                 info@georgevalandis.com
               </a>
@@ -69,7 +69,7 @@ export default function PrivacyStatementPage() {
                 href="https://all-inkl.com/datenschutzinformationen/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-indigo-300 hover:text-indigo-200 transition-colors"
+                className="text-amber-300 hover:text-amber-200 transition-colors"
               >
                 https://all-inkl.com/datenschutzinformationen/
               </a>

@@ -11,8 +11,8 @@ export default function Hero() {
     >
       {/* Animated background orbs */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/4 -left-20 w-96 h-96 bg-indigo-500/20 rounded-full blur-3xl animate-pulse-glow" />
-        <div className="absolute bottom-1/4 -right-20 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl animate-pulse-glow [animation-delay:2s]" />
+        <div className="absolute top-1/4 -left-20 w-96 h-96 bg-amber-500/20 rounded-full blur-3xl animate-pulse-glow" />
+        <div className="absolute bottom-1/4 -right-20 w-96 h-96 bg-orange-500/20 rounded-full blur-3xl animate-pulse-glow [animation-delay:2s]" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-500/10 rounded-full blur-3xl animate-pulse-glow [animation-delay:4s]" />
       </div>
 
@@ -33,7 +33,7 @@ export default function Hero() {
           transition={{ duration: 0.8 }}
         >
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-8 backdrop-blur-sm">
-            <Sparkles size={14} className="text-indigo-400" />
+            <Sparkles size={14} className="text-amber-400" />
             <span className="text-sm text-gray-400">
               iOS Developer &amp; Solopreneur
             </span>
@@ -47,7 +47,7 @@ export default function Hero() {
           className="text-5xl sm:text-6xl md:text-8xl font-bold tracking-tight leading-[0.9] mb-8"
         >
           <span className="block">I build</span>
-          <span className="block mt-2 bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-gradient">
+          <span className="block mt-2 bg-gradient-to-r from-amber-400 via-orange-400 to-yellow-300 bg-clip-text text-transparent animate-gradient">
             iOS apps
           </span>
           <span className="block mt-2 text-gray-500">from 5 to 9.</span>

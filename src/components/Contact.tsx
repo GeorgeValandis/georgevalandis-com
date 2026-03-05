@@ -38,7 +38,7 @@ export default function Contact() {
           transition={{ duration: 0.6 }}
           className="mb-20"
         >
-          <p className="text-indigo-400 font-mono text-sm mb-3 tracking-wider uppercase">
+          <p className="text-amber-400 font-mono text-sm mb-3 tracking-wider uppercase">
             04 &mdash; Contact
           </p>
           <h2 className="text-4xl md:text-5xl font-bold tracking-tight">
@@ -68,8 +68,8 @@ export default function Contact() {
                 href="mailto:info@georgevalandis.com"
                 className="flex items-center gap-4 group"
               >
-                <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/5 flex items-center justify-center group-hover:border-indigo-500/30 group-hover:bg-indigo-500/10 transition-all duration-300">
-                  <Mail size={18} className="text-gray-400 group-hover:text-indigo-400 transition-colors" />
+                <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/5 flex items-center justify-center group-hover:border-amber-500/30 group-hover:bg-amber-500/10 transition-all duration-300">
+                  <Mail size={18} className="text-gray-400 group-hover:text-amber-400 transition-colors" />
                 </div>
                 <div>
                   <p className="text-sm text-gray-500">Email</p>
@@ -140,7 +140,7 @@ export default function Contact() {
                     onChange={handleChange}
                     required
                     placeholder="John Doe"
-                    className="w-full px-4 py-3.5 bg-white/[0.03] border border-white/10 rounded-xl text-white placeholder:text-gray-600 focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/25 outline-none transition-all duration-300"
+                    className="w-full px-4 py-3.5 bg-white/[0.03] border border-white/10 rounded-xl text-white placeholder:text-gray-600 focus:border-amber-500/50 focus:ring-1 focus:ring-amber-500/25 outline-none transition-all duration-300"
                   />
                 </div>
                 <div>
@@ -158,7 +158,7 @@ export default function Contact() {
                     onChange={handleChange}
                     required
                     placeholder="john@example.com"
-                    className="w-full px-4 py-3.5 bg-white/[0.03] border border-white/10 rounded-xl text-white placeholder:text-gray-600 focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/25 outline-none transition-all duration-300"
+                    className="w-full px-4 py-3.5 bg-white/[0.03] border border-white/10 rounded-xl text-white placeholder:text-gray-600 focus:border-amber-500/50 focus:ring-1 focus:ring-amber-500/25 outline-none transition-all duration-300"
                   />
                 </div>
               </div>
@@ -178,14 +178,14 @@ export default function Contact() {
                   required
                   rows={6}
                   placeholder="Tell me about your project..."
-                  className="w-full px-4 py-3.5 bg-white/[0.03] border border-white/10 rounded-xl text-white placeholder:text-gray-600 focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/25 outline-none transition-all duration-300 resize-none"
+                  className="w-full px-4 py-3.5 bg-white/[0.03] border border-white/10 rounded-xl text-white placeholder:text-gray-600 focus:border-amber-500/50 focus:ring-1 focus:ring-amber-500/25 outline-none transition-all duration-300 resize-none"
                 />
               </div>
 
               <button
                 type="submit"
                 disabled={submitted}
-                className="group w-full sm:w-auto px-8 py-4 bg-indigo-500 hover:bg-indigo-400 disabled:bg-emerald-500 text-white rounded-full font-semibold text-sm transition-all duration-300 hover:shadow-lg hover:shadow-indigo-500/25 flex items-center justify-center gap-2"
+                className="group w-full sm:w-auto px-8 py-4 bg-amber-500 hover:bg-amber-400 disabled:bg-emerald-500 text-white rounded-full font-semibold text-sm transition-all duration-300 hover:shadow-lg hover:shadow-amber-500/25 flex items-center justify-center gap-2"
               >
                 {submitted ? (
                   'Message Sent!'

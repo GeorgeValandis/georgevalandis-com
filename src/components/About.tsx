@@ -58,7 +58,7 @@ export default function About() {
           transition={{ duration: 0.6 }}
           className="mb-20"
         >
-          <p className="text-indigo-400 font-mono text-sm mb-3 tracking-wider uppercase">
+          <p className="text-amber-400 font-mono text-sm mb-3 tracking-wider uppercase">
             02 &mdash; About
           </p>
           <h2 className="text-4xl md:text-5xl font-bold tracking-tight">
@@ -119,7 +119,7 @@ export default function About() {
                       whileInView={{ width: `${skill.level}%` }}
                       viewport={{ once: true }}
                       transition={{ duration: 1.2, delay: 0.6 + i * 0.1, ease: 'easeOut' }}
-                      className="h-full bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full"
+                      className="h-full bg-gradient-to-r from-amber-500 to-orange-500 rounded-full"
                     />
                   </div>
                 </motion.div>
@@ -156,10 +156,10 @@ export default function About() {
                   whileInView="visible"
                   viewport={{ once: true }}
                   variants={fadeUp}
-                  className="group p-6 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-indigo-500/30 hover:bg-white/[0.04] transition-all duration-500"
+                  className="group p-6 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-amber-500/30 hover:bg-white/[0.04] transition-all duration-500"
                 >
-                  <div className="w-12 h-12 rounded-xl bg-indigo-500/10 flex items-center justify-center mb-4 group-hover:bg-indigo-500/20 transition-colors duration-500">
-                    <item.icon size={22} className="text-indigo-400" />
+                  <div className="w-12 h-12 rounded-xl bg-amber-500/10 flex items-center justify-center mb-4 group-hover:bg-amber-500/20 transition-colors duration-500">
+                    <item.icon size={22} className="text-amber-400" />
                   </div>
                   <h3 className="text-lg font-semibold mb-2">{item.title}</h3>
                   <p className="text-gray-500 text-sm leading-relaxed">

@@ -1,6 +1,6 @@
-import Link from 'next/link';
 import { blogPosts } from '@/content/blogPosts';
 import { ArrowLeft, ArrowUpRight, Calendar } from 'lucide-react';
+import Link from 'next/link';
 
 export const metadata = {
   title: 'Blog - George Valandis',
@@ -21,7 +21,7 @@ export default function BlogPage() {
         </Link>
 
         <header className="mt-8 mb-12">
-          <p className="text-indigo-400 font-mono text-sm tracking-wider uppercase mb-3">
+          <p className="text-amber-400 font-mono text-sm tracking-wider uppercase mb-3">
             Blog
           </p>
           <h1 className="text-4xl md:text-5xl font-bold tracking-tight">All Posts</h1>
@@ -35,7 +35,7 @@ export default function BlogPage() {
             <Link
               key={post.slug}
               href={`/blog/${post.slug}`}
-              className="group block rounded-2xl border border-white/10 bg-white/[0.02] p-7 hover:border-indigo-500/30 transition-colors"
+              className="group block rounded-2xl border border-white/10 bg-white/[0.02] p-7 hover:border-amber-500/30 transition-colors"
             >
               <div className="flex items-center gap-2 text-gray-500 text-xs mb-4">
                 <Calendar size={12} />
@@ -48,7 +48,7 @@ export default function BlogPage() {
                 </h2>
                 <ArrowUpRight
                   size={16}
-                  className="text-gray-600 group-hover:text-indigo-400 transition-colors shrink-0 mt-1"
+                  className="text-gray-600 group-hover:text-amber-400 transition-colors shrink-0 mt-1"
                 />
               </div>
 

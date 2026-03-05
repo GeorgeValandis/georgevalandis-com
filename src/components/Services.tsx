@@ -19,7 +19,7 @@ export default function Blog() {
           transition={{ duration: 0.6 }}
           className="mb-20"
         >
-          <p className="text-indigo-400 font-mono text-sm mb-3 tracking-wider uppercase">
+          <p className="text-amber-400 font-mono text-sm mb-3 tracking-wider uppercase">
             03 &mdash; Blog
           </p>
           <h2 className="text-4xl md:text-5xl font-bold tracking-tight">
@@ -38,9 +38,9 @@ export default function Blog() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: i * 0.1, ease: 'easeOut' as const }}
-              className="group relative p-7 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-indigo-500/20 transition-all duration-500 block"
+              className="group relative p-7 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-amber-500/20 transition-all duration-500 block"
             >
-              <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-indigo-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+              <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-amber-500/5 to-orange-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
 
               <div className="relative">
                 <div className="flex items-center gap-2 text-gray-500 text-xs mb-4">
@@ -54,7 +54,7 @@ export default function Blog() {
                   </h3>
                   <ArrowUpRight
                     size={16}
-                    className="text-gray-600 group-hover:text-indigo-400 transition-colors shrink-0 mt-1"
+                    className="text-gray-600 group-hover:text-amber-400 transition-colors shrink-0 mt-1"
                   />
                 </div>
 
