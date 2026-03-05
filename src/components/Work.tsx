@@ -12,7 +12,9 @@ const apps = [
     tags: ['Swift', 'SwiftUI', 'HealthKit', 'Paid'],
     gradient: 'from-pink-500/20 to-rose-500/20',
     accentBorder: 'group-hover:border-pink-500/40',
-    link: 'https://georgevalandis.com/flowa/',
+    link: 'https://apps.apple.com/us/app/menstrual-calendar-flowa/id6738320165?uo=4',
+    logo:
+      'https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/d6/fc/ce/d6fcceea-f9e3-29ad-9df6-730585ca9f84/AppIcon-0-0-1x_U007ephone-0-1-0-85-220.png/512x512bb.jpg',
   },
   {
     title: 'MoodFlora',
@@ -22,7 +24,9 @@ const apps = [
     tags: ['Swift', 'SwiftUI', 'Journal', 'Free'],
     gradient: 'from-emerald-500/20 to-teal-500/20',
     accentBorder: 'group-hover:border-emerald-500/40',
-    link: 'https://apps.apple.com/de/app/journal-tracker-moodflora/id6477776787',
+    link: 'https://apps.apple.com/us/app/mood-tracker-moodflora/id6477776787?uo=4',
+    logo:
+      'https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/f8/d4/9a/f8d49a83-ddf9-3901-ccc1-196bf4fb1fbc/AppIcon-0-0-1x_U007ephone-0-1-0-85-220.png/512x512bb.jpg',
   },
   {
     title: 'GlanceAway',
@@ -32,7 +36,9 @@ const apps = [
     tags: ['Swift', 'SwiftUI', 'Notifications', 'Health'],
     gradient: 'from-sky-500/20 to-blue-500/20',
     accentBorder: 'group-hover:border-sky-500/40',
-    link: 'https://georgevalandis.com/lookaway/',
+    link: 'https://apps.apple.com/us/app/eye-break-glanceaway/id6751297230?uo=4',
+    logo:
+      'https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/fa/dc/60/fadc601c-f3bc-f694-273c-0f78dfd0af4e/AppIcon-0-0-1x_U007ephone-0-1-85-220.png/512x512bb.jpg',
   },
   {
     title: 'Perfect Day',
@@ -42,7 +48,9 @@ const apps = [
     tags: ['Swift', 'SwiftUI', 'Habits', 'Productivity'],
     gradient: 'from-amber-500/20 to-orange-500/20',
     accentBorder: 'group-hover:border-amber-500/40',
-    link: 'https://georgevalandis.com/perfectday/',
+    link: 'https://apps.apple.com/us/app/habit-day-tracker-perfectday/id6741456646?uo=4',
+    logo:
+      'https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/f0/7b/68/f07b6864-a8cd-eecb-1753-4589e67ed784/AppIcon-0-0-1x_U007ephone-0-1-85-220.png/512x512bb.jpg',
   },
   {
     title: 'Frokus',
@@ -52,7 +60,9 @@ const apps = [
     tags: ['Swift', 'SwiftUI', 'Pomodoro', 'Focus'],
     gradient: 'from-indigo-500/20 to-purple-500/20',
     accentBorder: 'group-hover:border-indigo-500/40',
-    link: 'https://apps.apple.com/de/app/frokus-focus-timer/id6737744446',
+    link: 'https://apps.apple.com/us/app/frokus-focus-timer/id6737744446?uo=4',
+    logo:
+      'https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/12/3b/91/123b9169-f680-37c6-bb2a-aee05279f039/AppIcon-0-0-1x_U007ephone-0-1-85-220.jpeg/512x512bb.jpg',
   },
   {
     title: 'SaveTap',
@@ -62,7 +72,9 @@ const apps = [
     tags: ['Swift', 'SwiftUI', 'Finance', 'Savings'],
     gradient: 'from-green-500/20 to-emerald-500/20',
     accentBorder: 'group-hover:border-green-500/40',
-    link: 'https://georgevalandis.com/savetap-turn-daily-choices-into-real-savings/',
+    link: 'https://apps.apple.com/us/app/savings-tracker-savetap/id6752865110?uo=4',
+    logo:
+      'https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/4e/73/1d/4e731de4-e0b4-960d-27bc-13b3907c1340/AppIcon-0-0-1x_U007ephone-0-1-85-220.png/512x512bb.jpg',
   },
   {
     title: 'QuitERGY',
@@ -72,7 +84,9 @@ const apps = [
     tags: ['Swift', 'SwiftUI', 'Health', 'Wellness'],
     gradient: 'from-violet-500/20 to-fuchsia-500/20',
     accentBorder: 'group-hover:border-violet-500/40',
-    link: 'https://georgevalandis.com/quitergy-your-gentle-companion-to-reduce-energy-drinks/',
+    link: 'https://apps.apple.com/us/app/quit-energy-drinks-quitergy/id6754967219?uo=4',
+    logo:
+      'https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/7b/06/bd/7b06bd9e-130a-bbb9-6304-020a92160ea4/AppIcon-0-0-1x_U007epad-0-1-85-220.png/512x512bb.jpg',
   },
 ];
 
@@ -119,8 +133,16 @@ export default function Apps() {
               />
 
               <div className="relative p-7">
-                <div className="flex items-start justify-between mb-2">
-                  <h3 className="text-xl font-bold">{app.title}</h3>
+                <div className="flex items-start justify-between mb-3 gap-3">
+                  <div className="flex items-center gap-3 min-w-0">
+                    <img
+                      src={app.logo}
+                      alt={`${app.title} logo`}
+                      className="w-11 h-11 rounded-xl border border-white/10 object-cover shrink-0"
+                      loading="lazy"
+                    />
+                    <h3 className="text-xl font-bold truncate">{app.title}</h3>
+                  </div>
                   <ExternalLink
                     size={16}
                     className="text-gray-600 group-hover:text-white transition-colors duration-300 mt-1 shrink-0"
