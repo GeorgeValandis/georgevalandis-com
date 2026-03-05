@@ -65,7 +65,7 @@ export default function Contact() {
 
             <div className="space-y-6">
               <a
-                href="mailto:hello@georgevalandis.com"
+                href="mailto:info@georgevalandis.com"
                 className="flex items-center gap-4 group"
               >
                 <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/5 flex items-center justify-center group-hover:border-indigo-500/30 group-hover:bg-indigo-500/10 transition-all duration-300">
@@ -74,7 +74,7 @@ export default function Contact() {
                 <div>
                   <p className="text-sm text-gray-500">Email</p>
                   <p className="text-gray-300 group-hover:text-white transition-colors">
-                    hello@georgevalandis.com
+                    info@georgevalandis.com
                   </p>
                 </div>
               </a>
@@ -90,14 +90,22 @@ export default function Contact() {
               </div>
             </div>
 
-            <div className="flex gap-4 pt-4">
-              {['GitHub', 'LinkedIn', 'Twitter'].map((platform) => (
+            <div className="flex flex-wrap gap-4 pt-4">
+              {[
+                { label: 'X / Twitter', href: 'https://x.com/georgevalandis' },
+                { label: 'Instagram', href: 'https://instagram.com/georgevalandis' },
+                { label: 'Threads', href: 'https://threads.net/@georgevalandis' },
+                { label: 'TikTok', href: 'https://tiktok.com/@georgevalandis' },
+                { label: 'Bluesky', href: 'https://bsky.app/profile/georgevalandis.bsky.social' },
+              ].map((platform) => (
                 <a
-                  key={platform}
-                  href="#"
+                  key={platform.label}
+                  href={platform.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="group flex items-center gap-1.5 text-sm text-gray-500 hover:text-white transition-colors duration-300"
                 >
-                  {platform}
+                  {platform.label}
                   <ArrowUpRight
                     size={14}
                     className="opacity-0 -translate-y-0.5 translate-x-0.5 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 transition-all duration-300"

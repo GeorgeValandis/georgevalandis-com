@@ -35,7 +35,7 @@ export default function Hero() {
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-8 backdrop-blur-sm">
             <Sparkles size={14} className="text-indigo-400" />
             <span className="text-sm text-gray-400">
-              Available for freelance work
+              iOS Developer &amp; Solopreneur
             </span>
           </div>
         </motion.div>
@@ -46,11 +46,11 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="text-5xl sm:text-6xl md:text-8xl font-bold tracking-tight leading-[0.9] mb-8"
         >
-          <span className="block">I craft</span>
+          <span className="block">I build</span>
           <span className="block mt-2 bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-gradient">
-            digital experiences
+            iOS apps
           </span>
-          <span className="block mt-2 text-gray-500">that matter.</span>
+          <span className="block mt-2 text-gray-500">from 5 to 9.</span>
         </motion.h1>
 
         <motion.p
@@ -59,9 +59,9 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.4 }}
           className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mb-12 leading-relaxed"
         >
-          A creative developer turning bold ideas into seamless, beautiful web
-          experiences. Specializing in modern frontend architecture &amp;
-          interactive design.
+          Hey, I&apos;m George — a passionate iOS developer and solopreneur
+          building apps after hours. Turning bold ideas into polished,
+          user-friendly mobile experiences with Swift &amp; SwiftUI.
         </motion.p>
 
         <motion.div
@@ -71,10 +71,10 @@ export default function Hero() {
           className="flex flex-col sm:flex-row gap-4 justify-center"
         >
           <a
-            href="#work"
+            href="#apps"
             className="group px-8 py-4 bg-white text-gray-950 rounded-full font-semibold text-sm hover:bg-gray-200 transition-all duration-300 hover:shadow-lg hover:shadow-white/10 flex items-center justify-center gap-2"
           >
-            View My Work
+            Explore My Apps
             <span className="group-hover:translate-x-1 transition-transform duration-300">
               &rarr;
             </span>
@@ -90,7 +90,7 @@ export default function Hero() {
 
       {/* Scroll indicator */}
       <motion.a
-        href="#about"
+        href="#apps"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.5, duration: 1 }}

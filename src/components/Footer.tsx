@@ -5,17 +5,18 @@ import { ArrowUp } from 'lucide-react';
 
 const footerLinks = [
   { label: 'Home', href: '#home' },
+  { label: 'Apps', href: '#apps' },
   { label: 'About', href: '#about' },
-  { label: 'Work', href: '#work' },
-  { label: 'Services', href: '#services' },
+  { label: 'Blog', href: '#blog' },
   { label: 'Contact', href: '#contact' },
 ];
 
 const socials = [
-  { label: 'GitHub', href: '#' },
-  { label: 'LinkedIn', href: '#' },
-  { label: 'Twitter', href: '#' },
-  { label: 'Dribbble', href: '#' },
+  { label: 'X / Twitter', href: 'https://x.com/georgevalandis' },
+  { label: 'Instagram', href: 'https://instagram.com/georgevalandis' },
+  { label: 'Threads', href: 'https://threads.net/@georgevalandis' },
+  { label: 'TikTok', href: 'https://tiktok.com/@georgevalandis' },
+  { label: 'Bluesky', href: 'https://bsky.app/profile/georgevalandis.bsky.social' },
 ];
 
 export default function Footer() {
@@ -29,7 +30,7 @@ export default function Footer() {
               george<span className="text-indigo-400">.</span>
             </a>
             <p className="text-gray-500 text-sm mt-4 max-w-xs leading-relaxed">
-              Crafting modern digital experiences with passion and precision.
+              iOS Developer &amp; Solopreneur. Building apps from 5 to 9.
               Based in Germany.
             </p>
           </div>
@@ -75,9 +76,25 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="mt-16 pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-xs text-gray-600">
-            &copy; {new Date().getFullYear()} George Valandis. All rights reserved.
-          </p>
+          <div className="flex items-center gap-4 text-xs text-gray-600">
+            <span>&copy; {new Date().getFullYear()} George Valandis.</span>
+            <a
+              href="https://georgevalandis.com/privacy-datenschutzerklaerung/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-gray-400 transition-colors"
+            >
+              Privacy Statement
+            </a>
+            <a
+              href="https://georgevalandis.com/legal-notice-impressum/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-gray-400 transition-colors"
+            >
+              Imprint
+            </a>
+          </div>
           <motion.a
             href="#home"
             whileHover={{ y: -2 }}

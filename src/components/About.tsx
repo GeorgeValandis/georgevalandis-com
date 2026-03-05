@@ -4,33 +4,33 @@ import { motion } from 'framer-motion';
 import { Code2, Globe, Palette, Zap } from 'lucide-react';
 
 const skills = [
-  { name: 'React / Next.js', level: 95 },
-  { name: 'TypeScript', level: 90 },
-  { name: 'Tailwind CSS', level: 92 },
-  { name: 'Node.js', level: 85 },
-  { name: 'UI/UX Design', level: 80 },
+  { name: 'Swift / SwiftUI', level: 95 },
+  { name: 'iOS Development', level: 92 },
+  { name: 'UI/UX Design', level: 85 },
+  { name: 'App Store Optimization', level: 80 },
+  { name: 'Content Creation', level: 78 },
 ];
 
 const highlights = [
   {
     icon: Code2,
-    title: 'Clean Code',
-    description: 'Writing maintainable, scalable code that stands the test of time.',
+    title: 'Solopreneur',
+    description: 'Building and shipping iOS apps independently — from idea to App Store.',
   },
   {
     icon: Palette,
-    title: 'Pixel Perfect',
-    description: 'Obsessing over every detail to deliver flawless visual experiences.',
+    title: 'Detail-Oriented',
+    description: 'Obsessing over every pixel and interaction to deliver polished experiences.',
   },
   {
     icon: Zap,
-    title: 'Performance',
-    description: 'Lightning-fast load times with optimized, efficient architectures.',
+    title: 'After-Hours Builder',
+    description: 'Working from 5 to 9 — turning side projects into real products.',
   },
   {
     icon: Globe,
-    title: 'Accessible',
-    description: 'Building inclusive products that work for everyone, everywhere.',
+    title: 'Multilingual',
+    description: 'Fluent in Greek, German and English. Building for a global audience.',
   },
 ];
 
@@ -56,12 +56,12 @@ export default function About() {
           className="mb-20"
         >
           <p className="text-indigo-400 font-mono text-sm mb-3 tracking-wider uppercase">
-            01 &mdash; About
+            02 &mdash; About
           </p>
           <h2 className="text-4xl md:text-5xl font-bold tracking-tight">
-            Building the web,
+            Building apps,
             <br />
-            <span className="text-gray-500">one pixel at a time.</span>
+            <span className="text-gray-500">one idea at a time.</span>
           </h2>
         </motion.div>
 
@@ -75,10 +75,11 @@ export default function About() {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="text-gray-400 text-lg leading-relaxed mb-8"
             >
-              I&apos;m a creative developer with a passion for turning complex
-              problems into elegant, user-friendly solutions. With years of
-              experience in modern web technologies, I bridge the gap between
-              design and engineering to create products that feel alive.
+              I&apos;m George — a passionate iOS developer and blogger. Since
+              2014, I&apos;ve been working in quality, process, and project
+              management. I started my career in the insurance industry as a
+              claims adjuster and later as a fraud investigator, building a
+              solid foundation in analytical thinking and problem-solving.
             </motion.p>
 
             <motion.p
@@ -88,9 +89,11 @@ export default function About() {
               transition={{ duration: 0.6, delay: 0.3 }}
               className="text-gray-400 text-lg leading-relaxed mb-12"
             >
-              When I&apos;m not coding, you&apos;ll find me exploring new design
-              trends, contributing to open-source projects, or experimenting
-              with the latest frameworks and tools.
+              I hold a Master&apos;s degree in Economics &amp; Management from
+              the Technical University of Kaiserslautern and a Bachelor&apos;s
+              in Business Law from FOM University. On this blog, I share my
+              journey as a solopreneur in mobile app development — insights
+              into what inspires me daily, working after-hours from 5 to 9.
             </motion.p>
 
             {/* Skill bars */}

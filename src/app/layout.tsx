@@ -13,10 +13,10 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "George Valandis — Creative Developer",
+  title: "George Valandis — iOS Development",
   description:
-    "Portfolio & personal website of George Valandis. Modern web experiences crafted with precision.",
-  keywords: ["developer", "portfolio", "web development", "George Valandis"],
+    "iOS Developer & Solopreneur. Building apps like Flowa, MoodFlora, GlanceAway and more. Sharing my journey from 5 to 9.",
+  keywords: ["iOS developer", "Swift", "SwiftUI", "solopreneur", "George Valandis", "app development"],
 };
 
 export default function RootLayout({

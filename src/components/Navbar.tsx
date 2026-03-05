@@ -6,9 +6,9 @@ import { useEffect, useState } from 'react';
 
 const navLinks = [
   { label: 'Home', href: '#home' },
+  { label: 'Apps', href: '#apps' },
   { label: 'About', href: '#about' },
-  { label: 'Work', href: '#work' },
-  { label: 'Services', href: '#services' },
+  { label: 'Blog', href: '#blog' },
   { label: 'Contact', href: '#contact' },
 ];
 
@@ -28,8 +28,8 @@ export default function Navbar() {
       animate={{ y: 0 }}
       transition={{ duration: 0.6, ease: 'easeOut' }}
       className={`fixed top-0 w-full z-50 transition-all duration-500 ${scrolled
-          ? 'bg-gray-950/80 backdrop-blur-xl border-b border-white/5 shadow-lg shadow-black/20'
-          : 'bg-transparent'
+        ? 'bg-gray-950/80 backdrop-blur-xl border-b border-white/5 shadow-lg shadow-black/20'
+        : 'bg-transparent'
         }`}
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
