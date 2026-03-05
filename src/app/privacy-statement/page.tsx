@@ -104,15 +104,16 @@ export default function PrivacyStatementPage() {
           <section>
             <h2 className="text-2xl font-semibold text-white mb-3">6. Cookies and Analytics</h2>
             <p>
-              This website may use cookies and similar technologies to ensure functionality,
-              remember consent settings, and improve user experience.
+              This website uses technically necessary cookies and similar technologies to ensure
+              secure and stable functionality and to remember your privacy choices.
             </p>
             <p>
-              Website analytics may be performed with WP Statistics. Data is stored on the own
-              server. IP addresses are anonymized where possible.
+              Optional categories such as analytics or marketing are only activated if you give
+              explicit consent through the cookie settings interface.
             </p>
             <p>
-              Consent management is handled via Real Cookie Banner.
+              You can grant, refuse, or withdraw consent at any time by opening the
+              {' '}&quot;Cookie Settings&quot; button on the website.
             </p>
           </section>
 
