@@ -6,6 +6,8 @@ import { motion } from 'framer-motion';
 import { ArrowUpRight, Mail, MapPin, Send } from 'lucide-react';
 import { useState } from 'react';
 
+type SubmissionState = 'idle' | 'sending' | 'success' | 'error';
+
 type ContactProps = {
   locale: SiteLocale;
 };
@@ -16,15 +18,44 @@ export default function Contact({ locale }: ContactProps) {
     email: '',
     message: '',
   });
-  const [submitted, setSubmitted] = useState(false);
+  const [submissionState, setSubmissionState] = useState<SubmissionState>('idle');
+  const [feedbackMessage, setFeedbackMessage] = useState('');
   const copy = getSiteCopy(locale);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 4000);
-    setFormData({ name: '', email: '', message: '' });
+    setSubmissionState('sending');
+    setFeedbackMessage('');
+
+    try {
+      const response = await fetch('/contact/send.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ...formData,
+          website: '',
+        }),
+      });
+
+      const result = (await response.json()) as { ok?: boolean; error?: string };
+
+      if (!response.ok || !result.ok) {
+        throw new Error(result.error || 'send_failed');
+      }
+
+      setSubmissionState('success');
+      setFeedbackMessage(copy.contact.form.submitted);
+      setFormData({ name: '', email: '', message: '' });
+      window.setTimeout(() => {
+        setSubmissionState('idle');
+        setFeedbackMessage('');
+      }, 4000);
+    } catch {
+      setSubmissionState('error');
+      setFeedbackMessage(copy.contact.form.error);
+    }
   };
 
   const handleChange = (
@@ -129,6 +160,14 @@ export default function Contact({ locale }: ContactProps) {
             className="lg:col-span-3"
           >
             <form onSubmit={handleSubmit} className="space-y-6">
+              <input
+                type="text"
+                name="website"
+                tabIndex={-1}
+                autoComplete="off"
+                className="hidden"
+                aria-hidden="true"
+              />
               <div className="grid sm:grid-cols-2 gap-6">
                 <div>
                   <label
@@ -189,11 +228,13 @@ export default function Contact({ locale }: ContactProps) {
 
               <button
                 type="submit"
-                disabled={submitted}
+                disabled={submissionState === 'sending' || submissionState === 'success'}
                 className="group w-full sm:w-auto px-8 py-4 bg-amber-500 hover:bg-amber-400 disabled:bg-emerald-500 text-white rounded-full font-semibold text-sm transition-all duration-300 hover:shadow-lg hover:shadow-amber-500/25 flex items-center justify-center gap-2"
               >
-                {submitted ? (
+                {submissionState === 'success' ? (
                   copy.contact.form.submitted
+                ) : submissionState === 'sending' ? (
+                  copy.contact.form.sending
                 ) : (
                   <>
                     {copy.contact.form.submit}
@@ -204,6 +245,15 @@ export default function Contact({ locale }: ContactProps) {
                   </>
                 )}
               </button>
+              {feedbackMessage ? (
+                <p
+                  className={`text-sm ${
+                    submissionState === 'error' ? 'text-rose-300' : 'text-emerald-300'
+                  }`}
+                >
+                  {feedbackMessage}
+                </p>
+              ) : null}
             </form>
           </motion.div>
         </div>

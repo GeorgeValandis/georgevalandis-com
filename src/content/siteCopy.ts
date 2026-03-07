@@ -73,7 +73,9 @@ export type SiteCopy = {
       emailPlaceholder: string;
       messagePlaceholder: string;
       submit: string;
+      sending: string;
       submitted: string;
+      error: string;
     };
   };
   footer: {
@@ -217,7 +219,9 @@ const siteCopy: Record<SiteLocale, SiteCopy> = {
         emailPlaceholder: 'john@example.com',
         messagePlaceholder: 'Tell me about your project...',
         submit: 'Send Message',
+        sending: 'Sending...',
         submitted: 'Message Sent!',
+        error: 'Sending failed. Please email me directly at info@georgevalandis.com.',
       },
     },
     footer: {
@@ -352,7 +356,10 @@ const siteCopy: Record<SiteLocale, SiteCopy> = {
         emailPlaceholder: 'max@example.com',
         messagePlaceholder: 'Erzähl mir etwas über dein Projekt ...',
         submit: 'Nachricht senden',
+        sending: 'Wird gesendet...',
         submitted: 'Nachricht gesendet!',
+        error:
+          'Senden fehlgeschlagen. Bitte schreibe mir direkt an info@georgevalandis.com.',
       },
     },
     footer: {
