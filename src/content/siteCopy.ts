@@ -76,6 +76,11 @@ export type SiteCopy = {
       sending: string;
       submitted: string;
       error: string;
+      validation: {
+        missingFields: string;
+        invalidEmail: string;
+        messageTooShort: string;
+      };
     };
   };
   footer: {
@@ -222,6 +227,11 @@ const siteCopy: Record<SiteLocale, SiteCopy> = {
         sending: 'Sending...',
         submitted: 'Message Sent!',
         error: 'Sending failed. Please email me directly at info@georgevalandis.com.',
+        validation: {
+          missingFields: 'Please fill out all fields before sending.',
+          invalidEmail: 'Please enter a valid email address.',
+          messageTooShort: 'Please write a slightly longer message.',
+        },
       },
     },
     footer: {
@@ -360,6 +370,11 @@ const siteCopy: Record<SiteLocale, SiteCopy> = {
         submitted: 'Nachricht gesendet!',
         error:
           'Senden fehlgeschlagen. Bitte schreibe mir direkt an info@georgevalandis.com.',
+        validation: {
+          missingFields: 'Bitte fülle alle Felder aus.',
+          invalidEmail: 'Bitte gib eine gültige E-Mail-Adresse ein.',
+          messageTooShort: 'Bitte schreibe eine etwas längere Nachricht.',
+        },
       },
     },
     footer: {

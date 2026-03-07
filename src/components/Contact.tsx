@@ -22,6 +22,19 @@ export default function Contact({ locale }: ContactProps) {
   const [feedbackMessage, setFeedbackMessage] = useState('');
   const copy = getSiteCopy(locale);
 
+  const getErrorMessage = (errorCode?: string) => {
+    switch (errorCode) {
+      case 'missing_fields':
+        return copy.contact.form.validation.missingFields;
+      case 'invalid_email':
+        return copy.contact.form.validation.invalidEmail;
+      case 'message_too_short':
+        return copy.contact.form.validation.messageTooShort;
+      default:
+        return copy.contact.form.error;
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSubmissionState('sending');
@@ -52,9 +65,11 @@ export default function Contact({ locale }: ContactProps) {
         setSubmissionState('idle');
         setFeedbackMessage('');
       }, 4000);
-    } catch {
+    } catch (error) {
       setSubmissionState('error');
-      setFeedbackMessage(copy.contact.form.error);
+      setFeedbackMessage(
+        getErrorMessage(error instanceof Error ? error.message : undefined)
+      );
     }
   };
 

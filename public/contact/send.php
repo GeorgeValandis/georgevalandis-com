@@ -59,7 +59,7 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 $message = str_replace(["\r\n", "\r"], "\n", $message);
 $message = trim($message);
 
-if ($message === '' || mb_strlen($message) < 10) {
+if ($message === '' || mb_strlen($message) < 3) {
     respond(422, ['ok' => false, 'error' => 'message_too_short']);
 }
 
