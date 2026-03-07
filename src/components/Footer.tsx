@@ -1,50 +1,42 @@
 'use client';
 
+import LanguageSwitch from '@/components/LanguageSwitch';
+import { getSiteCopy, socialLinks } from '@/content/siteCopy';
+import { localizedAnchor, localizedPath, type SiteLocale } from '@/lib/siteLocale';
 import { motion } from 'framer-motion';
 import { ArrowUp } from 'lucide-react';
 
-const footerLinks = [
-  { label: 'Home', href: '#home' },
-  { label: 'Apps', href: '#apps' },
-  { label: 'About', href: '#about' },
-  { label: 'Blog', href: '#blog' },
-  { label: 'Contact', href: '#contact' },
-];
+type FooterProps = {
+  locale: SiteLocale;
+};
 
-const socials = [
-  { label: 'X / Twitter', href: 'https://x.com/georgevalandis' },
-  { label: 'Instagram', href: 'https://instagram.com/georgevalandis' },
-  { label: 'Threads', href: 'https://threads.net/@georgevalandis' },
-  { label: 'TikTok', href: 'https://tiktok.com/@georgevalandis' },
-  { label: 'Bluesky', href: 'https://bsky.app/profile/georgevalandis.bsky.social' },
-];
+export default function Footer({ locale }: FooterProps) {
+  const copy = getSiteCopy(locale);
 
-export default function Footer() {
   return (
     <footer className="relative border-t border-white/5">
       <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16">
         <div className="grid md:grid-cols-3 gap-12 md:gap-8">
           {/* Brand */}
           <div>
-            <a href="#home" className="text-2xl font-bold tracking-tight">
+            <a href={localizedAnchor(locale, '#home')} className="text-2xl font-bold tracking-tight">
               george<span className="text-amber-400">.</span>valandis
             </a>
             <p className="text-gray-500 text-sm mt-4 max-w-xs leading-relaxed">
-              iOS Developer &amp; Solopreneur. Building apps from 5 to 9.
-              Based in Germany.
+              {copy.footer.description}
             </p>
           </div>
 
           {/* Navigation */}
           <div>
             <p className="text-sm font-semibold text-gray-300 mb-4 uppercase tracking-wider">
-              Navigation
+              {copy.footer.navigationTitle}
             </p>
             <ul className="space-y-3">
-              {footerLinks.map((link) => (
+              {copy.nav.links.map((link) => (
                 <li key={link.href}>
                   <a
-                    href={link.href}
+                    href={localizedAnchor(locale, link.href)}
                     className="text-sm text-gray-500 hover:text-white transition-colors duration-300"
                   >
                     {link.label}
@@ -57,10 +49,10 @@ export default function Footer() {
           {/* Socials */}
           <div>
             <p className="text-sm font-semibold text-gray-300 mb-4 uppercase tracking-wider">
-              Connect
+              {copy.footer.connectTitle}
             </p>
-            <ul className="space-y-3">
-              {socials.map((social) => (
+            <ul className="space-y-3 mb-5">
+              {socialLinks.map((social) => (
                 <li key={social.label}>
                   <a
                     href={social.href}
@@ -71,6 +63,9 @@ export default function Footer() {
                 </li>
               ))}
             </ul>
+            <div>
+              <LanguageSwitch locale={locale} variant="footer" />
+            </div>
           </div>
         </div>
 
@@ -79,24 +74,24 @@ export default function Footer() {
           <div className="flex items-center gap-4 text-xs text-gray-600">
             <span>&copy; {new Date().getFullYear()} George Valandis.</span>
             <a
-              href="/privacy-statement"
+              href={localizedPath(locale, '/privacy-statement')}
               className="hover:text-gray-400 transition-colors"
             >
-              Privacy Statement
+              {copy.footer.privacy}
             </a>
             <a
-              href="/imprint"
+              href={localizedPath(locale, '/imprint')}
               className="hover:text-gray-400 transition-colors"
             >
-              Imprint
+              {copy.footer.imprint}
             </a>
           </div>
           <motion.a
-            href="#home"
+            href={localizedAnchor(locale, '#home')}
             whileHover={{ y: -2 }}
             className="flex items-center gap-2 text-xs text-gray-500 hover:text-white transition-colors duration-300 group"
           >
-            Back to top
+            {copy.footer.backToTop}
             <ArrowUp size={14} className="group-hover:-translate-y-0.5 transition-transform" />
           </motion.a>
         </div>

@@ -1,11 +1,19 @@
 'use client';
 
 import { blogPosts } from '@/content/blogPosts';
+import { getSiteCopy } from '@/content/siteCopy';
+import { localizedPath, type SiteLocale } from '@/lib/siteLocale';
 import { motion } from 'framer-motion';
 import { ArrowUpRight, Calendar } from 'lucide-react';
 import Link from 'next/link';
 
-export default function Blog() {
+type BlogProps = {
+  locale: SiteLocale;
+};
+
+export default function Blog({ locale }: BlogProps) {
+  const copy = getSiteCopy(locale);
+
   return (
     <section id="blog" className="py-32 relative">
       {/* Subtle divider glow */}
@@ -20,12 +28,12 @@ export default function Blog() {
           className="mb-20"
         >
           <p className="text-amber-400 font-mono text-sm mb-3 tracking-wider uppercase">
-            03 &mdash; Blog
+            {copy.blog.eyebrow}
           </p>
           <h2 className="text-4xl md:text-5xl font-bold tracking-tight">
-            Latest from
+            {copy.blog.titleTop}
             <br />
-            <span className="text-gray-500">the journey.</span>
+            <span className="text-gray-500">{copy.blog.titleBottom}</span>
           </h2>
         </motion.div>
 
@@ -33,7 +41,7 @@ export default function Blog() {
           {blogPosts.map((post, i) => (
             <motion.a
               key={post.slug}
-              href={`/blog/${post.slug}`}
+              href={localizedPath(locale, `/blog/${post.slug}`)}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -74,10 +82,10 @@ export default function Blog() {
           className="mt-16 text-center"
         >
           <Link
-            href="/blog"
+            href={localizedPath(locale, '/blog')}
             className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors duration-300 group/link"
           >
-            <span className="text-sm font-medium">View all posts</span>
+            <span className="text-sm font-medium">{copy.blog.viewAll}</span>
             <span className="group-hover/link:translate-x-1 transition-transform duration-300">
               &rarr;
             </span>

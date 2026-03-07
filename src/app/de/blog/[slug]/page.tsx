@@ -19,7 +19,7 @@ export async function generateMetadata({
 
   if (!post) {
     return {
-      title: 'Post not found - George Valandis',
+      title: 'Beitrag nicht gefunden - George Valandis',
     };
   }
 
@@ -29,7 +29,7 @@ export async function generateMetadata({
   };
 }
 
-export default async function BlogPostPage({ params }: BlogPostPageProps) {
+export default async function GermanBlogPostPage({ params }: BlogPostPageProps) {
   const { slug } = await params;
   const post = getBlogPostBySlug(slug);
 
@@ -37,5 +37,5 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     notFound();
   }
 
-  return <BlogPostPageContent locale="en" post={post} />;
+  return <BlogPostPageContent locale="de" post={post} />;
 }

@@ -1,9 +1,17 @@
 'use client';
 
+import { getSiteCopy } from '@/content/siteCopy';
+import { type SiteLocale } from '@/lib/siteLocale';
 import { motion } from 'framer-motion';
 import { ArrowDown, Sparkles } from 'lucide-react';
 
-export default function Hero() {
+type HeroProps = {
+  locale: SiteLocale;
+};
+
+export default function Hero({ locale }: HeroProps) {
+  const copy = getSiteCopy(locale);
+
   return (
     <section
       id="home"
@@ -35,7 +43,7 @@ export default function Hero() {
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-8 backdrop-blur-sm">
             <Sparkles size={14} className="text-amber-400" />
             <span className="text-sm text-gray-400">
-              iOS Developer &amp; Solopreneur
+              {copy.hero.badge}
             </span>
           </div>
         </motion.div>
@@ -46,11 +54,11 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="text-5xl sm:text-6xl md:text-8xl font-bold tracking-tight leading-[0.9] mb-8"
         >
-          <span className="block">I build</span>
+          <span className="block">{copy.hero.titleLines[0]}</span>
           <span className="block mt-2 bg-gradient-to-r from-amber-400 via-orange-400 to-yellow-300 bg-clip-text text-transparent animate-gradient">
-            iOS apps
+            {copy.hero.titleLines[1]}
           </span>
-          <span className="block mt-2 text-gray-500">from 5 to 9.</span>
+          <span className="block mt-2 text-gray-500">{copy.hero.titleLines[2]}</span>
         </motion.h1>
 
         <motion.p
@@ -59,9 +67,7 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.4 }}
           className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mb-12 leading-relaxed"
         >
-          Hey, I&apos;m George — a passionate iOS developer and solopreneur
-          building apps after hours. Turning bold ideas into polished,
-          user-friendly mobile experiences with Swift &amp; SwiftUI.
+          {copy.hero.description}
         </motion.p>
 
         <motion.div
@@ -74,7 +80,7 @@ export default function Hero() {
             href="#apps"
             className="group px-8 py-4 bg-white text-gray-950 rounded-full font-semibold text-sm hover:bg-gray-200 transition-all duration-300 hover:shadow-lg hover:shadow-white/10 flex items-center justify-center gap-2"
           >
-            Explore My Apps
+            {copy.hero.primaryCta}
             <span className="group-hover:translate-x-1 transition-transform duration-300">
               &rarr;
             </span>
@@ -83,7 +89,7 @@ export default function Hero() {
             href="#contact"
             className="px-8 py-4 border border-white/10 rounded-full font-semibold text-sm hover:bg-white/5 transition-all duration-300 text-gray-300 flex items-center justify-center"
           >
-            Get in Touch
+            {copy.hero.secondaryCta}
           </a>
         </motion.div>
       </div>

@@ -1,16 +1,23 @@
 'use client';
 
+import { getSiteCopy } from '@/content/siteCopy';
+import { type SiteLocale } from '@/lib/siteLocale';
 import { motion } from 'framer-motion';
 import { ArrowUpRight, Mail, MapPin, Send } from 'lucide-react';
 import { useState } from 'react';
 
-export default function Contact() {
+type ContactProps = {
+  locale: SiteLocale;
+};
+
+export default function Contact({ locale }: ContactProps) {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     message: '',
   });
   const [submitted, setSubmitted] = useState(false);
+  const copy = getSiteCopy(locale);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -39,12 +46,12 @@ export default function Contact() {
           className="mb-20"
         >
           <p className="text-amber-400 font-mono text-sm mb-3 tracking-wider uppercase">
-            04 &mdash; Contact
+            {copy.contact.eyebrow}
           </p>
           <h2 className="text-4xl md:text-5xl font-bold tracking-tight">
-            Let&apos;s work
+            {copy.contact.titleTop}
             <br />
-            <span className="text-gray-500">together.</span>
+            <span className="text-gray-500">{copy.contact.titleBottom}</span>
           </h2>
         </motion.div>
 
@@ -58,9 +65,7 @@ export default function Contact() {
             className="lg:col-span-2 space-y-10"
           >
             <p className="text-gray-400 text-lg leading-relaxed">
-              Have an idea, a project, or just want to say hello? I&apos;d love
-              to hear from you. Drop me a message and I&apos;ll get back to you
-              as soon as possible.
+              {copy.contact.description}
             </p>
 
             <div className="space-y-6">
@@ -72,7 +77,7 @@ export default function Contact() {
                   <Mail size={18} className="text-gray-400 group-hover:text-amber-400 transition-colors" />
                 </div>
                 <div>
-                  <p className="text-sm text-gray-500">Email</p>
+                  <p className="text-sm text-gray-500">{copy.contact.emailLabel}</p>
                   <p className="text-gray-300 group-hover:text-white transition-colors">
                     info@georgevalandis.com
                   </p>
@@ -84,8 +89,8 @@ export default function Contact() {
                   <MapPin size={18} className="text-gray-400" />
                 </div>
                 <div>
-                  <p className="text-sm text-gray-500">Location</p>
-                  <p className="text-gray-300">Germany</p>
+                  <p className="text-sm text-gray-500">{copy.contact.locationLabel}</p>
+                  <p className="text-gray-300">{copy.contact.locationValue}</p>
                 </div>
               </div>
             </div>
@@ -128,9 +133,9 @@ export default function Contact() {
                 <div>
                   <label
                     htmlFor="name"
-                    className="block text-sm text-gray-400 mb-2 font-medium"
-                  >
-                    Name
+                  className="block text-sm text-gray-400 mb-2 font-medium"
+                >
+                    {copy.contact.form.name}
                   </label>
                   <input
                     type="text"
@@ -139,16 +144,16 @@ export default function Contact() {
                     value={formData.name}
                     onChange={handleChange}
                     required
-                    placeholder="John Doe"
+                    placeholder={copy.contact.form.namePlaceholder}
                     className="w-full px-4 py-3.5 bg-white/[0.03] border border-white/10 rounded-xl text-white placeholder:text-gray-600 focus:border-amber-500/50 focus:ring-1 focus:ring-amber-500/25 outline-none transition-all duration-300"
                   />
                 </div>
                 <div>
                   <label
                     htmlFor="email"
-                    className="block text-sm text-gray-400 mb-2 font-medium"
-                  >
-                    Email
+                  className="block text-sm text-gray-400 mb-2 font-medium"
+                >
+                    {copy.contact.form.email}
                   </label>
                   <input
                     type="email"
@@ -157,7 +162,7 @@ export default function Contact() {
                     value={formData.email}
                     onChange={handleChange}
                     required
-                    placeholder="john@example.com"
+                    placeholder={copy.contact.form.emailPlaceholder}
                     className="w-full px-4 py-3.5 bg-white/[0.03] border border-white/10 rounded-xl text-white placeholder:text-gray-600 focus:border-amber-500/50 focus:ring-1 focus:ring-amber-500/25 outline-none transition-all duration-300"
                   />
                 </div>
@@ -168,7 +173,7 @@ export default function Contact() {
                   htmlFor="message"
                   className="block text-sm text-gray-400 mb-2 font-medium"
                 >
-                  Message
+                  {copy.contact.form.message}
                 </label>
                 <textarea
                   id="message"
@@ -177,7 +182,7 @@ export default function Contact() {
                   onChange={handleChange}
                   required
                   rows={6}
-                  placeholder="Tell me about your project..."
+                  placeholder={copy.contact.form.messagePlaceholder}
                   className="w-full px-4 py-3.5 bg-white/[0.03] border border-white/10 rounded-xl text-white placeholder:text-gray-600 focus:border-amber-500/50 focus:ring-1 focus:ring-amber-500/25 outline-none transition-all duration-300 resize-none"
                 />
               </div>
@@ -188,10 +193,10 @@ export default function Contact() {
                 className="group w-full sm:w-auto px-8 py-4 bg-amber-500 hover:bg-amber-400 disabled:bg-emerald-500 text-white rounded-full font-semibold text-sm transition-all duration-300 hover:shadow-lg hover:shadow-amber-500/25 flex items-center justify-center gap-2"
               >
                 {submitted ? (
-                  'Message Sent!'
+                  copy.contact.form.submitted
                 ) : (
                   <>
-                    Send Message
+                    {copy.contact.form.submit}
                     <Send
                       size={16}
                       className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300"

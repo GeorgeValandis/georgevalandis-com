@@ -1,6 +1,9 @@
 'use client';
 
+import { getSiteCopy } from '@/content/siteCopy';
+import { detectLocaleFromPathname, localizedPath } from '@/lib/siteLocale';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 type ConsentMethod = 'accept_all' | 'reject_all' | 'save_selection';
@@ -173,6 +176,9 @@ function applyConsentToRuntime(consent: ConsentPreferences): void {
 const initialConsent = readStoredConsent();
 
 export default function CookieConsent() {
+  const pathname = usePathname();
+  const locale = detectLocaleFromPathname(pathname);
+  const copy = getSiteCopy(locale).consent;
   const [hasDecision, setHasDecision] = useState<boolean>(Boolean(initialConsent));
   const [showBanner, setShowBanner] = useState<boolean>(() => !initialConsent);
   const [showSettings, setShowSettings] = useState(false);
@@ -252,27 +258,28 @@ export default function CookieConsent() {
       {showBanner && (
         <section className="fixed inset-x-4 bottom-4 z-[1000] mx-auto max-w-3xl rounded-2xl border border-white/15 bg-gray-950/95 p-6 shadow-2xl shadow-black/50 backdrop-blur-xl">
           <p className="mb-3 text-xs font-mono uppercase tracking-[0.2em] text-amber-400">
-            Privacy Settings
+            {copy.bannerEyebrow}
           </p>
           <h2 className="text-xl font-semibold tracking-tight text-white sm:text-2xl">
-            We use cookies.
+            {copy.bannerTitle}
           </h2>
           <p className="mt-3 text-sm leading-relaxed text-gray-300">
-            We only use optional analytics or marketing cookies with your consent.
-            Necessary cookies for basic site functionality are always active.
-            You can change your choice at any time.
+            {copy.bannerDescription}
           </p>
           <p className="mt-3 text-sm text-gray-400">
-            See{' '}
+            {copy.bannerLegalPrefix}{' '}
             <Link
-              href="/privacy-statement"
+              href={localizedPath(locale, '/privacy-statement')}
               className="text-amber-300 hover:text-amber-200"
             >
-              Privacy Statement
+              {copy.privacyLink}
             </Link>{' '}
-            and{' '}
-            <Link href="/imprint" className="text-amber-300 hover:text-amber-200">
-              Imprint
+            {locale === 'de' ? 'und ' : 'and '}
+            <Link
+              href={localizedPath(locale, '/imprint')}
+              className="text-amber-300 hover:text-amber-200"
+            >
+              {copy.imprintLink}
             </Link>
             .
           </p>
@@ -283,21 +290,21 @@ export default function CookieConsent() {
               onClick={rejectAll}
               className="rounded-full border border-white/20 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-white/5"
             >
-              Reject all
+              {copy.rejectAll}
             </button>
             <button
               type="button"
               onClick={() => setShowSettings(true)}
               className="rounded-full border border-white/20 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-white/5"
             >
-              Customize
+              {copy.customize}
             </button>
             <button
               type="button"
               onClick={acceptAll}
               className="rounded-full bg-amber-500 px-5 py-2.5 text-sm font-semibold text-gray-950 transition-colors hover:bg-amber-400"
             >
-              Accept all
+              {copy.acceptAll}
             </button>
           </div>
         </section>
@@ -309,10 +316,10 @@ export default function CookieConsent() {
             <div className="flex items-start justify-between gap-4">
               <div>
                 <p className="mb-2 text-xs font-mono uppercase tracking-[0.2em] text-amber-400">
-                  Cookie Preferences
+                  {copy.modalEyebrow}
                 </p>
                 <h2 className="text-2xl font-semibold text-white">
-                  Manage your consent
+                  {copy.modalTitle}
                 </h2>
               </div>
               <button
@@ -325,16 +332,16 @@ export default function CookieConsent() {
                 }}
                 className="rounded-full border border-white/20 px-3 py-1.5 text-xs text-gray-300 transition-colors hover:bg-white/5"
               >
-                Close
+                {copy.close}
               </button>
             </div>
 
             <div className="mt-6 space-y-4">
               <label className="flex items-start justify-between gap-4 rounded-xl border border-white/10 p-4">
                 <div>
-                  <p className="font-medium text-white">Necessary</p>
+                  <p className="font-medium text-white">{copy.necessaryTitle}</p>
                   <p className="text-sm text-gray-400">
-                    Required for core site functions and security.
+                    {copy.necessaryDescription}
                   </p>
                 </div>
                 <input
@@ -347,9 +354,9 @@ export default function CookieConsent() {
 
               <label className="flex items-start justify-between gap-4 rounded-xl border border-white/10 p-4">
                 <div>
-                  <p className="font-medium text-white">Analytics</p>
+                  <p className="font-medium text-white">{copy.analyticsTitle}</p>
                   <p className="text-sm text-gray-400">
-                    Helps us understand usage and improve content.
+                    {copy.analyticsDescription}
                   </p>
                 </div>
                 <input
@@ -367,9 +374,9 @@ export default function CookieConsent() {
 
               <label className="flex items-start justify-between gap-4 rounded-xl border border-white/10 p-4">
                 <div>
-                  <p className="font-medium text-white">Marketing</p>
+                  <p className="font-medium text-white">{copy.marketingTitle}</p>
                   <p className="text-sm text-gray-400">
-                    Allows personalized marketing and ad measurement.
+                    {copy.marketingDescription}
                   </p>
                 </div>
                 <input
@@ -387,31 +394,30 @@ export default function CookieConsent() {
             </div>
 
             <p className="mt-5 text-sm text-gray-400">
-              You can update this selection anytime from the Cookie Settings
-              button.
+              {copy.updateHint}
             </p>
 
             <div className="mt-6 flex flex-wrap gap-3">
               <button
                 type="button"
-                onClick={rejectAll}
-                className="rounded-full border border-white/20 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-white/5"
-              >
-                Reject all
+              onClick={rejectAll}
+              className="rounded-full border border-white/20 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-white/5"
+            >
+                {copy.rejectAll}
               </button>
               <button
                 type="button"
-                onClick={saveSelection}
-                className="rounded-full border border-white/20 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-white/5"
-              >
-                Save selection
+              onClick={saveSelection}
+              className="rounded-full border border-white/20 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-white/5"
+            >
+                {copy.saveSelection}
               </button>
               <button
                 type="button"
-                onClick={acceptAll}
-                className="rounded-full bg-amber-500 px-5 py-2.5 text-sm font-semibold text-gray-950 transition-colors hover:bg-amber-400"
-              >
-                Accept all
+              onClick={acceptAll}
+              className="rounded-full bg-amber-500 px-5 py-2.5 text-sm font-semibold text-gray-950 transition-colors hover:bg-amber-400"
+            >
+                {copy.acceptAll}
               </button>
             </div>
           </div>
@@ -424,7 +430,7 @@ export default function CookieConsent() {
           onClick={() => setShowSettings(true)}
           className="fixed bottom-4 left-4 z-[999] rounded-full border border-white/15 bg-gray-950/90 px-4 py-2 text-xs font-semibold text-gray-200 transition-colors hover:bg-white/10"
         >
-          Cookie Settings
+          {copy.settingsButton}
         </button>
       )}
     </>

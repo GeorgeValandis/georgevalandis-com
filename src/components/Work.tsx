@@ -1,10 +1,18 @@
 'use client';
 
+import { getSiteCopy } from '@/content/siteCopy';
 import { motion } from 'framer-motion';
 import { ExternalLink } from 'lucide-react';
 import { apps } from '@/content/apps';
+import { type SiteLocale } from '@/lib/siteLocale';
 
-export default function Apps() {
+type AppsProps = {
+  locale: SiteLocale;
+};
+
+export default function Apps({ locale }: AppsProps) {
+  const copy = getSiteCopy(locale);
+
   return (
     <section id="apps" className="py-32 relative">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -16,15 +24,14 @@ export default function Apps() {
           className="mb-20"
         >
           <p className="text-amber-400 font-mono text-sm mb-3 tracking-wider uppercase">
-            01 &mdash; Apps
+            {copy.apps.eyebrow}
           </p>
           <h2 className="text-4xl md:text-5xl font-bold tracking-tight">
-            My iOS apps
-            <span className="text-gray-500">.</span>
+            {copy.apps.title}
+            <span className="text-gray-500">{copy.apps.titleAccent}</span>
           </h2>
           <p className="text-gray-400 mt-4 text-lg max-w-2xl">
-            Every app starts as a simple idea and grows into something that helps real people.
-            Here&apos;s what I&apos;ve been building.
+            {copy.apps.description}
           </p>
         </motion.div>
 
@@ -42,7 +49,7 @@ export default function Apps() {
                 href={app.appStoreLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label={`Open ${app.title} in the App Store`}
+                aria-label={`${copy.apps.appStoreAriaPrefix} ${app.title} in the App Store`}
                 className="absolute inset-0 z-10"
               />
 
@@ -78,19 +85,19 @@ export default function Apps() {
 
                 <div className="flex flex-wrap items-center gap-2 mb-4">
                   <span className="text-[11px] uppercase tracking-wider text-gray-500 font-mono">
-                    Legal
+                    {copy.apps.legalLabel}
                   </span>
                   <a
                     href={app.legal.termsPath}
                     className="pointer-events-auto px-3 py-1 text-xs font-mono text-amber-100 bg-amber-300/10 rounded-full border border-amber-300/35 hover:text-amber-50 hover:border-amber-200/55 hover:bg-amber-300/20 transition-colors"
                   >
-                    Terms
+                    {copy.apps.termsLabel}
                   </a>
                   <a
                     href={app.legal.privacyPath}
                     className="pointer-events-auto px-3 py-1 text-xs font-mono text-amber-100 bg-amber-300/10 rounded-full border border-amber-300/35 hover:text-amber-50 hover:border-amber-200/55 hover:bg-amber-300/20 transition-colors"
                   >
-                    Privacy
+                    {copy.apps.privacyLabel}
                   </a>
                 </div>
 
