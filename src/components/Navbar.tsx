@@ -38,6 +38,7 @@ export default function Navbar() {
             <span className="text-2xl font-bold tracking-tight">
               george
               <span className="text-amber-400">.</span>
+              valandis
             </span>
             <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-amber-400 transition-all duration-300 group-hover:w-full" />
           </a>

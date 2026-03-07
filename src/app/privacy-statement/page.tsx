@@ -115,6 +115,11 @@ export default function PrivacyStatementPage() {
               You can grant, refuse, or withdraw consent at any time by opening the
               {' '}&quot;Cookie Settings&quot; button on the website.
             </p>
+            <p>
+              To document your choice, the website may store a consent record containing the
+              selected categories, the decision timestamp, a consent ID, browser information, and
+              a pseudonymized IP hash.
+            </p>
           </section>
 
           <section>

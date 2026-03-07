@@ -13,6 +13,52 @@ export type BlogPost = {
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'juggling-7-apps-taking-a-breath-and-creating-more-long-form-content',
+    title: 'Juggling 7 Apps and Finding My Way Back',
+    date: 'March 5, 2026',
+    excerpt:
+      "Quick update from me. Right now, I'm juggling 7 apps, getting back into content after a short personal break...",
+    content: [
+      { type: 'paragraph', text: 'Hey friends,' },
+      { type: 'paragraph', text: 'Quick update from me.' },
+      {
+        type: 'paragraph',
+        text: "Right now, I'm juggling 7 apps at the same time. Some are further along, some are still evolving, and some are just small ideas slowly turning into something real. It's a lot to balance, but in a strange way, I enjoy that chaos. Each app teaches me something different, and switching between them keeps the whole journey exciting.",
+      },
+      {
+        type: 'paragraph',
+        text: "At the same time, I've kept creating content around everything I'm building. Sharing the process, the wins, the messy middle, and the little lessons along the way still feels like an important part of this journey for me.",
+      },
+      {
+        type: 'paragraph',
+        text: 'I did take a short break recently for personal reasons. Sometimes life just asks you to slow down for a moment, step back, and focus on what matters outside of work and projects. That pause was needed. And now, I am back, with fresh energy and a clearer mind.',
+      },
+      {
+        type: 'paragraph',
+        text: 'One thing I have also started doing more of is experimenting with longer-form content. I published one or two longer YouTube videos, which felt like a different challenge compared to short clips. It takes more planning, more structure, and more patience, but I really like the deeper format. It gives me more space to share the full story, not just quick snapshots.',
+      },
+      { type: 'heading', text: 'So right now, it is all about:' },
+      {
+        type: 'list',
+        items: [
+          'Juggling 7 apps and keeping them moving forward.',
+          'Getting back into content creation after a short personal break.',
+          'Exploring longer YouTube videos alongside short-form content.',
+          'Continuing to build in public, one step at a time.',
+        ],
+      },
+      {
+        type: 'paragraph',
+        text: "It still feels like a lot sometimes, but I'm learning to trust the pace and keep going.",
+      },
+      {
+        type: 'paragraph',
+        text: 'Step by step, figuring it out as I go.',
+      },
+      { type: 'paragraph', text: 'Until next time, George' },
+    ],
+  },
+  {
     slug: 'focus-on-marketing',
     title: 'Focus on Marketing',
     date: 'October 19, 2025',

@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 type ConsentMethod = 'accept_all' | 'reject_all' | 'save_selection';
 
 type ConsentState = {
+  consentId: string;
   version: number;
   necessary: true;
   analytics: boolean;
@@ -40,6 +41,8 @@ function parseStoredConsent(rawValue: string | null): ConsentState | null {
   try {
     const parsed = JSON.parse(rawValue) as Partial<ConsentState>;
     if (
+      typeof parsed.consentId !== 'string' ||
+      !parsed.consentId ||
       parsed.version !== CONSENT_VERSION ||
       parsed.necessary !== true ||
       typeof parsed.analytics !== 'boolean' ||
@@ -49,6 +52,7 @@ function parseStoredConsent(rawValue: string | null): ConsentState | null {
     }
 
     return {
+      consentId: parsed.consentId,
       version: CONSENT_VERSION,
       necessary: true,
       analytics: parsed.analytics,
@@ -67,6 +71,48 @@ function parseStoredConsent(rawValue: string | null): ConsentState | null {
   } catch {
     return null;
   }
+}
+
+function generateConsentId(): string {
+  if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
+    return crypto.randomUUID();
+  }
+
+  return `consent_${Date.now()}_${Math.random().toString(36).slice(2, 10)}`;
+}
+
+function logConsentDecision(consent: ConsentState): void {
+  const payload = {
+    consentId: consent.consentId,
+    consentVersion: consent.version,
+    policyVersion: consent.version,
+    method: consent.method,
+    necessary: consent.necessary,
+    analytics: consent.analytics,
+    marketing: consent.marketing,
+    decidedAt: consent.timestamp,
+    pageUrl: window.location.href,
+    locale: navigator.language,
+    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone ?? null,
+  };
+
+  const body = JSON.stringify(payload);
+
+  if (typeof navigator.sendBeacon === 'function') {
+    const blob = new Blob([body], { type: 'application/json' });
+    navigator.sendBeacon('/consent/log.php', blob);
+    return;
+  }
+
+  void fetch('/consent/log.php', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body,
+    credentials: 'same-origin',
+    keepalive: true,
+  });
 }
 
 function readCookie(name: string): string | null {
@@ -160,6 +206,7 @@ export default function CookieConsent() {
 
   const persistConsent = (method: ConsentMethod, next: ConsentPreferences) => {
     const consent: ConsentState = {
+      consentId: generateConsentId(),
       version: CONSENT_VERSION,
       necessary: true,
       analytics: next.analytics,
@@ -179,6 +226,7 @@ export default function CookieConsent() {
     setShowBanner(false);
     setShowSettings(false);
     applyConsentToRuntime(next);
+    logConsentDecision(consent);
   };
 
   const saveSelection = () => {

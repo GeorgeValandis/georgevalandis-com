@@ -1,0 +1,21 @@
+CREATE TABLE IF NOT EXISTS consent_log (
+    id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    consent_id VARCHAR(64) NOT NULL,
+    consent_version SMALLINT UNSIGNED NOT NULL,
+    policy_version SMALLINT UNSIGNED NOT NULL,
+    method VARCHAR(32) NOT NULL,
+    necessary TINYINT(1) NOT NULL DEFAULT 1,
+    analytics TINYINT(1) NOT NULL DEFAULT 0,
+    marketing TINYINT(1) NOT NULL DEFAULT 0,
+    decided_at DATETIME(6) NOT NULL,
+    page_url VARCHAR(2048) DEFAULT NULL,
+    locale VARCHAR(32) DEFAULT NULL,
+    timezone VARCHAR(64) DEFAULT NULL,
+    ip_hash CHAR(64) NOT NULL,
+    user_agent VARCHAR(512) DEFAULT NULL,
+    created_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+    PRIMARY KEY (id),
+    KEY idx_consent_log_consent_id (consent_id),
+    KEY idx_consent_log_decided_at (decided_at),
+    KEY idx_consent_log_method (method)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
