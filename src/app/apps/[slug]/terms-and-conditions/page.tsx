@@ -76,7 +76,7 @@ export default async function AppTermsPage({ params }: AppTermsPageProps) {
             rel="noopener noreferrer"
             className="mt-2 inline-flex text-xs text-gray-500 hover:text-gray-300 transition-colors"
           >
-            Legacy source
+            Source link
           </a>
           {termsContent.note ? (
             <p className="mt-3 text-xs text-gray-500">

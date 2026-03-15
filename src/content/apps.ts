@@ -106,6 +106,18 @@ const baseApps = [
     logo:
       'https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/7b/06/bd/7b06bd9e-130a-bbb9-6304-020a92160ea4/AppIcon-0-0-1x_U007epad-0-1-85-220.png/512x512bb.jpg',
   },
+  {
+    slug: 'lifechron',
+    title: 'LifeChron',
+    subtitle: 'See Your Life in Years, Months, Weeks, and Days',
+    description:
+      'A reflective time tracker that turns your life into perspective with clear countdowns, milestones, and a premium lifetime unlock.',
+    tags: ['Swift', 'SwiftUI', 'Time', 'Perspective'],
+    gradient: 'from-orange-500/20 to-red-500/20',
+    accentBorder: 'group-hover:border-orange-500/40',
+    appStoreLink: 'https://apps.apple.com/us/app/life-time-tracker-lifechron/id6760122665?uo=4',
+    logo: '/apps/lifechron-icon.png',
+  },
 ] as const;
 
 export const apps: AppEntry[] = baseApps.map((app) => ({
