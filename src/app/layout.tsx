@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Inter, JetBrains_Mono } from 'next/font/google';
 import CookieConsentLoader from '@/components/CookieConsentLoader';
 import HtmlLangSync from '@/components/HtmlLangSync';
+import { siteUrl } from '@/lib/seo';
 import './globals.css';
 
 const inter = Inter({
@@ -15,17 +16,11 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: 'George Valandis — iOS Development',
   description:
     'iOS Developer & Solopreneur. Building apps like Flowa, MoodFlora, GlanceAway and more. Sharing my journey from 5 to 9.',
   keywords: ['iOS developer', 'Swift', 'SwiftUI', 'solopreneur', 'George Valandis', 'app development'],
-  alternates: {
-    canonical: '/',
-    languages: {
-      en: '/',
-      de: '/de',
-    },
-  },
 };
 
 export default function RootLayout({
@@ -35,6 +30,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="scroll-smooth">
+      <head>
+        <meta httpEquiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+        <meta httpEquiv="Pragma" content="no-cache" />
+        <meta httpEquiv="Expires" content="0" />
+      </head>
       <body
         className={`${inter.variable} ${jetbrainsMono.variable} antialiased bg-gray-950 text-gray-50`}
       >

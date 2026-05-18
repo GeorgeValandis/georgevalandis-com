@@ -24,7 +24,7 @@ export default function Navbar({ locale }: NavbarProps) {
 
   return (
     <motion.nav
-      initial={{ y: -100 }}
+      initial={false}
       animate={{ y: 0 }}
       transition={{ duration: 0.6, ease: 'easeOut' }}
       className={`fixed top-0 w-full z-50 transition-all duration-500 ${scrolled

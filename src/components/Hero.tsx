@@ -36,7 +36,7 @@ export default function Hero({ locale }: HeroProps) {
 
       <div className="relative z-10 max-w-5xl mx-auto px-6 text-center">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={false}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
@@ -49,7 +49,7 @@ export default function Hero({ locale }: HeroProps) {
         </motion.div>
 
         <motion.h1
-          initial={{ opacity: 0, y: 30 }}
+          initial={false}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
           className="text-5xl sm:text-6xl md:text-8xl font-bold tracking-tight leading-[0.9] mb-8"
@@ -62,7 +62,7 @@ export default function Hero({ locale }: HeroProps) {
         </motion.h1>
 
         <motion.p
-          initial={{ opacity: 0, y: 30 }}
+          initial={false}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
           className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mb-12 leading-relaxed"
@@ -71,7 +71,7 @@ export default function Hero({ locale }: HeroProps) {
         </motion.p>
 
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={false}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6 }}
           className="flex flex-col sm:flex-row gap-4 justify-center"
@@ -97,7 +97,7 @@ export default function Hero({ locale }: HeroProps) {
       {/* Scroll indicator */}
       <motion.a
         href="#apps"
-        initial={{ opacity: 0 }}
+        initial={false}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.5, duration: 1 }}
         className="absolute bottom-10 left-1/2 -translate-x-1/2 text-gray-500 hover:text-white transition-colors"

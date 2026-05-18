@@ -139,11 +139,15 @@ function readStoredConsent(): ConsentState | null {
     return null;
   }
 
-  const localConsent = parseStoredConsent(
-    window.localStorage.getItem(CONSENT_STORAGE_KEY)
-  );
-  if (localConsent) {
-    return localConsent;
+  try {
+    const localConsent = parseStoredConsent(
+      window.localStorage.getItem(CONSENT_STORAGE_KEY)
+    );
+    if (localConsent) {
+      return localConsent;
+    }
+  } catch {
+    return parseStoredConsent(readCookie(CONSENT_COOKIE_KEY));
   }
 
   return parseStoredConsent(readCookie(CONSENT_COOKIE_KEY));
@@ -173,22 +177,31 @@ function applyConsentToRuntime(consent: ConsentPreferences): void {
   }
 }
 
-const initialConsent = readStoredConsent();
+function getInitialConsentModel() {
+  const consent = readStoredConsent();
+
+  return {
+    hasDecision: Boolean(consent),
+    showBanner: !consent,
+    preferences: consent
+      ? {
+          analytics: consent.analytics,
+          marketing: consent.marketing,
+        }
+      : defaultPreferences,
+  };
+}
 
 export default function CookieConsent() {
   const pathname = usePathname();
   const locale = detectLocaleFromPathname(pathname);
   const copy = getSiteCopy(locale).consent;
-  const [hasDecision, setHasDecision] = useState<boolean>(Boolean(initialConsent));
-  const [showBanner, setShowBanner] = useState<boolean>(() => !initialConsent);
+  const [initialModel] = useState(getInitialConsentModel);
+  const [hasDecision, setHasDecision] = useState(initialModel.hasDecision);
+  const [showBanner, setShowBanner] = useState(initialModel.showBanner);
   const [showSettings, setShowSettings] = useState(false);
-  const [preferences, setPreferences] = useState<ConsentPreferences>(() =>
-    initialConsent
-      ? {
-        analytics: initialConsent.analytics,
-        marketing: initialConsent.marketing,
-      }
-      : defaultPreferences
+  const [preferences, setPreferences] = useState<ConsentPreferences>(
+    initialModel.preferences
   );
 
   useEffect(() => {
@@ -222,7 +235,11 @@ export default function CookieConsent() {
     };
 
     const serialized = JSON.stringify(consent);
-    window.localStorage.setItem(CONSENT_STORAGE_KEY, serialized);
+    try {
+      window.localStorage.setItem(CONSENT_STORAGE_KEY, serialized);
+    } catch {
+      // Cookie fallback below still persists consent when storage is unavailable.
+    }
     document.cookie = `${CONSENT_COOKIE_KEY}=${encodeURIComponent(
       serialized
     )}; Max-Age=${CONSENT_COOKIE_MAX_AGE_SECONDS}; Path=/; SameSite=Lax; Secure`;

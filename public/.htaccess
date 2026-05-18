@@ -1,0 +1,24 @@
+RedirectMatch 410 ^/wp-(admin|includes)(/.*)?$
+RedirectMatch 410 ^/wp-content/(?!uploads/).*$
+RedirectMatch 410 ^/wp-[^/]+\.php$
+RedirectMatch 410 ^/(xmlrpc|wp-cron)\.php$
+
+Redirect 301 /privacy-policy-for-lookaway/ /apps/glanceaway/privacy-statement/
+Redirect 301 /privacy-statement-frokus/ /apps/frokus/privacy-statement/
+Redirect 301 /privacy-statement-quitergy/ /apps/quitergy/privacy-statement/
+Redirect 301 /terms-and-conditions-quitergy-app/ /apps/quitergy/terms-and-conditions/
+Redirect 301 /privacy-statement-flowa-app/ /apps/flowa/privacy-statement/
+Redirect 301 /terms-conditions-flowa-app/ /apps/flowa/terms-and-conditions/
+Redirect 301 /mood-flora/privacystatement-moodflora/ /apps/moodflora/privacy-statement/
+Redirect 301 /lookaway/ /blog/a-little-content-reset-and-glanceaway-is-live/
+Redirect 301 /flowa-content-creation-leveling-up-in-2025/ /blog/pushing-content-building-community-the-next-chapter-for-flowa-perfect-day-beyond/
+Redirect 301 /quitergy-your-gentle-companion-to-reduce-energy-drinks/ /
+RedirectMatch 301 ^/202[45]/([0-9]{2}/)?$ /blog/
+
+<IfModule mod_headers.c>
+  <FilesMatch "\.(html|json)$">
+    Header always set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
+    Header always set Pragma "no-cache"
+    Header always set Expires "0"
+  </FilesMatch>
+</IfModule>

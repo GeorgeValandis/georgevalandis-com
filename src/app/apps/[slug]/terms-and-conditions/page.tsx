@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { appSlugs, getAppBySlug } from '@/content/apps';
 import { getAppLegalContentBySlug } from '@/content/appLegalContent';
+import { canonicalPath } from '@/lib/seo';
 
 type AppTermsPageProps = {
   params: Promise<{ slug: string }>;
@@ -29,6 +30,9 @@ export async function generateMetadata({
   return {
     title: `${legal.terms.sourceTitle} - George Valandis`,
     description: `Terms and Conditions for the ${app.title} iOS app.`,
+    alternates: {
+      canonical: canonicalPath(`/apps/${app.slug}/terms-and-conditions`),
+    },
   };
 }
 
@@ -61,15 +65,17 @@ export default async function AppTermsPage({ params }: AppTermsPageProps) {
           <h1 className="text-4xl md:text-5xl font-bold tracking-tight">
             {termsContent.sourceTitle}
           </h1>
-          <a
-            href={app.appStoreLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-4 inline-flex items-center gap-2 text-sm text-amber-300 hover:text-amber-200 transition-colors"
-          >
-            View {app.title} in the App Store
-            <ExternalLink size={14} />
-          </a>
+          {app.appStoreLink ? (
+            <a
+              href={app.appStoreLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-4 inline-flex items-center gap-2 text-sm text-amber-300 hover:text-amber-200 transition-colors"
+            >
+              View {app.title} in the App Store
+              <ExternalLink size={14} />
+            </a>
+          ) : null}
           <a
             href={termsContent.sourceUrl}
             target="_blank"

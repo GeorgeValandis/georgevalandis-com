@@ -85,7 +85,7 @@ export default function Contact({ locale }: ContactProps) {
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={false}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.6 }}
@@ -104,7 +104,7 @@ export default function Contact({ locale }: ContactProps) {
         <div className="grid lg:grid-cols-5 gap-16">
           {/* Left: info */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={false}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
@@ -168,7 +168,7 @@ export default function Contact({ locale }: ContactProps) {
 
           {/* Right: form */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={false}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.3 }}

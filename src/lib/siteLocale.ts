@@ -7,14 +7,23 @@ export function getLocalePrefix(locale: SiteLocale): string {
 export function localizedPath(locale: SiteLocale, path = ''): string {
   const prefix = getLocalePrefix(locale);
   if (!path || path === '/') {
-    return prefix || '/';
+    return prefix ? `${prefix}/` : '/';
   }
-  return `${prefix}${path}`;
+
+  const suffixStart = path.search(/[?#]/);
+  const pathname = suffixStart === -1 ? path : path.slice(0, suffixStart);
+  const suffix = suffixStart === -1 ? '' : path.slice(suffixStart);
+  const normalizedPath = pathname.startsWith('/') ? pathname : `/${pathname}`;
+  const canonicalPath = normalizedPath.endsWith('/')
+    ? normalizedPath
+    : `${normalizedPath}/`;
+
+  return `${prefix}${canonicalPath}${suffix}`;
 }
 
 export function localizedAnchor(locale: SiteLocale, anchor: string): string {
   const normalizedAnchor = anchor.startsWith('#') ? anchor : `#${anchor}`;
-  return locale === 'de' ? `/de${normalizedAnchor}` : normalizedAnchor;
+  return locale === 'de' ? `/de/${normalizedAnchor}` : normalizedAnchor;
 }
 
 export function detectLocaleFromPathname(pathname: string | null | undefined): SiteLocale {
@@ -29,10 +38,13 @@ export function getAlternateLocalePath(
   const normalizedPath = currentPath.startsWith('/de')
     ? currentPath.slice(3) || '/'
     : currentPath;
+  const canonicalPath = normalizedPath === '/' || normalizedPath.endsWith('/')
+    ? normalizedPath
+    : `${normalizedPath}/`;
 
   if (targetLocale === 'de') {
-    return normalizedPath === '/' ? '/de' : `/de${normalizedPath}`;
+    return canonicalPath === '/' ? '/de/' : `/de${canonicalPath}`;
   }
 
-  return normalizedPath || '/';
+  return canonicalPath || '/';
 }

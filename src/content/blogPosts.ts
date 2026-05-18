@@ -13,6 +13,52 @@ export type BlogPost = {
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'finding-a-better-rhythm-while-the-app-list-keeps-growing',
+    title: 'Finding a Better Rhythm While the App List Keeps Growing',
+    date: 'May 1, 2026',
+    excerpt:
+      "Quick update from me. The app list keeps growing, and I'm trying to find a better rhythm between building, improving, and sharing...",
+    content: [
+      { type: 'paragraph', text: 'Hey friends,' },
+      { type: 'paragraph', text: 'Quick update from me.' },
+      {
+        type: 'paragraph',
+        text: "The app list keeps growing, and I'm slowly learning that building more does not only mean shipping more. It also means maintaining more, listening more, and being more intentional about what deserves my attention each week.",
+      },
+      {
+        type: 'paragraph',
+        text: "Some days are still very much about new ideas. Other days are about improving the apps that are already out there, checking feedback, polishing small details, and making sure each product still feels simple and useful. That part is not always as exciting as a fresh launch, but it matters a lot.",
+      },
+      {
+        type: 'paragraph',
+        text: "I have also been thinking more about how I present everything. The apps are starting to feel like a small portfolio instead of isolated side projects, so I want the website, the content, and the updates around them to feel clearer and easier to follow.",
+      },
+      {
+        type: 'paragraph',
+        text: "Content is still part of the journey, but I'm trying to keep it honest. Less forcing, more documenting. If something is messy, I want to share that too, because that is usually where the most useful lessons are.",
+      },
+      { type: 'heading', text: 'So right now, it is all about:' },
+      {
+        type: 'list',
+        items: [
+          'Keeping the existing apps moving forward.',
+          'Improving the website so the portfolio is easier to explore.',
+          'Finding a content rhythm that feels realistic.',
+          'Staying focused while still leaving space for new ideas.',
+        ],
+      },
+      {
+        type: 'paragraph',
+        text: "It is still a lot to juggle, but I'm getting better at seeing the whole thing as one connected journey.",
+      },
+      {
+        type: 'paragraph',
+        text: 'Step by step, figuring it out as I go.',
+      },
+      { type: 'paragraph', text: 'Until next time, George' },
+    ],
+  },
+  {
     slug: 'juggling-7-apps-taking-a-breath-and-creating-more-long-form-content',
     title: 'Juggling 7 Apps and Finding My Way Back',
     date: 'March 5, 2026',

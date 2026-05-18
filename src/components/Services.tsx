@@ -1,18 +1,135 @@
 'use client';
 
-import { blogPosts } from '@/content/blogPosts';
+import { blogPosts, type BlogPost } from '@/content/blogPosts';
 import { getSiteCopy } from '@/content/siteCopy';
 import { localizedPath, type SiteLocale } from '@/lib/siteLocale';
 import { motion } from 'framer-motion';
-import { ArrowUpRight, Calendar } from 'lucide-react';
+import { ArrowUpRight, Calendar, Grid3X3, List } from 'lucide-react';
 import Link from 'next/link';
+import type { ReactNode } from 'react';
+import { useState } from 'react';
 
 type BlogProps = {
   locale: SiteLocale;
 };
 
+type ViewMode = 'grid' | 'list';
+
+function ViewButton({
+  active,
+  children,
+  label,
+  onClick,
+}: {
+  active: boolean;
+  children: ReactNode;
+  label: string;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      aria-label={label}
+      aria-pressed={active}
+      onClick={onClick}
+      className={`inline-flex h-9 items-center gap-2 rounded-full px-3 text-xs font-semibold transition-colors ${
+        active
+          ? 'bg-white text-gray-950'
+          : 'text-gray-400 hover:bg-white/5 hover:text-white'
+      }`}
+    >
+      {children}
+      <span>{label}</span>
+    </button>
+  );
+}
+
+function BlogCard({
+  locale,
+  post,
+  index,
+}: {
+  locale: SiteLocale;
+  post: BlogPost;
+  index: number;
+}) {
+  return (
+    <motion.a
+      key={post.slug}
+      href={localizedPath(locale, `/blog/${post.slug}`)}
+      initial={false}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, delay: index * 0.1, ease: 'easeOut' as const }}
+      className="group relative block rounded-2xl border border-white/5 bg-white/[0.02] p-7 transition-all duration-500 hover:border-amber-500/20"
+    >
+      <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-amber-500/5 to-orange-500/5 opacity-0 transition-opacity duration-700 group-hover:opacity-100" />
+
+      <div className="relative">
+        <div className="mb-4 flex items-center gap-2 text-xs text-gray-500">
+          <Calendar size={12} />
+          <span>{post.date}</span>
+        </div>
+
+        <div className="mb-3 flex items-start justify-between gap-3">
+          <h3 className="text-lg font-semibold leading-snug transition-colors group-hover:text-white">
+            {post.title}
+          </h3>
+          <ArrowUpRight
+            size={16}
+            className="mt-1 shrink-0 text-gray-600 transition-colors group-hover:text-amber-400"
+          />
+        </div>
+
+        <p className="text-sm leading-relaxed text-gray-500">{post.excerpt}</p>
+      </div>
+    </motion.a>
+  );
+}
+
+function BlogListRow({
+  locale,
+  post,
+  index,
+}: {
+  locale: SiteLocale;
+  post: BlogPost;
+  index: number;
+}) {
+  return (
+    <motion.a
+      key={post.slug}
+      href={localizedPath(locale, `/blog/${post.slug}`)}
+      initial={false}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.45, delay: index * 0.04, ease: 'easeOut' as const }}
+      className="group grid gap-4 rounded-2xl border border-white/5 bg-white/[0.02] p-5 transition-all duration-500 hover:border-amber-500/20 hover:bg-white/[0.04] md:grid-cols-[minmax(0,1fr)_auto] md:items-center"
+    >
+      <div className="min-w-0">
+        <div className="mb-2 flex items-center gap-2 text-xs text-gray-500">
+          <Calendar size={12} />
+          <span>{post.date}</span>
+        </div>
+        <h3 className="text-lg font-semibold leading-snug text-white">
+          {post.title}
+        </h3>
+        <p className="mt-2 max-w-3xl text-sm leading-relaxed text-gray-500">
+          {post.excerpt}
+        </p>
+      </div>
+
+      <ArrowUpRight
+        size={16}
+        className="text-gray-600 transition-colors group-hover:text-amber-400 md:justify-self-end"
+      />
+    </motion.a>
+  );
+}
+
 export default function Blog({ locale }: BlogProps) {
   const copy = getSiteCopy(locale);
+  const [viewMode, setViewMode] = useState<ViewMode>('grid');
 
   return (
     <section id="blog" className="py-32 relative">
@@ -21,7 +138,7 @@ export default function Blog({ locale }: BlogProps) {
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={false}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.6 }}
@@ -37,45 +154,41 @@ export default function Blog({ locale }: BlogProps) {
           </h2>
         </motion.div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {blogPosts.map((post, i) => (
-            <motion.a
-              key={post.slug}
-              href={localizedPath(locale, `/blog/${post.slug}`)}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.1, ease: 'easeOut' as const }}
-              className="group relative p-7 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-amber-500/20 transition-all duration-500 block"
+        <div className="mb-6 flex justify-end">
+          <div className="inline-flex rounded-full border border-white/10 bg-white/[0.03] p-1">
+            <ViewButton
+              active={viewMode === 'grid'}
+              label={copy.blog.gridViewLabel}
+              onClick={() => setViewMode('grid')}
             >
-              <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-amber-500/5 to-orange-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-
-              <div className="relative">
-                <div className="flex items-center gap-2 text-gray-500 text-xs mb-4">
-                  <Calendar size={12} />
-                  <span>{post.date}</span>
-                </div>
-
-                <div className="flex items-start justify-between gap-3 mb-3">
-                  <h3 className="text-lg font-semibold leading-snug group-hover:text-white transition-colors">
-                    {post.title}
-                  </h3>
-                  <ArrowUpRight
-                    size={16}
-                    className="text-gray-600 group-hover:text-amber-400 transition-colors shrink-0 mt-1"
-                  />
-                </div>
-
-                <p className="text-gray-500 text-sm leading-relaxed">
-                  {post.excerpt}
-                </p>
-              </div>
-            </motion.a>
-          ))}
+              <Grid3X3 size={14} />
+            </ViewButton>
+            <ViewButton
+              active={viewMode === 'list'}
+              label={copy.blog.listViewLabel}
+              onClick={() => setViewMode('list')}
+            >
+              <List size={15} />
+            </ViewButton>
+          </div>
         </div>
 
+        {viewMode === 'grid' ? (
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {blogPosts.map((post, i) => (
+              <BlogCard key={post.slug} locale={locale} post={post} index={i} />
+            ))}
+          </div>
+        ) : (
+          <div className="space-y-3">
+            {blogPosts.map((post, i) => (
+              <BlogListRow key={post.slug} locale={locale} post={post} index={i} />
+            ))}
+          </div>
+        )}
+
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={false}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.4 }}

@@ -5,8 +5,7 @@ import { type SiteLocale } from '@/lib/siteLocale';
 import { motion } from 'framer-motion';
 import { Code2, Globe, Palette, Zap } from 'lucide-react';
 
-const profileImageUrl =
-  'https://georgevalandis.com/wp-content/uploads/2024/08/Bildschirmfoto-2024-08-14-um-22.10.29-1-1009x1024.png';
+const profileImageUrl = '/profile/george-valandis.png';
 
 const highlightIcons = [Code2, Palette, Zap, Globe] as const;
 
@@ -31,7 +30,7 @@ export default function About({ locale }: AboutProps) {
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         {/* Section header */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={false}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.6 }}
@@ -51,7 +50,7 @@ export default function About({ locale }: AboutProps) {
           {/* Left: story + skills */}
           <div>
             <motion.p
-              initial={{ opacity: 0, y: 20 }}
+              initial={false}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.2 }}
@@ -61,7 +60,7 @@ export default function About({ locale }: AboutProps) {
             </motion.p>
 
             <motion.p
-              initial={{ opacity: 0, y: 20 }}
+              initial={false}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.3 }}
@@ -75,7 +74,7 @@ export default function About({ locale }: AboutProps) {
               {copy.about.skills.map((skill, i) => (
                 <motion.div
                   key={skill.name}
-                  initial={{ opacity: 0, x: -20 }}
+                  initial={false}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: 0.4 + i * 0.1 }}
@@ -101,7 +100,7 @@ export default function About({ locale }: AboutProps) {
           {/* Right: profile image + highlight cards */}
           <div className="space-y-4">
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={false}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.2 }}
@@ -125,7 +124,7 @@ export default function About({ locale }: AboutProps) {
                   <motion.div
                     key={item.title}
                     custom={i}
-                    initial="hidden"
+                    initial={false}
                     whileInView="visible"
                     viewport={{ once: true }}
                     variants={fadeUp}

@@ -37,6 +37,8 @@ export type SiteCopy = {
     termsLabel: string;
     privacyLabel: string;
     appStoreAriaPrefix: string;
+    gridViewLabel: string;
+    listViewLabel: string;
   };
   about: {
     eyebrow: string;
@@ -56,6 +58,8 @@ export type SiteCopy = {
     backToHome: string;
     backToBlog: string;
     postNotFoundTitle: string;
+    gridViewLabel: string;
+    listViewLabel: string;
   };
   contact: {
     eyebrow: string;
@@ -156,6 +160,8 @@ const siteCopy: Record<SiteLocale, SiteCopy> = {
       termsLabel: 'Terms',
       privacyLabel: 'Privacy',
       appStoreAriaPrefix: 'Open',
+      gridViewLabel: 'Grid',
+      listViewLabel: 'List',
     },
     about: {
       eyebrow: '02 — About',
@@ -206,6 +212,8 @@ const siteCopy: Record<SiteLocale, SiteCopy> = {
       backToHome: 'Back to Home',
       backToBlog: 'Back to Blog',
       postNotFoundTitle: 'Post not found - George Valandis',
+      gridViewLabel: 'Grid',
+      listViewLabel: 'List',
     },
     contact: {
       eyebrow: '04 — Contact',
@@ -298,6 +306,8 @@ const siteCopy: Record<SiteLocale, SiteCopy> = {
       termsLabel: 'AGB',
       privacyLabel: 'Datenschutz',
       appStoreAriaPrefix: 'Öffne',
+      gridViewLabel: 'Kacheln',
+      listViewLabel: 'Liste',
     },
     about: {
       eyebrow: '02 — Über mich',
@@ -348,6 +358,8 @@ const siteCopy: Record<SiteLocale, SiteCopy> = {
       backToHome: 'Zurück zur Startseite',
       backToBlog: 'Zurück zum Blog',
       postNotFoundTitle: 'Beitrag nicht gefunden - George Valandis',
+      gridViewLabel: 'Kacheln',
+      listViewLabel: 'Liste',
     },
     contact: {
       eyebrow: '04 — Kontakt',
