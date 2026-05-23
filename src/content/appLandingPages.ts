@@ -256,6 +256,119 @@ export const appLandingPages: Record<string, AppLandingPageContent> = {
       },
     ],
   },
+  'perfect-day': {
+    appStoreName: 'Habit Day Tracker: PerfectDay',
+    eyebrow: 'habit tracker and streak tracker',
+    headline: 'Build better habits one visual check at a time.',
+    intro:
+      'Perfect Day is a clean habit tracker for daily routines, weekly progress, reminders, streaks, widgets, and simple check-in moments without creating an account.',
+    primaryCta: 'View in the App Store',
+    secondaryCta: 'See the app',
+    availability: 'Free on the App Store. Optional weekly and yearly premium plans may be available in the app.',
+    accent: '#ff9f0a',
+    background: 'from-[#fff4e4] via-[#fffaf5] to-[#f4f7ff]',
+    category: 'HealthApplication',
+    price: 0,
+    priceCurrency: 'USD',
+    highlights: [
+      'Daily habit tracker and streak view',
+      'Weekly grid for fast progress checks',
+      'Custom habits, reminders, and widgets',
+      'No account required and no data collected',
+    ],
+    screenshots: [
+      {
+        src: '/apps/perfect-day/screens/weekly-grid.png',
+        alt: 'Perfect Day habit tracker weekly grid showing checked boxes for Monday, Tuesday, and Wednesday with remaining habit days ahead.',
+        label: 'Week',
+      },
+      {
+        src: '/apps/perfect-day/screens/settings.png',
+        alt: 'Perfect Day settings screen showing premium access, number of habits, editable habit slots, theme selection, and notifications.',
+        label: 'Setup',
+      },
+      {
+        src: '/apps/perfect-day/screens/triangle-grid.png',
+        alt: 'Perfect Day habit tracker using triangle check shapes for a weekly daily routine and streak view.',
+        label: 'Shapes',
+      },
+      {
+        src: '/apps/perfect-day/screens/square-grid.png',
+        alt: 'Perfect Day habit tracker using square check boxes for a weekly habit progress overview.',
+        label: 'Progress',
+      },
+    ],
+    featureTitle: 'A weekly habit board that makes consistency visible.',
+    featureIntro:
+      'The app keeps the daily loop small: choose a habit, mark the day, and see your week fill in without turning self-improvement into admin work.',
+    features: [
+      {
+        title: 'Check off daily habits',
+        description:
+          'Track 3 to 6 daily habits in a focused weekly view so routine progress stays visible at a glance.',
+      },
+      {
+        title: 'Shape the tracker around your routine',
+        description:
+          'Edit habit slots, choose a simple visual style, and keep the interface dark, calm, and easy to scan.',
+      },
+      {
+        title: 'Keep momentum with reminders and widgets',
+        description:
+          'Optional reminders and widget support help the habit check happen in the flow of the day, not only when the app is already open.',
+      },
+    ],
+    workflowTitle: 'How Perfect Day fits into a daily routine',
+    workflow: [
+      {
+        title: 'Pick the habits that matter this week',
+        description:
+          'Start with a small set of routines such as fitness, mindfulness, study, writing, or cleanup.',
+      },
+      {
+        title: 'Mark each day as a visual win',
+        description:
+          'Use the weekly grid to check off completed habits and build a clear chain of small actions.',
+      },
+      {
+        title: 'Adjust before the routine gets stale',
+        description:
+          'Use settings, reminders, widgets, and progress signals to keep the system aligned with how your week actually works.',
+      },
+    ],
+    privacyTitle: 'Private routine tracking',
+    privacyDescription:
+      'Perfect Day does not require an account. The App Store privacy listing states that the developer does not collect data from this app, and the privacy policy says habit entries, notes, and progress tracking data stay on the user device.',
+    finalCtaDescription:
+      'Install Perfect Day from the App Store and start with one habit check today.',
+    faq: [
+      {
+        question: 'What is Perfect Day for?',
+        answer:
+          'Perfect Day is a habit tracker for daily routines, weekly progress, streaks, reminders, widgets, and simple visual check-ins.',
+      },
+      {
+        question: 'Can I track more than one habit?',
+        answer:
+          'Yes. The app is designed for a small set of daily habits, with the App Store copy describing support for 3 to 6 habits.',
+      },
+      {
+        question: 'Does Perfect Day collect my habit data?',
+        answer:
+          'The App Store privacy listing says the developer does not collect data from the app, and the privacy policy says user-entered habit data stays on the device.',
+      },
+      {
+        question: 'Does Perfect Day need an account?',
+        answer:
+          'No. The core habit tracking workflow is built around local use without requiring an account.',
+      },
+      {
+        question: 'Is Perfect Day free?',
+        answer:
+          'Perfect Day is listed as free on the App Store, with optional in-app purchases for premium access.',
+      },
+    ],
+  },
   quitergy: {
     appStoreName: 'Drink Counter: QuitERGY',
     eyebrow: 'energy drink and caffeine log',

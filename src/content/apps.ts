@@ -76,16 +76,16 @@ const baseApps = [
   {
     slug: 'perfect-day',
     title: 'Perfect Day',
-    subtitle: 'Form Habits and Build Your Perfect Day',
+    subtitle: 'Daily Streaks & Routines',
     description:
-      'A habit formation app designed to help you build consistent daily routines and create your ideal day.',
-    platforms: ['iOS', 'Android'],
-    tags: ['Swift', 'SwiftUI', 'Habits', 'Productivity'],
+      'A clean habit tracker for daily routines, weekly progress, reminders, streaks, widgets, and small visual wins.',
+    platforms: ['iOS'],
+    tags: ['Swift', 'SwiftUI', 'Habits', 'Streaks', 'Widgets'],
     gradient: 'from-amber-500/20 to-orange-500/20',
     accentBorder: 'group-hover:border-amber-500/40',
     appStoreLink: 'https://apps.apple.com/us/app/habit-day-tracker-perfectday/id6741456646?uo=4',
-    logo:
-      'https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/f0/7b/68/f07b6864-a8cd-eecb-1753-4589e67ed784/AppIcon-0-0-1x_U007ephone-0-1-85-220.png/512x512bb.jpg',
+    websitePath: '/apps/perfect-day/',
+    logo: '/apps/perfect-day-icon.png',
   },
   {
     slug: 'frokus',
