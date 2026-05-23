@@ -2,6 +2,8 @@ import { ArrowLeft, ExternalLink, ShieldCheck } from 'lucide-react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import AppLandingPage from '@/components/AppLandingPage';
+import { getAppLandingPage } from '@/content/appLandingPages';
 import { appSlugs, getAppBySlug } from '@/content/apps';
 import { canonicalPath } from '@/lib/seo';
 
@@ -23,12 +25,35 @@ export async function generateMetadata({ params }: AppPageProps): Promise<Metada
     };
   }
 
+  const landingPage = getAppLandingPage(app.slug);
+
   return {
-    title: `${app.title} - George Valandis`,
-    description: app.description,
+    title: landingPage
+      ? `${landingPage.appStoreName} - ${landingPage.eyebrow}`
+      : `${app.title} - George Valandis`,
+    description: landingPage?.intro ?? app.description,
     alternates: {
       canonical: canonicalPath(`/apps/${app.slug}`),
     },
+    openGraph: landingPage
+      ? {
+          title: landingPage.appStoreName,
+          description: landingPage.intro,
+          url: canonicalPath(`/apps/${app.slug}`),
+          images: landingPage.screenshots.slice(0, 1).map((screenshot) => ({
+            url: screenshot.src,
+            alt: screenshot.alt,
+          })),
+        }
+      : undefined,
+    twitter: landingPage
+      ? {
+          card: 'summary_large_image',
+          title: landingPage.appStoreName,
+          description: landingPage.intro,
+          images: landingPage.screenshots.slice(0, 1).map((screenshot) => screenshot.src),
+        }
+      : undefined,
   };
 }
 
@@ -38,6 +63,12 @@ export default async function AppPage({ params }: AppPageProps) {
 
   if (!app) {
     notFound();
+  }
+
+  const landingPage = getAppLandingPage(app.slug);
+
+  if (landingPage) {
+    return <AppLandingPage app={app} content={landingPage} />;
   }
 
   return (

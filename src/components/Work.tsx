@@ -79,6 +79,7 @@ function AppCard({
 }) {
   const cardHref = app.appStoreLink ?? app.websitePath;
   const isExternalCard = Boolean(app.appStoreLink);
+  const detailsHref = app.websitePath ?? `/apps/${app.slug}/`;
 
   return (
     <motion.article
@@ -157,6 +158,12 @@ function AppCard({
           >
             {copy.apps.privacyLabel}
           </a>
+          <a
+            href={detailsHref}
+            className="pointer-events-auto px-3 py-1 text-xs font-mono text-sky-100 bg-sky-300/10 rounded-full border border-sky-300/35 hover:text-sky-50 hover:border-sky-200/55 hover:bg-sky-300/20 transition-colors"
+          >
+            Details
+          </a>
         </div>
 
         <div className="flex flex-wrap gap-2">
@@ -185,6 +192,7 @@ function AppListRow({
 }) {
   const cardHref = app.appStoreLink ?? app.websitePath;
   const isExternalCard = Boolean(app.appStoreLink);
+  const detailsHref = app.websitePath ?? `/apps/${app.slug}/`;
 
   return (
     <motion.article
@@ -259,6 +267,12 @@ function AppListRow({
             className="pointer-events-auto rounded-full border border-amber-300/35 bg-amber-300/10 px-3 py-1 text-xs font-mono text-amber-100 transition-colors hover:border-amber-200/55 hover:bg-amber-300/20 hover:text-amber-50"
           >
             {copy.apps.privacyLabel}
+          </a>
+          <a
+            href={detailsHref}
+            className="pointer-events-auto rounded-full border border-sky-300/35 bg-sky-300/10 px-3 py-1 text-xs font-mono text-sky-100 transition-colors hover:border-sky-200/55 hover:bg-sky-300/20 hover:text-sky-50"
+          >
+            Details
           </a>
           {cardHref ? (
             <ExternalLink

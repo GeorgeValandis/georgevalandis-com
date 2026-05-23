@@ -70,8 +70,8 @@ const baseApps = [
     gradient: 'from-sky-500/20 to-blue-500/20',
     accentBorder: 'group-hover:border-sky-500/40',
     appStoreLink: 'https://apps.apple.com/us/app/eye-break-glanceaway/id6751297230?uo=4',
-    logo:
-      'https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/fa/dc/60/fadc601c-f3bc-f694-273c-0f78dfd0af4e/AppIcon-0-0-1x_U007ephone-0-1-85-220.png/512x512bb.jpg',
+    websitePath: '/apps/glanceaway/',
+    logo: '/apps/glanceaway-icon.png',
   },
   {
     slug: 'perfect-day',
@@ -131,16 +131,16 @@ const baseApps = [
   {
     slug: 'quitergy',
     title: 'QuitERGY',
-    subtitle: 'Your Gentle Companion to Reduce Energy Drinks',
+    subtitle: 'Energy Drink & Caffeine Log',
     description:
-      'A supportive companion app that helps you gradually reduce your energy drink consumption at your own pace.',
-    platforms: ['iOS'],
-    tags: ['Swift', 'SwiftUI', 'Health', 'Wellness'],
+      'A mindful drink counter for logging energy drinks, setting limits, and building healthier caffeine habits at your own pace.',
+    platforms: ['iOS', 'macOS'],
+    tags: ['Swift', 'SwiftUI', 'Health', 'Caffeine'],
     gradient: 'from-violet-500/20 to-fuchsia-500/20',
     accentBorder: 'group-hover:border-violet-500/40',
     appStoreLink: 'https://apps.apple.com/us/app/quit-energy-drinks-quitergy/id6754967219?uo=4',
-    logo:
-      'https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/7b/06/bd/7b06bd9e-130a-bbb9-6304-020a92160ea4/AppIcon-0-0-1x_U007epad-0-1-85-220.png/512x512bb.jpg',
+    websitePath: '/apps/quitergy/',
+    logo: '/apps/quitergy-icon.png',
   },
   {
     slug: 'axlo',
