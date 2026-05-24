@@ -1,5 +1,6 @@
 import { ArrowLeft, ExternalLink, ShieldCheck } from 'lucide-react';
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import AppLandingPage from '@/components/AppLandingPage';
@@ -90,9 +91,11 @@ export default async function AppPage({ params }: AppPageProps) {
         <section className="mt-12 grid gap-10 lg:grid-cols-[minmax(0,1fr)_320px] lg:items-start">
           <div>
             <div className="flex items-start gap-5">
-              <img
+              <Image
                 src={app.logo}
                 alt={`${app.title} logo`}
+                width={80}
+                height={80}
                 className="h-20 w-20 rounded-3xl border border-white/10 object-cover"
               />
               <div>

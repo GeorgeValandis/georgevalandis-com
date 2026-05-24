@@ -13,6 +13,7 @@ import {
   QrCode,
   Sparkles,
 } from 'lucide-react';
+import Image from 'next/image';
 import Link from 'next/link';
 
 type AppLandingPageProps = {
@@ -35,12 +36,15 @@ function PhoneShot({
 }) {
   if (variant === 'artwork') {
     return (
-      // eslint-disable-next-line @next/next/no-img-element
-      <img
+      <Image
         src={src}
         alt={alt}
+        width={1206}
+        height={2622}
         className={`block object-cover drop-shadow-2xl ${className}`}
-        loading={priority ? 'eager' : 'lazy'}
+        priority={priority}
+        loading={priority ? undefined : 'lazy'}
+        sizes="(min-width: 1280px) 276px, (min-width: 1024px) 258px, 216px"
       />
     );
   }
@@ -50,11 +54,15 @@ function PhoneShot({
       <div
         className={`relative overflow-hidden rounded-[2rem] border border-white/70 bg-white/45 p-1 shadow-2xl shadow-slate-950/20 backdrop-blur ${className}`}
       >
-        <img
+        <Image
           src={src}
           alt={alt}
+          width={1206}
+          height={2622}
           className="block h-full w-full rounded-[1.65rem] object-cover"
-          loading={priority ? 'eager' : 'lazy'}
+          priority={priority}
+          loading={priority ? undefined : 'lazy'}
+          sizes="(min-width: 1280px) 276px, (min-width: 1024px) 258px, 216px"
         />
       </div>
     );
@@ -64,11 +72,15 @@ function PhoneShot({
     <div
       className={`relative overflow-hidden rounded-[2.5rem] border border-slate-950/10 bg-slate-950 p-1.5 shadow-2xl shadow-slate-950/20 ${className}`}
     >
-      <img
+      <Image
         src={src}
         alt={alt}
+        width={1206}
+        height={2622}
         className="block h-full w-full rounded-[2.1rem] object-cover"
-        loading={priority ? 'eager' : 'lazy'}
+        priority={priority}
+        loading={priority ? undefined : 'lazy'}
+        sizes="(min-width: 1280px) 322px, (min-width: 1024px) 294px, 216px"
       />
     </div>
   );
@@ -347,9 +359,11 @@ export default function AppLandingPage({ app, content }: AppLandingPageProps) {
         <div className="mx-auto grid max-w-7xl items-start gap-12 px-6 pb-16 pt-10 lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-8 lg:px-8 lg:pb-12 lg:pt-8 xl:grid-cols-[minmax(0,0.92fr)_minmax(420px,1fr)] xl:gap-12">
           <div className="relative z-10 max-w-2xl">
             <div className="mb-8 flex items-center gap-4">
-              <img
+              <Image
                 src={app.logo}
                 alt={`${app.title} app icon`}
+                width={64}
+                height={64}
                 className="h-16 w-16 rounded-2xl shadow-xl shadow-slate-950/10"
               />
               <div>

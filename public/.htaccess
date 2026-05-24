@@ -43,9 +43,21 @@ Redirect 301 /quitergy-your-gentle-companion-to-reduce-energy-drinks/ /apps/quit
 RedirectMatch 301 ^/202[45]/([0-9]{2}/)?$ /blog/
 
 <IfModule mod_headers.c>
-  <FilesMatch "\.(html|json)$">
-    Header always set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
-    Header always set Pragma "no-cache"
-    Header always set Expires "0"
+  <FilesMatch "\.html$">
+    Header always set Cache-Control "public, max-age=300, must-revalidate"
+    Header always unset Pragma
+    Header always unset Expires
+  </FilesMatch>
+
+  <FilesMatch "\.(css|js|mjs|woff|woff2)$">
+    Header always set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+
+  <FilesMatch "\.(png|jpe?g|webp|avif|ico|svg)$">
+    Header always set Cache-Control "public, max-age=2592000"
+  </FilesMatch>
+
+  <FilesMatch "^(robots\.txt|sitemap\.xml)$">
+    Header always set Cache-Control "public, max-age=3600, must-revalidate"
   </FilesMatch>
 </IfModule>
