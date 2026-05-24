@@ -42,11 +42,35 @@ if (!is_string($token) || !hash_equals((string) $config['export_token'], $token)
 $limit = isset($_GET['limit']) ? (int) $_GET['limit'] : 1000;
 $limit = max(1, min($limit, 5000));
 
+$consentId = $_GET['consent_id'] ?? null;
+$scope = $_GET['scope'] ?? null;
+$pageUrl = $_GET['page_url'] ?? null;
+$pageContains = $_GET['page_contains'] ?? null;
 $from = $_GET['from'] ?? null;
 $to = $_GET['to'] ?? null;
 
 $conditions = [];
 $parameters = [];
+
+if (is_string($consentId) && $consentId !== '') {
+    $conditions[] = 'consent_id = :consent_id';
+    $parameters[':consent_id'] = $consentId;
+}
+
+if (is_string($scope) && $scope !== '') {
+    $conditions[] = 'scope = :scope';
+    $parameters[':scope'] = substr($scope, 0, 128);
+}
+
+if (is_string($pageUrl) && $pageUrl !== '') {
+    $conditions[] = 'page_url = :page_url';
+    $parameters[':page_url'] = substr($pageUrl, 0, 2048);
+}
+
+if (is_string($pageContains) && $pageContains !== '') {
+    $conditions[] = 'page_url LIKE :page_contains';
+    $parameters[':page_contains'] = '%' . substr($pageContains, 0, 512) . '%';
+}
 
 if (is_string($from) && $from !== '') {
     try {
@@ -92,6 +116,7 @@ try {
         consent_id,
         consent_version,
         policy_version,
+        scope,
         method,
         necessary,
         analytics,
@@ -127,6 +152,7 @@ try {
         'consent_id',
         'consent_version',
         'policy_version',
+        'scope',
         'method',
         'necessary',
         'analytics',

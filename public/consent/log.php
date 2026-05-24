@@ -75,6 +75,9 @@ try {
 $clientIp = $_SERVER['REMOTE_ADDR'] ?? '';
 $ipHash = hash_hmac('sha256', $clientIp, (string) $config['hash_salt']);
 $userAgent = substr((string) ($_SERVER['HTTP_USER_AGENT'] ?? ''), 0, 512);
+$scope = isset($payload['scope']) && is_string($payload['scope']) && $payload['scope'] !== ''
+    ? substr($payload['scope'], 0, 128)
+    : 'site';
 $pageUrl = isset($payload['pageUrl']) ? substr((string) $payload['pageUrl'], 0, 2048) : null;
 $locale = isset($payload['locale']) ? substr((string) $payload['locale'], 0, 32) : null;
 $timezone = isset($payload['timezone']) ? substr((string) $payload['timezone'], 0, 64) : null;
@@ -98,6 +101,7 @@ try {
             consent_id,
             consent_version,
             policy_version,
+            scope,
             method,
             necessary,
             analytics,
@@ -112,6 +116,7 @@ try {
             :consent_id,
             :consent_version,
             :policy_version,
+            :scope,
             :method,
             :necessary,
             :analytics,
@@ -129,6 +134,7 @@ try {
         ':consent_id' => (string) $payload['consentId'],
         ':consent_version' => (int) $payload['consentVersion'],
         ':policy_version' => (int) $payload['policyVersion'],
+        ':scope' => $scope,
         ':method' => (string) $payload['method'],
         ':necessary' => (int) ((bool) $payload['necessary']),
         ':analytics' => (int) ((bool) $payload['analytics']),

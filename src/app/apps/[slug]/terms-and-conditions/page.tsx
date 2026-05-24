@@ -51,7 +51,7 @@ export default async function AppTermsPage({ params }: AppTermsPageProps) {
     <main className="min-h-screen bg-gray-950 text-gray-50">
       <article className="max-w-3xl mx-auto px-6 lg:px-8 py-16 md:py-24">
         <Link
-          href="/#apps"
+          href="/apps/"
           className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors"
         >
           <ArrowLeft size={16} />
@@ -102,7 +102,9 @@ export default async function AppTermsPage({ params }: AppTermsPageProps) {
             href={app.legal.privacyPath}
             className="text-amber-300 hover:text-amber-200 transition-colors underline"
           >
-            {legal.privacy.sourceTitle}
+            {app.websitePath
+              ? `Privacy Policy for the ${app.title} Landing Page`
+              : legal.privacy.sourceTitle}
           </Link>
         </section>
       </article>

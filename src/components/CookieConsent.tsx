@@ -11,6 +11,7 @@ type ConsentMethod = 'accept_all' | 'reject_all' | 'save_selection';
 type ConsentState = {
   consentId: string;
   version: number;
+  scope: string;
   necessary: true;
   analytics: boolean;
   marketing: boolean;
@@ -30,13 +31,38 @@ const defaultPreferences: ConsentPreferences = {
   marketing: false,
 };
 
+function sanitizeConsentScope(scope: string): string {
+  return scope.replace(/[^a-z0-9_-]/gi, '_');
+}
+
+function getScopedStorageKey(scope: string): string {
+  return `${CONSENT_STORAGE_KEY}_${sanitizeConsentScope(scope)}`;
+}
+
+function getScopedCookieKey(scope: string): string {
+  return `${CONSENT_COOKIE_KEY}_${sanitizeConsentScope(scope)}`;
+}
+
+function getConsentScope(pathname: string | null): string {
+  const appPathMatch = pathname?.match(/^\/apps\/([^/]+)(?:\/|$)/);
+
+  if (appPathMatch) {
+    return `app:${appPathMatch[1]}`;
+  }
+
+  return 'site';
+}
+
 declare global {
   interface Window {
     gtag?: (...args: unknown[]) => void;
   }
 }
 
-function parseStoredConsent(rawValue: string | null): ConsentState | null {
+function parseStoredConsent(
+  rawValue: string | null,
+  scope: string
+): ConsentState | null {
   if (!rawValue) {
     return null;
   }
@@ -47,6 +73,7 @@ function parseStoredConsent(rawValue: string | null): ConsentState | null {
       typeof parsed.consentId !== 'string' ||
       !parsed.consentId ||
       parsed.version !== CONSENT_VERSION ||
+      (parsed.scope !== scope && !(scope === 'site' && !parsed.scope)) ||
       parsed.necessary !== true ||
       typeof parsed.analytics !== 'boolean' ||
       typeof parsed.marketing !== 'boolean'
@@ -57,6 +84,7 @@ function parseStoredConsent(rawValue: string | null): ConsentState | null {
     return {
       consentId: parsed.consentId,
       version: CONSENT_VERSION,
+      scope,
       necessary: true,
       analytics: parsed.analytics,
       marketing: parsed.marketing,
@@ -89,6 +117,7 @@ function logConsentDecision(consent: ConsentState): void {
     consentId: consent.consentId,
     consentVersion: consent.version,
     policyVersion: consent.version,
+    scope: consent.scope,
     method: consent.method,
     necessary: consent.necessary,
     analytics: consent.analytics,
@@ -134,23 +163,24 @@ function readCookie(name: string): string | null {
   return null;
 }
 
-function readStoredConsent(): ConsentState | null {
+function readStoredConsent(scope: string): ConsentState | null {
   if (typeof window === 'undefined') {
     return null;
   }
 
   try {
     const localConsent = parseStoredConsent(
-      window.localStorage.getItem(CONSENT_STORAGE_KEY)
+      window.localStorage.getItem(getScopedStorageKey(scope)),
+      scope
     );
     if (localConsent) {
       return localConsent;
     }
   } catch {
-    return parseStoredConsent(readCookie(CONSENT_COOKIE_KEY));
+    return parseStoredConsent(readCookie(getScopedCookieKey(scope)), scope);
   }
 
-  return parseStoredConsent(readCookie(CONSENT_COOKIE_KEY));
+  return parseStoredConsent(readCookie(getScopedCookieKey(scope)), scope);
 }
 
 function applyConsentToRuntime(consent: ConsentPreferences): void {
@@ -177,32 +207,82 @@ function applyConsentToRuntime(consent: ConsentPreferences): void {
   }
 }
 
-function getInitialConsentModel() {
-  const consent = readStoredConsent();
+function getPrivacyPathForCurrentPage(
+  pathname: string | null,
+  locale: ReturnType<typeof detectLocaleFromPathname>
+): string {
+  const appPathMatch = pathname?.match(/^\/apps\/([^/]+)(?:\/|$)/);
 
-  return {
-    hasDecision: Boolean(consent),
-    showBanner: !consent,
-    preferences: consent
-      ? {
-          analytics: consent.analytics,
-          marketing: consent.marketing,
-        }
-      : defaultPreferences,
-  };
+  if (appPathMatch) {
+    return `/apps/${appPathMatch[1]}/privacy-statement/`;
+  }
+
+  return localizedPath(locale, '/privacy-statement');
 }
 
 export default function CookieConsent() {
   const pathname = usePathname();
   const locale = detectLocaleFromPathname(pathname);
   const copy = getSiteCopy(locale).consent;
-  const [initialModel] = useState(getInitialConsentModel);
-  const [hasDecision, setHasDecision] = useState(initialModel.hasDecision);
-  const [showBanner, setShowBanner] = useState(initialModel.showBanner);
+  const consentScope = getConsentScope(pathname);
+  const privacyPath = getPrivacyPathForCurrentPage(pathname, locale);
+
+  return (
+    <ScopedCookieConsent
+      key={consentScope}
+      consentScope={consentScope}
+      copy={copy}
+      locale={locale}
+      privacyPath={privacyPath}
+    />
+  );
+}
+
+function ScopedCookieConsent({
+  consentScope,
+  copy,
+  locale,
+  privacyPath,
+}: {
+  consentScope: string;
+  copy: ReturnType<typeof getSiteCopy>['consent'];
+  locale: ReturnType<typeof detectLocaleFromPathname>;
+  privacyPath: string;
+}) {
+  const [isMounted, setIsMounted] = useState(false);
+  const [hasDecision, setHasDecision] = useState(false);
+  const [showBanner, setShowBanner] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [preferences, setPreferences] = useState<ConsentPreferences>(
-    initialModel.preferences
+    defaultPreferences
   );
+  const [storedConsent, setStoredConsent] = useState<ConsentState | null>(null);
+
+  useEffect(() => {
+    const timeoutId = window.setTimeout(() => {
+      const consent = readStoredConsent(consentScope);
+
+      if (consent) {
+        setPreferences({
+          analytics: consent.analytics,
+          marketing: consent.marketing,
+        });
+        setStoredConsent(consent);
+        setHasDecision(true);
+        setShowBanner(false);
+      } else {
+        setPreferences(defaultPreferences);
+        setStoredConsent(null);
+        setHasDecision(false);
+        setShowBanner(true);
+      }
+
+      setShowSettings(false);
+      setIsMounted(true);
+    }, 0);
+
+    return () => window.clearTimeout(timeoutId);
+  }, [consentScope]);
 
   useEffect(() => {
     if (hasDecision) {
@@ -212,6 +292,7 @@ export default function CookieConsent() {
     }
 
     const handleOpenSettings = () => {
+      setStoredConsent(readStoredConsent(consentScope));
       setShowSettings(true);
       setShowBanner(false);
     };
@@ -221,12 +302,13 @@ export default function CookieConsent() {
     return () => {
       window.removeEventListener('gv-open-consent-settings', handleOpenSettings);
     };
-  }, [hasDecision, preferences]);
+  }, [consentScope, hasDecision, preferences]);
 
   const persistConsent = (method: ConsentMethod, next: ConsentPreferences) => {
     const consent: ConsentState = {
       consentId: generateConsentId(),
       version: CONSENT_VERSION,
+      scope: consentScope,
       necessary: true,
       analytics: next.analytics,
       marketing: next.marketing,
@@ -236,15 +318,16 @@ export default function CookieConsent() {
 
     const serialized = JSON.stringify(consent);
     try {
-      window.localStorage.setItem(CONSENT_STORAGE_KEY, serialized);
+      window.localStorage.setItem(getScopedStorageKey(consentScope), serialized);
     } catch {
       // Cookie fallback below still persists consent when storage is unavailable.
     }
-    document.cookie = `${CONSENT_COOKIE_KEY}=${encodeURIComponent(
+    document.cookie = `${getScopedCookieKey(consentScope)}=${encodeURIComponent(
       serialized
     )}; Max-Age=${CONSENT_COOKIE_MAX_AGE_SECONDS}; Path=/; SameSite=Lax; Secure`;
 
     setPreferences(next);
+    setStoredConsent(consent);
     setHasDecision(true);
     setShowBanner(false);
     setShowSettings(false);
@@ -270,6 +353,10 @@ export default function CookieConsent() {
     });
   };
 
+  if (!isMounted) {
+    return null;
+  }
+
   return (
     <>
       {showBanner && (
@@ -286,7 +373,7 @@ export default function CookieConsent() {
           <p className="mt-3 text-sm text-gray-400">
             {copy.bannerLegalPrefix}{' '}
             <Link
-              href={localizedPath(locale, '/privacy-statement')}
+              href={privacyPath}
               className="text-amber-300 hover:text-amber-200"
             >
               {copy.privacyLink}
@@ -413,6 +500,20 @@ export default function CookieConsent() {
             <p className="mt-5 text-sm text-gray-400">
               {copy.updateHint}
             </p>
+
+            {storedConsent && (
+              <div className="mt-5 rounded-xl border border-white/10 bg-white/[0.03] p-4">
+                <p className="text-sm font-semibold text-white">
+                  {copy.consentRecordTitle}
+                </p>
+                <p className="mt-2 break-all font-mono text-xs text-gray-300">
+                  {copy.consentIdLabel}: {storedConsent.consentId}
+                </p>
+                <p className="mt-2 text-sm leading-relaxed text-gray-400">
+                  {copy.consentRequestHint}
+                </p>
+              </div>
+            )}
 
             <div className="mt-6 flex flex-wrap gap-3">
               <button
