@@ -4,9 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "npm run validate:landing-screens && next build",
     "start": "next start",
     "lint": "eslint",
+    "validate:landing-screens": "node scripts/validate-landing-screens.mjs",
     "preview:static": "npx serve@latest out -l 3005",
     "stage": "npm run build && npm run preview:static"
   },

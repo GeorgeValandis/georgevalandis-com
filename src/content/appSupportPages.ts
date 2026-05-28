@@ -62,6 +62,56 @@ export const appSupportPages: Record<string, AppSupportPageContent> = {
     contact:
       'For support, email info@georgevalandis.com and mention MediMemo in the message.',
   },
+  'darts-scorekeeper': {
+    intro:
+      'Darts Scorekeeper is a local-first iPhone scorer for 301 and 501 darts matches. These notes cover setup, scoring, checkout hints, and purchase questions.',
+    notes: [
+      {
+        title: 'Local match scoring',
+        description:
+          'Player names, visits, scores, legs, and match history are designed to stay on the device. No account is required for the scorer workflow.',
+      },
+      {
+        title: 'X01 match flow',
+        description:
+          'The initial release focuses on 301 and 501 scoring with quick visit entry, bust handling, undo, checkout hints, and two to four players.',
+      },
+      {
+        title: 'Purchase support',
+        description:
+          'The planned Pro model is a one-time lifetime unlock. Purchase and restore behavior will be handled through Apple In-App Purchase after release.',
+      },
+    ],
+    faq: [
+      {
+        question: 'Which darts modes are supported?',
+        answer:
+          'The initial version is built for X01 scoring with 301 and 501 match setup.',
+      },
+      {
+        question: 'Can I undo a wrong score?',
+        answer:
+          'Yes. The scorer includes undo support so incorrect visits can be corrected during a match.',
+      },
+      {
+        question: 'Does the app calculate checkout hints?',
+        answer:
+          'Yes. Darts Scorekeeper shows suggested finish context where it can help the current leg.',
+      },
+      {
+        question: 'Does it require an account?',
+        answer:
+          'No. The app is planned as a local-first match scorer without account setup.',
+      },
+      {
+        question: 'How will Pro purchases work?',
+        answer:
+          'The planned model is a free download with an optional lifetime Pro unlock through Apple In-App Purchase.',
+      },
+    ],
+    contact:
+      'For support, email info@georgevalandis.com and mention Darts Scorekeeper in the message.',
+  },
 };
 
 export const appSupportSlugs = Object.keys(appSupportPages);

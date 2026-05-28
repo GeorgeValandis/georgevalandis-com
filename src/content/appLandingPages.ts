@@ -1831,6 +1831,111 @@ export const appLandingPages: Record<string, AppLandingPageContent> = {
       },
     ],
   },
+  'darts-scorekeeper': {
+    appStoreName: 'Darts Scorekeeper',
+    eyebrow: 'darts scorekeeper and 501 scorer',
+    headline: 'A fast darts scorekeeper for 301 and 501 matches.',
+    intro:
+      'Darts Scorekeeper is an iPhone scoreboard for X01 darts with quick visit entry, bust handling, checkout hints, undo, legs, and clean match stats.',
+    primaryCta: 'App Store coming soon',
+    secondaryCta: 'See the scorer',
+    availability:
+      'Prepared for iPhone. Pricing is planned as a free download with an optional lifetime Pro unlock.',
+    accent: '#34d399',
+    background: 'from-[#081611] via-[#10261d] to-[#321517]',
+    heroTone: 'dark',
+    category: 'SportsApplication',
+    price: 0,
+    priceCurrency: 'USD',
+    highlights: [
+      '301 and 501 darts scoring',
+      'Quick visit entry and common scores',
+      'Bust handling, legs, and undo',
+      'Checkout hints and match statistics',
+    ],
+    screenshots: [
+      {
+        src: '/apps/darts-scorekeeper/screens/setup.png',
+        alt: 'Darts Scorekeeper setup screen with 301 and 501 match options.',
+        label: 'Setup',
+      },
+      {
+        src: '/apps/darts-scorekeeper/screens/match.png',
+        alt: 'Darts Scorekeeper match screen showing player scores and suggested finish.',
+        label: 'Match',
+      },
+      {
+        src: '/apps/darts-scorekeeper/screens/scoring.png',
+        alt: 'Darts Scorekeeper score entry screen with quick scores and numeric input.',
+        label: 'Scoring',
+      },
+    ],
+    featureTitle: 'A darts scoreboard built for the throw line.',
+    featureIntro:
+      'Darts Scorekeeper keeps the match moving with large scores, quick entry, and just enough context for each player to know what comes next.',
+    features: [
+      {
+        title: 'Score each visit without friction',
+        description:
+          'Tap common scores, enter custom visits, choose dart count, and keep the turn cycle clear for two to four players.',
+      },
+      {
+        title: 'Catch busts before they derail the leg',
+        description:
+          'The scorer handles bust logic and undo, so wrong taps and impossible finishes can be corrected without rebuilding the match.',
+      },
+      {
+        title: 'Keep checkout context visible',
+        description:
+          'Suggested finish states, leg progress, high score, and average give enough structure for casual matches and practice sessions.',
+      },
+    ],
+    workflowTitle: 'How Darts Scorekeeper fits into a match',
+    workflow: [
+      {
+        title: 'Choose 301 or 501',
+        description:
+          'Set the match mode, player count, and names before the first throw, then keep the scorer open at the table.',
+      },
+      {
+        title: 'Enter the visit',
+        description:
+          'After each player throws, tap a common score or type the total, then let the app update the remaining score and turn order.',
+      },
+      {
+        title: 'Finish the leg cleanly',
+        description:
+          'Use checkout hints, bust handling, and undo to keep the final turns clear without arguing over the math.',
+      },
+    ],
+    privacyTitle: 'Match scoring without an account',
+    privacyDescription:
+      'Darts Scorekeeper is designed around local match scoring. The landing page privacy policy covers website hosting, cookies, consent records, and outbound App Store links separately from app behavior.',
+    finalCtaDescription:
+      'Follow Darts Scorekeeper as the App Store release is prepared.',
+    faq: [
+      {
+        question: 'What is Darts Scorekeeper for?',
+        answer:
+          'Darts Scorekeeper is a darts scoreboard for 301 and 501 matches, quick visit entry, bust handling, checkout hints, legs, and match stats.',
+      },
+      {
+        question: 'Does it support 301 and 501?',
+        answer:
+          'Yes. The initial release is built around X01 scoring with 301 and 501 match setup.',
+      },
+      {
+        question: 'Does it need an account?',
+        answer:
+          'No. The app is planned as a local-first scorer for match data on the device.',
+      },
+      {
+        question: 'How will Pro work?',
+        answer:
+          'The planned model is a free download with an optional lifetime Pro unlock for advanced scoring and history features.',
+      },
+    ],
+  },
 };
 
 export function getAppLandingPage(slug: string) {

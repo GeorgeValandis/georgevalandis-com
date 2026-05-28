@@ -171,11 +171,22 @@ export const appSeoMetadata: Record<string, AppSeoMetadata> = {
     group: 'habits-focus-wellbeing',
     updatedAt: '2026-05-23',
   },
+  'darts-scorekeeper': {
+    primaryKeyword: 'darts scorekeeper',
+    secondaryKeywords: ['dart scoreboard', '501 darts scorer', 'darts scoring app'],
+    searchIntent:
+      'Find a darts scorekeeper and scoreboard for 301, 501, quick visit entry, checkout hints, bust handling, and match stats.',
+    group: 'utilities-tools',
+    updatedAt: '2026-05-27',
+  },
 };
 
 export const supportSeoMetadata: Record<string, { updatedAt: string }> = {
   medimemo: {
     updatedAt: '2026-05-23',
+  },
+  'darts-scorekeeper': {
+    updatedAt: '2026-05-27',
   },
 };
 

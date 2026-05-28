@@ -45,6 +45,8 @@ export default async function AppSupportPage({ params }: AppSupportPageProps) {
     notFound();
   }
 
+  const supportSubject = encodeURIComponent(`${app.title} Support`);
+
   return (
     <main className="min-h-screen bg-gray-950 text-gray-50">
       <article className="mx-auto max-w-5xl px-6 py-16 md:py-24 lg:px-8">
@@ -79,7 +81,7 @@ export default async function AppSupportPage({ params }: AppSupportPageProps) {
               </a>
             ) : null}
             <a
-              href="mailto:info@georgevalandis.com?subject=MediMemo%20Support"
+              href={`mailto:info@georgevalandis.com?subject=${supportSubject}`}
               className="inline-flex items-center gap-2 rounded-full border border-white/15 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-white/5"
             >
               Contact support

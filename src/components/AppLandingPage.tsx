@@ -21,6 +21,150 @@ type AppLandingPageProps = {
   content: AppLandingPageContent;
 };
 
+type StoreBrand = 'app-store' | 'google-play';
+
+function getStoreBrand(app: AppEntry, storeUrl?: string): StoreBrand {
+  const normalizedUrl = storeUrl?.toLowerCase() ?? '';
+
+  if (normalizedUrl.includes('play.google.com')) {
+    return 'google-play';
+  }
+
+  if (
+    normalizedUrl.includes('apps.apple.com') ||
+    normalizedUrl.includes('itunes.apple.com')
+  ) {
+    return 'app-store';
+  }
+
+  return app.platforms.includes('Android') && !app.platforms.includes('iOS')
+    ? 'google-play'
+    : 'app-store';
+}
+
+function StoreBadge({
+  brand,
+  showArrow = false,
+  size = 'regular',
+}: {
+  brand: StoreBrand;
+  showArrow?: boolean;
+  size?: 'compact' | 'regular';
+}) {
+  const isCompact = size === 'compact';
+  const badgeClass = isCompact
+    ? 'h-10 w-40 rounded-xl px-3'
+    : 'h-11 w-40 rounded-[0.85rem] px-3';
+  const iconClass = isCompact ? 'h-5 w-5' : 'h-[1.35rem] w-[1.35rem]';
+  const arrowSize = isCompact ? 11 : 12;
+
+  if (brand === 'google-play') {
+    return (
+      <span
+        aria-hidden="true"
+        className={`inline-flex items-center gap-1.5 bg-slate-950 text-white shadow-sm ring-1 ring-white/25 ${badgeClass}`}
+      >
+        <svg viewBox="0 0 64 64" className={`${iconClass} shrink-0`} role="img">
+          <path d="M10 6.5c-1.1.7-1.8 2-1.8 3.7v43.6c0 1.7.7 3 1.8 3.7L34.6 32 10 6.5Z" fill="#34A853" />
+          <path d="M34.6 32 42 24.3 13.8 7.9c-1.5-.9-2.8-1.2-3.8-1.4L34.6 32Z" fill="#4285F4" />
+          <path d="m34.6 32-24.6 25.5c1 .2 2.3-.2 3.8-1.1L42 39.7 34.6 32Z" fill="#FBBC04" />
+          <path d="m42 24.3-7.4 7.7 7.4 7.7 10.2-6c3.2-1.9 3.2-4.9 0-6.8l-10.2-5.9Z" fill="#EA4335" />
+        </svg>
+        <span className="min-w-0 flex-1 leading-none">
+          <span className={`block whitespace-nowrap font-bold uppercase tracking-wide ${isCompact ? 'text-[0.45rem]' : 'text-[0.48rem]'}`}>
+            Get it on
+          </span>
+          <span className={`block whitespace-nowrap font-bold tracking-tight ${isCompact ? 'text-base' : 'text-[1.02rem]'}`}>
+            Google Play
+          </span>
+        </span>
+        {showArrow ? <ExternalLink size={arrowSize} className="ml-auto shrink-0 opacity-80" /> : null}
+      </span>
+    );
+  }
+
+  return (
+    <span
+      aria-hidden="true"
+      className={`inline-flex items-center gap-1.5 bg-slate-950 text-white shadow-sm ring-1 ring-white/25 ${badgeClass}`}
+    >
+      <svg viewBox="0 0 24 24" className={`${iconClass} shrink-0`} fill="currentColor" role="img">
+        <path d="M16.7 12.5c0-2 1.7-3 1.8-3.1-1-1.4-2.5-1.6-3-1.6-1.3-.1-2.5.8-3.1.8-.7 0-1.7-.8-2.7-.7-1.4 0-2.7.8-3.4 2.1-1.5 2.6-.4 6.3 1.1 8.4.7 1 1.5 2.2 2.6 2.1 1 0 1.5-.7 2.8-.7 1.3 0 1.7.7 2.8.7s1.9-1 2.6-2c.8-1.2 1.1-2.3 1.2-2.4-.1-.1-2.7-1.1-2.7-3.6ZM14.7 6.4c.6-.8 1-1.8.9-2.9-.9 0-2 .6-2.6 1.4-.6.7-1.1 1.8-1 2.8 1 .1 2.1-.5 2.7-1.3Z" />
+      </svg>
+      <span className="min-w-0 flex-1 leading-none">
+        <span className={`block whitespace-nowrap font-bold ${isCompact ? 'text-[0.5rem]' : 'text-[0.5rem]'}`}>
+          Download on the
+        </span>
+        <span className={`block whitespace-nowrap font-bold tracking-tight ${isCompact ? 'text-base' : 'text-[1.06rem]'}`}>
+          App Store
+        </span>
+      </span>
+      {showArrow ? <ExternalLink size={arrowSize} className="ml-auto shrink-0 opacity-80" /> : null}
+    </span>
+  );
+}
+
+function StoreQrLink({
+  app,
+  appStoreLink,
+  className = '',
+  badgeSize = 'regular',
+  qrClassName,
+  qrCodeSvg,
+}: {
+  app: AppEntry;
+  appStoreLink: string;
+  badgeSize?: 'compact' | 'regular';
+  className?: string;
+  qrClassName: string;
+  qrCodeSvg: string;
+}) {
+  const storeBrand = getStoreBrand(app, appStoreLink);
+
+  return (
+    <a
+      href={appStoreLink}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={`Open the store listing for ${app.title}`}
+      className={`flex flex-col items-center gap-2 transition hover:scale-[1.02] ${className}`}
+    >
+      <span
+        className={`block bg-white shadow-sm ring-1 ring-slate-950/10 [&_svg]:h-full [&_svg]:w-full ${qrClassName}`}
+        dangerouslySetInnerHTML={{ __html: qrCodeSvg }}
+      />
+      <StoreBadge brand={storeBrand} showArrow size={badgeSize} />
+    </a>
+  );
+}
+
+function StoreBadgeLink({
+  app,
+  appStoreLink,
+  className = '',
+  size = 'regular',
+}: {
+  app: AppEntry;
+  appStoreLink: string;
+  className?: string;
+  size?: 'compact' | 'regular';
+}) {
+  const storeBrand = getStoreBrand(app, appStoreLink);
+  const storeName = storeBrand === 'google-play' ? 'Google Play' : 'the App Store';
+
+  return (
+    <a
+      href={appStoreLink}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={`Open ${app.title} on ${storeName}`}
+      className={`inline-flex transition hover:scale-[1.02] ${className}`}
+    >
+      <StoreBadge brand={storeBrand} showArrow size={size} />
+    </a>
+  );
+}
+
 function PhoneShot({
   alt,
   className = '',
@@ -222,14 +366,12 @@ function DownloadQrCard({
   }
 
   return (
-    <aside className="grid gap-4 rounded-3xl border border-slate-950/10 bg-slate-50 p-5 sm:grid-cols-[8.5rem_1fr] sm:items-center">
-      <a
-        href={appStoreLink}
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label={`Open the store listing for ${app.title}`}
-        className="inline-flex h-[8.5rem] w-[8.5rem] items-center justify-center rounded-2xl bg-white p-2 shadow-sm ring-1 ring-slate-950/10 transition hover:ring-slate-950/20 [&_svg]:h-full [&_svg]:w-full"
-        dangerouslySetInnerHTML={{ __html: qrCodeSvg }}
+    <aside className="grid gap-4 rounded-3xl border border-slate-950/10 bg-slate-50 p-5 sm:grid-cols-[10rem_1fr] sm:items-center">
+      <StoreQrLink
+        app={app}
+        appStoreLink={appStoreLink}
+        qrClassName="h-40 w-40 rounded-2xl p-2"
+        qrCodeSvg={qrCodeSvg}
       />
       <div>
         <p className="text-sm font-bold uppercase tracking-[0.16em] text-slate-500">
@@ -271,13 +413,12 @@ function HeroQrCode({
   }
 
   return (
-    <a
-      href={appStoreLink}
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label={`Open the store listing for ${app.title}`}
-      className={`inline-flex h-24 w-24 items-center justify-center rounded-2xl bg-white p-2 shadow-2xl shadow-slate-950/15 ring-1 ring-slate-950/10 transition hover:scale-[1.02] hover:ring-slate-950/20 [&_svg]:h-full [&_svg]:w-full ${className}`}
-      dangerouslySetInnerHTML={{ __html: qrCodeSvg }}
+    <StoreQrLink
+      app={app}
+      appStoreLink={appStoreLink}
+      className={className}
+      qrClassName="hidden h-40 w-40 rounded-2xl p-2 shadow-2xl shadow-slate-950/15 sm:block"
+      qrCodeSvg={qrCodeSvg}
     />
   );
 }
@@ -381,22 +522,8 @@ export default function AppLandingPage({ app, content }: AppLandingPageProps) {
               {content.intro}
             </p>
 
-            <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
-              {appStoreLink ? (
-                <a
-                  href={appStoreLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`inline-flex items-center justify-center gap-2 rounded-full px-6 py-3.5 text-sm font-bold transition ${
-                    isDarkHero
-                      ? 'bg-white text-slate-950 hover:bg-slate-200'
-                      : 'bg-slate-950 text-white hover:bg-slate-800'
-                  }`}
-                >
-                  {content.primaryCta}
-                  <ExternalLink size={16} />
-                </a>
-              ) : (
+            <div className="mt-9 flex flex-col items-start gap-3">
+              {!appStoreLink ? (
                 <span
                   className={`inline-flex items-center justify-center rounded-full px-6 py-3.5 text-sm font-bold ${
                     isDarkHero ? 'bg-white/10 text-slate-300' : 'bg-slate-950/10 text-slate-600'
@@ -404,11 +531,12 @@ export default function AppLandingPage({ app, content }: AppLandingPageProps) {
                 >
                   {content.primaryCta}
                 </span>
-              )}
+              ) : null}
               {showHeroQrCode ? (
                 <HeroQrCode
                   app={app}
                   appStoreLink={appStoreLink}
+                  className="self-start"
                   qrCodeSvg={downloadQrSvg}
                 />
               ) : (
@@ -642,15 +770,7 @@ export default function AppLandingPage({ app, content }: AppLandingPageProps) {
               </p>
               <div className="mt-6">
                 {appStoreLink ? (
-                  <a
-                    href={appStoreLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-2 rounded-full bg-slate-950 px-6 py-3.5 text-sm font-bold text-white transition hover:bg-slate-800"
-                  >
-                    {content.primaryCta}
-                    <ExternalLink size={16} />
-                  </a>
+                  <StoreBadgeLink app={app} appStoreLink={appStoreLink} />
                 ) : (
                   <span className="inline-flex items-center justify-center rounded-full bg-slate-950/10 px-6 py-3.5 text-sm font-bold text-slate-600">
                     {content.primaryCta}

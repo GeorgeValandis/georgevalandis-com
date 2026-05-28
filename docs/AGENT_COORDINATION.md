@@ -25,7 +25,7 @@ Alle Apps aus `src/content/apps.ts`, die in der App-Sektion auf georgevalandis.c
 - `websitePath: '/apps/{slug}/'` in `src/content/apps.ts`.
 - Einen passenden Record in `src/content/appLandingPages.ts`.
 - Lokales App-Icon unter `public/apps/{slug}-icon.*`, sofern die App eine Landingpage hat.
-- Mindestens drei echte App-/Store-Screenshots unter `public/apps/{slug}/screens/`.
+- Mindestens drei echte rohe App-Screenshots unter `public/apps/{slug}/screens/`; keine App-Store-Connect-Poster, Store-Screenshot-Poster oder Mockup-Poster fuer Website-Landingpages verwenden.
 - Eine Details-Verlinkung ueber `src/components/Work.tsx`.
 - Landingpage-Privacy unter `/apps/{slug}/privacy-statement/`, die Website-/Landingpage-Daten beschreibt.
 - Terms unter `/apps/{slug}/terms-and-conditions/`.

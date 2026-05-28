@@ -240,6 +240,19 @@ const baseApps = [
     websitePath: '/apps/nightlock/',
     logo: '/apps/nightlock-icon.png',
   },
+  {
+    slug: 'darts-scorekeeper',
+    title: 'Darts Scorekeeper',
+    subtitle: 'Dart Scoreboard & 501 Scorer',
+    description:
+      'A focused iPhone scorer for 301 and 501 darts matches with quick visit entry, bust handling, checkout hints, undo, and match stats.',
+    platforms: ['iOS'],
+    tags: ['Swift', 'SwiftUI', 'Sports', 'Scorekeeper', 'Lifetime'],
+    gradient: 'from-emerald-500/20 to-red-500/20',
+    accentBorder: 'group-hover:border-emerald-400/40',
+    websitePath: '/apps/darts-scorekeeper/',
+    logo: '/apps/darts-scorekeeper-icon.png',
+  },
 ] as const;
 
 export const apps: AppEntry[] = baseApps.map((app) => ({

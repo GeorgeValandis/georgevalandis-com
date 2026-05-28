@@ -34,6 +34,7 @@ Wenn mehrere Agenten parallel arbeiten:
 ## Landingpage-Qualitaetsstandard
 
 - Jede Landingpage muss echte Produktwahrheit zeigen: reale Screenshots, konkrete Workflows, keine Platzhalter und keine generische SaaS-Card-Flut.
+- App-Landingpage-Screenshots sind rohe App-Screenshots aus App/Simulator. App-Store-Connect-Poster, Store-Screenshot-Poster oder Mockup-Poster duerfen nicht als Website-Screenshots unter `public/apps/{slug}/screens/` verwendet werden.
 - Hero und Screenshot-Auswahl muessen den App-Nutzen im ersten Viewport klar machen.
 - Copy kurz halten: Suchintention, konkreter Nutzen, Vertrauen, Store-Klick.
 - Privacy/Terms fuer Landingpages muessen Website-/Landingpage-Daten beschreiben, nicht ungeprueft Mobile-App-Privacy kopieren.
