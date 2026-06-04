@@ -826,6 +826,125 @@ export const appLandingPages: Record<string, AppLandingPageContent> = {
       },
     ],
   },
+  notebuddy: {
+    appStoreName: 'Love Messages: NoteBuddy',
+    eyebrow: 'love messages and cute notes',
+    headline: 'Cute love messages and drawings for your favorite person.',
+    intro:
+      'NoteBuddy is a playful love messages app for tiny handwritten notes, simple drawings, buddy sharing, daily drafts, and sweet received notes without a public feed.',
+    primaryCta: 'App Store coming soon',
+    secondaryCta: 'See the app',
+    availability:
+      'Prepared for iPhone App Store submission. Buddy delivery uses Apple-native CloudKit sharing.',
+    accent: '#79cfe6',
+    background: 'from-[#dff6fb] via-[#fffaf2] to-[#ffe4dc]',
+    category: 'SocialNetworkingApplication',
+    price: 0,
+    priceCurrency: 'USD',
+    highlights: [
+      'Love messages with hand-drawn notes',
+      'One-buddy setup for a calmer sharing loop',
+      'Yesterday, today, and tomorrow drafts',
+      'Widget support for the latest sweet note',
+    ],
+    screenshots: [
+      {
+        src: '/apps/notebuddy/screens/composer.png',
+        alt: 'NoteBuddy composer screen showing a handwritten love note and drawing tools for a cute daily message.',
+        label: 'Compose',
+      },
+      {
+        src: '/apps/notebuddy/screens/buddy-setup.png',
+        alt: 'NoteBuddy buddy setup screen for choosing the person who receives love messages and drawings.',
+        label: 'Buddy',
+      },
+      {
+        src: '/apps/notebuddy/screens/send-note.png',
+        alt: 'NoteBuddy send screen showing a handwritten note ready to send to a selected buddy.',
+        label: 'Send',
+      },
+      {
+        src: '/apps/notebuddy/screens/tomorrow.png',
+        alt: 'NoteBuddy tomorrow draft screen showing a planned love message for the next day.',
+        label: 'Tomorrow',
+      },
+      {
+        src: '/apps/notebuddy/screens/sun-place.png',
+        alt: 'NoteBuddy received note screen showing a sweet message opened in the Sun Place.',
+        label: 'Received',
+      },
+    ],
+    featureTitle: 'A quiet note loop for small messages that feel personal.',
+    featureIntro:
+      'NoteBuddy keeps the product small on purpose: write a tiny note, draw something simple, pick your buddy, and let the app stay out of the way.',
+    features: [
+      {
+        title: 'Write a note that feels handmade',
+        description:
+          'Use short text and a finger drawing area to make love messages feel closer to a pocket note than a public social post.',
+      },
+      {
+        title: 'Send to one favorite person',
+        description:
+          'The buddy setup keeps the sharing loop focused on a partner, best friend, or long-distance favorite person instead of a broad audience.',
+      },
+      {
+        title: 'Keep tomorrow warm',
+        description:
+          'Yesterday, today, and tomorrow tabs help you keep small daily thoughts organized without turning affection into a task list.',
+      },
+    ],
+    workflowTitle: 'How NoteBuddy fits into a daily love note habit',
+    workflow: [
+      {
+        title: 'Choose your buddy',
+        description:
+          'Set the person who should receive your notes and keep the app centered around one warm connection.',
+      },
+      {
+        title: 'Create a tiny message',
+        description:
+          'Write a short love message, add a simple drawing, and keep it gentle enough to send on ordinary days.',
+      },
+      {
+        title: 'Open the sweet reply',
+        description:
+          'Received notes appear in the Sun Place and can also update the widget so the latest message stays nearby.',
+      },
+    ],
+    privacyTitle: 'Private by design, powered by Apple sharing',
+    privacyDescription:
+      'NoteBuddy stores drafts, sent and received notes, drawings, buddy details, widget snapshots, and app settings on your device. Buddy sharing uses Apple iCloud/CloudKit sharing, and the current release is not designed to use ad SDKs, analytics SDKs, or cross-app tracking.',
+    finalCtaDescription:
+      'NoteBuddy is being prepared for the App Store with love messages, cute notes, and buddy sharing as the first release focus.',
+    faq: [
+      {
+        question: 'What is NoteBuddy for?',
+        answer:
+          'NoteBuddy is for sending small love messages, cute notes, and simple drawings to one favorite person, such as a partner, best friend, or long-distance buddy.',
+      },
+      {
+        question: 'Does NoteBuddy have a public feed?',
+        answer:
+          'No. NoteBuddy is intentionally focused on one buddy relationship and does not create a public profile or noisy social feed.',
+      },
+      {
+        question: 'How does buddy sharing work?',
+        answer:
+          'The prepared iPhone release uses Apple-native CloudKit sharing for buddy connections, so iCloud availability may be needed on participating devices.',
+      },
+      {
+        question: 'Does NoteBuddy collect analytics or tracking data?',
+        answer:
+          'The current release is not designed to use advertising SDKs, third-party analytics SDKs, or cross-app tracking.',
+      },
+      {
+        question: 'Is NoteBuddy available on the App Store?',
+        answer:
+          'The App Store listing is being prepared. The store link should be added once Apple publishes the app page.',
+      },
+    ],
+  },
   savetap: {
     appStoreName: 'Savings Tracker: SaveTap',
     eyebrow: 'savings tracker and money goals',

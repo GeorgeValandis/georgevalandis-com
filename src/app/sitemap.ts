@@ -106,6 +106,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
         changeFrequency: 'yearly',
         priority: 0.25,
       }),
+      sitemapEntry(`/apps/${slug}/privacy/`, {
+        lastModified: legalLastModified,
+        changeFrequency: 'yearly',
+        priority: 0.25,
+      }),
       sitemapEntry(`/apps/${slug}/privacy-statement/`, {
         lastModified: legalLastModified,
         changeFrequency: 'yearly',

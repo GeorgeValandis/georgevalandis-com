@@ -62,6 +62,56 @@ export const appSupportPages: Record<string, AppSupportPageContent> = {
     contact:
       'For support, email info@georgevalandis.com and mention MediMemo in the message.',
   },
+  notebuddy: {
+    intro:
+      'NoteBuddy is an iPhone app for tiny love messages, hand-drawn notes, and one-buddy sharing. These notes cover buddy setup, iCloud sharing, widgets, and notifications.',
+    notes: [
+      {
+        title: 'Buddy sharing',
+        description:
+          'NoteBuddy uses Apple-native CloudKit sharing for buddy connections. iCloud availability may be required on participating devices.',
+      },
+      {
+        title: 'Local note data',
+        description:
+          'Drafts, drawings, sent and received notes, buddy details, widget snapshots, and app settings are designed to stay on device unless shared through Apple iCloud/CloudKit.',
+      },
+      {
+        title: 'Widget and notifications',
+        description:
+          'Widget refresh and notification delivery depend on iOS settings, notification permission, and system background behavior.',
+      },
+    ],
+    faq: [
+      {
+        question: 'How do I send a note?',
+        answer:
+          'Create a short message, add a drawing if you want, set your buddy, and use the send action from the composer.',
+      },
+      {
+        question: 'Why do I need iCloud?',
+        answer:
+          'The prepared release uses Apple CloudKit sharing for buddy delivery, so iCloud may be needed to create, accept, and sync shared notes.',
+      },
+      {
+        question: 'Does NoteBuddy have a public profile?',
+        answer:
+          'No. NoteBuddy is built around one buddy relationship and does not include a public feed or public profile.',
+      },
+      {
+        question: 'Can I use the widget without opening the app?',
+        answer:
+          'The widget can show the latest available note snapshot, but iOS controls when widgets refresh and whether notification permissions are enabled.',
+      },
+      {
+        question: 'How do I report a sharing issue?',
+        answer:
+          'Email support with your device model, iOS version, app version, and whether both people were signed in to iCloud when the invite or note was sent.',
+      },
+    ],
+    contact:
+      'For support, email info@georgevalandis.com and mention NoteBuddy in the message.',
+  },
   'darts-scorekeeper': {
     intro:
       'Darts Scorekeeper is a local-first iPhone scorer for 301 and 501 darts matches. These notes cover setup, scoring, checkout hints, and purchase questions.',

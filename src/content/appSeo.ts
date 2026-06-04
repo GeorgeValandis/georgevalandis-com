@@ -155,6 +155,14 @@ export const appSeoMetadata: Record<string, AppSeoMetadata> = {
     group: 'health-self-tracking',
     updatedAt: '2026-05-23',
   },
+  notebuddy: {
+    primaryKeyword: 'love messages',
+    secondaryKeywords: ['love notes', 'cute notes', 'romantic messages'],
+    searchIntent:
+      'Find a cute love messages app for sending small handwritten notes, drawings, and sweet daily thoughts to one favorite person.',
+    group: 'cozy-companions',
+    updatedAt: '2026-06-04',
+  },
   lifechron: {
     primaryKeyword: 'life countdown app',
     secondaryKeywords: ['time tracker', 'life progress tracker', 'countdown grid'],
@@ -184,6 +192,9 @@ export const appSeoMetadata: Record<string, AppSeoMetadata> = {
 export const supportSeoMetadata: Record<string, { updatedAt: string }> = {
   medimemo: {
     updatedAt: '2026-05-23',
+  },
+  notebuddy: {
+    updatedAt: '2026-06-04',
   },
   'darts-scorekeeper': {
     updatedAt: '2026-05-27',

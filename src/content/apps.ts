@@ -214,6 +214,19 @@ const baseApps = [
     logo: '/apps/medimemo-icon.png',
   },
   {
+    slug: 'notebuddy',
+    title: 'NoteBuddy',
+    subtitle: 'Cute Love Notes & Drawings',
+    description:
+      'A playful iPhone app for sending tiny love messages, hand-drawn notes, and soft daily thoughts to one favorite person.',
+    platforms: ['iOS'],
+    tags: ['Swift', 'SwiftUI', 'Widget', 'CloudKit', 'Love Notes'],
+    gradient: 'from-sky-500/20 to-rose-500/20',
+    accentBorder: 'group-hover:border-sky-400/40',
+    websitePath: '/apps/notebuddy/',
+    logo: '/apps/notebuddy-icon.png',
+  },
+  {
     slug: 'lifechron',
     title: 'LifeChron',
     subtitle: 'See Your Life in Years, Months, Weeks, and Days',
