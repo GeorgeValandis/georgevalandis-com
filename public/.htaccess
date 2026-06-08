@@ -3,9 +3,11 @@ RedirectMatch 410 ^/wp-content/(?!uploads/).*$
 RedirectMatch 410 ^/wp-[^/]+\.php$
 RedirectMatch 410 ^/(xmlrpc|wp-cron)\.php$
 
-Redirect 301 /privacy-policy-for-lookaway/ /apps/glanceaway/privacy-statement/
+Redirect 301 /privacy-policy-for-lookaway/ /apps/glanceaway/privacy/
+Redirect 301 /privacy-policy-for-glanceaway/ /apps/glanceaway/privacy/
 Redirect 301 /privacy-statement-frokus/ /apps/frokus/privacy-statement/
-Redirect 301 /privacy-statement-quitergy/ /apps/quitergy/privacy-statement/
+Redirect 301 /privacy-statement-quitergy/ /apps/quitergy/privacy/
+Redirect 301 /privacy-statement-quitergy-app/ /apps/quitergy/privacy/
 Redirect 301 /terms-and-conditions-quitergy-app/ /apps/quitergy/terms-and-conditions/
 Redirect 301 /privacy-statement-flowa-app/ /apps/flowa/privacy-statement/
 Redirect 301 /terms-conditions-flowa-app/ /apps/flowa/terms-and-conditions/

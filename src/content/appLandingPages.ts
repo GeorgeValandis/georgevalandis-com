@@ -455,7 +455,7 @@ export const appLandingPages: Record<string, AppLandingPageContent> = {
     ],
     privacyTitle: 'Private by design',
     privacyDescription:
-      'GlanceAway does not require an account and is designed around local app settings and usage history. Your screen-break routine stays simple and personal.',
+      'GlanceAway keeps timer settings, session history, statistics, and reminder preferences on your device. Optional premium purchase validation may be handled by Apple and RevenueCat, without advertising tracking.',
     finalCtaDescription:
       'Install it from the App Store and start with a simple eye-break rhythm.',
     faq: [
@@ -1088,7 +1088,7 @@ export const appLandingPages: Record<string, AppLandingPageContent> = {
       'Energy drink counter and caffeine log',
       'Daily limits, streaks, and gentle reminders',
       'Progress views for healthier routines',
-      'Private local tracking with no data collected',
+      'Private local tracking with optional purchase validation',
     ],
     screenshots: [
       {
@@ -1147,7 +1147,7 @@ export const appLandingPages: Record<string, AppLandingPageContent> = {
     ],
     privacyTitle: 'Private by design',
     privacyDescription:
-      'QuitERGY stores user-entered drink logs, notes, reminders, and progress locally on your device. The App Store privacy listing states that the developer does not collect data from this app.',
+      'QuitERGY stores drink logs, notes, reminders, profiles, and progress locally on your device. Optional premium purchase validation may be handled by Apple and RevenueCat, without advertising tracking.',
     finalCtaDescription:
       'Install QuitERGY from the App Store and start with one honest drink log today.',
     faq: [
@@ -1164,7 +1164,7 @@ export const appLandingPages: Record<string, AppLandingPageContent> = {
       {
         question: 'Does QuitERGY collect my drink logs?',
         answer:
-          'No. QuitERGY is designed around local tracking, and the App Store privacy listing says the developer does not collect data from the app.',
+          'No. QuitERGY is designed around local tracking, and the app privacy policy says drink logs, notes, reminders, profiles, and progress are not sent to George Valandis servers.',
       },
       {
         question: 'Is QuitERGY available for iPhone and iPad?',
