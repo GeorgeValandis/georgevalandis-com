@@ -30,6 +30,10 @@ export async function generateMetadata({
   return {
     title: `${legal.terms.sourceTitle} - George Valandis`,
     description: `Terms and Conditions for the ${app.title} iOS app.`,
+    robots: {
+      index: false,
+      follow: true,
+    },
     alternates: {
       canonical: canonicalPath(`/apps/${app.slug}/terms-and-conditions`),
     },

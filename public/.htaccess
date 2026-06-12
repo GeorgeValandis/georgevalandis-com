@@ -59,6 +59,10 @@ RedirectMatch 301 ^/202[45]/([0-9]{2}/)?$ /blog/
     Header always set Cache-Control "public, max-age=2592000"
   </FilesMatch>
 
+  <FilesMatch "^(?!robots\.txt$).+\.txt$">
+    Header always set X-Robots-Tag "noindex, nofollow, noarchive"
+  </FilesMatch>
+
   <FilesMatch "^(robots\.txt|sitemap\.xml)$">
     Header always set Cache-Control "public, max-age=3600, must-revalidate"
   </FilesMatch>

@@ -31,6 +31,10 @@ export async function generateMetadata({
     return {
       title: `Privacy Policy for ${app.title} Landing Page - George Valandis`,
       description: `Privacy information for the ${app.title} landing page on georgevalandis.com.`,
+      robots: {
+        index: false,
+        follow: true,
+      },
       alternates: {
         canonical: canonicalPath(`/apps/${app.slug}/privacy-statement`),
       },
@@ -46,6 +50,10 @@ export async function generateMetadata({
   return {
     title: `${legal.privacy.sourceTitle} - George Valandis`,
     description: `Privacy information for the ${app.title} iOS app.`,
+    robots: {
+      index: false,
+      follow: true,
+    },
     alternates: {
       canonical: canonicalPath(`/apps/${app.slug}/privacy-statement`),
     },

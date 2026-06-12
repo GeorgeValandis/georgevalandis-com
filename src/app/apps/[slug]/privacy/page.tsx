@@ -30,6 +30,10 @@ export async function generateMetadata({
   return {
     title: `${legal.privacy.sourceTitle} - George Valandis`,
     description: `Privacy information for the ${app.title} app.`,
+    robots: {
+      index: false,
+      follow: true,
+    },
     alternates: {
       canonical: canonicalPath(`/apps/${app.slug}/privacy`),
     },
