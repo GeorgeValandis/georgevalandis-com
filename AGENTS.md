@@ -48,4 +48,12 @@ Mindestens ausfuehren, sofern die Aufgabe Code oder Content beruehrt:
 - `npx tsc --noEmit`
 - fuer groessere/shared Aenderungen zusaetzlich `npm run build`
 
+Wenn `npm run build` im Codex-App-Node wegen macOS Library Validation oder nativer Next-/SWC-/LightningCSS-Bindings scheitert, mit System-Node erneut pruefen:
+
+```bash
+env PATH="/usr/local/bin:$PATH" npm run build
+```
+
+Erst wenn der Build damit ebenfalls scheitert, als echten Projekt-Buildfehler behandeln.
+
 Bei visuellen Landingpage-Aenderungen desktop und mobil im Browser pruefen.

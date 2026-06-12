@@ -214,14 +214,14 @@ function PhoneShot({
 
   return (
     <div
-      className={`relative overflow-hidden rounded-[2.5rem] border border-slate-950/10 bg-slate-950 p-1.5 shadow-2xl shadow-slate-950/20 ${className}`}
+      className={`relative overflow-hidden rounded-[2.5rem] border border-slate-950/10 bg-slate-950 p-2.5 shadow-2xl shadow-slate-950/20 ${className}`}
     >
       <Image
         src={src}
         alt={alt}
         width={1206}
         height={2622}
-        className="block h-full w-full rounded-[2.1rem] object-cover"
+        className="block h-full w-full rounded-[1.45rem] object-contain"
         priority={priority}
         loading={priority ? undefined : 'lazy'}
         sizes="(min-width: 1280px) 322px, (min-width: 1024px) 294px, 216px"
@@ -336,15 +336,17 @@ function appJsonLd(app: AppEntry, content: AppLandingPageContent) {
 function DownloadQrCard({
   app,
   appStoreLink,
+  className = '',
   qrCodeSvg,
 }: {
   app: AppEntry;
   appStoreLink?: string;
+  className?: string;
   qrCodeSvg?: string;
 }) {
   if (!appStoreLink || !qrCodeSvg) {
     return (
-      <aside className="rounded-3xl border border-slate-950/10 bg-slate-50 p-5">
+      <aside className={`rounded-3xl border border-slate-950/10 bg-slate-50 p-5 ${className}`}>
         <div className="flex items-start gap-4">
           <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-slate-950/5 text-slate-500">
             <QrCode size={22} />
@@ -366,7 +368,7 @@ function DownloadQrCard({
   }
 
   return (
-    <aside className="grid gap-4 rounded-3xl border border-slate-950/10 bg-slate-50 p-5 sm:grid-cols-[10rem_1fr] sm:items-center">
+    <aside className={`grid gap-4 rounded-3xl border border-slate-950/10 bg-slate-50 p-5 sm:grid-cols-[10rem_1fr] sm:items-center ${className}`}>
       <StoreQrLink
         app={app}
         appStoreLink={appStoreLink}
@@ -397,29 +399,107 @@ function DownloadQrCard({
   );
 }
 
-function HeroQrCode({
+function HeroInstallActions({
   app,
   appStoreLink,
-  className = '',
+  ctaLabel,
+  isDarkHero,
   qrCodeSvg,
 }: {
   app: AppEntry;
   appStoreLink?: string;
-  className?: string;
+  ctaLabel: string;
+  isDarkHero: boolean;
   qrCodeSvg?: string;
 }) {
-  if (!appStoreLink || !qrCodeSvg) {
-    return null;
+  if (!appStoreLink) {
+    return (
+      <span
+        className={`inline-flex items-center justify-center rounded-full px-6 py-3.5 text-sm font-bold ${
+          isDarkHero ? 'bg-white/10 text-slate-300' : 'bg-slate-950/10 text-slate-600'
+        }`}
+      >
+        {ctaLabel}
+      </span>
+    );
   }
 
   return (
-    <StoreQrLink
-      app={app}
-      appStoreLink={appStoreLink}
-      className={className}
-      qrClassName="hidden h-40 w-40 rounded-2xl p-2 shadow-2xl shadow-slate-950/15 sm:block"
-      qrCodeSvg={qrCodeSvg}
-    />
+    <div className="w-full max-w-2xl">
+      {qrCodeSvg ? (
+        <HeroDownloadQrCard
+          app={app}
+          appStoreLink={appStoreLink}
+          ctaLabel={ctaLabel}
+          isDarkHero={isDarkHero}
+          qrCodeSvg={qrCodeSvg}
+        />
+      ) : (
+        <a
+          href={appStoreLink}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={`inline-flex h-14 shrink-0 items-center justify-center gap-2 rounded-full px-6 text-sm font-bold shadow-lg transition hover:scale-[1.02] ${
+            isDarkHero
+              ? 'bg-white text-slate-950 shadow-slate-950/20 hover:bg-slate-200'
+              : 'bg-slate-950 text-white shadow-slate-950/15 hover:bg-slate-800'
+          }`}
+        >
+          {ctaLabel}
+          <ExternalLink size={17} />
+        </a>
+      )}
+    </div>
+  );
+}
+
+function HeroDownloadQrCard({
+  app,
+  appStoreLink,
+  ctaLabel,
+  isDarkHero,
+  qrCodeSvg,
+}: {
+  app: AppEntry;
+  appStoreLink: string;
+  ctaLabel: string;
+  isDarkHero: boolean;
+  qrCodeSvg: string;
+}) {
+  return (
+    <aside className="grid w-full max-w-xl grid-cols-[7rem_1fr] items-center gap-4 rounded-3xl border border-slate-950/10 bg-white/70 p-4 shadow-2xl shadow-slate-950/10 backdrop-blur sm:grid-cols-[8.5rem_1fr] sm:p-5">
+      <StoreQrLink
+        app={app}
+        appStoreLink={appStoreLink}
+        className="gap-0 [&>span:last-child]:hidden"
+        qrClassName="h-28 w-28 rounded-2xl p-2 shadow-sm sm:h-[8.5rem] sm:w-[8.5rem]"
+        qrCodeSvg={qrCodeSvg}
+      />
+      <div className="min-w-0">
+        <p className="text-xs font-bold uppercase tracking-[0.18em] text-slate-500 sm:text-sm">
+          Scan to install
+        </p>
+        <p className="mt-1.5 text-base font-bold tracking-tight text-slate-950 sm:mt-2 sm:text-lg">
+          Download {app.title}
+        </p>
+        <p className="mt-2 hidden text-sm leading-6 text-slate-600 sm:block">
+          Scan the QR code with your phone camera to open the store listing directly.
+        </p>
+      </div>
+      <a
+        href={appStoreLink}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={`col-span-2 inline-flex h-11 items-center justify-center gap-2 whitespace-nowrap rounded-full px-5 text-sm font-bold shadow-lg transition hover:scale-[1.02] sm:col-span-1 sm:col-start-2 sm:h-12 sm:w-fit ${
+          isDarkHero
+            ? 'bg-white text-slate-950 shadow-slate-950/20 hover:bg-slate-200'
+            : 'bg-slate-950 text-white shadow-slate-950/15 hover:bg-slate-800'
+        }`}
+      >
+        {ctaLabel}
+        <ExternalLink size={16} className="shrink-0" />
+      </a>
+    </aside>
   );
 }
 
@@ -449,7 +529,6 @@ export default function AppLandingPage({ app, content }: AppLandingPageProps) {
   const privacyCardClass = 'border-slate-950/10 bg-slate-50';
   const privacyButtonClass = 'border-slate-950/15 text-slate-950 hover:bg-slate-950/5';
   const downloadQrSvg = appStoreLink ? createDownloadQrSvg(appStoreLink) : undefined;
-  const showHeroQrCode = Boolean(downloadQrSvg);
 
   return (
     <main className="min-h-screen bg-slate-50 text-slate-950">
@@ -523,34 +602,35 @@ export default function AppLandingPage({ app, content }: AppLandingPageProps) {
             </p>
 
             <div className="mt-9 flex flex-col items-start gap-3">
-              {!appStoreLink ? (
-                <span
-                  className={`inline-flex items-center justify-center rounded-full px-6 py-3.5 text-sm font-bold ${
-                    isDarkHero ? 'bg-white/10 text-slate-300' : 'bg-slate-950/10 text-slate-600'
-                  }`}
-                >
-                  {content.primaryCta}
-                </span>
-              ) : null}
-              {showHeroQrCode ? (
-                <HeroQrCode
+              {appStoreLink ? (
+                <HeroInstallActions
                   app={app}
                   appStoreLink={appStoreLink}
-                  className="self-start"
+                  ctaLabel={content.primaryCta}
+                  isDarkHero={isDarkHero}
                   qrCodeSvg={downloadQrSvg}
                 />
               ) : (
-                <a
-                  href="#screens"
-                  className={`inline-flex items-center justify-center gap-2 rounded-full border px-6 py-3.5 text-sm font-bold backdrop-blur transition ${
-                    isDarkHero
-                      ? 'border-white/15 bg-white/10 text-white hover:bg-white/15'
-                      : 'border-slate-950/15 bg-white/60 text-slate-900 hover:bg-white'
-                  }`}
-                >
-                  {content.secondaryCta}
-                  <ArrowRight size={16} />
-                </a>
+                <>
+                  <span
+                    className={`inline-flex items-center justify-center rounded-full px-6 py-3.5 text-sm font-bold ${
+                      isDarkHero ? 'bg-white/10 text-slate-300' : 'bg-slate-950/10 text-slate-600'
+                    }`}
+                  >
+                    {content.primaryCta}
+                  </span>
+                  <a
+                    href="#screens"
+                    className={`inline-flex items-center justify-center gap-2 rounded-full border px-6 py-3.5 text-sm font-bold backdrop-blur transition ${
+                      isDarkHero
+                        ? 'border-white/15 bg-white/10 text-white hover:bg-white/15'
+                        : 'border-slate-950/15 bg-white/60 text-slate-900 hover:bg-white'
+                    }`}
+                  >
+                    {content.secondaryCta}
+                    <ArrowRight size={16} />
+                  </a>
+                </>
               )}
             </div>
 
