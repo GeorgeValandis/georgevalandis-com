@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "npm run validate:landing-screens && next build",
+    "build": "npm run validate:landing-screens && next build && node scripts/patch-static-html-lang.mjs",
     "start": "next start",
     "lint": "eslint",
     "validate:landing-screens": "node scripts/validate-landing-screens.mjs",

@@ -1,7 +1,9 @@
 RedirectMatch 410 ^/wp-(admin|includes)(/.*)?$
+RedirectMatch 410 ^/wp-content/uploads/.*$
 RedirectMatch 410 ^/wp-content/(?!uploads/).*$
 RedirectMatch 410 ^/wp-[^/]+\.php$
 RedirectMatch 410 ^/(xmlrpc|wp-cron)\.php$
+RedirectMatch 410 ^/(.*/)?feed/?$
 
 Redirect 301 /privacy-policy-for-lookaway/ /apps/glanceaway/privacy/
 Redirect 301 /privacy-policy-for-glanceaway/ /apps/glanceaway/privacy/
@@ -48,6 +50,21 @@ RedirectMatch 301 ^/medimemo/?$ /apps/medimemo/
 RedirectMatch 301 ^/medi-memo/?$ /apps/medimemo/
 RedirectMatch 301 ^/lifechron/?$ /apps/lifechron/
 RedirectMatch 301 ^/nightlock/?$ /apps/nightlock/
+RedirectMatch 301 ^/my-apps/?$ /apps/
+RedirectMatch 301 ^/author/georgevalandis/?$ /
+RedirectMatch 301 ^/legal-notice-impressum/?$ /de/imprint/
+RedirectMatch 301 ^/privacy-datenschutzerklaerung/?$ /de/privacy-statement/
+RedirectMatch 301 ^/progress-bug-fixes-and-twitter-networking/?$ /blog/
+RedirectMatch 301 ^/a-new-chapter-building-my-next-app/?$ /blog/
+RedirectMatch 301 ^/track-your-cycle-flowa-expanding-optimizing-and-reaching-new-users/?$ /apps/flowa/
+RedirectMatch 301 ^/moodflora-redesign-completed-lessons-learned-along-the-way/?$ /apps/moodflora/
+RedirectMatch 301 ^/savetap-turn-daily-choices-into-real-savings/?$ /apps/savetap/
+RedirectMatch 301 ^/flowa-tracking-life-together/?$ /apps/flowa/
+RedirectMatch 301 ^/focus-on-marketing/?$ /blog/focus-on-marketing/
+RedirectMatch 301 ^/many-apps-many-ideas-and-juggling-life/?$ /blog/many-apps-many-ideas-and-juggling-life/
+RedirectMatch 301 ^/a-little-content-reset-and-glanceaway-is-live/?$ /blog/a-little-content-reset-and-glanceaway-is-live/
+RedirectMatch 301 ^/flowa-is-live-my-first-paid-app-on-the-app-store/?$ /blog/flowa-is-live-my-first-paid-app-on-the-app-store/
+RedirectMatch 301 ^/pushing-content-building-community-the-next-chapter-for-flowa-perfect-day-beyond/?$ /blog/pushing-content-building-community-the-next-chapter-for-flowa-perfect-day-beyond/
 Redirect 301 /flowa-content-creation-leveling-up-in-2025/ /blog/pushing-content-building-community-the-next-chapter-for-flowa-perfect-day-beyond/
 Redirect 301 /flowa-the-next-steps-improving-fixing-and-optimizing/ /blog/pushing-content-building-community-the-next-chapter-for-flowa-perfect-day-beyond/
 Redirect 301 /slowing-down-to-speed-up-shipping-perfect-day-and-building-lookaway/ /blog/slowing-down-to-speed-up-shipping-perfect-day-and-building-lookaway/

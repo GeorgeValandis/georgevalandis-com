@@ -75,21 +75,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }),
   ];
 
-  const blogPages = blogPosts.flatMap((post) => {
+  const blogPages = blogPosts.map((post) => {
     const postDate = new Date(post.date);
 
-    return [
-      sitemapEntry(`/blog/${post.slug}/`, {
-        lastModified: postDate,
-        changeFrequency: 'monthly',
-        priority: 0.7,
-      }),
-      sitemapEntry(`/de/blog/${post.slug}/`, {
-        lastModified: postDate,
-        changeFrequency: 'monthly',
-        priority: 0.6,
-      }),
-    ];
+    return sitemapEntry(`/blog/${post.slug}/`, {
+      lastModified: postDate,
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    });
   });
 
   const appPages = appSlugs.flatMap((slug) => {

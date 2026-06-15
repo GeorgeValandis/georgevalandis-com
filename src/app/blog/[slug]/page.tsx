@@ -1,6 +1,5 @@
 import BlogPostPageContent from '@/components/BlogPostPageContent';
 import { blogPosts, getBlogPostBySlug } from '@/content/blogPosts';
-import { localizedAlternates } from '@/lib/seo';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
@@ -29,10 +28,6 @@ export async function generateMetadata({
     description: post.excerpt,
     alternates: {
       canonical: `/blog/${post.slug}/`,
-      languages: localizedAlternates(
-        `/blog/${post.slug}/`,
-        `/de/blog/${post.slug}/`
-      ),
     },
   };
 }
