@@ -1079,7 +1079,7 @@ export const appLandingPages: Record<string, AppLandingPageContent> = {
     primaryCta: 'View in the App Store',
     secondaryCta: 'See the app',
     availability: 'Free on the App Store. Lifetime Premium may be available in the app.',
-    accent: '#9d5cff',
+    accent: '#34c759',
     background: 'from-[#f8f0ff] via-[#fff7fb] to-[#effaf8]',
     category: 'HealthApplication',
     price: 0,
