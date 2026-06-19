@@ -375,10 +375,10 @@ export const appLandingPages: Record<string, AppLandingPageContent> = {
   },
   glanceaway: {
     appStoreName: 'Eye Break Timer: GlanceAway',
-    eyebrow: '20-20-20 screen break reminder',
-    headline: 'A 20-20-20 eye break timer for long screen days.',
+    eyebrow: 'eye break timer app',
+    headline: 'An eye break timer app for long screen days.',
     intro:
-      'GlanceAway is an eye break timer and 20-20-20 rule reminder with gentle alerts, custom break intervals, and simple progress stats across iPhone and Mac.',
+      'GlanceAway is an eye break timer app and 20-20-20 rule app with gentle alerts, custom break intervals, and simple progress stats across iPhone and Mac.',
     primaryCta: 'View in the App Store',
     secondaryCta: 'See the app',
     availability: 'Free on the App Store. Optional premium features may be available in the app.',
@@ -388,7 +388,7 @@ export const appLandingPages: Record<string, AppLandingPageContent> = {
     price: 0,
     priceCurrency: 'USD',
     highlights: [
-      '20-20-20 eye break timer',
+      'Eye break timer app for the 20-20-20 rule',
       'Custom work and break intervals',
       'Session stats, streaks, and trends',
       'No account required',
@@ -396,7 +396,7 @@ export const appLandingPages: Record<string, AppLandingPageContent> = {
     screenshots: [
       {
         src: '/apps/glanceaway/screens/timer.png',
-        alt: 'GlanceAway timer screen showing the 20-20-20 eye break timer.',
+        alt: 'GlanceAway eye break timer app showing a 20-20-20 rule session.',
         label: 'Timer',
       },
       {
@@ -415,14 +415,14 @@ export const appLandingPages: Record<string, AppLandingPageContent> = {
         label: 'Settings',
       },
     ],
-    featureTitle: 'A small reminder system for healthier screen habits.',
+    featureTitle: 'A small eye break timer app for healthier screen habits.',
     featureIntro:
       'The app is intentionally simple: set a rhythm, stay in your flow, and let GlanceAway create moments where your eyes can reset.',
     features: [
       {
         title: 'Start a focused screen session',
         description:
-          'Use a clean 20-20-20 timer that tells you when to rest your eyes without turning the app into another distraction.',
+          'Use a clean eye break timer app that tells you when to rest your eyes without turning the habit into another distraction.',
       },
       {
         title: 'Take the break when it matters',
@@ -457,8 +457,13 @@ export const appLandingPages: Record<string, AppLandingPageContent> = {
     privacyDescription:
       'GlanceAway keeps timer settings, session history, statistics, and reminder preferences on your device. Optional premium purchase validation may be handled by Apple and RevenueCat, without advertising tracking.',
     finalCtaDescription:
-      'Install it from the App Store and start with a simple eye-break rhythm.',
+      'Install the eye break timer app from the App Store and start with a simple 20-20-20 rhythm.',
     faq: [
+      {
+        question: 'What is an eye break timer app?',
+        answer:
+          'An eye break timer app reminds you to pause during long screen sessions, rest your eyes, and build a repeatable screen-break rhythm.',
+      },
       {
         question: 'What is the 20-20-20 rule?',
         answer:
