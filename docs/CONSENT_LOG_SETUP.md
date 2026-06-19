@@ -21,6 +21,13 @@ This setup keeps consent logging on your own ALL-INKL hosting stack. No Supabase
 4. Paste the SQL from [`docs/consent-log.sql`](/Users/georgiosavenidis/CascadeProjects/windsurf-project/homepage/docs/consent-log.sql).
 5. Run it.
 
+For an existing installation that was created before scoped landing page consent, run this once if the `scope` column is missing:
+
+```sql
+ALTER TABLE consent_log ADD COLUMN scope VARCHAR(128) NOT NULL DEFAULT 'site' AFTER policy_version;
+ALTER TABLE consent_log ADD KEY idx_consent_log_scope (scope);
+```
+
 ## 3. Create the server config file
 
 Create this file on the server:
@@ -54,12 +61,14 @@ These files must exist on the webspace:
 
 - [`public/consent/log.php`](/Users/georgiosavenidis/CascadeProjects/windsurf-project/homepage/public/consent/log.php)
 - [`public/consent/export.php`](/Users/georgiosavenidis/CascadeProjects/windsurf-project/homepage/public/consent/export.php)
+- [`public/consent/delete.php`](/Users/georgiosavenidis/CascadeProjects/windsurf-project/homepage/public/consent/delete.php)
 - `consent/config.php`
 
 For a static export deployment, they should end up at:
 
 - `/consent/log.php`
 - `/consent/export.php`
+- `/consent/delete.php`
 - `/consent/config.php`
 
 ## 5. Verify the endpoint
@@ -91,12 +100,42 @@ Open:
 Optional filters:
 
 - `limit=500`
+- `consent_id=CONSENT_ID_FROM_COOKIE_SETTINGS`
+- `scope=site`
+- `scope=app:glanceaway`
+- `page_url=https://example.com/apps/app-slug/`
+- `page_contains=/apps/app-slug/`
 - `from=2026-03-01`
 - `to=2026-03-31`
 
 Example:
 
 - `https://your-domain/consent/export.php?token=YOUR_EXPORT_TOKEN&limit=500&from=2026-03-01&to=2026-03-31`
+- `https://your-domain/consent/export.php?token=YOUR_EXPORT_TOKEN&consent_id=CONSENT_ID_FROM_COOKIE_SETTINGS`
+- `https://your-domain/consent/export.php?token=YOUR_EXPORT_TOKEN&scope=app:glanceaway`
+- `https://your-domain/consent/export.php?token=YOUR_EXPORT_TOKEN&page_contains=/apps/glanceaway/`
+
+Use `consent_id` when a customer requests access to their consent record. Use `scope`, `page_contains`, or `page_url` to review consent records for a specific landing page.
+
+## 8. Delete a customer consent record
+
+Ask the customer for the Consent ID shown in the Cookie Settings modal. Then send a POST request to the delete endpoint with the private export token:
+
+```bash
+curl -X POST "https://your-domain/consent/delete.php" \
+  -H "Content-Type: application/json" \
+  -d '{"token":"YOUR_EXPORT_TOKEN","consentId":"CONSENT_ID_FROM_COOKIE_SETTINGS","scope":"app:glanceaway"}'
+```
+
+The `scope` field is optional, but recommended for app landing pages so deletion uses the same separated channel as storage and export.
+
+Expected response:
+
+```json
+{"ok":true,"removed":1}
+```
+
+If `removed` is `0`, no stored consent record matched that Consent ID.
 
 ## Stored fields
 
@@ -105,6 +144,7 @@ Each decision stores:
 - `consent_id`
 - `consent_version`
 - `policy_version`
+- `scope`
 - `method`
 - `necessary`
 - `analytics`
@@ -120,4 +160,8 @@ Each decision stores:
 
 - The frontend sends logs to `/consent/log.php`.
 - IPs are not stored in plain text; only a salted hash is stored.
+- Consent storage is scoped. The main website uses `site`; app landing pages use `app:{slug}`, for example `app:glanceaway`.
+- The browser storage keys are scoped too, so a consent decision on one standalone landing page does not silently cover another app landing page on the same host.
+- The Cookie Settings modal shows the customer's Consent ID for access and deletion requests.
+- CSV export supports customer lookup by `consent_id` and landing page lookup by `scope`, `page_url`, or `page_contains`.
 - If `config.php` is missing, logging fails safely and the banner still works.

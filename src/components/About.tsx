@@ -4,6 +4,7 @@ import { getSiteCopy } from '@/content/siteCopy';
 import { type SiteLocale } from '@/lib/siteLocale';
 import { motion } from 'framer-motion';
 import { Code2, Globe, Palette, Zap } from 'lucide-react';
+import Image from 'next/image';
 
 const profileImageUrl = '/profile/george-valandis.png';
 
@@ -106,9 +107,11 @@ export default function About({ locale }: AboutProps) {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="relative rounded-2xl overflow-hidden border border-white/10 bg-white/[0.02]"
             >
-              <img
+              <Image
                 src={profileImageUrl}
                 alt="George Valandis"
+                width={960}
+                height={640}
                 className="w-full h-80 object-cover object-center"
                 loading="lazy"
               />

@@ -1,9 +1,11 @@
 import { ArrowLeft, ExternalLink, ShieldCheck } from 'lucide-react';
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import AppLandingPage from '@/components/AppLandingPage';
 import { getAppLandingPage } from '@/content/appLandingPages';
+import { getAppSeoMetadata } from '@/content/appSeo';
 import { appSlugs, getAppBySlug } from '@/content/apps';
 import { canonicalPath } from '@/lib/seo';
 
@@ -26,12 +28,16 @@ export async function generateMetadata({ params }: AppPageProps): Promise<Metada
   }
 
   const landingPage = getAppLandingPage(app.slug);
+  const seo = getAppSeoMetadata(app.slug);
 
   return {
     title: landingPage
       ? `${landingPage.appStoreName} - ${landingPage.eyebrow}`
       : `${app.title} - George Valandis`,
     description: landingPage?.intro ?? app.description,
+    keywords: seo
+      ? [seo.primaryKeyword, ...seo.secondaryKeywords, app.title, ...app.tags]
+      : [...app.tags],
     alternates: {
       canonical: canonicalPath(`/apps/${app.slug}`),
     },
@@ -75,7 +81,7 @@ export default async function AppPage({ params }: AppPageProps) {
     <main className="min-h-screen bg-gray-950 text-gray-50">
       <article className="max-w-5xl mx-auto px-6 lg:px-8 py-16 md:py-24">
         <Link
-          href="/#apps"
+          href="/apps/"
           className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors"
         >
           <ArrowLeft size={16} />
@@ -85,9 +91,11 @@ export default async function AppPage({ params }: AppPageProps) {
         <section className="mt-12 grid gap-10 lg:grid-cols-[minmax(0,1fr)_320px] lg:items-start">
           <div>
             <div className="flex items-start gap-5">
-              <img
+              <Image
                 src={app.logo}
                 alt={`${app.title} logo`}
+                width={80}
+                height={80}
                 className="h-20 w-20 rounded-3xl border border-white/10 object-cover"
               />
               <div>

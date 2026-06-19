@@ -116,6 +116,9 @@ export type SiteCopy = {
     marketingTitle: string;
     marketingDescription: string;
     updateHint: string;
+    consentRecordTitle: string;
+    consentIdLabel: string;
+    consentRequestHint: string;
     saveSelection: string;
     settingsButton: string;
   };
@@ -272,6 +275,10 @@ const siteCopy: Record<SiteLocale, SiteCopy> = {
       marketingTitle: 'Marketing',
       marketingDescription: 'Allows personalized marketing and ad measurement.',
       updateHint: 'You can update this selection anytime from the Cookie Settings button.',
+      consentRecordTitle: 'Stored consent record',
+      consentIdLabel: 'Consent ID',
+      consentRequestHint:
+        'For access or deletion requests about your consent record, please include this Consent ID.',
       saveSelection: 'Save selection',
       settingsButton: 'Cookie Settings',
     },
@@ -420,6 +427,10 @@ const siteCopy: Record<SiteLocale, SiteCopy> = {
       marketingTitle: 'Marketing',
       marketingDescription: 'Erlaubt personalisiertes Marketing und Werbemessung.',
       updateHint: 'Du kannst diese Auswahl jederzeit über den Button Cookie-Einstellungen ändern.',
+      consentRecordTitle: 'Gespeicherter Consent-Nachweis',
+      consentIdLabel: 'Consent-ID',
+      consentRequestHint:
+        'Für Auskunfts- oder Löschanfragen zu deinem Consent-Nachweis schicke bitte diese Consent-ID mit.',
       saveSelection: 'Auswahl speichern',
       settingsButton: 'Cookie-Einstellungen',
     },

@@ -183,6 +183,20 @@ export default function PrivacyStatementContent({
                   der die gewählten Kategorien, den Zeitpunkt der Entscheidung, eine Consent-ID,
                   Browserinformationen und einen pseudonymisierten IP-Hash enthält.
                 </p>
+                <p>
+                  Wenn du Auskunft über deinen Consent-Datensatz erhalten oder dessen Löschung
+                  verlangen möchtest, schicke bitte die Consent-ID aus den Cookie-Einstellungen mit.
+                  Ohne diese ID ist eine eindeutige Zuordnung regelmäßig nicht möglich, da keine
+                  Klar-IP-Adresse im Consent-Log gespeichert wird.
+                </p>
+                <p>
+                  Consent-Nachweise werden grundsätzlich für bis zu drei Jahre ab Ende des
+                  Kalenderjahres gespeichert, in dem die Auswahl getroffen wurde. Eine längere
+                  Speicherung erfolgt nur, soweit dies zur Bearbeitung konkreter Anfragen, zur
+                  Erfüllung rechtlicher Pflichten oder zur Rechtsverteidigung erforderlich ist. Bei
+                  einer berechtigten Löschanfrage werden die zugehörigen Consent-Einträge anhand der
+                  Consent-ID aus dem Consent-Log entfernt.
+                </p>
               </>
             ) : (
               <>
@@ -202,6 +216,18 @@ export default function PrivacyStatementContent({
                   To document your choice, the website may store a consent record containing the
                   selected categories, the decision timestamp, a consent ID, browser information, and
                   a pseudonymized IP hash.
+                </p>
+                <p>
+                  If you request access to or deletion of your consent record, please include the
+                  Consent ID shown in the Cookie Settings. Without this ID, a clear assignment is
+                  usually not possible because no plain IP address is stored in the consent log.
+                </p>
+                <p>
+                  Consent records are generally stored for up to three years from the end of the
+                  calendar year in which the choice was made. Longer storage only takes place where
+                  required to handle specific requests, comply with legal obligations, or defend legal
+                  claims. If a deletion request is justified, the related consent entries are removed
+                  from the consent log using the Consent ID.
                 </p>
               </>
             )}

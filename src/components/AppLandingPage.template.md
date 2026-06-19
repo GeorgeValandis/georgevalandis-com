@@ -55,6 +55,17 @@ Each app landing page needs:
 - `AppLandingPage.tsx` emits `MobileApplication` JSON-LD.
 - Screenshot alt text must include the app name and the real screen purpose.
 - Footer must include `Privacy Policy`, `Terms`, and `Imprint`.
+- The landing page `Privacy Policy` must describe data processed by the landing page
+  itself: hosting/server logs, cookie consent, optional analytics/marketing consent,
+  contact links, and outbound store links. Do not use the mobile app privacy text for
+  the landing page privacy link.
+- Cookie consent logging uses the shared `/consent/log.php`, `/consent/export.php`,
+  and `/consent/delete.php` endpoints. Keep the customer's Consent ID visible in the
+  cookie settings so records can be searched and deleted without storing plain IPs.
+- Consent must be scoped per standalone homepage. Main site scope is `site`; app
+  landing page scope is `app:{slug}`. Browser storage keys and consent export filters
+  must preserve that separation so one landing page decision does not silently cover
+  another app landing page on the same host.
 - For subdomain deploys, rewrite canonical/OG/JSON-LD URLs to the subdomain root and verify the live page.
 
 ## Deployment Notes
@@ -69,6 +80,9 @@ Deploy at least:
 - `/apps/{slug}-icon.png`
 - `/privacy-statement`
 - `/terms-and-conditions`
+- `/consent/log.php`
+- `/consent/export.php`
+- `/consent/delete.php`
 - `.htaccess`
 - `favicon.ico`
 

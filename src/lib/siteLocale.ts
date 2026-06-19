@@ -22,6 +22,10 @@ export function localizedPath(locale: SiteLocale, path = ''): string {
 }
 
 export function localizedAnchor(locale: SiteLocale, anchor: string): string {
+  if (anchor.startsWith('/')) {
+    return anchor;
+  }
+
   const normalizedAnchor = anchor.startsWith('#') ? anchor : `#${anchor}`;
   return locale === 'de' ? `/de/${normalizedAnchor}` : normalizedAnchor;
 }

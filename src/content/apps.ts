@@ -9,6 +9,7 @@ export type AppEntry = {
   accentBorder: string;
   appStoreLink?: string;
   websitePath?: string;
+  showInAppsSection?: boolean;
   logo: string;
   legal: {
     termsPath: string;
@@ -28,22 +29,36 @@ const baseApps = [
     gradient: 'from-pink-500/20 to-rose-500/20',
     accentBorder: 'group-hover:border-pink-500/40',
     appStoreLink: 'https://apps.apple.com/us/app/menstrual-calendar-flowa/id6738320165?uo=4',
-    logo:
-      'https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/d6/fc/ce/d6fcceea-f9e3-29ad-9df6-730585ca9f84/AppIcon-0-0-1x_U007ephone-0-1-0-85-220.png/512x512bb.jpg',
+    websitePath: '/apps/flowa/',
+    logo: '/apps/flowa-icon.jpg',
+  },
+  {
+    slug: 'flower',
+    title: 'Flower',
+    subtitle: 'Monthly Cycle, Mood & Self-Care Tracker',
+    description:
+      'A calm Android period tracker for cycle dates, ovulation markers, mood, symptoms, notes, and gentle daily recommendations.',
+    platforms: ['Android'],
+    tags: ['Kotlin', 'Jetpack Compose', 'Health', 'Cycle Tracking'],
+    gradient: 'from-rose-500/20 to-violet-500/20',
+    accentBorder: 'group-hover:border-rose-400/40',
+    websitePath: '/apps/flower/',
+    showInAppsSection: false,
+    logo: '/apps/flower-icon.png',
   },
   {
     slug: 'moodflora',
     title: 'MoodFlora',
     subtitle: 'Track Your Moods, Grow Your Well-Being',
     description:
-      'An iOS odyssey into mood mastery and journal vibes. Track your emotional well-being and watch your garden grow.',
+      'A calm mood tracker and journal for daily reflections, mood patterns, suggestions, and local-first emotional self-tracking.',
     platforms: ['iOS', 'Android'],
     tags: ['Swift', 'SwiftUI', 'Journal', 'Free'],
     gradient: 'from-emerald-500/20 to-teal-500/20',
     accentBorder: 'group-hover:border-emerald-500/40',
     appStoreLink: 'https://apps.apple.com/us/app/mood-tracker-moodflora/id6477776787?uo=4',
-    logo:
-      'https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/f8/d4/9a/f8d49a83-ddf9-3901-ccc1-196bf4fb1fbc/AppIcon-0-0-1x_U007ephone-0-1-0-85-220.png/512x512bb.jpg',
+    websitePath: '/apps/moodflora/',
+    logo: '/apps/moodflora-icon.png',
   },
   {
     slug: 'my-grain-tracker',
@@ -65,7 +80,7 @@ const baseApps = [
     subtitle: 'Your Gentle Reminder to Protect Your Eyes',
     description:
       'A gentle reminder app that helps you protect your eyes by encouraging regular screen breaks throughout the day.',
-    platforms: ['iOS', 'macOS'],
+    platforms: ['iOS'],
     tags: ['Swift', 'SwiftUI', 'Notifications', 'Health'],
     gradient: 'from-sky-500/20 to-blue-500/20',
     accentBorder: 'group-hover:border-sky-500/40',
@@ -98,8 +113,8 @@ const baseApps = [
     gradient: 'from-blue-500/20 to-cyan-500/20',
     accentBorder: 'group-hover:border-blue-500/40',
     appStoreLink: 'https://apps.apple.com/us/app/frokus-focus-timer/id6737744446?uo=4',
-    logo:
-      'https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/12/3b/91/123b9169-f680-37c6-bb2a-aee05279f039/AppIcon-0-0-1x_U007ephone-0-1-85-220.jpeg/512x512bb.jpg',
+    websitePath: '/apps/frokus/',
+    logo: '/apps/frokus-icon.jpg',
   },
   {
     slug: 'savetap',
@@ -112,8 +127,8 @@ const baseApps = [
     gradient: 'from-green-500/20 to-emerald-500/20',
     accentBorder: 'group-hover:border-green-500/40',
     appStoreLink: 'https://apps.apple.com/us/app/savings-tracker-savetap/id6752865110?uo=4',
-    logo:
-      'https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/4e/73/1d/4e731de4-e0b4-960d-27bc-13b3907c1340/AppIcon-0-0-1x_U007ephone-0-1-85-220.png/512x512bb.jpg',
+    websitePath: '/apps/savetap/',
+    logo: '/apps/savetap-icon.png',
   },
   {
     slug: 'ring-sizer',
@@ -181,6 +196,7 @@ const baseApps = [
     gradient: 'from-amber-500/20 to-orange-500/20',
     accentBorder: 'group-hover:border-amber-500/40',
     appStoreLink: 'https://apps.apple.com/us/app/store-reviews-inbox/id6761003137?uo=4',
+    websitePath: '/apps/store-reviews/',
     logo: '/apps/store-reviews-icon.png',
   },
   {
@@ -194,7 +210,21 @@ const baseApps = [
     gradient: 'from-emerald-500/20 to-cyan-500/20',
     accentBorder: 'group-hover:border-emerald-500/40',
     appStoreLink: 'https://apps.apple.com/app/id6761365488',
+    websitePath: '/apps/medimemo/',
     logo: '/apps/medimemo-icon.png',
+  },
+  {
+    slug: 'notebuddy',
+    title: 'NoteBuddy',
+    subtitle: 'Cute Love Notes & Drawings',
+    description:
+      'A playful iPhone app for sending tiny love messages, hand-drawn notes, and soft daily thoughts to one favorite person.',
+    platforms: ['iOS'],
+    tags: ['Swift', 'SwiftUI', 'Widget', 'CloudKit', 'Love Notes'],
+    gradient: 'from-sky-500/20 to-rose-500/20',
+    accentBorder: 'group-hover:border-sky-400/40',
+    websitePath: '/apps/notebuddy/',
+    logo: '/apps/notebuddy-icon.png',
   },
   {
     slug: 'lifechron',
@@ -207,6 +237,7 @@ const baseApps = [
     gradient: 'from-orange-500/20 to-red-500/20',
     accentBorder: 'group-hover:border-orange-500/40',
     appStoreLink: 'https://apps.apple.com/us/app/life-time-tracker-lifechron/id6760122665?uo=4',
+    websitePath: '/apps/lifechron/',
     logo: '/apps/lifechron-icon.png',
   },
   {
@@ -219,7 +250,21 @@ const baseApps = [
     tags: ['Swift', 'SwiftUI', 'Sleep', 'Digital Wellbeing'],
     gradient: 'from-indigo-500/20 to-amber-500/20',
     accentBorder: 'group-hover:border-indigo-400/40',
+    websitePath: '/apps/nightlock/',
     logo: '/apps/nightlock-icon.png',
+  },
+  {
+    slug: 'darts-scorekeeper',
+    title: 'Darts Scorekeeper',
+    subtitle: 'Dart Scoreboard & 501 Scorer',
+    description:
+      'A focused iPhone scorer for 301 and 501 darts matches with quick visit entry, bust handling, checkout hints, undo, and match stats.',
+    platforms: ['iOS'],
+    tags: ['Swift', 'SwiftUI', 'Sports', 'Scorekeeper', 'Lifetime'],
+    gradient: 'from-emerald-500/20 to-red-500/20',
+    accentBorder: 'group-hover:border-emerald-400/40',
+    websitePath: '/apps/darts-scorekeeper/',
+    logo: '/apps/darts-scorekeeper-icon.png',
   },
 ] as const;
 

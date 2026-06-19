@@ -1,24 +1,97 @@
 RedirectMatch 410 ^/wp-(admin|includes)(/.*)?$
+RedirectMatch 410 ^/wp-content/uploads/.*$
 RedirectMatch 410 ^/wp-content/(?!uploads/).*$
 RedirectMatch 410 ^/wp-[^/]+\.php$
 RedirectMatch 410 ^/(xmlrpc|wp-cron)\.php$
+RedirectMatch 410 ^/(.*/)?feed/?$
 
-Redirect 301 /privacy-policy-for-lookaway/ /apps/glanceaway/privacy-statement/
+Redirect 301 /privacy-policy-for-lookaway/ /apps/glanceaway/privacy/
+Redirect 301 /privacy-policy-for-glanceaway/ /apps/glanceaway/privacy/
+Redirect 301 /licensed-application-end-user-license-agreement/ https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
 Redirect 301 /privacy-statement-frokus/ /apps/frokus/privacy-statement/
-Redirect 301 /privacy-statement-quitergy/ /apps/quitergy/privacy-statement/
+Redirect 301 /terms-and-conditions-frokus-app/ /apps/frokus/terms-and-conditions/
+Redirect 301 /privacy-statement-quitergy/ /apps/quitergy/privacy/
+Redirect 301 /privacy-statement-quitergy-app/ /apps/quitergy/privacy/
 Redirect 301 /terms-and-conditions-quitergy-app/ /apps/quitergy/terms-and-conditions/
 Redirect 301 /privacy-statement-flowa-app/ /apps/flowa/privacy-statement/
 Redirect 301 /terms-conditions-flowa-app/ /apps/flowa/terms-and-conditions/
 Redirect 301 /mood-flora/privacystatement-moodflora/ /apps/moodflora/privacy-statement/
-Redirect 301 /lookaway/ /blog/a-little-content-reset-and-glanceaway-is-live/
+Redirect 301 /terms-and-conditions-moodflora-app/ /apps/moodflora/terms-and-conditions/
+Redirect 301 /terms-and-conditions-glanceaway-app/ /apps/glanceaway/terms-and-conditions/
+Redirect 301 /privacy-statement-perfect-day-app/ /apps/perfect-day/privacy/
+Redirect 301 /terms-and-conditions-perfect-day-app/ /apps/perfect-day/terms-and-conditions/
+Redirect 301 /privacy-statement-savetap-app/ /apps/savetap/privacy/
+Redirect 301 /terms-and-conditions-savetap-app/ /apps/savetap/terms-and-conditions/
+RedirectMatch 301 ^/sample-page/?$ /
+RedirectMatch 301 ^/perfectday/?$ /apps/perfect-day/
+RedirectMatch 301 ^/perfect-day/?$ /apps/perfect-day/
+RedirectMatch 301 ^/flowa/?$ /apps/flowa/
+RedirectMatch 301 ^/flower/?$ /apps/flower/
+RedirectMatch 301 ^/moodflora/?$ /apps/moodflora/
+RedirectMatch 301 ^/mood-flora/?$ /apps/moodflora/
+RedirectMatch 301 ^/mygrain/?$ /apps/my-grain-tracker/
+RedirectMatch 301 ^/my-grain/?$ /apps/my-grain-tracker/
+RedirectMatch 301 ^/my-grain-tracker/?$ /apps/my-grain-tracker/
+RedirectMatch 301 ^/lookaway/?$ /apps/glanceaway/
+RedirectMatch 301 ^/glanceaway/?$ /apps/glanceaway/
+RedirectMatch 301 ^/glance-away/?$ /apps/glanceaway/
+RedirectMatch 301 ^/frokus/?$ /apps/frokus/
+RedirectMatch 301 ^/savetap/?$ /apps/savetap/
+RedirectMatch 301 ^/safe-tap/?$ /apps/savetap/
+RedirectMatch 301 ^/ring-sizer/?$ /apps/ring-sizer/
+RedirectMatch 301 ^/ring-size-finder/?$ /apps/ring-sizer/
+RedirectMatch 301 ^/quitergy/?$ /apps/quitergy/
+RedirectMatch 301 ^/quit-energy-drinks/?$ /apps/quitergy/
+RedirectMatch 301 ^/axlo/?$ /apps/axlo/
+RedirectMatch 301 ^/trexlo/?$ /apps/trexlo/
+RedirectMatch 301 ^/t-rexlo/?$ /apps/trexlo/
+RedirectMatch 301 ^/store-reviews/?$ /apps/store-reviews/
+RedirectMatch 301 ^/medimemo/?$ /apps/medimemo/
+RedirectMatch 301 ^/medi-memo/?$ /apps/medimemo/
+RedirectMatch 301 ^/lifechron/?$ /apps/lifechron/
+RedirectMatch 301 ^/nightlock/?$ /apps/nightlock/
+RedirectMatch 301 ^/my-apps/?$ /apps/
+RedirectMatch 301 ^/author/georgevalandis/?$ /
+RedirectMatch 301 ^/legal-notice-impressum/?$ /de/imprint/
+RedirectMatch 301 ^/privacy-datenschutzerklaerung/?$ /de/privacy-statement/
+RedirectMatch 301 ^/progress-bug-fixes-and-twitter-networking/?$ /blog/
+RedirectMatch 301 ^/a-new-chapter-building-my-next-app/?$ /blog/
+RedirectMatch 301 ^/track-your-cycle-flowa-expanding-optimizing-and-reaching-new-users/?$ /apps/flowa/
+RedirectMatch 301 ^/moodflora-redesign-completed-lessons-learned-along-the-way/?$ /apps/moodflora/
+RedirectMatch 301 ^/savetap-turn-daily-choices-into-real-savings/?$ /apps/savetap/
+RedirectMatch 301 ^/flowa-tracking-life-together/?$ /apps/flowa/
+RedirectMatch 301 ^/focus-on-marketing/?$ /blog/focus-on-marketing/
+RedirectMatch 301 ^/many-apps-many-ideas-and-juggling-life/?$ /blog/many-apps-many-ideas-and-juggling-life/
+RedirectMatch 301 ^/a-little-content-reset-and-glanceaway-is-live/?$ /blog/a-little-content-reset-and-glanceaway-is-live/
+RedirectMatch 301 ^/flowa-is-live-my-first-paid-app-on-the-app-store/?$ /blog/flowa-is-live-my-first-paid-app-on-the-app-store/
+RedirectMatch 301 ^/pushing-content-building-community-the-next-chapter-for-flowa-perfect-day-beyond/?$ /blog/pushing-content-building-community-the-next-chapter-for-flowa-perfect-day-beyond/
 Redirect 301 /flowa-content-creation-leveling-up-in-2025/ /blog/pushing-content-building-community-the-next-chapter-for-flowa-perfect-day-beyond/
-Redirect 301 /quitergy-your-gentle-companion-to-reduce-energy-drinks/ /
+Redirect 301 /flowa-the-next-steps-improving-fixing-and-optimizing/ /blog/pushing-content-building-community-the-next-chapter-for-flowa-perfect-day-beyond/
+Redirect 301 /slowing-down-to-speed-up-shipping-perfect-day-and-building-lookaway/ /blog/slowing-down-to-speed-up-shipping-perfect-day-and-building-lookaway/
+Redirect 301 /quitergy-your-gentle-companion-to-reduce-energy-drinks/ /apps/quitergy/
+RedirectMatch 301 ^/category/blog/?$ /blog/
 RedirectMatch 301 ^/202[45]/([0-9]{2}/)?$ /blog/
 
 <IfModule mod_headers.c>
-  <FilesMatch "\.(html|json)$">
-    Header always set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
-    Header always set Pragma "no-cache"
-    Header always set Expires "0"
+  <FilesMatch "\.html$">
+    Header always set Cache-Control "public, max-age=300, must-revalidate"
+    Header always unset Pragma
+    Header always unset Expires
+  </FilesMatch>
+
+  <FilesMatch "\.(css|js|mjs|woff|woff2)$">
+    Header always set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+
+  <FilesMatch "\.(png|jpe?g|webp|avif|ico|svg)$">
+    Header always set Cache-Control "public, max-age=2592000"
+  </FilesMatch>
+
+  <FilesMatch "^(?!robots\.txt$).+\.txt$">
+    Header always set X-Robots-Tag "noindex, nofollow, noarchive"
+  </FilesMatch>
+
+  <FilesMatch "^(robots\.txt|sitemap\.xml)$">
+    Header always set Cache-Control "public, max-age=3600, must-revalidate"
   </FilesMatch>
 </IfModule>
