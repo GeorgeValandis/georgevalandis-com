@@ -19,6 +19,8 @@ export type PreviewCopy = {
     eyebrow: string;
     title: string;
     viewAll: string;
+    pause: string;
+    resume: string;
     ariaLabel: string;
   };
   afterWork: {
@@ -105,6 +107,8 @@ export const previewCopy: Record<SiteLocale, PreviewCopy> = {
       eyebrow: '01 — Apps',
       title: 'My iOS apps',
       viewAll: 'View all apps',
+      pause: 'Pause motion',
+      resume: 'Resume motion',
       ariaLabel: 'All apps',
     },
     afterWork: {
@@ -169,6 +173,8 @@ export const previewCopy: Record<SiteLocale, PreviewCopy> = {
       eyebrow: '01 — Apps',
       title: 'Meine iOS-Apps',
       viewAll: 'Alle Apps ansehen',
+      pause: 'Bewegung pausieren',
+      resume: 'Bewegung fortsetzen',
       ariaLabel: 'Alle Apps',
     },
     afterWork: {
