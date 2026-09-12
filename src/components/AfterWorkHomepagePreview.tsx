@@ -331,11 +331,13 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
 
       <section id="preview-contact" className="relative flex min-h-[430px] items-center justify-center bg-[#050a13] px-6 py-28 text-center lg:px-8">
         <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 -top-8 z-10 h-8 bg-gradient-to-b from-[#07101a] to-[#050a13] sm:-top-11 sm:h-11" />
-        <p className="font-mono text-xs uppercase tracking-[0.24em] text-[#ff9d19]">{copy.contact.eyebrow}</p>
-        <h2 className="mx-auto mt-5 max-w-2xl text-4xl font-semibold tracking-[-0.04em] text-white sm:text-5xl">{copy.contact.title}</h2>
-        <a href="mailto:info@georgevalandis.com" className="mt-8 inline-flex items-center gap-2 text-lg text-slate-300 transition-colors hover:text-white">
-          info@georgevalandis.com <ArrowUpRight size={18} />
-        </a>
+        <div className="mx-auto flex w-full max-w-[1600px] flex-col items-start px-0 text-left sm:px-4 lg:flex-row lg:items-center lg:justify-center lg:px-[46px] lg:text-center">
+          <p className="font-mono text-xs uppercase tracking-[0.24em] text-[#ff9d19]">{copy.contact.eyebrow}</p>
+          <h2 className="mt-5 max-w-2xl text-4xl font-semibold tracking-[-0.04em] text-white sm:text-5xl lg:mx-auto">{copy.contact.title}</h2>
+          <a href="mailto:info@georgevalandis.com" className="mt-8 inline-flex items-center gap-2 text-lg text-slate-300 transition-colors hover:text-white">
+            info@georgevalandis.com <ArrowUpRight size={18} />
+          </a>
+        </div>
       </section>
 
       <footer className="bg-[#050a13] px-6 py-8 text-center text-xs text-slate-600 lg:px-8">
