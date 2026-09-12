@@ -150,8 +150,8 @@ export default function AfterWorkHomepagePreview() {
         )}
       </nav>
 
-      <section id="preview-home" className="relative isolate overflow-hidden pt-20 lg:pt-16">
-        <div className="absolute inset-0 -z-20 bg-[#07101a]" />
+      <section id="preview-home" className="relative isolate overflow-hidden bg-[#050a13] pt-20 lg:pt-16">
+        <div className="absolute inset-0 -z-20 bg-[#050a13]" />
         <div className="absolute inset-0 -z-10 w-full">
           <Image
             src="/after-work-preview/hero-desk.png"
@@ -161,9 +161,10 @@ export default function AfterWorkHomepagePreview() {
             sizes="(min-width: 1024px) 67vw, 100vw"
             className="object-cover object-center"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#07101a] via-[#07101a]/90 via-35% to-[#07101a]/10" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#07101a]/65 via-transparent to-[#07101a]/10" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#050a13] via-[#050a13]/90 via-35% to-[#050a13]/10" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#050a13]/65 via-transparent to-[#050a13]/10" />
         </div>
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-0 h-36 bg-gradient-to-b from-transparent via-[#050a13]/90 to-[#050a13] sm:h-40" />
 
         <div className="relative mx-auto flex min-h-[590px] max-w-[1600px] items-center px-6 py-20 sm:px-10 lg:min-h-[388px] lg:items-start lg:px-[54px] lg:py-7">
           <div className="relative z-10 max-w-[635px]">
@@ -198,7 +199,7 @@ export default function AfterWorkHomepagePreview() {
         </div>
       </section>
 
-      <section id="preview-apps" className="border-t border-white/[0.04] pb-11 pt-7 sm:pb-[46px] sm:pt-8">
+      <section id="preview-apps" className="pb-11 pt-7 sm:pb-[46px] sm:pt-8">
         <div className="mx-auto max-w-[1600px] px-6 sm:px-10 lg:px-[54px]">
           <div className="mb-6 flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
             <div>
