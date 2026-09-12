@@ -73,8 +73,25 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
         }
 
         .preview-about-image {
-          -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.32) 24%, rgba(0, 0, 0, 0.7) 48%, #000 70%, #000 100%);
-          mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.32) 24%, rgba(0, 0, 0, 0.7) 48%, #000 70%, #000 100%);
+          -webkit-mask-image:
+            linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.32) 24%, #000 55%, #000 88%, transparent 100%),
+            linear-gradient(to bottom, transparent 0%, #000 16%, #000 82%, transparent 100%);
+          -webkit-mask-composite: source-in;
+          mask-image:
+            linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.32) 24%, #000 55%, #000 88%, transparent 100%),
+            linear-gradient(to bottom, transparent 0%, #000 16%, #000 82%, transparent 100%);
+          mask-composite: intersect;
+        }
+
+        @media (min-width: 1024px) {
+          .preview-about-image {
+            -webkit-mask-image:
+              linear-gradient(to right, transparent 0%, transparent 36%, rgba(0, 0, 0, 0.18) 46%, #000 64%, #000 82%, transparent 100%),
+              linear-gradient(to bottom, transparent 0%, #000 16%, #000 82%, transparent 100%);
+            mask-image:
+              linear-gradient(to right, transparent 0%, transparent 36%, rgba(0, 0, 0, 0.18) 46%, #000 64%, #000 82%, transparent 100%),
+              linear-gradient(to bottom, transparent 0%, #000 16%, #000 82%, transparent 100%);
+          }
         }
 
       `}</style>
@@ -282,9 +299,6 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#07101a]/80 via-[#07101a]/20 to-[#07101a]/5 lg:bg-gradient-to-r lg:from-[#07101a] lg:via-[#07101a]/90 lg:via-45% lg:to-transparent lg:to-82%" />
           <div className="absolute inset-0 bg-gradient-to-b from-[#07101a] via-[#07101a]/[0.62] via-20% to-transparent lg:hidden" />
-          <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-[#07101a] via-[#07101a]/[0.72] to-transparent sm:h-28 lg:h-32" />
-          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-[#07101a] via-[#07101a]/[0.78] to-transparent sm:h-32 lg:h-36" />
-          <div className="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-[#07101a]/[0.32] to-transparent" />
         </div>
         <div className="relative mx-auto flex min-h-[820px] max-w-[1600px] items-start px-6 pb-16 pt-20 sm:min-h-[860px] sm:px-10 sm:pb-20 sm:pt-24 lg:min-h-[640px] lg:items-center lg:px-[54px] lg:py-0">
           <div className="relative z-10 max-w-[480px]">
@@ -325,7 +339,6 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
       </section>
 
       <section id="preview-contact" className="relative flex min-h-[430px] items-center justify-center bg-[#050a13] px-6 py-28 text-center lg:px-8">
-        <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 -top-8 z-10 h-8 bg-gradient-to-b from-[#07101a] to-[#050a13] sm:-top-11 sm:h-11" />
         <div className="mx-auto flex w-full max-w-[1600px] flex-col items-start px-0 text-left sm:px-4 lg:flex-row lg:items-center lg:justify-center lg:px-[46px] lg:text-center">
           <p className="font-mono text-xs uppercase tracking-[0.24em] text-[#ff9d19]">{copy.contact.eyebrow}</p>
           <h2 className="mt-5 max-w-2xl text-4xl font-semibold tracking-[-0.04em] text-white sm:text-5xl lg:mx-auto">{copy.contact.title}</h2>
