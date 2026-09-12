@@ -1,53 +1,40 @@
 'use client';
 
+import { apps } from '@/content/apps';
 import { blogPosts } from '@/content/blogPosts';
-import { ArrowUpRight, Check, Menu, Sparkles, Sprout, X } from 'lucide-react';
+import { ArrowUpRight, Menu, Sparkles, X } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 
-const previewApps = [
-  {
-    title: 'Dawn',
-    subtitle: 'A calmer start to your day.',
-    tags: 'FOCUS · HABITS · iOS',
-    icon: 'dawn',
-  },
-  {
-    title: 'Right Now',
-    subtitle: 'Get things done. Right now.',
-    tags: 'PRODUCTIVITY · iOS',
-    icon: 'right-now',
-  },
-  {
-    title: 'Little Steps',
-    subtitle: 'Small habits. A brighter you.',
-    tags: 'HEALTH · HABITS · iOS',
-    icon: 'little-steps',
-  },
-] as const;
+const marqueeApps = apps;
 
-function PreviewAppIcon({ icon }: { icon: (typeof previewApps)[number]['icon'] }) {
-  if (icon === 'dawn') {
-    return (
-      <div className="relative h-[104px] w-[104px] shrink-0 overflow-hidden rounded-[25px] bg-[linear-gradient(180deg,#ff9161_0%,#f77a58_47%,#664193_100%)] shadow-[0_14px_30px_rgba(0,0,0,0.22)]">
-        <div className="absolute -bottom-3 left-1/2 h-[58px] w-[58px] -translate-x-1/2 rounded-full bg-[#ffe08a]" />
-        <div className="absolute inset-x-0 bottom-0 h-10 bg-gradient-to-t from-[#5b3d91]/80 to-transparent" />
-      </div>
-    );
-  }
-
-  if (icon === 'right-now') {
-    return (
-      <div className="flex h-[104px] w-[104px] shrink-0 items-center justify-center rounded-[25px] border border-white/20 bg-[linear-gradient(145deg,#1b2c3b,#0b1119)] shadow-[0_14px_30px_rgba(0,0,0,0.22)]">
-        <Check size={58} strokeWidth={2.3} className="text-white" />
-      </div>
-    );
-  }
-
+function AppMarqueeSet({ duplicate = false }: { duplicate?: boolean }) {
   return (
-    <div className="flex h-[104px] w-[104px] shrink-0 items-center justify-center rounded-[25px] border border-[#68c7a9]/80 bg-[linear-gradient(145deg,#57a994,#10565b)] shadow-[0_14px_30px_rgba(0,0,0,0.22)]">
-      <Sprout size={57} strokeWidth={1.25} className="text-[#e0fff0]" />
+    <div className="flex shrink-0 gap-6 pr-6 lg:gap-7 lg:pr-7" aria-hidden={duplicate}>
+      {marqueeApps.map((app) => (
+        <a
+          key={`${duplicate ? 'duplicate-' : ''}${app.slug}`}
+          href={app.websitePath || app.appStoreLink || '#preview-apps'}
+          tabIndex={duplicate ? -1 : undefined}
+          className="group flex w-[285px] shrink-0 items-center gap-5 transition-transform duration-300 hover:-translate-y-0.5"
+        >
+          <Image
+            src={app.logo}
+            alt=""
+            width={104}
+            height={104}
+            className="h-[104px] w-[104px] shrink-0 rounded-[25px] object-cover shadow-[0_14px_30px_rgba(0,0,0,0.22)]"
+          />
+          <div className="min-w-0">
+            <h3 className="text-[17px] font-semibold tracking-[-0.02em] text-white">{app.title}</h3>
+            <p className="mt-1.5 max-w-[165px] text-[14px] leading-[1.35] text-slate-300/80">{app.subtitle}</p>
+            <p className="mt-4 font-mono text-[9px] uppercase tracking-[0.22em] text-slate-400/80">
+              {app.platforms.join(' · ')}
+            </p>
+          </div>
+        </a>
+      ))}
     </div>
   );
 }
@@ -73,6 +60,28 @@ export default function AfterWorkHomepagePreview() {
 
   return (
     <main className="min-h-screen overflow-hidden bg-[#050a13] text-[#f7f8f9]">
+      <style>{`
+        @keyframes preview-app-marquee-right {
+          from { transform: translate3d(-50%, 0, 0); }
+          to { transform: translate3d(0, 0, 0); }
+        }
+
+        .preview-app-marquee {
+          animation: preview-app-marquee-right 78s linear infinite;
+          will-change: transform;
+        }
+
+        .preview-app-marquee:hover {
+          animation-play-state: paused;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .preview-app-marquee {
+            animation: none;
+            transform: none;
+          }
+        }
+      `}</style>
       <nav className="fixed inset-x-0 top-0 z-50 border-b border-white/[0.04] bg-[#050a13]/75 backdrop-blur-xl">
         <div className="relative mx-auto flex h-20 max-w-[1600px] items-center justify-between px-6 lg:h-16 lg:px-[52px]">
           <a href="#preview-home" className="text-xl font-semibold tracking-tight text-white">
@@ -190,21 +199,13 @@ export default function AfterWorkHomepagePreview() {
             </Link>
           </div>
 
-          <div className="grid gap-10 md:grid-cols-3 md:gap-8 lg:gap-6">
-            {previewApps.map((app) => (
-              <a
-                key={app.title}
-                href="#preview-apps"
-                className="group flex items-center gap-5 transition-transform duration-300 hover:-translate-y-0.5"
-              >
-                <PreviewAppIcon icon={app.icon} />
-                <div className="min-w-0">
-                  <h3 className="text-[17px] font-semibold tracking-[-0.02em] text-white">{app.title}</h3>
-                  <p className="mt-1.5 max-w-[170px] text-[14px] leading-[1.35] text-slate-300/80">{app.subtitle}</p>
-                  <p className="mt-4 font-mono text-[9px] uppercase tracking-[0.22em] text-slate-400/80">{app.tags}</p>
-                </div>
-              </a>
-            ))}
+          <div className="relative overflow-hidden" role="region" aria-label="All apps">
+            <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-10 bg-gradient-to-r from-[#070d17] to-transparent sm:w-16" />
+            <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-10 bg-gradient-to-l from-[#070d17] to-transparent sm:w-16" />
+            <div className="preview-app-marquee flex w-max">
+              <AppMarqueeSet />
+              <AppMarqueeSet duplicate />
+            </div>
           </div>
         </div>
       </section>
