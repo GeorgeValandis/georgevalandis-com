@@ -83,8 +83,8 @@ export default function AfterWorkHomepagePreview() {
         }
       `}</style>
       <nav className="fixed inset-x-0 top-0 z-50 border-b border-white/[0.04] bg-[#050a13]/75 backdrop-blur-xl">
-        <div className="relative mx-auto flex h-20 max-w-[1600px] items-center justify-between px-6 lg:h-16 lg:px-[52px]">
-          <a href="#preview-home" className="text-xl font-semibold tracking-tight text-white">
+        <div className="relative mx-auto flex h-20 max-w-[1600px] items-center justify-start px-6 lg:h-16 lg:px-[52px]">
+          <a href="#preview-home" className="mr-auto text-xl font-semibold tracking-tight text-white">
             george<span className="text-[#ff9d19]">.</span>valandis
           </a>
 
