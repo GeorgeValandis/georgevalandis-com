@@ -71,7 +71,7 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
       ([entry]) => {
         marquee.classList.toggle('is-paused', !entry.isIntersecting);
       },
-      { rootMargin: '180px 0px' },
+      { rootMargin: '0px' },
     );
 
     observer.observe(appsSection);
@@ -141,7 +141,6 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
         .preview-app-marquee {
           width: max-content;
           flex-shrink: 0;
-          will-change: transform;
           animation: preview-app-marquee-right 90s linear infinite;
         }
 
@@ -157,11 +156,40 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
 
         .preview-newsletter-form .ml-form-embedWrapper,
         .preview-newsletter-form .ml-form-embedBody,
+        .preview-newsletter-form .ml-form-embedContent,
+        .preview-newsletter-form .ml-form-align-center,
+        .preview-newsletter-form .ml-form-embedBody form {
+          width: 100% !important;
+        }
+
+        .preview-newsletter-form .ml-form-align-center {
+          text-align: left !important;
+        }
+
+        .preview-newsletter-form .ml-form-embedWrapper,
+        .preview-newsletter-form .ml-form-embedBody,
         .preview-newsletter-form .ml-form-embedContent {
           background: transparent !important;
           border: 0 !important;
           box-shadow: none !important;
           padding: 0 !important;
+        }
+
+        #preview-after-work,
+        #preview-about,
+        #preview-blog,
+        #preview-contact {
+          content-visibility: auto;
+        }
+
+        #preview-after-work { contain-intrinsic-size: 720px; }
+        #preview-about { contain-intrinsic-size: 640px; }
+        #preview-blog { contain-intrinsic-size: 560px; }
+        #preview-contact { contain-intrinsic-size: 500px; }
+
+        @media (max-width: 639px) {
+          #preview-after-work { contain-intrinsic-size: 860px; }
+          #preview-about { contain-intrinsic-size: 860px; }
         }
 
         .preview-newsletter-form .ml-form-embedContent h4,
@@ -333,7 +361,7 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
         <div className="absolute inset-0 -z-20 bg-[#050a13]" />
         <div className="absolute inset-0 -z-10 w-full">
           <Image
-            src="/after-work-preview/hero-desk.png"
+            src="/after-work-preview/hero-desk.webp"
             alt={copy.hero.imageAlt}
             fill
             priority
@@ -428,7 +456,6 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
                 </a>
               </noscript>
             </div>
-            <p className="mt-3 text-[11px] text-[#8c8176]">{copy.afterWork.helper}</p>
           </div>
 
           <article className="relative w-full max-w-[540px] justify-self-end overflow-hidden rounded-[14px] border border-[#e3d9cc] bg-[#fbf7ef] p-4 shadow-[0_16px_42px_rgba(70,48,24,0.11)] sm:p-[14px]">
@@ -438,7 +465,7 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
             </div>
             <div className="relative mt-3 aspect-[1.7/1] overflow-hidden rounded-[8px]">
               <Image
-                src="/after-work-preview/issue-001.png"
+                src="/after-work-preview/issue-001.webp"
                 alt={copy.afterWork.imageAlt}
                 fill
                 sizes="(min-width: 1024px) 46vw, 100vw"
@@ -455,7 +482,7 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
         <div className="absolute inset-0 -z-20 bg-[#050a13]" />
         <div className="preview-about-frame absolute inset-x-0 bottom-0 top-[440px] -z-10 sm:top-[420px] lg:inset-y-0 lg:right-0 lg:left-auto lg:aspect-[1009/1024] lg:h-full lg:w-auto">
           <Image
-            src="/profile/george-valandis.png"
+            src="/profile/george-valandis.webp"
             alt={copy.about.imageAlt}
             fill
             sizes="(min-width: 1024px) 63vh, 100vw"
