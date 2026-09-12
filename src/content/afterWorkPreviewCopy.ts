@@ -6,7 +6,7 @@ export type PreviewCopy = {
     cta: string;
   };
   hero: {
-    badge: string;
+    badge: [string, string];
     prefix: string;
     highlight: string;
     suffix: string;
@@ -19,8 +19,6 @@ export type PreviewCopy = {
     eyebrow: string;
     title: string;
     viewAll: string;
-    pause: string;
-    resume: string;
     ariaLabel: string;
   };
   afterWork: {
@@ -94,7 +92,7 @@ export const previewCopy: Record<SiteLocale, PreviewCopy> = {
       cta: "Let's Talk",
     },
     hero: {
-      badge: 'iOS Developer · Solopreneur',
+      badge: ['iOS Developer', 'Solopreneur'],
       prefix: 'I build',
       highlight: 'iOS apps',
       suffix: 'from 5 to 9.',
@@ -107,8 +105,6 @@ export const previewCopy: Record<SiteLocale, PreviewCopy> = {
       eyebrow: '01 — Apps',
       title: 'My iOS apps',
       viewAll: 'View all apps',
-      pause: 'Pause motion',
-      resume: 'Resume motion',
       ariaLabel: 'All apps',
     },
     afterWork: {
@@ -160,7 +156,7 @@ export const previewCopy: Record<SiteLocale, PreviewCopy> = {
       cta: 'Kontakt aufnehmen',
     },
     hero: {
-      badge: 'iOS-Entwickler · Solopreneur',
+      badge: ['iOS-Entwickler', 'Solopreneur'],
       prefix: 'Ich baue',
       highlight: 'iOS-Apps',
       suffix: 'von 17 bis 21 Uhr.',
@@ -173,8 +169,6 @@ export const previewCopy: Record<SiteLocale, PreviewCopy> = {
       eyebrow: '01 — Apps',
       title: 'Meine iOS-Apps',
       viewAll: 'Alle Apps ansehen',
-      pause: 'Bewegung pausieren',
-      resume: 'Bewegung fortsetzen',
       ariaLabel: 'Alle Apps',
     },
     afterWork: {

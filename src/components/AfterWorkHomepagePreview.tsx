@@ -4,7 +4,7 @@ import { apps } from '@/content/apps';
 import { germanAppSubtitles, previewCopy } from '@/content/afterWorkPreviewCopy';
 import { blogPosts } from '@/content/blogPosts';
 import type { SiteLocale } from '@/lib/siteLocale';
-import { ArrowUpRight, Menu, Sparkles, X } from 'lucide-react';
+import { ArrowUpRight, Menu, X } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
@@ -48,7 +48,6 @@ function AppMarqueeSet({ duplicate = false, locale }: { duplicate?: boolean; loc
 export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocale }) {
   const copy = previewCopy[locale];
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isMarqueePaused, setIsMarqueePaused] = useState(false);
   const [email, setEmail] = useState('');
   const [submitted, setSubmitted] = useState(false);
 
@@ -69,12 +68,8 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
         .preview-app-marquee {
           width: max-content;
           flex-shrink: 0;
+          will-change: transform;
           animation: preview-app-marquee-right 38s linear infinite;
-        }
-
-        .preview-app-marquee.is-paused,
-        .preview-app-marquee:focus-within {
-          animation-play-state: paused;
         }
 
         .preview-about-image {
@@ -89,12 +84,6 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
           }
         }
 
-        @media (prefers-reduced-motion: reduce) {
-          .preview-app-marquee {
-            animation: none;
-            transform: none;
-          }
-        }
       `}</style>
       <nav className="fixed inset-x-0 top-0 z-50 border-b border-white/[0.04] bg-[#050a13] backdrop-blur-xl">
         <div className="relative mx-auto flex h-20 max-w-[1600px] items-center justify-start px-6 lg:h-16 lg:px-[52px]">
@@ -172,11 +161,11 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
 
         <div className="relative mx-auto flex min-h-[590px] max-w-[1600px] items-center px-6 py-20 sm:px-10 lg:min-h-[640px] lg:px-[54px] lg:py-20 xl:min-h-[calc(100svh-64px)]">
           <div className="relative z-10 max-w-[635px]">
-            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/[0.16] bg-[#111c28]/75 px-3.5 py-1.5 text-[10px] font-medium tracking-[0.09em] text-slate-100 shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_10px_26px_rgba(0,0,0,0.14)] backdrop-blur-md">
-              <span className="grid h-5 w-5 place-items-center rounded-full bg-[#ff8a3d]/[0.14] text-[#ffad70]">
-                <Sparkles size={12} strokeWidth={1.8} />
-              </span>
-              <span>{copy.hero.badge}</span>
+            <div className="mb-5 inline-flex h-7 items-center gap-2.5 whitespace-nowrap rounded-full border border-[#ff8a3d]/[0.28] bg-[#111c28]/[0.55] px-3 text-[10px] font-medium uppercase tracking-[0.14em] text-slate-300 backdrop-blur-md sm:h-[30px] sm:gap-3 sm:px-3.5 sm:tracking-[0.18em]">
+              <span aria-hidden="true" className="h-1.5 w-1.5 shrink-0 rounded-full bg-[#ff8a3d]" />
+              <span>{copy.hero.badge[0]}</span>
+              <span aria-hidden="true" className="text-[#ff8a3d]/70">/</span>
+              <span>{copy.hero.badge[1]}</span>
             </div>
             <h1 className="max-w-[640px] text-[50px] font-bold leading-[0.98] tracking-[-0.055em] text-white sm:text-[58px] lg:text-[64px] lg:leading-[0.95]">
               {copy.hero.prefix}{' '}
@@ -214,16 +203,7 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
                 {copy.apps.title}<span className="text-slate-500">.</span>
               </h2>
             </div>
-            <div className="flex items-center gap-4 self-start sm:self-auto">
-              <button
-                type="button"
-                aria-pressed={isMarqueePaused}
-                onClick={() => setIsMarqueePaused((paused) => !paused)}
-                className="inline-flex items-center gap-2 rounded-full border border-white/[0.12] px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.14em] text-slate-400 transition-colors hover:border-white/30 hover:text-white"
-              >
-                <span aria-hidden="true" className="text-[#ff8a3d]">{isMarqueePaused ? '▶' : 'Ⅱ'}</span>
-                {isMarqueePaused ? copy.apps.resume : copy.apps.pause}
-              </button>
+            <div className="self-start sm:self-auto">
               <Link href="/apps/" className="inline-flex items-center gap-2 pb-1 text-[13px] text-[#ff8a3d] hover:text-[#ffb27b]">
                 {copy.apps.viewAll} <ArrowUpRight size={15} />
               </Link>
@@ -233,7 +213,7 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
           <div className="relative overflow-hidden" role="region" aria-label={copy.apps.ariaLabel}>
             <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-10 bg-gradient-to-r from-[#050a13] to-transparent sm:w-16" />
             <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-10 bg-gradient-to-l from-[#050a13] to-transparent sm:w-16" />
-            <div className={`preview-app-marquee flex w-max${isMarqueePaused ? ' is-paused' : ''}`}>
+            <div className="preview-app-marquee flex w-max">
               <AppMarqueeSet locale={locale} />
               <AppMarqueeSet duplicate locale={locale} />
             </div>
@@ -242,7 +222,6 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
       </section>
 
       <section id="preview-after-work" className="relative flex min-h-[620px] items-center scroll-mt-20 bg-[#f7efe3] py-20 text-[#171717] sm:min-h-[700px] sm:scroll-mt-16 sm:py-24 lg:min-h-[720px] lg:py-28">
-        <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 -top-8 z-10 h-8 bg-gradient-to-b from-[#050a13] to-[#f7efe3] sm:-top-11 sm:h-11" />
         <div className="mx-auto grid w-full max-w-[1600px] items-center gap-10 px-6 sm:px-10 lg:grid-cols-[1fr_430px] lg:gap-10 lg:pl-[54px] lg:pr-[44px]">
           <div className="max-w-[535px]">
             <p className="mb-4 font-mono text-[11px] font-medium uppercase tracking-[0.27em] text-[#f47734]">
