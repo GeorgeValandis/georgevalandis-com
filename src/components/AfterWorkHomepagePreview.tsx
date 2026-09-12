@@ -48,6 +48,16 @@ const previewNav = [
   { label: 'Contact', href: '#preview-contact' },
 ];
 
+function PreviewSectionTransition({ from, to }: { from: string; to: string }) {
+  return (
+    <div
+      aria-hidden="true"
+      className="h-10 sm:h-14"
+      style={{ background: `linear-gradient(to bottom, ${from} 0%, ${to} 100%)` }}
+    />
+  );
+}
+
 export default function AfterWorkHomepagePreview() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [email, setEmail] = useState('');
@@ -224,6 +234,8 @@ export default function AfterWorkHomepagePreview() {
         </div>
       </section>
 
+      <PreviewSectionTransition from="#050a13" to="#f7efe3" />
+
       <section id="preview-after-work" className="scroll-mt-20 bg-[#f7efe3] py-5 text-[#171717] sm:scroll-mt-16 sm:py-[29px]">
         <div className="mx-auto grid max-w-[1600px] items-center gap-10 px-6 sm:px-10 lg:grid-cols-[1fr_430px] lg:gap-10 lg:pl-[54px] lg:pr-[44px]">
           <div className="max-w-[535px]">
@@ -279,6 +291,8 @@ export default function AfterWorkHomepagePreview() {
         </div>
       </section>
 
+      <PreviewSectionTransition from="#f7efe3" to="#07101a" />
+
       <section id="preview-about" className="relative isolate scroll-mt-20 overflow-hidden bg-[#07101a] py-0 lg:scroll-mt-16">
         <div className="absolute inset-0 -z-20 bg-[#07101a]" />
         <div className="preview-about-image absolute inset-y-0 right-0 -z-10 w-full lg:w-[76%]">
@@ -314,8 +328,8 @@ export default function AfterWorkHomepagePreview() {
         </div>
       </section>
 
-      <section id="preview-blog" className="bg-[#070d17] px-6 pb-28 lg:px-8">
-        <div className="mx-auto max-w-7xl border-t border-white/[0.06] pt-20">
+      <section id="preview-blog" className="bg-[#07101a] px-6 pb-28 lg:px-8">
+        <div className="mx-auto max-w-7xl pt-20">
           <p className="mb-3 font-mono text-xs uppercase tracking-[0.24em] text-[#ff9d19]">03 — Blog</p>
           <div className="grid gap-4 md:grid-cols-3">
             {blogPosts.slice(0, 3).map((post) => (
@@ -329,7 +343,9 @@ export default function AfterWorkHomepagePreview() {
         </div>
       </section>
 
-      <section id="preview-contact" className="border-t border-white/[0.06] bg-[#050a13] px-6 py-28 text-center lg:px-8">
+      <PreviewSectionTransition from="#07101a" to="#050a13" />
+
+      <section id="preview-contact" className="bg-[#050a13] px-6 py-28 text-center lg:px-8">
         <p className="font-mono text-xs uppercase tracking-[0.24em] text-[#ff9d19]">04 — Contact</p>
         <h2 className="mx-auto mt-5 max-w-2xl text-4xl font-semibold tracking-[-0.04em] text-white sm:text-5xl">Let&apos;s work together.</h2>
         <a href="mailto:info@georgevalandis.com" className="mt-8 inline-flex items-center gap-2 text-lg text-slate-300 transition-colors hover:text-white">
@@ -337,7 +353,7 @@ export default function AfterWorkHomepagePreview() {
         </a>
       </section>
 
-      <footer className="border-t border-white/[0.06] bg-[#050a13] px-6 py-8 text-center text-xs text-slate-600 lg:px-8">
+      <footer className="bg-[#050a13] px-6 py-8 text-center text-xs text-slate-600 lg:px-8">
         <span>Preview version · George Valandis</span>
       </footer>
     </main>
