@@ -72,28 +72,6 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
           animation: preview-app-marquee-right 90s linear infinite;
         }
 
-        .preview-about-image {
-          -webkit-mask-image:
-            linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.32) 24%, #000 55%, #000 88%, transparent 100%),
-            linear-gradient(to bottom, transparent 0%, #000 16%, #000 82%, transparent 100%);
-          -webkit-mask-composite: source-in;
-          mask-image:
-            linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.32) 24%, #000 55%, #000 88%, transparent 100%),
-            linear-gradient(to bottom, transparent 0%, #000 16%, #000 82%, transparent 100%);
-          mask-composite: intersect;
-        }
-
-        @media (min-width: 1024px) {
-          .preview-about-image {
-            -webkit-mask-image:
-              linear-gradient(to right, transparent 0%, transparent 36%, rgba(0, 0, 0, 0.18) 46%, #000 64%, #000 82%, transparent 100%),
-              linear-gradient(to bottom, transparent 0%, #000 16%, #000 82%, transparent 100%);
-            mask-image:
-              linear-gradient(to right, transparent 0%, transparent 36%, rgba(0, 0, 0, 0.18) 46%, #000 64%, #000 82%, transparent 100%),
-              linear-gradient(to bottom, transparent 0%, #000 16%, #000 82%, transparent 100%);
-          }
-        }
-
       `}</style>
       <nav className="fixed inset-x-0 top-0 z-50 border-b border-white/[0.04] bg-[#050a13] backdrop-blur-xl">
         <div className="relative mx-auto flex h-20 max-w-[1600px] items-center justify-start px-6 lg:h-16 lg:px-[52px]">
@@ -286,19 +264,21 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
         </div>
       </section>
 
-      <section id="preview-about" className="relative isolate scroll-mt-20 overflow-hidden bg-[#07101a] py-0 lg:scroll-mt-16">
-        <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 -top-8 z-20 h-8 bg-gradient-to-b from-[#f7efe3] to-[#07101a] sm:-top-11 sm:h-11" />
-        <div className="absolute inset-0 -z-20 bg-[#07101a]" />
-        <div className="preview-about-image absolute inset-x-0 bottom-0 top-[440px] -z-10 w-full sm:top-[420px] lg:inset-y-0 lg:right-0 lg:left-auto lg:w-[76%]">
+      <section id="preview-about" className="relative isolate scroll-mt-20 overflow-hidden bg-[#050a13] py-0 lg:scroll-mt-16">
+        <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 -top-8 z-20 h-8 bg-gradient-to-b from-[#f7efe3] to-[#050a13] sm:-top-11 sm:h-11" />
+        <div className="absolute inset-0 -z-20 bg-[#050a13]" />
+        <div className="preview-about-frame absolute inset-x-0 bottom-0 top-[440px] -z-10 sm:top-[420px] lg:inset-y-0 lg:right-0 lg:left-auto lg:aspect-[1009/1024] lg:h-full lg:w-auto">
           <Image
             src="/profile/george-valandis.png"
             alt={copy.about.imageAlt}
             fill
-            sizes="(min-width: 1024px) 76vw, 100vw"
-            className="object-contain object-right"
+            sizes="(min-width: 1024px) 63vh, 100vw"
+            className="object-cover object-center"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#07101a]/80 via-[#07101a]/20 to-[#07101a]/5 lg:bg-gradient-to-r lg:from-[#07101a] lg:via-[#07101a]/90 lg:via-45% lg:to-transparent lg:to-82%" />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#07101a] via-[#07101a]/[0.62] via-20% to-transparent lg:hidden" />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#050a13] via-[#050a13]/[0.2] via-18% to-transparent to-40%" />
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-[#050a13] via-[#050a13]/[0.72] to-transparent sm:h-40 lg:h-36" />
+          <div className="pointer-events-none absolute inset-y-0 left-0 hidden w-[52%] bg-gradient-to-r from-[#050a13] via-[#050a13]/[0.72] via-22% to-transparent lg:block" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-[#050a13]/[0.28] to-transparent" />
         </div>
         <div className="relative mx-auto flex min-h-[820px] max-w-[1600px] items-start px-6 pb-16 pt-20 sm:min-h-[860px] sm:px-10 sm:pb-20 sm:pt-24 lg:min-h-[640px] lg:items-center lg:px-[54px] lg:py-0">
           <div className="relative z-10 max-w-[480px]">
@@ -323,7 +303,7 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
         </div>
       </section>
 
-      <section id="preview-blog" className="min-h-[560px] bg-[#07101a] px-6 pb-36 lg:px-8">
+      <section id="preview-blog" className="min-h-[560px] bg-[#050a13] px-6 pb-36 lg:px-8">
         <div className="mx-auto max-w-[1600px] px-0 pt-28 sm:px-4 lg:px-[46px]">
           <p className="mb-3 font-mono text-xs uppercase tracking-[0.24em] text-[#ff9d19]">{copy.blog.eyebrow}</p>
           <div className="grid gap-4 md:grid-cols-3">
