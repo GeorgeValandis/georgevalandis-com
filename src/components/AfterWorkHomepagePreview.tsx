@@ -42,6 +42,7 @@ function AppMarqueeSet({ duplicate = false }: { duplicate?: boolean }) {
 const previewNav = [
   { label: 'Home', href: '#preview-home' },
   { label: 'Apps', href: '#preview-apps' },
+  { label: 'After Hours', href: '#preview-after-work' },
   { label: 'About', href: '#preview-about' },
   { label: 'Blog', href: '#preview-blog' },
   { label: 'Contact', href: '#preview-contact' },
@@ -210,7 +211,7 @@ export default function AfterWorkHomepagePreview() {
         </div>
       </section>
 
-      <section id="preview-after-work" className="bg-[#f7efe3] py-5 text-[#171717] sm:py-[29px]">
+      <section id="preview-after-work" className="scroll-mt-20 bg-[#f7efe3] py-5 text-[#171717] sm:scroll-mt-16 sm:py-[29px]">
         <div className="mx-auto grid max-w-[1600px] items-center gap-10 px-6 sm:px-10 lg:grid-cols-[1fr_430px] lg:gap-10 lg:pl-[54px] lg:pr-[44px]">
           <div className="max-w-[535px]">
             <p className="mb-4 font-mono text-[11px] font-medium uppercase tracking-[0.27em] text-[#f47734]">
