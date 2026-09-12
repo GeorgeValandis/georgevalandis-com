@@ -214,17 +214,33 @@ function PhoneShot({
 
   return (
     <div
-      className={`relative overflow-hidden rounded-[2.5rem] border border-slate-950/10 bg-slate-950 p-2.5 shadow-2xl shadow-slate-950/20 ${className}`}
+      className={`relative isolate overflow-visible rounded-[3.2rem] border border-slate-950/30 bg-[linear-gradient(145deg,#454952_0%,#1c1f25_28%,#080a0f_72%,#363942_100%)] p-[5px] shadow-[0_34px_70px_-28px_rgba(15,23,42,0.55),0_12px_24px_-16px_rgba(15,23,42,0.4)] ${className}`}
     >
+      <span
+        aria-hidden="true"
+        className="absolute -left-[4px] top-[19%] h-12 w-[4px] rounded-l-full bg-[#2d3037] shadow-[inset_1px_0_0_rgba(255,255,255,0.16),0_1px_2px_rgba(15,23,42,0.35)]"
+      />
+      <span
+        aria-hidden="true"
+        className="absolute -left-[4px] top-[29%] h-20 w-[4px] rounded-l-full bg-[#2d3037] shadow-[inset_1px_0_0_rgba(255,255,255,0.16),0_1px_2px_rgba(15,23,42,0.35)]"
+      />
+      <span
+        aria-hidden="true"
+        className="absolute -right-[4px] top-[28%] h-24 w-[4px] rounded-r-full bg-[#2d3037] shadow-[inset_-1px_0_0_rgba(255,255,255,0.16),0_1px_2px_rgba(15,23,42,0.35)]"
+      />
       <Image
         src={src}
         alt={alt}
         width={1206}
         height={2622}
-        className="block h-full w-full rounded-[1.45rem] object-contain"
+        className="relative z-10 block h-full w-full rounded-[2.85rem] object-cover ring-1 ring-white/15"
         priority={priority}
         loading={priority ? undefined : 'lazy'}
         sizes="(min-width: 1280px) 322px, (min-width: 1024px) 294px, 216px"
+      />
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-[5px] z-20 rounded-[3rem] border border-white/10"
       />
     </div>
   );
@@ -509,6 +525,7 @@ export default function AppLandingPage({ app, content }: AppLandingPageProps) {
   const supportingShot = secondaryShot ?? heroShot;
   const tertiaryShot = progressShot ?? supportingShot;
   const privacyUrl = absoluteUrl(app.legal.privacyPath);
+  const appPrivacyUrl = absoluteUrl(`/apps/${app.slug}/privacy/`);
   const termsUrl = absoluteUrl(app.legal.termsPath);
   const imprintUrl = absoluteUrl('/imprint/');
   const supportPage = getAppSupportPage(app.slug);
@@ -529,6 +546,7 @@ export default function AppLandingPage({ app, content }: AppLandingPageProps) {
   const privacyCardClass = 'border-slate-950/10 bg-slate-50';
   const privacyButtonClass = 'border-slate-950/15 text-slate-950 hover:bg-slate-950/5';
   const downloadQrSvg = appStoreLink ? createDownloadQrSvg(appStoreLink) : undefined;
+  const usesGlanceAwayCampaignMeasurement = app.slug === 'glanceaway';
 
   return (
     <main className="min-h-screen bg-slate-50 text-slate-950">
@@ -708,12 +726,12 @@ export default function AppLandingPage({ app, content }: AppLandingPageProps) {
             </p>
           </div>
 
-          <div className="mt-16 grid gap-8 lg:grid-cols-[minmax(280px,420px)_minmax(0,1fr)] lg:items-center">
+          <div className="mt-16 grid min-w-0 gap-8 lg:grid-cols-[minmax(280px,420px)_minmax(0,1fr)] lg:items-center">
             <PhoneShot
               src={featureShot.src}
               alt={featureShot.alt}
               variant={featureShot.variant}
-              className="mx-auto h-[640px] w-[294px] lg:h-[700px] lg:w-[322px]"
+              className="mx-auto aspect-[294/640] h-auto w-full max-w-[294px] lg:aspect-auto lg:h-[700px] lg:w-[322px]"
             />
 
             <div className="grid gap-5">
@@ -806,10 +824,10 @@ export default function AppLandingPage({ app, content }: AppLandingPageProps) {
               </p>
             </div>
             <a
-              href={privacyUrl}
+              href={usesGlanceAwayCampaignMeasurement ? appPrivacyUrl : privacyUrl}
               className={`inline-flex items-center justify-center rounded-full border px-5 py-3 text-sm font-bold transition ${privacyButtonClass}`}
             >
-              Privacy
+              {usesGlanceAwayCampaignMeasurement ? 'App Privacy' : 'Privacy'}
             </a>
           </div>
         </div>
@@ -872,9 +890,20 @@ export default function AppLandingPage({ app, content }: AppLandingPageProps) {
               &copy; {new Date().getFullYear()} George Valandis. {app.title} is an app by George Valandis.
             </p>
             <nav aria-label={`${app.title} legal links`} className="flex flex-wrap gap-x-5 gap-y-2">
-              <a href={privacyUrl} className="font-semibold text-slate-600 transition hover:text-slate-950">
-                Privacy Policy
-              </a>
+              {usesGlanceAwayCampaignMeasurement ? (
+                <>
+                  <a href={privacyUrl} className="font-semibold text-slate-600 transition hover:text-slate-950">
+                    Website Privacy &amp; Cookies
+                  </a>
+                  <a href={appPrivacyUrl} className="font-semibold text-slate-600 transition hover:text-slate-950">
+                    App Privacy
+                  </a>
+                </>
+              ) : (
+                <a href={privacyUrl} className="font-semibold text-slate-600 transition hover:text-slate-950">
+                  Privacy Policy
+                </a>
+              )}
               <a href={termsUrl} className="font-semibold text-slate-600 transition hover:text-slate-950">
                 Terms
               </a>
@@ -890,6 +919,9 @@ export default function AppLandingPage({ app, content }: AppLandingPageProps) {
           </div>
         </footer>
       </section>
+      {usesGlanceAwayCampaignMeasurement ? (
+        <script src="/apps/glanceaway/campaign.js" defer />
+      ) : null}
     </main>
   );
 }

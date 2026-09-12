@@ -266,6 +266,45 @@ const baseApps = [
     websitePath: '/apps/darts-scorekeeper/',
     logo: '/apps/darts-scorekeeper-icon.png',
   },
+  {
+    slug: 'padel-scorekeeper',
+    title: 'Padel Scorekeeper',
+    subtitle: 'Fast Padel Scoreboard for Doubles Matches',
+    description:
+      'A focused iPhone scoreboard for Padel doubles with clear 15–30–40 scoring, games, sets, tie-breaks, serve tracking, undo, and clean result sharing.',
+    platforms: ['iOS'],
+    tags: ['Swift', 'SwiftUI', 'Sports', 'Padel', 'Monthly', 'Lifetime'],
+    gradient: 'from-emerald-500/20 to-cyan-500/20',
+    accentBorder: 'group-hover:border-emerald-400/40',
+    websitePath: '/apps/padel-scorekeeper/',
+    logo: '/apps/padel-scorekeeper-icon.png',
+  },
+  {
+    slug: 'topf-budget',
+    title: 'Topf Budget',
+    subtitle: 'Monthly budget, made clear',
+    description:
+      'A playful local-first budget app for four editable spending pots, clear limit bars, and simple month-to-month progress.',
+    platforms: ['iOS', 'Android'],
+    tags: ['React Native', 'Expo', 'Budget', 'CSV Import', 'Local-first'],
+    gradient: 'from-orange-500/20 to-emerald-500/20',
+    accentBorder: 'group-hover:border-orange-400/40',
+    websitePath: '/apps/topf-budget/',
+    logo: '/apps/topf-budget-icon.png',
+  },
+  {
+    slug: 'one-sentence',
+    title: 'One Sentence',
+    subtitle: 'A quiet daily journal for one meaningful thought',
+    description:
+      'A minimalist local-first journal for writing or dictating one sentence, choosing a mood, and keeping small moments close.',
+    platforms: ['iOS', 'Android'],
+    tags: ['React Native', 'Expo', 'Journal', 'Local-first', 'Dictation'],
+    gradient: 'from-[#ead8cb]/30 to-[#f7f2e9]/30',
+    accentBorder: 'group-hover:border-[#c4674a]/40',
+    websitePath: '/apps/one-sentence/',
+    logo: '/apps/one-sentence-icon.png',
+  },
 ] as const;
 
 export const apps: AppEntry[] = baseApps.map((app) => ({

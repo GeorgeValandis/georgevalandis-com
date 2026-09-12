@@ -75,6 +75,7 @@ export default async function AppPrivacyStatementPage({
     const appStoreProvider = app.platforms.includes('Android') && !app.platforms.includes('iOS')
       ? 'Google Play'
       : 'the App Store';
+    const usesAggregateCampaignMeasurement = app.slug === 'glanceaway';
 
     return (
       <main className="min-h-screen bg-gray-950 text-gray-50">
@@ -141,6 +142,21 @@ export default async function AppPrivacyStatementPage({
                 purchase, journal, tracking, or other content that you may enter inside the mobile
                 app, and does not process mobile app data.
               </p>
+              {app.slug === 'glanceaway' ? (
+                <p>
+                  The optional anonymous feedback survey shown after a cancelled timer session is
+                  part of the GlanceAway app flow and opens a form hosted by Tally. This landing
+                  page does not send survey answers to Tally. The survey and its data processing are
+                  described in the{' '}
+                  <Link
+                    href="/apps/glanceaway/privacy/"
+                    className="text-amber-300 hover:text-amber-200 transition-colors underline"
+                  >
+                    GlanceAway App Privacy Policy
+                  </Link>
+                  .
+                </p>
+              ) : null}
             </section>
 
             <section>
@@ -175,50 +191,69 @@ export default async function AppPrivacyStatementPage({
               <ul className="list-disc pl-6 space-y-2">
                 <li>Technical access data required to deliver and secure the page.</li>
                 <li>
-                  Cookie consent information, if you interact with the cookie settings interface.
-                </li>
-                <li>
-                  Basic browser and device information needed for layout, security, and consent
-                  handling.
+                  The version of the cookie notice stored in a necessary first-party cookie after
+                  you acknowledge that notice.
                 </li>
                 <li>
                   Data you actively send by contacting George Valandis by email or phone.
                 </li>
+                {usesAggregateCampaignMeasurement ? (
+                  <li>
+                    The campaign label in a GlanceAway landing-page URL and a daily aggregate
+                    count when an App Store button is opened.
+                  </li>
+                ) : null}
               </ul>
             </section>
 
             <section>
               <h2 className="text-2xl font-semibold text-white mb-3">
-                5. Cookies, Consent, and Analytics
+                {usesAggregateCampaignMeasurement
+                  ? '5. Cookies and Campaign Analytics'
+                  : '5. Cookies and Analytics'}
               </h2>
               <p>
-                The landing page uses technically necessary cookies or comparable storage only
-                where needed to provide the page securely and remember privacy choices.
+                This landing page does not use analytics or marketing cookies and does not load
+                analytics services, advertising SDKs, Meta or TikTok pixels, fingerprinting, or
+                other marketing trackers.
               </p>
               <p>
-                Optional analytics or marketing categories are only activated if you give explicit
-                consent through the cookie settings interface. You can withdraw or change that
-                choice at any time by opening the cookie settings on the website.
+                If you acknowledge the cookie notice, the page stores only the necessary
+                first-party cookie <code>gv_cookie_notice_*</code>. It contains the notice version
+                and prevents the same information from appearing on every page view. It is kept
+                for up to 180 days.
               </p>
               <p>
-                To document your choice, the website may store a consent record containing the
-                selected categories, decision timestamp, consent ID, browser information, the
-                scope for this standalone landing page, and a pseudonymized IP hash. No plain IP
-                address is stored in the consent log.
+                The cookie-information function does not use local storage, a consent ID, or
+                server-side consent logging. Acknowledging the notice is not consent to analytics
+                or marketing because those technologies are not used.
               </p>
-              <p>
-                Consent records are separated by scope. The main georgevalandis.com website uses
-                the scope &quot;site&quot;, while this app landing page uses its own app-specific scope.
-                Records are indexed by the Consent ID shown in the cookie settings and can also be
-                filtered by scope and page URL. This allows the website operator to locate the
-                matching landing page consent record for access requests and to delete that record
-                after a verified deletion request.
-              </p>
-              <p>
-                You can open the cookie settings on the website to view your Consent ID and change
-                or withdraw optional analytics and marketing consent. For access or deletion
-                requests about a stored consent record, include that Consent ID in your message.
-              </p>
+              {usesAggregateCampaignMeasurement ? (
+                <>
+                  <p>
+                    GlanceAway campaign measurement itself is cookieless and does not use local
+                    storage or another visitor identifier.
+                  </p>
+                  <p>
+                    A campaign link may contain a short, shared campaign label in the URL. The page
+                    reads that label only in the current page view and uses it to route a later App
+                    Store button click through a first-party redirect. Opening the landing page
+                    alone does not send a campaign analytics request.
+                  </p>
+                  <p>
+                    When an App Store button is opened, the redirect records only the UTC calendar
+                    day, the fixed source &quot;landing&quot;, the shared campaign label, and an aggregate
+                    click total. The campaign statistics do not contain an IP address, user agent,
+                    device identifier, full referrer, or individual click timestamp. Technical
+                    hosting access logs remain subject to the hosting information above.
+                  </p>
+                  <p>
+                    Campaign labels must describe a shared campaign or creative. They are not used
+                    as visitor IDs and must not contain a name, email address, device identifier, or
+                    another label assigned to one person.
+                  </p>
+                </>
+              ) : null}
             </section>
 
             <section>
@@ -231,6 +266,14 @@ export default async function AppPrivacyStatementPage({
                 policy of the respective provider applies. George Valandis does not control the
                 data processing on those external websites.
               </p>
+              {usesAggregateCampaignMeasurement ? (
+                <p>
+                  When you open the App Store from a measured GlanceAway campaign, the redirect
+                  adds the GlanceAway App Store provider token and the shared campaign token to the
+                  App Store URL. Apple receives those tokens only after you choose to open the App
+                  Store. Apple&apos;s own privacy terms then apply.
+                </p>
+              ) : null}
             </section>
 
             <section>
@@ -240,14 +283,28 @@ export default async function AppPrivacyStatementPage({
               <p>Landing page data is processed to:</p>
               <ul className="list-disc pl-6 space-y-2">
                 <li>provide, display, and secure the landing page,</li>
-                <li>remember and document privacy choices,</li>
+                <li>remember that the cookie notice was acknowledged,</li>
                 <li>respond to direct inquiries,</li>
-                <li>measure and improve the page only where legally permitted or consented to.</li>
+                {usesAggregateCampaignMeasurement ? (
+                  <li>measure aggregate App Store button interest by shared campaign label.</li>
+                ) : null}
               </ul>
               <p>
-                Processing is carried out under applicable legal bases, in particular Art. 6
-                para. 1 lit. a, b, c, and f GDPR depending on the case.
+                The notice cookie is used under Section 25(2) no. 2 TDDDG to provide the
+                notice-memory function you requested. Technical delivery and security processing
+                is based on Art. 6 para. 1 lit. f GDPR. Direct inquiries are processed under Art. 6
+                para. 1 lit. b GDPR where they concern pre-contractual communication and otherwise
+                under Art. 6 para. 1 lit. f GDPR.
               </p>
+              {usesAggregateCampaignMeasurement ? (
+                <p>
+                  The GlanceAway campaign totals are used to understand whether a positioning
+                  creates interest in the App Store and to improve the landing page. The legal
+                  basis is Art. 6 para. 1 lit. f GDPR, based on the legitimate interest in measuring
+                  the effectiveness of first-party product communication in a data-minimizing way.
+                  No visitor profile is created from the campaign total.
+                </p>
+              ) : null}
             </section>
 
             <section>
@@ -256,15 +313,21 @@ export default async function AppPrivacyStatementPage({
               </h2>
               <p>
                 Personal data is stored only as long as required for the relevant purpose or legal
-                retention obligations. Consent records are generally stored for up to three years
-                from the end of the calendar year in which the choice was made, unless longer
-                storage is required for legal obligations or defense of legal claims.
+                retention obligations.
               </p>
               <p>
-                Consent records can be searched by Consent ID, scope, or page URL through the
-                protected consent export workflow and can be removed from the consent log through
-                the protected deletion workflow when deletion is legally required or justified.
+                The necessary notice cookie is kept for up to 180 days. No related consent record
+                is stored on the server.
               </p>
+              {usesAggregateCampaignMeasurement ? (
+                <p>
+                  GlanceAway campaign click totals are retained as daily aggregate statistics.
+                  They may be kept for long-term campaign comparisons because they contain no
+                  visitor or device identifier and individual visitors cannot be identified from
+                  the campaign count. Technical hosting logs follow the separate retention rules of
+                  the hosting and security process.
+                </p>
+              ) : null}
             </section>
 
             <section>
@@ -281,11 +344,13 @@ export default async function AppPrivacyStatementPage({
                 <li>data portability where applicable,</li>
                 <li>lodge a complaint with a supervisory authority.</li>
               </ul>
-              <p>
-                Because the consent log stores a pseudonymized IP hash instead of a plain IP
-                address, the Consent ID is the practical identifier for locating and deleting your
-                landing page consent record.
-              </p>
+              {usesAggregateCampaignMeasurement ? (
+                <p>
+                  You may object at any time to processing based on Art. 6 para. 1 lit. f GDPR for
+                  reasons arising from your particular situation. The aggregate campaign count
+                  cannot be assigned back to an individual visitor.
+                </p>
+              ) : null}
             </section>
 
             <section>

@@ -192,6 +192,30 @@ export const appSeoMetadata: Record<string, AppSeoMetadata> = {
     group: 'utilities-tools',
     updatedAt: '2026-05-27',
   },
+  'padel-scorekeeper': {
+    primaryKeyword: 'padel scorekeeper',
+    secondaryKeywords: ['padel scoreboard', 'padel scoring app', 'padel match score'],
+    searchIntent:
+      'Find a fast Padel scorekeeper for doubles matches with standard points, games, sets, tie-breaks, serve tracking, undo, and result sharing.',
+    group: 'utilities-tools',
+    updatedAt: '2026-09-07',
+  },
+  'topf-budget': {
+    primaryKeyword: 'monthly budget app',
+    secondaryKeywords: ['family budget planner', 'spending tracker', 'budget by category'],
+    searchIntent:
+      'Find a simple monthly budget app for four spending categories, local bank-file import, and clear progress bars.',
+    group: 'habits-focus-wellbeing',
+    updatedAt: '2026-09-02',
+  },
+  'one-sentence': {
+    primaryKeyword: 'one sentence journal',
+    secondaryKeywords: ['daily journal app', 'private journal', 'minimalist journal'],
+    searchIntent:
+      'Find a simple private journal for capturing one meaningful sentence each day by typing or dictating.',
+    group: 'habits-focus-wellbeing',
+    updatedAt: '2026-09-02',
+  },
 };
 
 export const supportSeoMetadata: Record<string, { updatedAt: string }> = {
@@ -203,6 +227,9 @@ export const supportSeoMetadata: Record<string, { updatedAt: string }> = {
   },
   'darts-scorekeeper': {
     updatedAt: '2026-05-27',
+  },
+  'padel-scorekeeper': {
+    updatedAt: '2026-09-07',
   },
 };
 

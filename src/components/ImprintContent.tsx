@@ -33,7 +33,7 @@ export default function ImprintContent({ locale }: ImprintContentProps) {
         <div className="space-y-8 text-gray-300 leading-relaxed">
           <section>
             <h2 className="text-2xl font-semibold text-white mb-3">
-              {isGerman ? 'Angaben gemäß § 5 TMG' : 'Legal Notice'}
+              {isGerman ? 'Angaben gemäß § 5 DDG' : 'Legal Notice'}
             </h2>
             <p>Georgios Andi Avenidis</p>
             <p>Berliner Strasse 235</p>
@@ -59,7 +59,11 @@ export default function ImprintContent({ locale }: ImprintContentProps) {
 
           <section>
             <h2 className="text-2xl font-semibold text-white mb-3">
-              {isGerman ? 'Verantwortlich für den Inhalt' : 'Responsible for Content'}
+              {
+                isGerman
+                  ? 'Verantwortlich für journalistisch-redaktionelle Inhalte gemäß § 18 Abs. 2 MStV'
+                  : 'Responsible for Editorial Content'
+              }
             </h2>
             {isGerman ? (
               <>
@@ -68,7 +72,7 @@ export default function ImprintContent({ locale }: ImprintContentProps) {
               </>
             ) : (
               <>
-                <p>According to Section 55 para. 2 RStV:</p>
+                <p>According to Section 18 (2) of the German State Media Treaty (MStV):</p>
                 <p>Georgios Andi Avenidis, address as above.</p>
               </>
             )}
@@ -81,34 +85,14 @@ export default function ImprintContent({ locale }: ImprintContentProps) {
             {isGerman ? (
               <>
                 <p>
-                  Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS)
-                  bereit:{' '}
-                  <a
-                    href="https://ec.europa.eu/consumers/odr/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-amber-300 hover:text-amber-200 transition-colors"
-                  >
-                    https://ec.europa.eu/consumers/odr/
-                  </a>
-                  .
+                  Die Europäische Online-Streitbeilegungsplattform wurde zum 20. Juli 2025
+                  eingestellt.
                 </p>
                 <p>Unsere E-Mail-Adresse findest du oben im Impressum.</p>
               </>
             ) : (
               <>
-                <p>
-                  The European Commission provides a platform for online dispute resolution (ODR):{' '}
-                  <a
-                    href="https://ec.europa.eu/consumers/odr/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-amber-300 hover:text-amber-200 transition-colors"
-                  >
-                    https://ec.europa.eu/consumers/odr/
-                  </a>
-                  .
-                </p>
+                <p>The European Online Dispute Resolution platform was discontinued on 20 July 2025.</p>
                 <p>Our email address can be found above in the contact information.</p>
               </>
             )}

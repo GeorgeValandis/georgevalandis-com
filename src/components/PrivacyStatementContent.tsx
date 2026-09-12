@@ -142,13 +142,13 @@ export default function PrivacyStatementContent({
                 <>
                   <li>die Website bereitzustellen und abzusichern,</li>
                   <li>Anfragen zu beantworten,</li>
-                  <li>die Nutzung der Website in anonymisierter Form auszuwerten.</li>
+                  <li>zu speichern, dass der Cookie-Hinweis bestätigt wurde.</li>
                 </>
               ) : (
                 <>
                   <li>Provide and secure the website.</li>
                   <li>Respond to inquiries.</li>
-                  <li>Analyze website usage in anonymized form.</li>
+                  <li>Remember that the cookie notice was acknowledged.</li>
                 </>
               )}
             </ul>
@@ -161,73 +161,55 @@ export default function PrivacyStatementContent({
 
           <section>
             <h2 className="text-2xl font-semibold text-white mb-3">
-              {isGerman ? '6. Cookies und Einwilligungen' : '6. Cookies and Analytics'}
+              {isGerman
+                ? '6. Cookies und ähnliche Technologien'
+                : '6. Cookies and Similar Technologies'}
             </h2>
             {isGerman ? (
               <>
                 <p>
-                  Diese Website verwendet technisch notwendige Cookies und vergleichbare Technologien,
-                  um eine sichere und stabile Funktion sicherzustellen und deine Datenschutzeinstellungen
-                  zu speichern.
+                  Diese Website verwendet keine Analyse- oder Marketing-Cookies und lädt keine
+                  Analyse-, Werbe- oder Marketing-Tracker.
                 </p>
                 <p>
-                  Optionale Kategorien wie Analyse oder Marketing werden nur dann aktiviert, wenn du
-                  über das Cookie-Interface ausdrücklich einwilligst.
+                  Wenn du den Cookie-Hinweis bestätigst, speichert die Website ausschließlich das
+                  notwendige Erstanbieter-Cookie <code>gv_cookie_notice_*</code>. Es enthält nur die
+                  Version des bestätigten Hinweises und verhindert, dass derselbe Hinweis bei jedem
+                  Seitenaufruf erneut erscheint. Das Cookie wird bis zu 180 Tage gespeichert.
                 </p>
                 <p>
-                  Du kannst deine Einwilligung jederzeit erteilen, ablehnen oder widerrufen, indem du
-                  den Button &quot;Cookie-Einstellungen&quot; auf der Website öffnest.
+                  Für diese Funktion werden kein Local Storage, keine Consent-ID und kein serverseitiges
+                  Consent-Protokoll verwendet. Die Bestätigung des Hinweises ist keine Einwilligung in
+                  Analyse oder Marketing; solche Technologien sind nicht aktiv.
                 </p>
                 <p>
-                  Zur Dokumentation deiner Auswahl kann die Website einen Consent-Datensatz speichern,
-                  der die gewählten Kategorien, den Zeitpunkt der Entscheidung, eine Consent-ID,
-                  Browserinformationen und einen pseudonymisierten IP-Hash enthält.
-                </p>
-                <p>
-                  Wenn du Auskunft über deinen Consent-Datensatz erhalten oder dessen Löschung
-                  verlangen möchtest, schicke bitte die Consent-ID aus den Cookie-Einstellungen mit.
-                  Ohne diese ID ist eine eindeutige Zuordnung regelmäßig nicht möglich, da keine
-                  Klar-IP-Adresse im Consent-Log gespeichert wird.
-                </p>
-                <p>
-                  Consent-Nachweise werden grundsätzlich für bis zu drei Jahre ab Ende des
-                  Kalenderjahres gespeichert, in dem die Auswahl getroffen wurde. Eine längere
-                  Speicherung erfolgt nur, soweit dies zur Bearbeitung konkreter Anfragen, zur
-                  Erfüllung rechtlicher Pflichten oder zur Rechtsverteidigung erforderlich ist. Bei
-                  einer berechtigten Löschanfrage werden die zugehörigen Consent-Einträge anhand der
-                  Consent-ID aus dem Consent-Log entfernt.
+                  Du kannst die Angaben jederzeit über den Button &quot;Cookie-Information&quot; erneut
+                  öffnen. Das notwendige Cookie wird auf Grundlage von § 25 Abs. 2 Nr. 2 TDDDG
+                  eingesetzt, um die von dir angeforderte Speicherung der Hinweisbestätigung
+                  bereitzustellen.
                 </p>
               </>
             ) : (
               <>
                 <p>
-                  This website uses technically necessary cookies and similar technologies to ensure
-                  secure and stable functionality and to remember your privacy choices.
+                  This website does not use analytics or marketing cookies and does not load
+                  analytics, advertising, or marketing trackers.
                 </p>
                 <p>
-                  Optional categories such as analytics or marketing are only activated if you give
-                  explicit consent through the cookie settings interface.
+                  If you acknowledge the cookie notice, the website stores only the necessary
+                  first-party cookie <code>gv_cookie_notice_*</code>. It contains only the version of
+                  the acknowledged notice and prevents the same notice from appearing on every page
+                  view. The cookie is kept for up to 180 days.
                 </p>
                 <p>
-                  You can grant, refuse, or withdraw consent at any time by opening the{' '}
-                  &quot;Cookie Settings&quot; button on the website.
+                  This function does not use local storage, a consent ID, or server-side consent
+                  logging. Acknowledging the notice is not consent to analytics or marketing; those
+                  technologies are not active.
                 </p>
                 <p>
-                  To document your choice, the website may store a consent record containing the
-                  selected categories, the decision timestamp, a consent ID, browser information, and
-                  a pseudonymized IP hash.
-                </p>
-                <p>
-                  If you request access to or deletion of your consent record, please include the
-                  Consent ID shown in the Cookie Settings. Without this ID, a clear assignment is
-                  usually not possible because no plain IP address is stored in the consent log.
-                </p>
-                <p>
-                  Consent records are generally stored for up to three years from the end of the
-                  calendar year in which the choice was made. Longer storage only takes place where
-                  required to handle specific requests, comply with legal obligations, or defend legal
-                  claims. If a deletion request is justified, the related consent entries are removed
-                  from the consent log using the Consent ID.
+                  You can reopen this information at any time with the &quot;Cookie Information&quot;
+                  button. The necessary cookie is used under Section 25(2) no. 2 TDDDG to provide
+                  the notice-memory function you requested.
                 </p>
               </>
             )}
@@ -237,14 +219,160 @@ export default function PrivacyStatementContent({
             <h2 className="text-2xl font-semibold text-white mb-3">7. Social Media</h2>
             <p>
               {isGerman
-                ? 'Diese Website kann Links oder Einbindungen zu sozialen Netzwerken wie X (ehemals Twitter) enthalten. Wenn solche Einbindungen aktiv sind, können Daten an den jeweiligen Anbieter übertragen werden.'
-                : 'This website may include links or integrations to social networks such as X (formerly Twitter). If such integrations are active, data may be transmitted to the provider.'}
+                ? 'Diese Website enthält Links zu sozialen Netzwerken wie X, Instagram, Threads, TikTok und Bluesky. Beim bloßen Aufruf dieser Website wird über diese Links keine Verbindung zu den jeweiligen Anbietern hergestellt. Erst wenn du einen Link öffnest, gelten die Datenschutzbedingungen des jeweiligen Anbieters.'
+                : 'This website contains links to social networks such as X, Instagram, Threads, TikTok, and Bluesky. Merely opening this website does not create a connection to those providers through the links. Their privacy terms apply only after you open a link.'}
             </p>
           </section>
 
           <section>
             <h2 className="text-2xl font-semibold text-white mb-3">
-              {isGerman ? '8. Deine Rechte' : '8. Your Rights'}
+              {isGerman ? '8. Newsletter „After Work“' : '8. “After Work” Newsletter'}
+            </h2>
+            {isGerman ? (
+              <>
+                <p>
+                  Wenn du dich für den Newsletter „After Work“ anmeldest, verarbeiten wir deine
+                  E-Mail-Adresse sowie die mit Anmeldung und Bestätigung verbundenen Nachweisdaten,
+                  um dir redaktionelle Nachrichten aus George Valandis’ Indie-App-Developer-Alltag
+                  zu senden. Die Anmeldung erfolgt über ein eingebettetes Formular von MailerLite.
+                </p>
+                <p>
+                  Die Verarbeitung erfolgt auf Grundlage deiner Einwilligung nach Art. 6 Abs. 1 lit. a
+                  DSGVO. Wir verwenden ein Double-Opt-in-Verfahren. Die Bestätigungsnachricht dient
+                  ausschließlich der Bestätigung der Anmeldung. Du kannst die Einwilligung jederzeit
+                  über den Abmeldelink in jeder Ausgabe widerrufen; die Rechtmäßigkeit der bis dahin
+                  erfolgten Verarbeitung bleibt unberührt.
+                </p>
+                <p>
+                  MailerLite Limited, 88 Harcourt Street, Dublin 2, D02 DK18, Irland, verarbeitet die
+                  Newsletterdaten in unserem Auftrag. Die Verarbeitung wird durch die aktuellen
+                  Vertrags- und Datenschutzdokumente von MailerLite einschließlich des{' '}
+                  <a
+                    href="https://www.mailerlite.com/legal/data-processing-agreement"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-amber-300 hover:text-amber-200 transition-colors underline"
+                  >
+                    Data Processing Addendum
+                  </a>{' '}
+                  geregelt. MailerLite kann Unterauftragsverarbeiter einsetzen und beschreibt in seinen
+                  aktuellen Anbieterinformationen die dafür vorgesehenen Schutzmechanismen.
+                </p>
+                <p>
+                  Für den ersten Versand ist kein Öffnungs-Tracking vorgesehen. MailerLite kann
+                  technische Zustell-, Bounce-, Abmelde- und gegebenenfalls Klickdaten verarbeiten;
+                  die konkreten Kampagneneinstellungen werden vor einem Versand geprüft. Die
+                  Newsletterdaten werden grundsätzlich bis zur Abmeldung verarbeitet. Begrenzte
+                  Nachweis- oder Sperrlistendaten können darüber hinaus gespeichert werden, soweit
+                  dies zur Vermeidung einer erneuten Anmeldung, zur Erfüllung gesetzlicher Pflichten
+                  oder zur Rechtsverteidigung erforderlich ist.
+                </p>
+                <p>
+                  Weitere Informationen zum Anbieter findest du in der{' '}
+                  <a
+                    href="https://www.mailerlite.com/legal/privacy-policy"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-amber-300 hover:text-amber-200 transition-colors underline"
+                  >
+                    Datenschutzerklärung von MailerLite
+                  </a>
+                  .
+                </p>
+              </>
+            ) : (
+              <>
+                <p>
+                  If you subscribe to the “After Work” newsletter, we process your email address and
+                  the evidence connected with the sign-up and confirmation in order to send editorial
+                  notes from George Valandis’ indie app development life. The subscription uses an
+                  embedded MailerLite form.
+                </p>
+                <p>
+                  Processing is based on your consent under Article 6(1)(a) GDPR. We use a double
+                  opt-in process. The confirmation message is used only to confirm the subscription.
+                  You can withdraw your consent at any time through the unsubscribe link in every
+                  issue; this does not affect the lawfulness of processing before the withdrawal.
+                </p>
+                <p>
+                  MailerLite Limited, 88 Harcourt Street, Dublin 2, D02 DK18, Ireland, processes
+                  newsletter data on our behalf. The processing is governed by MailerLite’s current
+                  contractual and privacy documents, including its{' '}
+                  <a
+                    href="https://www.mailerlite.com/legal/data-processing-agreement"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-amber-300 hover:text-amber-200 transition-colors underline"
+                  >
+                    Data Processing Addendum
+                  </a>
+                  . MailerLite may use sub-processors and describes the safeguards for such processing
+                  in its current provider information.
+                </p>
+                <p>
+                  Open tracking is not planned for the first send. MailerLite may process technical
+                  delivery, bounce, unsubscribe, and, where applicable, click data; the concrete
+                  campaign settings are checked before sending. Newsletter data is generally processed
+                  until you unsubscribe. Limited suppression or consent-evidence data may be retained
+                  afterwards where necessary to prevent re-subscription, comply with legal obligations,
+                  or defend legal claims.
+                </p>
+                <p>
+                  For more information, see MailerLite’s{' '}
+                  <a
+                    href="https://www.mailerlite.com/legal/privacy-policy"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-amber-300 hover:text-amber-200 transition-colors underline"
+                  >
+                    Privacy Policy
+                  </a>
+                  .
+                </p>
+              </>
+            )}
+          </section>
+
+          <section>
+            <h2 className="text-2xl font-semibold text-white mb-3">
+              {isGerman ? '9. Datenschutz in den Apps' : '9. Privacy in the Apps'}
+            </h2>
+            {isGerman ? (
+              <p>
+                Diese Datenschutzerklärung gilt für die Hauptwebsite georgevalandis.com. Einzelne
+                Apps können zusätzliche Dienste verwenden. GlanceAway bietet beispielsweise nach
+                dem Abbruch einer aktiven Timer-Session freiwillig einen anonymen, von Tally
+                gehosteten Feedback-Fragebogen an. Die Hauptwebsite sendet keine Antworten an
+                Tally. Einzelheiten stehen in der jeweiligen{' '}
+                <Link
+                  href="/apps/glanceaway/privacy/"
+                  className="text-amber-300 hover:text-amber-200 transition-colors underline"
+                >
+                  App-Datenschutzerklärung
+                </Link>
+                .
+              </p>
+            ) : (
+              <p>
+                This Privacy Statement applies to the main georgevalandis.com website. Individual
+                apps may use additional services. For example, after an active timer session is
+                cancelled, GlanceAway may offer a voluntary anonymous feedback survey hosted by
+                Tally. The main website does not send survey answers to Tally. Details are provided
+                in the relevant{' '}
+                <Link
+                  href="/apps/glanceaway/privacy/"
+                  className="text-amber-300 hover:text-amber-200 transition-colors underline"
+                >
+                  app privacy policy
+                </Link>
+                .
+              </p>
+            )}
+          </section>
+
+          <section>
+            <h2 className="text-2xl font-semibold text-white mb-3">
+              {isGerman ? '10. Deine Rechte' : '10. Your Rights'}
             </h2>
             <p>
               {isGerman
@@ -278,7 +406,7 @@ export default function PrivacyStatementContent({
 
           <section>
             <h2 className="text-2xl font-semibold text-white mb-3">
-              {isGerman ? '9. Kontaktanfragen' : '9. Contact Requests'}
+              {isGerman ? '11. Kontaktanfragen' : '11. Contact Requests'}
             </h2>
             <p>
               {isGerman
@@ -289,7 +417,7 @@ export default function PrivacyStatementContent({
 
           <section>
             <h2 className="text-2xl font-semibold text-white mb-3">
-              {isGerman ? '10. Speicherdauer' : '10. Storage Duration'}
+              {isGerman ? '12. Speicherdauer' : '12. Storage Duration'}
             </h2>
             <p>
               {isGerman
@@ -300,7 +428,7 @@ export default function PrivacyStatementContent({
 
           <section>
             <h2 className="text-2xl font-semibold text-white mb-3">
-              {isGerman ? '11. Sicherheit' : '11. Security'}
+              {isGerman ? '13. Sicherheit' : '13. Security'}
             </h2>
             <p>
               {isGerman

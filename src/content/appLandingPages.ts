@@ -455,7 +455,7 @@ export const appLandingPages: Record<string, AppLandingPageContent> = {
     ],
     privacyTitle: 'Private by design',
     privacyDescription:
-      'GlanceAway keeps timer settings, session history, statistics, and reminder preferences on your device. Optional premium purchase validation may be handled by Apple and RevenueCat, without advertising tracking.',
+      'GlanceAway keeps timer settings, session history, statistics, and reminder preferences on your device. After a cancelled session, an optional anonymous Tally survey may collect the answers you choose to submit, without asking for your name or email address. Purchase validation and privacy-focused product analytics may be handled by Apple, RevenueCat, and TelemetryDeck without advertising tracking.',
     finalCtaDescription:
       'Install the eye break timer app from the App Store and start with a simple 20-20-20 rhythm.',
     faq: [
@@ -2057,6 +2057,336 @@ export const appLandingPages: Record<string, AppLandingPageContent> = {
         question: 'How will Pro work?',
         answer:
           'The planned model is a free download with an optional lifetime Pro unlock for advanced scoring and history features.',
+      },
+    ],
+  },
+  'padel-scorekeeper': {
+    appStoreName: 'Padel Scorekeeper: Padelo',
+    eyebrow: 'padel scorekeeper and doubles scoreboard',
+    headline: 'A clear Padel scoreboard for every doubles match.',
+    intro:
+      'Padel Scorekeeper keeps standard points, games, sets, tie-breaks, serve tracking, undo, and result sharing close at hand while you stay on court.',
+    primaryCta: 'App Store coming soon',
+    secondaryCta: 'See the scoreboard',
+    availability:
+      'Prepared for iPhone. Free core scoring with optional Monthly and Lifetime Pro access for match history and future themes.',
+    accent: '#22b8d6',
+    background: 'from-[#f7f8fd] via-[#eef9fc] to-[#f0ecff]',
+    heroTone: 'light',
+    category: 'SportsApplication',
+    price: 0,
+    priceCurrency: 'USD',
+    highlights: [
+      'Standard 15–30–40 Padel scoring',
+      'Games, sets, tie-breaks, and advantage',
+      'Serve team, side, undo, and offline play',
+      'Clean result sharing after the match',
+    ],
+    screenshots: [
+      {
+        src: '/apps/padel-scorekeeper/screens/match.png',
+        alt: 'Padel Scorekeeper live score screen showing both teams at 40 and the active serve.',
+        label: 'Live score',
+      },
+      {
+        src: '/apps/padel-scorekeeper/screens/setup.png',
+        alt: 'Padel Scorekeeper setup screen with two teams and four player names.',
+        label: 'Setup',
+      },
+      {
+        src: '/apps/padel-scorekeeper/screens/deuce.png',
+        alt: 'Padel Scorekeeper settings screen with the compact Padel Pro banner, restore purchases, and legal links.',
+        label: 'Settings',
+      },
+    ],
+    featureTitle: 'A Padel scoreboard built for the next point.',
+    featureIntro:
+      'The live view makes the important thing obvious: who is serving, where the set stands, and which team just won the point.',
+    features: [
+      {
+        title: 'Score standard Padel points quickly',
+        description:
+          'Tap a team after each rally and let the app handle 15, 30, 40, advantage, games, sets, and tie-breaks.',
+      },
+      {
+        title: 'Keep serve context visible',
+        description:
+          'The active serving team and side stay in the live view, with a single Switch action when the court changes.',
+      },
+      {
+        title: 'Correct without restarting',
+        description:
+          'Point-by-point undo keeps the score trustworthy when a rally is entered on the wrong side.',
+      },
+    ],
+    workflowTitle: 'How Padel Scorekeeper fits into a match',
+    workflow: [
+      {
+        title: 'Name the four players',
+        description:
+          'Set the two team names and player names in a few seconds before the first serve.',
+      },
+      {
+        title: 'Tap the point winner',
+        description:
+          'Use the two large team buttons and keep your attention on the court instead of the math.',
+      },
+      {
+        title: 'Share the final result',
+        description:
+          'When the match ends, share a clean summary with the teams and completed set scores.',
+      },
+    ],
+    privacyTitle: 'Local-first scorekeeping',
+    privacyDescription:
+      'Padel Scorekeeper stores team names, player names, active matches, undo state, match history, and app preferences locally on your iPhone. Apple processes purchases, and RevenueCat processes technical purchase and entitlement information required to unlock Pro. The app has no account system, ads, analytics SDK, or developer-operated match server.',
+    finalCtaDescription:
+      'Keep the next Padel match moving. The App Store link will be added as soon as the first release is live.',
+    faq: [
+      {
+        question: 'What does Padel Scorekeeper track?',
+        answer:
+          'It tracks standard Padel points, advantage, games, sets, tie-breaks, serving team, serve side, undo state, and completed match results.',
+      },
+      {
+        question: 'Does it work offline?',
+        answer:
+          'Yes. Core scoring and the active match are designed to work locally without an account or an internet connection.',
+      },
+      {
+        question: 'What is included with Pro?',
+        answer:
+          'Pro is prepared as a Monthly or Lifetime purchase for match history and future court themes. Live scoring remains available without Pro.',
+      },
+      {
+        question: 'Is Padel Scorekeeper available on iPhone?',
+        answer:
+          'Yes. The first release is being prepared for iPhone only.',
+      },
+    ],
+  },
+  'topf-budget': {
+    appStoreName: 'Topf Budget',
+    eyebrow: 'monthly budget app for four spending pots',
+    headline: 'A calmer way to see where your monthly budget goes.',
+    intro:
+      'Topf turns a household limit into four clear spending pots for groceries, dining, kids, and mobility — with local bank-file import and a simple view of what remains.',
+    primaryCta: 'App Store coming soon',
+    secondaryCta: 'See the dashboard',
+    availability:
+      'Prepared for iPhone, Android, and web. The first release is local-first, with CSV, XLS, and XLSX bank-file analysis on the device.',
+    accent: '#f2766d',
+    background: 'from-[#fff4e8] via-[#f9efff] to-[#e8f8ef]',
+    heroTone: 'light',
+    category: 'FinanceApplication',
+    price: 0,
+    priceCurrency: 'EUR',
+    highlights: [
+      'Four editable monthly spending pots',
+      'Left-to-right limit bars with traffic-light status',
+      'CSV, XLS, and XLSX import processed locally',
+      'Monthly progress, streaks, and better-than-last-month signals',
+    ],
+    screenshots: [
+      {
+        src: '/apps/topf-budget/screens/overview.png',
+        alt: 'Topf Budget overview showing the August monthly status, traffic-light indicator, and four spending pots.',
+        label: 'Overview',
+      },
+      {
+        src: '/apps/topf-budget/screens/stats.png',
+        alt: 'Topf Budget statistics screen showing month-over-month improvement, budget flow, and a three-month streak.',
+        label: 'Progress',
+      },
+      {
+        src: '/apps/topf-budget/screens/settings.png',
+        alt: 'Topf Budget settings screen showing local bank-file import, offline sorting, and editable pot limits.',
+        label: 'Settings',
+      },
+    ],
+    featureTitle: 'A budget view that tells you where you stand.',
+    featureIntro:
+      'Topf keeps the monthly decision small: see what is used, what is left, and which pot needs your attention before the limit gets tight.',
+    features: [
+      {
+        title: 'See all four pots at a glance',
+        description:
+          'Horizontal progress bars make every category readable in one scan, while the traffic-light state shows whether the month is still comfortable.',
+      },
+      {
+        title: 'Bring in a bank export privately',
+        description:
+          'Import CSV, XLS, or XLSX files and let the local rules sort common merchants without an account, an upload endpoint, or an online AI request.',
+      },
+      {
+        title: 'Make progress visible',
+        description:
+          'Month-to-month totals, improvement percentages, levels, and streaks turn a quiet budgeting habit into something you can keep building.',
+      },
+    ],
+    workflowTitle: 'How Topf fits into a month',
+    workflow: [
+      {
+        title: 'Set your four limits',
+        description:
+          'Choose the monthly amounts for groceries, dining, kids, and mobility, then adjust them whenever your household changes.',
+      },
+      {
+        title: 'Import your bank file',
+        description:
+          'Select a CSV, XLS, or XLSX export from your device. Topf reads the first sheet or rows locally and keeps the raw file out of app storage.',
+      },
+      {
+        title: 'Use the next clear signal',
+        description:
+          'Check the bars, remaining amount, and weekly orientation to decide where to slow down or where there is still room.',
+      },
+    ],
+    privacyTitle: 'Your bank file stays on your device',
+    privacyDescription:
+      'Topf is designed around local-first budgeting. It stores limits, aggregated totals, import statistics, a cleaned filename, and a timestamp locally; the raw bank file is not saved in app state or sent to an online AI service.',
+    finalCtaDescription:
+      'Topf is prepared for iPhone, Android, and web. The App Store listing will be linked once the release is published.',
+    faq: [
+      {
+        question: 'What is Topf Budget?',
+        answer:
+          'Topf Budget is a monthly budget app that splits one household limit into four editable pots for groceries, dining, kids, and mobility.',
+      },
+      {
+        question: 'Which bank files can Topf import?',
+        answer:
+          'The first release supports CSV, XLS, and XLSX exports. CSV rows and the first sheet of a spreadsheet are analyzed locally on the device.',
+      },
+      {
+        question: 'Does Topf need an account?',
+        answer:
+          'No. The current app does not require an account or login for the budgeting and import workflow.',
+      },
+      {
+        question: 'Does Topf send my bank data online?',
+        answer:
+          'No. The current release does not upload bank files or send them to an online AI service. The future AI adapter is disabled in this version.',
+      },
+    ],
+  },
+  'one-sentence': {
+    appStoreName: 'One Sentence',
+    eyebrow: 'minimalist daily journal',
+    headline: 'A small place for one meaningful sentence.',
+    intro:
+      'One Sentence is a calm, local-first journal for capturing what stays with you — by typing or using your system keyboard’s dictation.',
+    primaryCta: 'App Store listing coming soon',
+    secondaryCta: 'See the journal',
+    availability:
+      'The current test release is free on iPhone and iPad. Android and web are being prepared from the same Expo codebase.',
+    accent: '#c4674a',
+    background: 'from-[#ead8cb] via-[#fbf7ef] to-[#efe2de]',
+    heroTone: 'light',
+    category: 'LifestyleApplication',
+    price: 0,
+    priceCurrency: 'USD',
+    highlights: [
+      'One sentence is a complete entry',
+      'A gentle prompt, without dashboard noise',
+      'Type or use your keyboard’s dictation',
+      'Local-first and no account required',
+    ],
+    screenshots: [
+      {
+        src: '/apps/one-sentence/screens/today.png',
+        alt: 'One Sentence Today screen showing a quiet prompt and a single writing line.',
+        label: 'Today',
+      },
+      {
+        src: '/apps/one-sentence/screens/compose.png',
+        alt: 'One Sentence compose screen with the prompt and a focused writing field.',
+        label: 'Compose',
+      },
+      {
+        src: '/apps/one-sentence/screens/saved.png',
+        alt: 'One Sentence saved entry screen showing one finished daily thought and mood.',
+        label: 'Saved',
+      },
+      {
+        src: '/apps/one-sentence/screens/pages.png',
+        alt: 'One Sentence Pages screen showing an earlier journal entry in the quiet archive.',
+        label: 'Pages',
+      },
+      {
+        src: '/apps/one-sentence/screens/settings.png',
+        alt: 'One Sentence settings screen showing language, local privacy, export, feedback, and delete controls.',
+        label: 'Settings',
+      },
+    ],
+    featureTitle: 'Make room for one thought.',
+    featureIntro:
+      'The app opens on a quiet page, gives you a gentle prompt, and lets one sentence be enough.',
+    features: [
+      {
+        title: 'Start with a question',
+        description:
+          'A thoughtful prompt appears immediately, so there is no dashboard, streak pressure, or mandatory setup between you and the page.',
+      },
+      {
+        title: 'Write the way you want',
+        description:
+          'Edit inline with the keyboard, or focus the field and tap the microphone on your system keyboard to dictate. One Sentence does not record audio itself.',
+      },
+      {
+        title: 'Keep the thread',
+        description:
+          'Saved entries flow into Pages as a calm chronological journal, with export available when you want to take your writing elsewhere.',
+      },
+    ],
+    workflowTitle: 'A journal loop that stays small.',
+    workflow: [
+      {
+        title: 'Open the page',
+        description:
+          'One prompt greets you right away. There is no account and no onboarding sequence to get through first.',
+      },
+      {
+        title: 'Let the sentence arrive',
+        description:
+          'Type a thought, or focus the writing field and use your device keyboard’s dictation for a hands-free start.',
+      },
+      {
+        title: 'Leave it somewhere safe',
+        description:
+          'Your entry stays on the device and can be revisited later in Pages, without a cloud account or an automatic upload.',
+      },
+    ],
+    privacyTitle: 'Private by design.',
+    privacyDescription:
+      'Entries, drafts, and selected mood stay on your device. One Sentence requires no account, records no audio, and sends no journal content to our servers.',
+    finalCtaDescription:
+      'A quiet page is waiting for you. The public App Store link will be added as soon as this first release is live.',
+    faq: [
+      {
+        question: 'What is One Sentence?',
+        answer:
+          'One Sentence is a minimalist daily journal for capturing one meaningful thought at a time, with a gentle prompt, inline writing, moods, and a calm archive.',
+      },
+      {
+        question: 'Does One Sentence record audio?',
+        answer:
+          'No. The app does not record or upload audio. If you use voice input, your iPhone or Android keyboard handles dictation and inserts the recognized text into the writing field.',
+      },
+      {
+        question: 'Do I need an account?',
+        answer:
+          'No. The current release is local-first and does not require an account, login, or automatic cloud sync.',
+      },
+      {
+        question: 'Where are my journal entries stored?',
+        answer:
+          'Entries and drafts are stored locally on your device. Platform-managed backups may include app data according to your device and account settings.',
+      },
+      {
+        question: 'Is One Sentence available on iPhone and iPad?',
+        answer:
+          'The current test release is prepared for iPhone and iPad. Android and web are being developed from the same React Native and Expo codebase.',
       },
     ],
   },

@@ -100,12 +100,12 @@ export type SiteCopy = {
     bannerEyebrow: string;
     bannerTitle: string;
     bannerDescription: string;
+    storageNotice: string;
     bannerLegalPrefix: string;
     privacyLink: string;
     imprintLink: string;
-    rejectAll: string;
-    customize: string;
-    acceptAll: string;
+    detailsButton: string;
+    continueButton: string;
     modalEyebrow: string;
     modalTitle: string;
     close: string;
@@ -116,10 +116,8 @@ export type SiteCopy = {
     marketingTitle: string;
     marketingDescription: string;
     updateHint: string;
-    consentRecordTitle: string;
-    consentIdLabel: string;
-    consentRequestHint: string;
-    saveSelection: string;
+    activeLabel: string;
+    notUsedLabel: string;
     settingsButton: string;
   };
 };
@@ -249,38 +247,38 @@ const siteCopy: Record<SiteLocale, SiteCopy> = {
       description: 'iOS Developer & Solopreneur. Building apps from 5 to 9. Based in Germany.',
       navigationTitle: 'Navigation',
       connectTitle: 'Connect',
-      privacy: 'Privacy Statement',
+      privacy: 'Website Privacy & Cookies',
       imprint: 'Imprint',
       backToTop: 'Back to top',
       languageLabel: 'Deutsch',
     },
     consent: {
-      bannerEyebrow: 'Privacy Settings',
-      bannerTitle: 'We use cookies.',
+      bannerEyebrow: 'Cookie Information',
+      bannerTitle: 'Only necessary cookies.',
       bannerDescription:
-        'We only use optional analytics or marketing cookies with your consent. Necessary cookies for basic site functionality are always active. You can change your choice at any time.',
+        'This website does not use analytics or marketing cookies. It uses only a necessary first-party cookie to remember that you acknowledged this notice.',
+      storageNotice:
+        'No analytics, advertising pixels, profiling, or marketing tracking is activated.',
       bannerLegalPrefix: 'See',
-      privacyLink: 'Privacy Statement',
+      privacyLink: 'Website Privacy & Cookies',
       imprintLink: 'Imprint',
-      rejectAll: 'Reject all',
-      customize: 'Customize',
-      acceptAll: 'Accept all',
-      modalEyebrow: 'Cookie Preferences',
-      modalTitle: 'Manage your consent',
+      detailsButton: 'View details',
+      continueButton: 'Continue with necessary only',
+      modalEyebrow: 'Cookie Information',
+      modalTitle: 'Technologies used on this website',
       close: 'Close',
       necessaryTitle: 'Necessary',
-      necessaryDescription: 'Required for core site functions and security.',
+      necessaryDescription:
+        'A first-party cookie remembers that you acknowledged this notice. It contains only the notice version and is kept for up to 180 days.',
       analyticsTitle: 'Analytics',
-      analyticsDescription: 'Helps us understand usage and improve content.',
+      analyticsDescription: 'Not used. No analytics service or analytics cookie is active.',
       marketingTitle: 'Marketing',
-      marketingDescription: 'Allows personalized marketing and ad measurement.',
-      updateHint: 'You can update this selection anytime from the Cookie Settings button.',
-      consentRecordTitle: 'Stored consent record',
-      consentIdLabel: 'Consent ID',
-      consentRequestHint:
-        'For access or deletion requests about your consent record, please include this Consent ID.',
-      saveSelection: 'Save selection',
-      settingsButton: 'Cookie Settings',
+      marketingDescription: 'Not used. No advertising pixel or marketing tracker is active.',
+      updateHint:
+        'Acknowledging this notice is not consent to analytics or marketing. Those technologies are not used.',
+      activeLabel: 'Always active',
+      notUsedLabel: 'Not used',
+      settingsButton: 'Cookie Information',
     },
   },
   de: {
@@ -401,38 +399,38 @@ const siteCopy: Record<SiteLocale, SiteCopy> = {
         'iOS-Entwickler & Solopreneur. Ich baue Apps von 17 bis 21 Uhr. Zuhause in Deutschland.',
       navigationTitle: 'Navigation',
       connectTitle: 'Vernetzen',
-      privacy: 'Datenschutzerklärung',
+      privacy: 'Website-Datenschutz & Cookies',
       imprint: 'Impressum',
       backToTop: 'Nach oben',
       languageLabel: 'English',
     },
     consent: {
-      bannerEyebrow: 'Datenschutzeinstellungen',
-      bannerTitle: 'Wir verwenden Cookies.',
+      bannerEyebrow: 'Cookie-Information',
+      bannerTitle: 'Nur notwendige Cookies.',
       bannerDescription:
-        'Optionale Analyse- oder Marketing-Cookies setzen wir nur mit deiner Einwilligung. Notwendige Cookies für die Grundfunktionen der Website sind immer aktiv. Du kannst deine Auswahl jederzeit ändern.',
+        'Diese Website verwendet keine Analyse- oder Marketing-Cookies. Es wird nur ein notwendiges Erstanbieter-Cookie gespeichert, damit wir uns merken können, dass du diesen Hinweis bestätigt hast.',
+      storageNotice:
+        'Es sind keine Analyse, Werbepixel, Profilbildung oder Marketing-Tracker aktiviert.',
       bannerLegalPrefix: 'Siehe',
-      privacyLink: 'Datenschutzerklärung',
+      privacyLink: 'Website-Datenschutz & Cookies',
       imprintLink: 'Impressum',
-      rejectAll: 'Alle ablehnen',
-      customize: 'Anpassen',
-      acceptAll: 'Alle akzeptieren',
-      modalEyebrow: 'Cookie-Einstellungen',
-      modalTitle: 'Einwilligung verwalten',
+      detailsButton: 'Details ansehen',
+      continueButton: 'Nur mit notwendigen fortfahren',
+      modalEyebrow: 'Cookie-Information',
+      modalTitle: 'Auf dieser Website verwendete Technologien',
       close: 'Schließen',
       necessaryTitle: 'Notwendig',
-      necessaryDescription: 'Erforderlich für Grundfunktionen und Sicherheit der Website.',
+      necessaryDescription:
+        'Ein Erstanbieter-Cookie merkt sich, dass du diesen Hinweis bestätigt hast. Es enthält nur die Version des Hinweises und wird bis zu 180 Tage gespeichert.',
       analyticsTitle: 'Analyse',
-      analyticsDescription: 'Hilft uns, die Nutzung zu verstehen und Inhalte zu verbessern.',
+      analyticsDescription: 'Nicht verwendet. Es ist kein Analysedienst oder Analyse-Cookie aktiv.',
       marketingTitle: 'Marketing',
-      marketingDescription: 'Erlaubt personalisiertes Marketing und Werbemessung.',
-      updateHint: 'Du kannst diese Auswahl jederzeit über den Button Cookie-Einstellungen ändern.',
-      consentRecordTitle: 'Gespeicherter Consent-Nachweis',
-      consentIdLabel: 'Consent-ID',
-      consentRequestHint:
-        'Für Auskunfts- oder Löschanfragen zu deinem Consent-Nachweis schicke bitte diese Consent-ID mit.',
-      saveSelection: 'Auswahl speichern',
-      settingsButton: 'Cookie-Einstellungen',
+      marketingDescription: 'Nicht verwendet. Es ist kein Werbepixel oder Marketing-Tracker aktiv.',
+      updateHint:
+        'Die Bestätigung dieses Hinweises ist keine Einwilligung in Analyse oder Marketing. Diese Technologien werden nicht verwendet.',
+      activeLabel: 'Immer aktiv',
+      notUsedLabel: 'Nicht verwendet',
+      settingsButton: 'Cookie-Information',
     },
   },
 };
