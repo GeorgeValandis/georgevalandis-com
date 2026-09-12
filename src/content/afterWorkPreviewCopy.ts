@@ -51,7 +51,12 @@ export type PreviewCopy = {
     eyebrow: string;
     title: string;
   };
-  footer: string;
+  footer: {
+    copyright: string;
+    privacy: string;
+    imprint: string;
+    backToTop: string;
+  };
 };
 
 export const germanAppSubtitles: Record<string, string> = {
@@ -141,7 +146,12 @@ export const previewCopy: Record<SiteLocale, PreviewCopy> = {
       eyebrow: '04 — Contact',
       title: "Let's work together.",
     },
-    footer: 'Preview version · George Valandis',
+    footer: {
+      copyright: '© 2026 George Valandis.',
+      privacy: 'Website Privacy & Cookies',
+      imprint: 'Imprint',
+      backToTop: 'Back to top',
+    },
   },
   de: {
     nav: {
@@ -205,6 +215,11 @@ export const previewCopy: Record<SiteLocale, PreviewCopy> = {
       eyebrow: '04 — Kontakt',
       title: 'Lass uns zusammenarbeiten.',
     },
-    footer: 'Preview-Version · George Valandis',
+    footer: {
+      copyright: '© 2026 George Valandis.',
+      privacy: 'Datenschutz & Cookies',
+      imprint: 'Impressum',
+      backToTop: 'Nach oben',
+    },
   },
 };

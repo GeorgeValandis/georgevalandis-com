@@ -3,14 +3,17 @@
 import { apps } from '@/content/apps';
 import { germanAppSubtitles, previewCopy } from '@/content/afterWorkPreviewCopy';
 import { blogPosts } from '@/content/blogPosts';
-import type { SiteLocale } from '@/lib/siteLocale';
-import { ArrowUpRight, Menu, X } from 'lucide-react';
+import { getSiteCopy } from '@/content/siteCopy';
+import { localizedAnchor, localizedPath, type SiteLocale } from '@/lib/siteLocale';
+import { ArrowUp, ArrowUpRight, Menu, Send, X } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import Script from 'next/script';
 import { useState } from 'react';
 import LanguageSwitch from './LanguageSwitch';
 
 const marqueeApps = apps;
+type ContactSubmissionState = 'idle' | 'sending' | 'success' | 'error';
 
 function AppMarqueeSet({ duplicate = false, locale }: { duplicate?: boolean; locale: SiteLocale }) {
   return (
@@ -47,18 +50,66 @@ function AppMarqueeSet({ duplicate = false, locale }: { duplicate?: boolean; loc
 
 export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocale }) {
   const copy = previewCopy[locale];
+  const contactCopy = getSiteCopy(locale).contact;
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [email, setEmail] = useState('');
-  const [submitted, setSubmitted] = useState(false);
+  const [contactForm, setContactForm] = useState({ name: '', email: '', message: '' });
+  const [contactSubmissionState, setContactSubmissionState] = useState<ContactSubmissionState>('idle');
+  const [contactFeedback, setContactFeedback] = useState('');
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const getContactErrorMessage = (errorCode?: string) => {
+    switch (errorCode) {
+      case 'missing_fields':
+        return contactCopy.form.validation.missingFields;
+      case 'invalid_email':
+        return contactCopy.form.validation.invalidEmail;
+      case 'message_too_short':
+        return contactCopy.form.validation.messageTooShort;
+      default:
+        return contactCopy.form.error;
+    }
+  };
+
+  const handleContactSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (!email.trim()) return;
-    setSubmitted(true);
+    setContactSubmissionState('sending');
+    setContactFeedback('');
+
+    try {
+      const response = await fetch('/contact/send.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...contactForm, website: '' }),
+      });
+      const result = (await response.json()) as { ok?: boolean; error?: string };
+
+      if (!response.ok || !result.ok) {
+        throw new Error(result.error || 'send_failed');
+      }
+
+      setContactSubmissionState('success');
+      setContactFeedback(contactCopy.form.submitted);
+      setContactForm({ name: '', email: '', message: '' });
+      window.setTimeout(() => {
+        setContactSubmissionState('idle');
+        setContactFeedback('');
+      }, 4000);
+    } catch (error) {
+      setContactSubmissionState('error');
+      setContactFeedback(
+        getContactErrorMessage(error instanceof Error ? error.message : undefined),
+      );
+    }
   };
 
   return (
     <main className="min-h-screen overflow-hidden bg-[#050a13] text-[#f7f8f9]">
+      <Script id="mailerlite-universal" strategy="afterInteractive">
+        {`(function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
+    .push(arguments);},l=d.createElement(e),l.async=1,l.src=u,
+    n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})
+    (window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');
+    ml('account', '2630673');`}
+      </Script>
       <style>{`
         @keyframes preview-app-marquee-right {
           from { transform: translate3d(-50%, 0, 0); }
@@ -70,6 +121,127 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
           flex-shrink: 0;
           will-change: transform;
           animation: preview-app-marquee-right 90s linear infinite;
+        }
+
+        .preview-newsletter-form .ml-embedded,
+        .preview-newsletter-form .ml-embedded [id^="mlb2-"] {
+          width: 100% !important;
+          max-width: none !important;
+        }
+
+        .preview-newsletter-form .ml-form-embedWrapper,
+        .preview-newsletter-form .ml-form-embedBody,
+        .preview-newsletter-form .ml-form-embedContent {
+          background: transparent !important;
+          border: 0 !important;
+          box-shadow: none !important;
+          padding: 0 !important;
+        }
+
+        .preview-newsletter-form .ml-form-embedContent h4,
+        .preview-newsletter-form .ml-form-embedContent > p {
+          display: none !important;
+        }
+
+        .preview-newsletter-form .ml-form-embedBody form {
+          display: flex !important;
+          flex-wrap: wrap !important;
+          align-items: flex-start !important;
+          gap: 10px !important;
+        }
+
+        .preview-newsletter-form .ml-form-formContent {
+          flex: 1 1 0% !important;
+          min-width: 0 !important;
+          order: 1 !important;
+          width: auto !important;
+          margin-bottom: 0 !important;
+        }
+
+        .preview-newsletter-form .ml-form-fieldRow,
+        .preview-newsletter-form .ml-field-group {
+          margin: 0 !important;
+        }
+
+        .preview-newsletter-form input.form-control {
+          min-height: 52px !important;
+          border: 1px solid #d9d0c3 !important;
+          border-radius: 8px !important;
+          background: rgb(255 255 255 / 0.8) !important;
+          color: #171717 !important;
+          font: inherit !important;
+          font-size: 13px !important;
+          padding: 14px 16px !important;
+        }
+
+        .preview-newsletter-form input.form-control::placeholder {
+          color: #8e867e !important;
+        }
+
+        .preview-newsletter-form input.form-control:focus {
+          border-color: #f47734 !important;
+          box-shadow: 0 0 0 2px rgb(244 119 52 / 0.2) !important;
+          outline: none !important;
+        }
+
+        .preview-newsletter-form .ml-form-embedSubmit {
+          flex: 0 0 182px !important;
+          margin: 0 !important;
+          order: 2 !important;
+        }
+
+        .preview-newsletter-form .ml-form-embedSubmit button.primary {
+          min-height: 52px !important;
+          width: 100% !important;
+          border: 0 !important;
+          border-radius: 8px !important;
+          background: #ff7b39 !important;
+          color: #24170b !important;
+          font: inherit !important;
+          font-size: 13px !important;
+          font-weight: 600 !important;
+          padding: 14px 24px !important;
+        }
+
+        .preview-newsletter-form #mlb2-45845332.ml-form-embedContainer .ml-form-embedWrapper .ml-form-embedBody .ml-form-embedSubmit button.primary {
+          min-height: 52px !important;
+          width: 100% !important;
+          border: 0 !important;
+          border-radius: 8px !important;
+          background: #ff7b39 !important;
+          color: #24170b !important;
+          font-family: inherit !important;
+          font-size: 13px !important;
+          font-weight: 600 !important;
+          line-height: inherit !important;
+          padding: 14px 24px !important;
+        }
+
+        .preview-newsletter-form .ml-form-embedPermissions {
+          flex: 1 0 100% !important;
+          margin: 0 !important;
+          order: 3 !important;
+          color: #8c8176 !important;
+          font: inherit !important;
+          font-size: 11px !important;
+        }
+
+        .preview-newsletter-form .ml-form-checkboxRow {
+          flex: 1 0 100% !important;
+          order: 4 !important;
+          margin: 0 !important;
+        }
+
+        @media (max-width: 520px) {
+          .preview-newsletter-form .ml-form-embedBody form {
+            flex-direction: column !important;
+          }
+
+          .preview-newsletter-form .ml-form-formContent,
+          .preview-newsletter-form .ml-form-embedSubmit {
+            flex-basis: auto !important;
+            width: 100% !important;
+          }
         }
 
       `}</style>
@@ -222,27 +394,15 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
               {copy.afterWork.description}
             </p>
 
-            <form onSubmit={handleSubmit} className="mt-7 flex max-w-[445px] flex-col gap-2.5 sm:flex-row">
-              <label htmlFor="preview-email" className="sr-only">{copy.afterWork.inputLabel}</label>
-              <input
-                id="preview-email"
-                type="email"
-                value={email}
-                onChange={(event) => setEmail(event.target.value)}
-                placeholder={copy.afterWork.inputPlaceholder}
-                required
-                className="min-w-0 flex-1 rounded-[8px] border border-[#d9d0c3] bg-white/80 px-4 py-3.5 text-[13px] text-[#171717] outline-none transition-colors placeholder:text-[#8e867e] focus:border-[#f47734] focus:ring-2 focus:ring-[#f47734]/20"
-              />
-              <button
-                type="submit"
-                className="min-w-[182px] shrink-0 rounded-[8px] bg-[#ff7b39] px-6 py-3.5 text-[13px] font-semibold text-[#24170b] transition-transform hover:-translate-y-0.5 hover:bg-[#ff8f55]"
-              >
-                {submitted ? copy.afterWork.submitted : copy.afterWork.submit}
-              </button>
-            </form>
-            <p aria-live="polite" className="mt-3 text-[11px] text-[#8c8176]">
-              {submitted ? copy.afterWork.previewNote : copy.afterWork.helper}
-            </p>
+            <div className="preview-newsletter-form mt-7 max-w-[445px]">
+              <div className="ml-embedded" data-form="Em4Az7" />
+              <noscript>
+                <a href="https://preview.mailerlite.io/forms/2630673/198351846006327170/share">
+                  {copy.afterWork.submit}
+                </a>
+              </noscript>
+            </div>
+            <p className="mt-3 text-[11px] text-[#8c8176]">{copy.afterWork.helper}</p>
           </div>
 
           <article className="relative w-full max-w-[540px] justify-self-end overflow-hidden rounded-[14px] border border-[#e3d9cc] bg-[#fbf7ef] p-4 shadow-[0_16px_42px_rgba(70,48,24,0.11)] sm:p-[14px]">
@@ -318,18 +478,103 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
         </div>
       </section>
 
-      <section id="preview-contact" className="relative flex min-h-[430px] items-center justify-center bg-[#050a13] px-6 py-28 text-center lg:px-8">
-        <div className="mx-auto flex w-full max-w-[1600px] flex-col items-start px-0 text-left sm:px-4 lg:flex-row lg:items-center lg:justify-center lg:px-[46px] lg:text-center">
-          <p className="font-mono text-xs uppercase tracking-[0.24em] text-[#ff9d19]">{copy.contact.eyebrow}</p>
-          <h2 className="mt-5 max-w-2xl text-4xl font-semibold tracking-[-0.04em] text-white sm:text-5xl lg:mx-auto">{copy.contact.title}</h2>
-          <a href="mailto:info@georgevalandis.com" className="mt-8 inline-flex items-center gap-2 text-lg text-slate-300 transition-colors hover:text-white">
-            info@georgevalandis.com <ArrowUpRight size={18} />
-          </a>
+      <section id="preview-contact" className="relative bg-[#050a13] px-6 py-28 lg:px-8">
+        <div className="mx-auto grid w-full max-w-[1600px] gap-12 px-0 sm:px-4 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1fr)] lg:items-start lg:gap-20 lg:px-[46px]">
+          <div>
+            <p className="font-mono text-xs uppercase tracking-[0.24em] text-[#ff9d19]">{copy.contact.eyebrow}</p>
+            <h2 className="mt-5 max-w-2xl text-4xl font-semibold tracking-[-0.04em] text-white sm:text-5xl">{copy.contact.title}</h2>
+            <p className="mt-6 max-w-lg text-base leading-relaxed text-slate-400">{contactCopy.description}</p>
+            <a href="mailto:info@georgevalandis.com" className="mt-8 inline-flex items-center gap-2 text-lg text-slate-300 transition-colors hover:text-white">
+              info@georgevalandis.com <ArrowUpRight size={18} />
+            </a>
+          </div>
+
+          <form onSubmit={handleContactSubmit} className="space-y-5">
+            <input
+              type="text"
+              name="website"
+              tabIndex={-1}
+              autoComplete="off"
+              className="hidden"
+              aria-hidden="true"
+            />
+            <div className="grid gap-5 sm:grid-cols-2">
+              <div>
+                <label htmlFor="contact-name" className="sr-only">{contactCopy.form.name}</label>
+                <input
+                  id="contact-name"
+                  name="name"
+                  type="text"
+                  value={contactForm.name}
+                  onChange={(event) => setContactForm({ ...contactForm, name: event.target.value })}
+                  required
+                  autoComplete="name"
+                  placeholder={contactCopy.form.namePlaceholder}
+                  className="w-full rounded-[8px] border border-white/10 bg-white/[0.03] px-4 py-3.5 text-sm text-white outline-none transition-colors placeholder:text-slate-600 focus:border-[#ff9d19]/70"
+                />
+              </div>
+              <div>
+                <label htmlFor="contact-email" className="sr-only">{contactCopy.form.email}</label>
+                <input
+                  id="contact-email"
+                  name="email"
+                  type="email"
+                  value={contactForm.email}
+                  onChange={(event) => setContactForm({ ...contactForm, email: event.target.value })}
+                  required
+                  autoComplete="email"
+                  placeholder={contactCopy.form.emailPlaceholder}
+                  className="w-full rounded-[8px] border border-white/10 bg-white/[0.03] px-4 py-3.5 text-sm text-white outline-none transition-colors placeholder:text-slate-600 focus:border-[#ff9d19]/70"
+                />
+              </div>
+            </div>
+            <div>
+              <label htmlFor="contact-message" className="sr-only">{contactCopy.form.message}</label>
+              <textarea
+                id="contact-message"
+                name="message"
+                value={contactForm.message}
+                onChange={(event) => setContactForm({ ...contactForm, message: event.target.value })}
+                required
+                rows={5}
+                placeholder={contactCopy.form.messagePlaceholder}
+                className="w-full resize-none rounded-[8px] border border-white/10 bg-white/[0.03] px-4 py-3.5 text-sm text-white outline-none transition-colors placeholder:text-slate-600 focus:border-[#ff9d19]/70"
+              />
+            </div>
+            <button
+              type="submit"
+              disabled={contactSubmissionState === 'sending' || contactSubmissionState === 'success'}
+              className="inline-flex h-11 items-center gap-2 rounded-[8px] bg-[#ff8a3d] px-5 text-sm font-semibold text-[#18120d] transition-colors hover:bg-[#ff9b59] disabled:cursor-not-allowed disabled:opacity-70"
+            >
+              {contactSubmissionState === 'success' ? contactCopy.form.submitted : contactSubmissionState === 'sending' ? contactCopy.form.sending : contactCopy.form.submit}
+              <Send size={15} />
+            </button>
+            {contactFeedback ? (
+              <p className={`text-sm ${contactSubmissionState === 'error' ? 'text-rose-300' : 'text-emerald-300'}`}>
+                {contactFeedback}
+              </p>
+            ) : null}
+          </form>
         </div>
       </section>
 
-      <footer className="bg-[#050a13] px-6 py-8 text-center text-xs text-slate-600 lg:px-8">
-        <span>{copy.footer}</span>
+      <footer className="border-t border-white/[0.06] bg-[#050a13] px-6 py-8 text-xs text-slate-500 lg:px-8">
+        <div className="mx-auto flex max-w-[1600px] flex-col items-center justify-between gap-5 sm:flex-row">
+          <span>{copy.footer.copyright}</span>
+          <nav className="flex flex-wrap items-center justify-center gap-x-5 gap-y-3" aria-label="Footer">
+            <Link href={localizedPath(locale, '/privacy-statement')} className="transition-colors hover:text-white">
+              {copy.footer.privacy}
+            </Link>
+            <Link href={localizedPath(locale, '/imprint')} className="transition-colors hover:text-white">
+              {copy.footer.imprint}
+            </Link>
+            <LanguageSwitch locale={locale} variant="footer" />
+            <a href={localizedAnchor(locale, '#preview-home')} className="group inline-flex items-center gap-1.5 transition-colors hover:text-white">
+              {copy.footer.backToTop}
+              <ArrowUp size={13} className="transition-transform group-hover:-translate-y-0.5" />
+            </a>
+          </nav>
+        </div>
       </footer>
     </main>
   );
