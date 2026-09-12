@@ -222,7 +222,7 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
       </section>
 
       <section id="preview-after-work" className="relative flex min-h-[620px] items-center scroll-mt-20 bg-[#f7efe3] py-20 text-[#171717] sm:min-h-[700px] sm:scroll-mt-16 sm:py-24 lg:min-h-[720px] lg:py-28">
-        <div className="mx-auto grid w-full max-w-[1600px] items-center gap-10 px-6 sm:px-10 lg:grid-cols-[1fr_430px] lg:gap-10 lg:pl-[54px] lg:pr-[44px]">
+        <div className="mx-auto grid w-full max-w-[1600px] items-center gap-10 px-6 sm:px-10 lg:grid-cols-[minmax(0,1fr)_460px] lg:gap-10 lg:pl-[54px] lg:pr-[44px] xl:grid-cols-[minmax(0,1fr)_540px] xl:gap-14">
           <div className="max-w-[535px]">
             <p className="mb-4 font-mono text-[11px] font-medium uppercase tracking-[0.27em] text-[#f47734]">
               {copy.afterWork.eyebrow}
@@ -257,7 +257,7 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
             </p>
           </div>
 
-          <article className="relative w-full max-w-[465px] justify-self-end overflow-hidden rounded-[14px] border border-[#e3d9cc] bg-[#fbf7ef] p-4 shadow-[0_16px_42px_rgba(70,48,24,0.11)] sm:p-[14px]">
+          <article className="relative w-full max-w-[540px] justify-self-end overflow-hidden rounded-[14px] border border-[#e3d9cc] bg-[#fbf7ef] p-4 shadow-[0_16px_42px_rgba(70,48,24,0.11)] sm:p-[14px]">
             <div className="flex items-center justify-between border-b-2 border-[#ff7b39] pb-3">
               <h3 className="font-serif text-[32px] leading-none tracking-[-0.035em] text-[#171717]">After Work</h3>
               <span className="text-[11px] text-[#514a43]">{copy.afterWork.issue}</span>
