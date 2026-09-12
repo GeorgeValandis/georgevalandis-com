@@ -265,11 +265,11 @@ export default function AfterWorkHomepagePreview() {
         </div>
       </section>
 
-      <section id="preview-about" className="relative isolate overflow-hidden bg-[#07101a] py-0">
+      <section id="preview-about" className="relative isolate scroll-mt-20 overflow-hidden bg-[#07101a] py-0 lg:scroll-mt-16">
         <div className="absolute inset-0 -z-10 w-full">
           <Image
-            src="/after-work-preview/about-george.png"
-            alt=""
+            src="/after-work-preview/about-george-real.png"
+            alt="George Valandis working at his desk in the evening"
             fill
             sizes="(min-width: 1024px) 65vw, 100vw"
             className="object-cover object-center"
@@ -294,7 +294,7 @@ export default function AfterWorkHomepagePreview() {
             </a>
           </div>
           <p className="absolute bottom-2 right-8 hidden max-w-[130px] rotate-[-5deg] font-serif text-[17px] italic leading-[1.15] text-white/80 lg:block">
-            Indie today.<br />A brighter<br />tomorrow.<br /><span className="text-[13px]">— George</span>
+            An idea becomes<br />a product when<br />patience gives it shape.<br /><span className="text-[13px]">— George</span>
           </p>
         </div>
       </section>
