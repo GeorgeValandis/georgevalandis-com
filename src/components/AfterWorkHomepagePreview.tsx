@@ -73,15 +73,8 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
         }
 
         .preview-about-image {
-          -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.72) 18%, #000 44%, #000 100%);
-          mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.72) 18%, #000 44%, #000 100%);
-        }
-
-        @media (max-width: 1023px) {
-          .preview-about-image {
-            -webkit-mask-image: none;
-            mask-image: none;
-          }
+          -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.32) 24%, rgba(0, 0, 0, 0.7) 48%, #000 70%, #000 100%);
+          mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.32) 24%, rgba(0, 0, 0, 0.7) 48%, #000 70%, #000 100%);
         }
 
       `}</style>
@@ -285,9 +278,9 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
             alt={copy.about.imageAlt}
             fill
             sizes="(min-width: 1024px) 76vw, 100vw"
-            className="object-cover object-[58%_center] lg:object-center"
+            className="object-contain object-right"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#07101a]/80 via-[#07101a]/20 to-[#07101a]/5 lg:bg-gradient-to-r lg:from-[#07101a] lg:via-[#07101a]/45 lg:via-30% lg:to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#07101a]/80 via-[#07101a]/20 to-[#07101a]/5 lg:bg-gradient-to-r lg:from-[#07101a] lg:via-[#07101a]/90 lg:via-45% lg:to-transparent lg:to-82%" />
           <div className="absolute inset-0 bg-gradient-to-b from-[#07101a] via-[#07101a]/[0.62] via-20% to-transparent lg:hidden" />
           <div className="absolute inset-0 bg-gradient-to-t from-[#07101a]/65 via-transparent to-[#07101a]/10" />
         </div>
