@@ -76,6 +76,18 @@ export default function AfterWorkHomepagePreview() {
           animation-play-state: paused;
         }
 
+        .preview-about-image {
+          -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.72) 18%, #000 44%, #000 100%);
+          mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.72) 18%, #000 44%, #000 100%);
+        }
+
+        @media (max-width: 1023px) {
+          .preview-about-image {
+            -webkit-mask-image: none;
+            mask-image: none;
+          }
+        }
+
         @media (prefers-reduced-motion: reduce) {
           .preview-app-marquee {
             animation: none;
@@ -267,16 +279,17 @@ export default function AfterWorkHomepagePreview() {
       </section>
 
       <section id="preview-about" className="relative isolate scroll-mt-20 overflow-hidden bg-[#07101a] py-0 lg:scroll-mt-16">
-        <div className="absolute inset-0 -z-10 w-full">
+        <div className="absolute inset-0 -z-20 bg-[#07101a]" />
+        <div className="preview-about-image absolute inset-y-0 right-0 -z-10 w-full lg:w-[76%]">
           <Image
-            src="/after-work-preview/about-george-real.png"
+            src="/after-work-preview/george-at-desk.png"
             alt="George Valandis working at his desk in the evening"
             fill
-            sizes="(min-width: 1024px) 65vw, 100vw"
+            sizes="(min-width: 1024px) 76vw, 100vw"
             className="object-cover object-center"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#07101a] via-[#07101a]/90 via-38% to-[#07101a]/20" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#07101a]/60 via-transparent to-[#07101a]/10" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#07101a] via-[#07101a]/45 via-30% to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#07101a]/65 via-transparent to-[#07101a]/10" />
         </div>
         <div className="relative mx-auto flex min-h-[410px] max-w-[1600px] items-center px-6 sm:px-10 lg:px-[54px]">
           <div className="relative z-10 max-w-[480px]">
