@@ -246,12 +246,12 @@ export default function AfterWorkHomepagePreview() {
             </p>
           </div>
 
-          <article className="relative w-full max-w-[465px] justify-self-end overflow-hidden border border-[#e3d9cc] bg-[#fbf7ef] p-4 shadow-[0_16px_42px_rgba(70,48,24,0.11)] sm:p-[14px]">
+          <article className="relative w-full max-w-[465px] justify-self-end overflow-hidden rounded-[14px] border border-[#e3d9cc] bg-[#fbf7ef] p-4 shadow-[0_16px_42px_rgba(70,48,24,0.11)] sm:p-[14px]">
             <div className="flex items-center justify-between border-b-2 border-[#ff7b39] pb-3">
               <h3 className="font-serif text-[32px] leading-none tracking-[-0.035em] text-[#171717]">After Work</h3>
               <span className="text-[11px] text-[#514a43]">Issue 001</span>
             </div>
-            <div className="relative mt-3 aspect-[1.7/1] overflow-hidden">
+            <div className="relative mt-3 aspect-[1.7/1] overflow-hidden rounded-[8px]">
               <Image
                 src="/after-work-preview/issue-001.png"
                 alt="A late-night desk with a laptop, notebook, coffee and city lights"
