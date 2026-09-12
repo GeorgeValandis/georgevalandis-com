@@ -9,11 +9,16 @@ import { ArrowUp, ArrowUpRight, Menu, Send, X } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import Script from 'next/script';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import LanguageSwitch from './LanguageSwitch';
 
 const marqueeApps = apps;
 type ContactSubmissionState = 'idle' | 'sending' | 'success' | 'error';
+
+function getMarqueeLogoPath(logo: string) {
+  const filename = logo.split('/').pop();
+  return filename ? `/after-work-preview/app-icons/${filename.replace(/\.[^.]+$/, '.webp')}` : logo;
+}
 
 function AppMarqueeSet({ duplicate = false, locale }: { duplicate?: boolean; locale: SiteLocale }) {
   return (
@@ -26,11 +31,11 @@ function AppMarqueeSet({ duplicate = false, locale }: { duplicate?: boolean; loc
           className="group flex w-[285px] shrink-0 items-center gap-5 transition-transform duration-300 hover:-translate-y-0.5"
         >
           <Image
-            src={app.logo}
+            src={getMarqueeLogoPath(app.logo)}
             alt=""
             width={104}
             height={104}
-            loading="eager"
+            loading="lazy"
             className="h-[104px] w-[104px] shrink-0 rounded-[25px] object-cover shadow-[0_14px_30px_rgba(0,0,0,0.22)]"
           />
           <div className="min-w-0">
@@ -55,6 +60,23 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
   const [contactForm, setContactForm] = useState({ name: '', email: '', message: '' });
   const [contactSubmissionState, setContactSubmissionState] = useState<ContactSubmissionState>('idle');
   const [contactFeedback, setContactFeedback] = useState('');
+  const marqueeRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const marquee = marqueeRef.current;
+    const appsSection = document.getElementById('preview-apps');
+    if (!marquee || !appsSection) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        marquee.classList.toggle('is-paused', !entry.isIntersecting);
+      },
+      { rootMargin: '180px 0px' },
+    );
+
+    observer.observe(appsSection);
+    return () => observer.disconnect();
+  }, []);
 
   const getContactErrorMessage = (errorCode?: string) => {
     switch (errorCode) {
@@ -121,6 +143,10 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
           flex-shrink: 0;
           will-change: transform;
           animation: preview-app-marquee-right 90s linear infinite;
+        }
+
+        .preview-app-marquee.is-paused {
+          animation-play-state: paused;
         }
 
         .preview-newsletter-form .ml-embedded,
@@ -245,7 +271,7 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
         }
 
       `}</style>
-      <nav className="fixed inset-x-0 top-0 z-50 border-b border-white/[0.04] bg-[#050a13] backdrop-blur-xl">
+      <nav className="fixed inset-x-0 top-0 z-50 border-b border-white/[0.04] bg-[#050a13]">
         <div className="relative mx-auto flex h-20 max-w-[1600px] items-center justify-start px-6 lg:h-16 lg:px-[52px]">
           <a href="#preview-home" className="mr-auto text-xl font-semibold tracking-tight text-white">
             george<span className="text-[#ff9d19]">.</span>valandis
@@ -373,7 +399,7 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
           <div className="relative overflow-hidden" role="region" aria-label={copy.apps.ariaLabel}>
             <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-10 bg-gradient-to-r from-[#050a13] to-transparent sm:w-16" />
             <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-10 bg-gradient-to-l from-[#050a13] to-transparent sm:w-16" />
-            <div className="preview-app-marquee flex w-max">
+            <div ref={marqueeRef} className="preview-app-marquee flex w-max">
               <AppMarqueeSet locale={locale} />
               <AppMarqueeSet duplicate locale={locale} />
             </div>
