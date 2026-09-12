@@ -127,7 +127,7 @@ export const previewCopy: Record<SiteLocale, PreviewCopy> = {
       description: "I'm George Valandis, an indie iOS developer and solopreneur based in Germany. I build apps because I enjoy turning ideas into something real — useful tools that make everyday life a little bit better.",
       cta: 'More about me',
       quote: ['An idea becomes', 'a product when', 'patience gives it shape.', '— George'],
-      imageAlt: 'George Valandis working at his desk in the evening',
+      imageAlt: 'George Valandis',
     },
     blog: {
       eyebrow: '03 — Blog',
@@ -191,7 +191,7 @@ export const previewCopy: Record<SiteLocale, PreviewCopy> = {
       description: 'Ich bin George Valandis, Indie-iOS-Entwickler und Solopreneur aus Deutschland. Ich baue Apps, weil ich es mag, Ideen in etwas Echtes zu verwandeln — in nützliche Werkzeuge, die den Alltag ein kleines bisschen besser machen.',
       cta: 'Mehr über mich',
       quote: ['Aus einer Idee wird', 'ein Produkt, wenn', 'Geduld ihr Form gibt.', '— George'],
-      imageAlt: 'George Valandis arbeitet abends an seinem Schreibtisch',
+      imageAlt: 'George Valandis',
     },
     blog: {
       eyebrow: '03 — Blog',

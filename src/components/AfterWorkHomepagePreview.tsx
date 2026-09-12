@@ -279,15 +279,16 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
       <section id="preview-about" className="relative isolate scroll-mt-20 overflow-hidden bg-[#07101a] py-0 lg:scroll-mt-16">
         <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 -top-8 z-20 h-8 bg-gradient-to-b from-[#f7efe3] to-[#07101a] sm:-top-11 sm:h-11" />
         <div className="absolute inset-0 -z-20 bg-[#07101a]" />
-        <div className="preview-about-image absolute inset-x-0 bottom-0 top-[440px] -z-10 w-full sm:top-[420px] lg:inset-y-0 lg:right-0 lg:left-auto lg:top-auto lg:w-[76%]">
+        <div className="preview-about-image absolute inset-x-0 bottom-0 top-[440px] -z-10 w-full sm:top-[420px] lg:inset-y-0 lg:right-0 lg:left-auto lg:w-[76%]">
           <Image
-            src="/after-work-preview/george-at-desk.png"
+            src="/profile/george-valandis.png"
             alt={copy.about.imageAlt}
             fill
             sizes="(min-width: 1024px) 76vw, 100vw"
             className="object-cover object-[58%_center] lg:object-center"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#07101a]/80 via-[#07101a]/20 to-[#07101a]/5 lg:bg-gradient-to-r lg:from-[#07101a] lg:via-[#07101a]/45 lg:via-30% lg:to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#07101a] via-[#07101a]/[0.62] via-20% to-transparent lg:hidden" />
           <div className="absolute inset-0 bg-gradient-to-t from-[#07101a]/65 via-transparent to-[#07101a]/10" />
         </div>
         <div className="relative mx-auto flex min-h-[820px] max-w-[1600px] items-start px-6 pb-16 pt-20 sm:min-h-[860px] sm:px-10 sm:pb-20 sm:pt-24 lg:min-h-[640px] lg:items-center lg:px-[54px] lg:py-0">
