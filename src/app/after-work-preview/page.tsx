@@ -11,5 +11,5 @@ export const metadata: Metadata = {
 };
 
 export default function AfterWorkPreviewPage() {
-  return <AfterWorkHomepagePreview />;
+  return <AfterWorkHomepagePreview locale="en" />;
 }
