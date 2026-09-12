@@ -71,7 +71,7 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
       ([entry]) => {
         marquee.classList.toggle('is-paused', !entry.isIntersecting);
       },
-      { rootMargin: '0px' },
+      { rootMargin: '200px 0px' },
     );
 
     observer.observe(appsSection);
@@ -125,7 +125,7 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
 
   return (
     <main className="min-h-screen overflow-hidden bg-[#050a13] text-[#f7f8f9]">
-      <Script id="mailerlite-universal" strategy="afterInteractive">
+      <Script id="mailerlite-universal" strategy="lazyOnload">
         {`(function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
     .push(arguments);},l=d.createElement(e),l.async=1,l.src=u,
     n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})
@@ -179,17 +179,15 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
         #preview-about,
         #preview-blog,
         #preview-contact {
-          content-visibility: auto;
+          content-visibility: visible;
+          contain-intrinsic-size: none;
         }
 
-        #preview-after-work { contain-intrinsic-size: 720px; }
-        #preview-about { contain-intrinsic-size: 640px; }
-        #preview-blog { contain-intrinsic-size: 560px; }
-        #preview-contact { contain-intrinsic-size: 500px; }
-
         @media (max-width: 639px) {
-          #preview-after-work { contain-intrinsic-size: 860px; }
-          #preview-about { contain-intrinsic-size: 860px; }
+          #preview-after-work,
+          #preview-about {
+            contain-intrinsic-size: none;
+          }
         }
 
         .preview-newsletter-form .ml-form-embedContent h4,
