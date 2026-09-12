@@ -69,7 +69,7 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
           width: max-content;
           flex-shrink: 0;
           will-change: transform;
-          animation: preview-app-marquee-right 38s linear infinite;
+          animation: preview-app-marquee-right 72s linear infinite;
         }
 
         .preview-about-image {
