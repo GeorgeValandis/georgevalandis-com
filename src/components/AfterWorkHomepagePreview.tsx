@@ -5,6 +5,7 @@ import { germanAppSubtitles, previewCopy } from '@/content/afterWorkPreviewCopy'
 import { blogPosts } from '@/content/blogPosts';
 import { getSiteCopy } from '@/content/siteCopy';
 import { localizedAnchor, localizedPath, type SiteLocale } from '@/lib/siteLocale';
+import { OPEN_COOKIE_SETTINGS_EVENT } from '@/components/CookieConsent';
 import { ArrowUp, ArrowUpRight, Menu, Send, X } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -614,6 +615,13 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
         <div className="mx-auto flex max-w-[1600px] flex-col items-center justify-between gap-5 sm:flex-row">
           <span>{copy.footer.copyright}</span>
           <nav className="flex flex-wrap items-center justify-center gap-x-5 gap-y-3" aria-label="Footer">
+            <button
+              type="button"
+              onClick={() => window.dispatchEvent(new Event(OPEN_COOKIE_SETTINGS_EVENT))}
+              className="transition-colors hover:text-white"
+            >
+              {copy.footer.cookieSettings}
+            </button>
             <Link href={localizedPath(locale, '/privacy-statement')} className="transition-colors hover:text-white">
               {copy.footer.privacy}
             </Link>

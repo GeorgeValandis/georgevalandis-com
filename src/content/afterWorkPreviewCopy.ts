@@ -53,6 +53,7 @@ export type PreviewCopy = {
   };
   footer: {
     copyright: string;
+    cookieSettings: string;
     privacy: string;
     imprint: string;
     backToTop: string;
@@ -148,6 +149,7 @@ export const previewCopy: Record<SiteLocale, PreviewCopy> = {
     },
     footer: {
       copyright: '© 2026 George Valandis.',
+      cookieSettings: 'Cookie Information',
       privacy: 'Website Privacy & Cookies',
       imprint: 'Imprint',
       backToTop: 'Back to top',
@@ -217,6 +219,7 @@ export const previewCopy: Record<SiteLocale, PreviewCopy> = {
     },
     footer: {
       copyright: '© 2026 George Valandis.',
+      cookieSettings: 'Cookie-Information',
       privacy: 'Datenschutz & Cookies',
       imprint: 'Impressum',
       backToTop: 'Nach oben',

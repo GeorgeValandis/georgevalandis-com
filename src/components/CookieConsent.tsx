@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react';
 const NOTICE_VERSION = '2';
 const NOTICE_COOKIE_KEY = 'gv_cookie_notice';
 const NOTICE_COOKIE_MAX_AGE_SECONDS = 60 * 60 * 24 * 180;
+export const OPEN_COOKIE_SETTINGS_EVENT = 'gv:open-cookie-settings';
 
 function sanitizeScope(scope: string): string {
   return scope.replace(/[^a-z0-9_-]/gi, '_');
@@ -80,6 +81,7 @@ export default function CookieConsent() {
   const copy = getSiteCopy(locale).consent;
   const scope = getNoticeScope(pathname);
   const privacyPath = getPrivacyPath(pathname, locale);
+  const isAfterWorkPreview = /^\/(?:de\/)?after-work-preview\/?$/.test(pathname ?? '');
   const [isMounted, setIsMounted] = useState(false);
   const [acknowledged, setAcknowledged] = useState(false);
   const [showBanner, setShowBanner] = useState(false);
@@ -96,6 +98,16 @@ export default function CookieConsent() {
 
     return () => window.clearTimeout(timeoutId);
   }, [scope]);
+
+  useEffect(() => {
+    const openCookieSettings = () => {
+      setShowBanner(false);
+      setShowDetails(true);
+    };
+
+    window.addEventListener(OPEN_COOKIE_SETTINGS_EVENT, openCookieSettings);
+    return () => window.removeEventListener(OPEN_COOKIE_SETTINGS_EVENT, openCookieSettings);
+  }, []);
 
   const acknowledge = () => {
     storeAcknowledgement(scope);
@@ -245,7 +257,7 @@ export default function CookieConsent() {
         </section>
       ) : null}
 
-      {acknowledged && !showDetails ? (
+      {acknowledged && !showDetails && !isAfterWorkPreview ? (
         <button
           type="button"
           onClick={() => setShowDetails(true)}
