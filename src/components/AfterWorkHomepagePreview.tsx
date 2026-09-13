@@ -121,6 +121,27 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    const form = document.querySelector('.preview-newsletter-form');
+    if (!form) return;
+
+    const applyNewsletterInputCopy = () => {
+      const input = form.querySelector<HTMLInputElement>('input[type="email"], input.form-control');
+      if (!input) return;
+
+      if (input.placeholder !== copy.afterWork.inputPlaceholder) {
+        input.placeholder = copy.afterWork.inputPlaceholder;
+      }
+      input.setAttribute('aria-label', copy.afterWork.inputLabel);
+    };
+
+    applyNewsletterInputCopy();
+    const observer = new MutationObserver(applyNewsletterInputCopy);
+    observer.observe(form, { attributes: true, childList: true, subtree: true, attributeFilter: ['placeholder'] });
+
+    return () => observer.disconnect();
+  }, [copy.afterWork.inputLabel, copy.afterWork.inputPlaceholder]);
+
   const getContactErrorMessage = (errorCode?: string) => {
     switch (errorCode) {
       case 'missing_fields':
