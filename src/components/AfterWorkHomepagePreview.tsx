@@ -444,6 +444,10 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
         }
 
         .preview-newsletter-form .ml-form-embedSubmit button.primary {
+          display: inline-flex !important;
+          align-items: center !important;
+          justify-content: center !important;
+          gap: 8px !important;
           min-height: 52px !important;
           width: 100% !important;
           border: 0 !important;
@@ -454,6 +458,16 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
           font-size: 13px !important;
           font-weight: 600 !important;
           padding: 14px 24px !important;
+        }
+
+        .preview-newsletter-form .ml-form-embedSubmit button.primary::before {
+          content: '';
+          display: inline-block;
+          width: 14px;
+          height: 14px;
+          background-color: currentColor;
+          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2'%3E%3Crect x='3' y='5' width='18' height='14' rx='2'/%3E%3Cpath d='m3 7 9 6 9-6'/%3E%3C/svg%3E") center / contain no-repeat;
+          -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2'%3E%3Crect x='3' y='5' width='18' height='14' rx='2'/%3E%3Cpath d='m3 7 9 6 9-6'/%3E%3C/svg%3E") center / contain no-repeat;
         }
 
         .preview-newsletter-form #mlb2-45845332.ml-form-embedContainer .ml-form-embedWrapper .ml-form-embedBody .ml-form-embedSubmit button.primary {
