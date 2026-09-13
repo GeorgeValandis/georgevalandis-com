@@ -548,8 +548,8 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
               <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#514a43]">{copy.afterWork.issue}</span>
             </div>
             <div className="relative -mx-1 overflow-hidden px-1">
-              <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-10 bg-gradient-to-r from-[#f7efe3] via-[#f7efe3]/80 to-transparent sm:w-14" />
-              <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-10 bg-gradient-to-l from-[#f7efe3] via-[#f7efe3]/80 to-transparent sm:w-14" />
+              <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-5 bg-gradient-to-r from-[#f7efe3] to-transparent sm:w-7" />
+              <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-5 bg-gradient-to-l from-[#f7efe3] to-transparent sm:w-7" />
               <div className="preview-newsletter-track flex w-max">
                 <NewsletterSceneSet scenes={copy.afterWork.gallery} />
                 <NewsletterSceneSet duplicate scenes={copy.afterWork.gallery} />
