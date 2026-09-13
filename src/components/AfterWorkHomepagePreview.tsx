@@ -15,6 +15,7 @@ import LanguageSwitch from './LanguageSwitch';
 
 const marqueeApps = apps.filter((app) => app.showInAppsSection !== false);
 type ContactSubmissionState = 'idle' | 'sending' | 'success' | 'error';
+type NewsletterConsentState = 'idle' | 'recording' | 'recorded' | 'error';
 
 function getMarqueeLogoPath(logo: string) {
   const filename = logo.split('/').pop();
@@ -86,6 +87,7 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
   const [contactForm, setContactForm] = useState({ name: '', email: '', message: '' });
   const [contactSubmissionState, setContactSubmissionState] = useState<ContactSubmissionState>('idle');
   const [contactFeedback, setContactFeedback] = useState('');
+  const [newsletterConsentState, setNewsletterConsentState] = useState<NewsletterConsentState>('idle');
   const marqueeRef = useRef<HTMLDivElement>(null);
   const newsletterReelRef = useRef<HTMLDivElement>(null);
 
@@ -122,25 +124,106 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
   }, []);
 
   useEffect(() => {
-    const form = document.querySelector('.preview-newsletter-form');
-    if (!form) return;
+    const formRoot = document.querySelector<HTMLElement>('.preview-newsletter-form');
+    if (!formRoot) return;
+
+    let currentForm: HTMLFormElement | null = null;
+    let submitHandler: ((event: Event) => void) | null = null;
+    let recordedEmail: string | null = null;
+    let isActive = true;
 
     const applyNewsletterInputCopy = () => {
-      const input = form.querySelector<HTMLInputElement>('input[type="email"], input.form-control');
-      if (!input) return;
+      const input = formRoot.querySelector<HTMLInputElement>('input[type="email"], input.form-control');
 
-      if (input.placeholder !== copy.afterWork.inputPlaceholder) {
-        input.placeholder = copy.afterWork.inputPlaceholder;
+      if (input) {
+        if (input.placeholder !== copy.afterWork.inputPlaceholder) {
+          input.placeholder = copy.afterWork.inputPlaceholder;
+        }
+        input.setAttribute('aria-label', copy.afterWork.inputLabel);
       }
-      input.setAttribute('aria-label', copy.afterWork.inputLabel);
+
+      const checkboxRow = formRoot.querySelector<HTMLElement>('.ml-form-checkboxRow');
+      if (checkboxRow) {
+        checkboxRow.classList.remove('ml-validate-required');
+        checkboxRow.hidden = true;
+      }
+
+      const form = formRoot.querySelector<HTMLFormElement>('form');
+      if (!form || form === currentForm) return;
+
+      if (currentForm && submitHandler) {
+        currentForm.removeEventListener('submit', submitHandler, true);
+      }
+
+      currentForm = form;
+      submitHandler = (event: Event) => {
+        const emailInput = form.querySelector<HTMLInputElement>('input[type="email"], input.form-control');
+        const email = emailInput?.value.trim() ?? '';
+
+        if (!email || !emailInput?.checkValidity()) return;
+
+        if (form.dataset.newsletterConsentPending === 'true') {
+          event.preventDefault();
+          event.stopImmediatePropagation();
+          return;
+        }
+
+        if (recordedEmail === email) return;
+
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        form.dataset.newsletterConsentPending = 'true';
+        setNewsletterConsentState('recording');
+
+        const submissionId = typeof crypto !== 'undefined' && 'randomUUID' in crypto
+          ? crypto.randomUUID()
+          : `${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`;
+
+        void fetch('/newsletter/subscribe.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'same-origin',
+          body: JSON.stringify({
+            email,
+            consent: true,
+            method: 'subscribe_button',
+            submissionId,
+            locale,
+          }),
+        })
+          .then(async (response) => {
+            const result = (await response.json().catch(() => null)) as { ok?: boolean } | null;
+            if (!response.ok || !result?.ok) throw new Error('newsletter_consent_failed');
+          })
+          .then(() => {
+            if (!isActive) return;
+            recordedEmail = email;
+            delete form.dataset.newsletterConsentPending;
+            setNewsletterConsentState('recorded');
+            HTMLFormElement.prototype.submit.call(form);
+          })
+          .catch(() => {
+            if (!isActive) return;
+            delete form.dataset.newsletterConsentPending;
+            setNewsletterConsentState('error');
+          });
+      };
+
+      form.addEventListener('submit', submitHandler, true);
     };
 
     applyNewsletterInputCopy();
     const observer = new MutationObserver(applyNewsletterInputCopy);
-    observer.observe(form, { attributes: true, childList: true, subtree: true, attributeFilter: ['placeholder'] });
+    observer.observe(formRoot, { attributes: true, childList: true, subtree: true, attributeFilter: ['placeholder'] });
 
-    return () => observer.disconnect();
-  }, [copy.afterWork.inputLabel, copy.afterWork.inputPlaceholder]);
+    return () => {
+      isActive = false;
+      observer.disconnect();
+      if (currentForm && submitHandler) {
+        currentForm.removeEventListener('submit', submitHandler, true);
+      }
+    };
+  }, [copy.afterWork.inputLabel, copy.afterWork.inputPlaceholder, locale]);
 
   const getContactErrorMessage = (errorCode?: string) => {
     switch (errorCode) {
@@ -419,12 +502,7 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
         }
 
         .preview-newsletter-form .ml-form-checkboxRow {
-          grid-column: 1 !important;
-          grid-row: 2 !important;
-          flex: none !important;
-          width: 100% !important;
-          order: 3 !important;
-          margin: 0 !important;
+          display: none !important;
         }
 
         @media (max-width: 520px) {
@@ -436,8 +514,7 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
 
           .preview-newsletter-form .ml-form-formContent,
           .preview-newsletter-form .ml-form-embedSubmit,
-          .preview-newsletter-form .ml-form-embedPermissions,
-          .preview-newsletter-form .ml-form-checkboxRow {
+          .preview-newsletter-form .ml-form-embedPermissions {
             flex-basis: auto !important;
             width: 100% !important;
             grid-column: auto !important;
@@ -605,6 +682,19 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
                 </a>
               </noscript>
             </div>
+            <p
+              className={`mt-3 min-h-[1.25rem] text-[12px] leading-[1.4] text-[#8c8176] ${newsletterConsentState === 'idle' ? 'sr-only' : ''}`}
+              role="status"
+              aria-live="polite"
+            >
+              {newsletterConsentState === 'recording'
+                ? copy.afterWork.consentSaving
+                : newsletterConsentState === 'recorded'
+                  ? copy.afterWork.consentRecorded
+                  : newsletterConsentState === 'error'
+                    ? copy.afterWork.consentError
+                    : ''}
+            </p>
           </div>
 
           <div

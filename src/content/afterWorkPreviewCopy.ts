@@ -29,6 +29,9 @@ export type PreviewCopy = {
     inputPlaceholder: string;
     submit: string;
     submitted: string;
+    consentSaving: string;
+    consentRecorded: string;
+    consentError: string;
     previewNote: string;
     helper: string;
     issue: string;
@@ -123,6 +126,9 @@ export const previewCopy: Record<SiteLocale, PreviewCopy> = {
       inputPlaceholder: 'Your email for the next note',
       submit: 'Get the next note',
       submitted: "You're on the list",
+      consentSaving: 'Saving…',
+      consentRecorded: 'Check your inbox to confirm.',
+      consentError: 'Something went wrong. Please try again.',
       previewNote: 'Preview confirmation only — MailerLite will be connected after visual approval.',
       helper: 'One calm note per week. No noise.',
       issue: 'Issue 001',
@@ -211,6 +217,9 @@ export const previewCopy: Record<SiteLocale, PreviewCopy> = {
       inputPlaceholder: 'Deine E-Mail für die nächste Notiz',
       submit: 'Nächste Ausgabe erhalten',
       submitted: 'Du bist dabei',
+      consentSaving: 'Wird gespeichert …',
+      consentRecorded: 'Bestätige die Anmeldung in deinem Postfach.',
+      consentError: 'Das hat nicht geklappt. Bitte versuche es erneut.',
       previewNote: 'Nur eine Preview-Bestätigung — MailerLite wird nach der visuellen Freigabe verbunden.',
       helper: 'Eine ruhige Notiz pro Woche. Kein Rauschen.',
       issue: 'Ausgabe 001',

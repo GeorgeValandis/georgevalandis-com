@@ -243,12 +243,15 @@ export default function PrivacyStatementContent({
                 </p>
                 <p>
                   Die Verarbeitung erfolgt auf Grundlage deiner Einwilligung nach Art. 6 Abs. 1 lit. a
-                  DSGVO. Wir verwenden ein Double-Opt-in-Verfahren. Die Bestätigungsnachricht dient
-                  ausschließlich der Bestätigung der Anmeldung. Du kannst die Einwilligung jederzeit
-                  über den Abmeldelink in jeder Ausgabe widerrufen; die Rechtmäßigkeit der bis dahin
-                  erfolgten Verarbeitung bleibt unberührt. Alternativ kannst du den Widerruf an die im
-                  Impressum genannte Kontaktadresse richten; die E-Mail-Adresse wird dann zur
-                  Zuordnung im Newsletter-System verwendet.
+                  DSGVO. Die Einwilligung wird durch das Absenden des eindeutig beschrifteten Buttons
+                  „Subscribe“ erteilt; dieser Anmeldevorgang wird serverseitig als
+                  <span className="font-mono text-sm">signup_requested</span>-Ereignis mit Zeitstempel
+                  protokolliert. Wir verwenden zusätzlich ein Double-Opt-in-Verfahren. Die
+                  Bestätigungsnachricht dient ausschließlich der Bestätigung der Anmeldung. Du kannst
+                  die Einwilligung jederzeit über den Abmeldelink in jeder Ausgabe widerrufen; die
+                  Rechtmäßigkeit der bis dahin erfolgten Verarbeitung bleibt unberührt. Alternativ
+                  kannst du den Widerruf an die im Impressum genannte Kontaktadresse richten; die
+                  E-Mail-Adresse wird dann zur Zuordnung im Newsletter-System verwendet.
                 </p>
                 <p>
                   MailerLite Limited, 88 Harcourt Street, Dublin 2, D02 DK18, Irland, verarbeitet die
@@ -266,9 +269,10 @@ export default function PrivacyStatementContent({
                   aktuellen Anbieterinformationen die dafür vorgesehenen Schutzmechanismen.
                 </p>
                 <p>
-                  Für den Nachweis der Einwilligung werden zusätzlich serverseitige Ereignisse aus
-                  MailerLite über signaturgesicherte Webhooks verarbeitet. Das getrennte Protokoll enthält keinen Klartext der
-                  E-Mail-Adresse, sondern einen gesicherten E-Mail-Hash, die MailerLite-
+                  Für den Nachweis der Einwilligung werden der serverseitig protokollierte
+                  Absendevorgang sowie Ereignisse aus MailerLite über signaturgesicherte Webhooks
+                  verarbeitet. Das getrennte Protokoll enthält keinen Klartext der E-Mail-Adresse,
+                  sondern einen gesicherten E-Mail-Hash, die MailerLite-
                   Abonnenten-ID, Statusänderungen, Zeitpunkte, gegebenenfalls einen gesalzenen
                   Hash der Opt-in-IP sowie die verwendeten Formular- und
                   Datenschutzerklärungsversionen. Double-Opt-in-Bestätigung, Abmeldung und manuelle
@@ -308,12 +312,15 @@ export default function PrivacyStatementContent({
                   embedded MailerLite form.
                 </p>
                 <p>
-                  Processing is based on your consent under Article 6(1)(a) GDPR. We use a double
-                  opt-in process. The confirmation message is used only to confirm the subscription.
-                  You can withdraw your consent at any time through the unsubscribe link in every
-                  issue; this does not affect the lawfulness of processing before the withdrawal. You
-                  can also send the withdrawal to the contact address stated in the imprint; the
-                  email address is then used to locate the newsletter record.
+                  Processing is based on your consent under Article 6(1)(a) GDPR. Consent is given by
+                  submitting the clearly labelled “Subscribe” button; that sign-up action is recorded
+                  server-side as a <span className="font-mono text-sm">signup_requested</span> event
+                  with a timestamp. We also use a double opt-in process. The confirmation message is
+                  used only to confirm the subscription. You can withdraw your consent at any time
+                  through the unsubscribe link in every issue; this does not affect the lawfulness of
+                  processing before the withdrawal. You can also send the withdrawal to the contact
+                  address stated in the imprint; the email address is then used to locate the
+                  newsletter record.
                 </p>
                 <p>
                   MailerLite Limited, 88 Harcourt Street, Dublin 2, D02 DK18, Ireland, processes
@@ -331,9 +338,9 @@ export default function PrivacyStatementContent({
                   in its current provider information.
                 </p>
                 <p>
-                  To document consent, we additionally process server-side events received from
-                  MailerLite through signature-protected webhooks. The separate log does not contain
-                  the email address in plain text; it stores a protected email HMAC, the MailerLite
+                  To document consent, we process the server-side sign-up action and events received
+                  from MailerLite through signature-protected webhooks. The separate log does not
+                  contain the email address in plain text; it stores a protected email HMAC, the MailerLite
                   subscriber ID, status changes, timestamps, where supplied a salted hash of the
                   opt-in IP, and the form and Privacy Statement versions in use. Double-opt-in
                   confirmation, unsubscribe events, and manual withdrawals are stored as separate

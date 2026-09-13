@@ -3,7 +3,8 @@
 This setup keeps the newsletter consent evidence on the existing ALL-INKL MySQL database while
 keeping it separate from the cookie-notice log. The local tables store no raw subscriber email:
 they store an HMAC of the normalized email, the MailerLite subscriber ID, status changes and
-consent events.
+consent events. The website records the affirmative `Subscribe` action as a pending
+`signup_requested` event; MailerLite's Double-Opt-in webhook records the later confirmation.
 
 ## 1. Create the tables
 
@@ -40,12 +41,15 @@ Never commit `consent/config.php` or place any of these secrets in frontend code
 Deploy these public PHP files to the webspace:
 
 - `/newsletter/webhook.php`
+- `/newsletter/subscribe.php`
 - `/newsletter/withdraw.php`
 - `/newsletter/export.php`
 - `/newsletter/_lib.php`
 
-The webhook accepts only POST requests with a valid MailerLite `Signature` HMAC. The withdrawal
-and export endpoints accept only POST requests with an `Authorization: Bearer ...` header using
+The subscribe endpoint accepts only a POST with an affirmative `subscribe_button` method and
+stores only an HMAC of the normalized email, plus timestamp and a salted IP hash. The webhook
+accepts only POST requests with a valid MailerLite `Signature` HMAC. The withdrawal and export
+endpoints accept only POST requests with an `Authorization: Bearer ...` header using
 `newsletter_admin_token`; they do not accept tokens in URLs.
 
 ## 4. Create the MailerLite webhook
@@ -63,8 +67,9 @@ Subscribe it to these events:
 
 Copy the generated webhook secret into `newsletter_webhook_secret`. Verify in the MailerLite
 account that Double Opt-in is enabled for form `Em4Az7` and that the opt-in evidence is available
-there. The webhook is the source for confirmation and unsubscribe events; a browser-side POST is
-not used as proof of consent.
+there. The webhook is the source for provider confirmation and unsubscribe events. The browser-side
+POST documents the user's affirmative Subscribe action, but it does not replace MailerLite's
+Double-Opt-in confirmation.
 
 ## 5. Process a withdrawal request
 

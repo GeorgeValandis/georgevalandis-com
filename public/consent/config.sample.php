@@ -13,7 +13,7 @@ return [
     'newsletter_ip_hash_salt' => 'replace-this-with-a-separate-newsletter-ip-secret',
     'newsletter_admin_token' => 'replace-this-with-a-separate-newsletter-admin-token',
     'newsletter_form_id' => 'Em4Az7',
-    'newsletter_consent_version' => 1,
-    'newsletter_privacy_version' => 1,
+    'newsletter_consent_version' => 2,
+    'newsletter_privacy_version' => 2,
     'mailerlite_api_token' => 'replace-this-with-the-mailerlite-api-token',
 ];
