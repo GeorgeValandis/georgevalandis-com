@@ -34,6 +34,8 @@ export type PreviewCopy = {
     issue: string;
     imageAlt: string;
     footer: string;
+    galleryLabel: string;
+    gallery: { image: string; alt: string; caption: string }[];
   };
   about: {
     eyebrow: string;
@@ -126,6 +128,24 @@ export const previewCopy: Record<SiteLocale, PreviewCopy> = {
       issue: 'Issue 001',
       imageAlt: 'A late-night desk with a laptop, notebook, coffee and city lights',
       footer: 'Apps / Decisions / A calmer kind of progress',
+      galleryLabel: 'After Work newsletter preview',
+      gallery: [
+        {
+          image: '/after-work-preview/newsletter-night-desk.webp',
+          alt: 'A laptop and notebook on a warm late-night desk with city lights in the background',
+          caption: 'The work gets quieter. The ideas get clearer.',
+        },
+        {
+          image: '/after-work-preview/newsletter-george-at-desk.webp',
+          alt: 'George Valandis working at his desk with a softly blurred background',
+          caption: 'Make something worth coming back to.',
+        },
+        {
+          image: '/after-work-preview/newsletter-about-george.webp',
+          alt: 'A warm portrait of George Valandis with evening light and soft background blur',
+          caption: 'Keep a little room for the next idea.',
+        },
+      ],
     },
     about: {
       eyebrow: '02 — About',
@@ -196,6 +216,24 @@ export const previewCopy: Record<SiteLocale, PreviewCopy> = {
       issue: 'Ausgabe 001',
       imageAlt: 'Ein nächtlicher Schreibtisch mit Laptop, Notizbuch, Kaffee und Stadtlichtern',
       footer: 'Apps / Entscheidungen / Ein ruhigerer Fortschritt',
+      galleryLabel: 'After-Work-Newsletter-Vorschau',
+      gallery: [
+        {
+          image: '/after-work-preview/newsletter-night-desk.webp',
+          alt: 'Laptop und Notizbuch auf einem warm beleuchteten Schreibtisch mit Stadtlichtern im Hintergrund',
+          caption: 'Die Arbeit wird ruhiger. Die Ideen werden klarer.',
+        },
+        {
+          image: '/after-work-preview/newsletter-george-at-desk.webp',
+          alt: 'George Valandis bei der Arbeit an seinem Schreibtisch mit weich verschwommenem Hintergrund',
+          caption: 'Baue etwas, zu dem du gern zurückkehrst.',
+        },
+        {
+          image: '/after-work-preview/newsletter-about-george.webp',
+          alt: 'Warmes Portrait von George Valandis mit Abendlicht und weichem Bokeh im Hintergrund',
+          caption: 'Lass ein wenig Raum für die nächste Idee.',
+        },
+      ],
     },
     about: {
       eyebrow: '02 — Über mich',

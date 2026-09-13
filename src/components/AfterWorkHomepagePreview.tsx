@@ -54,6 +54,31 @@ function AppMarqueeSet({ duplicate = false, locale }: { duplicate?: boolean; loc
   );
 }
 
+type NewsletterScene = { image: string; alt: string; caption: string };
+
+function NewsletterSceneSet({ scenes, duplicate = false }: { scenes: NewsletterScene[]; duplicate?: boolean }) {
+  return (
+    <div className="flex shrink-0 gap-5 pr-5" aria-hidden={duplicate}>
+      {scenes.map((scene) => (
+        <figure key={`${duplicate ? 'duplicate-' : ''}${scene.image}`} className="w-[270px] shrink-0 sm:w-[300px] xl:w-[320px]">
+          <div className="relative aspect-[1.25/1] overflow-hidden rounded-[12px] bg-[#e8ddcf] shadow-[0_16px_30px_rgba(70,48,24,0.12)]">
+            <Image
+              src={scene.image}
+              alt={duplicate ? '' : scene.alt}
+              fill
+              sizes="(min-width: 1280px) 320px, (min-width: 640px) 300px, 82vw"
+              className="object-cover object-center"
+            />
+          </div>
+          <figcaption className="pt-3 font-serif text-[17px] italic leading-[1.25] text-[#514a43]">
+            {scene.caption}
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+  );
+}
+
 export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocale }) {
   const copy = previewCopy[locale];
   const contactCopy = getSiteCopy(locale).contact;
@@ -62,6 +87,7 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
   const [contactSubmissionState, setContactSubmissionState] = useState<ContactSubmissionState>('idle');
   const [contactFeedback, setContactFeedback] = useState('');
   const marqueeRef = useRef<HTMLDivElement>(null);
+  const newsletterReelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const marquee = marqueeRef.current;
@@ -76,6 +102,22 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
     );
 
     observer.observe(appsSection);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const reel = newsletterReelRef.current;
+    const afterWorkSection = document.getElementById('preview-after-work');
+    if (!reel || !afterWorkSection) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        reel.classList.toggle('is-paused', !entry.isIntersecting);
+      },
+      { rootMargin: '0px' },
+    );
+
+    observer.observe(afterWorkSection);
     return () => observer.disconnect();
   }, []);
 
@@ -147,6 +189,22 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
         }
 
         .preview-app-marquee.is-paused {
+          animation-play-state: paused;
+        }
+
+        @keyframes preview-newsletter-reel-right {
+          from { transform: translate3d(-50%, 0, 0); }
+          to { transform: translate3d(0, 0, 0); }
+        }
+
+        .preview-newsletter-track {
+          width: max-content;
+          flex-shrink: 0;
+          will-change: transform;
+          animation: preview-newsletter-reel-right 84s linear infinite;
+        }
+
+        .preview-newsletter-reel.is-paused .preview-newsletter-track {
           animation-play-state: paused;
         }
 
@@ -458,22 +516,25 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
             </div>
           </div>
 
-          <article className="relative w-full max-w-[540px] justify-self-end overflow-hidden rounded-[14px] border border-[#e3d9cc] bg-[#fbf7ef] p-4 shadow-[0_16px_42px_rgba(70,48,24,0.11)] sm:p-[14px]">
-            <div className="flex items-center justify-between border-b-2 border-[#ff7b39] pb-3">
+          <div
+            ref={newsletterReelRef}
+            className="preview-newsletter-reel relative w-full max-w-[600px] justify-self-end overflow-hidden"
+            role="region"
+            aria-label={copy.afterWork.galleryLabel}
+          >
+            <div className="mb-4 flex items-baseline justify-between border-b border-[#d6c9b8] pb-3">
               <h3 className="font-serif text-[32px] leading-none tracking-[-0.035em] text-[#171717]">After Work</h3>
-              <span className="text-[11px] text-[#514a43]">{copy.afterWork.issue}</span>
+              <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#514a43]">{copy.afterWork.issue}</span>
             </div>
-            <div className="relative mt-3 aspect-[1.7/1] overflow-hidden rounded-[8px]">
-              <Image
-                src="/after-work-preview/issue-001.webp"
-                alt={copy.afterWork.imageAlt}
-                fill
-                sizes="(min-width: 1024px) 46vw, 100vw"
-                className="object-cover object-center"
-              />
+            <div className="relative -mx-1 overflow-hidden px-1">
+              <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-10 bg-gradient-to-r from-[#f7efe3] via-[#f7efe3]/80 to-transparent sm:w-14" />
+              <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-10 bg-gradient-to-l from-[#f7efe3] via-[#f7efe3]/80 to-transparent sm:w-14" />
+              <div className="preview-newsletter-track flex w-max">
+                <NewsletterSceneSet scenes={copy.afterWork.gallery} />
+                <NewsletterSceneSet duplicate scenes={copy.afterWork.gallery} />
+              </div>
             </div>
-            <p className="pt-3 font-mono text-[9px] uppercase tracking-[0.27em] text-[#514a43]">{copy.afterWork.footer}</p>
-          </article>
+          </div>
         </div>
       </section>
 
