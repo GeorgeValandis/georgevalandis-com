@@ -13,7 +13,7 @@ import Script from 'next/script';
 import { useEffect, useRef, useState } from 'react';
 import LanguageSwitch from './LanguageSwitch';
 
-const marqueeApps = apps;
+const marqueeApps = apps.filter((app) => app.showInAppsSection !== false);
 type ContactSubmissionState = 'idle' | 'sending' | 'success' | 'error';
 
 function getMarqueeLogoPath(logo: string) {
