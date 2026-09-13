@@ -182,7 +182,9 @@ export default function PrivacyStatementContent({
                 <p>
                   Diese Website verwendet keine Analyse- oder Marketing-Cookies. Sie lädt jedoch den
                   in Abschnitt 7 beschriebenen Cloudflare-Web-Analytics-Beacon. Werbe- oder
-                  Marketing-Tracker werden nicht verwendet.
+                  Marketing-Tracker werden nicht verwendet. Für diese Webanalyse werden keine
+                  eigenen Nutzer-, Besucher- oder Geräte-IDs zur individuellen Wiedererkennung
+                  eingesetzt und keine Nutzerprofile erstellt.
                 </p>
                 <p>
                   Wenn du den Cookie-Hinweis bestätigst, speichert die Website ausschließlich das
@@ -218,7 +220,8 @@ export default function PrivacyStatementContent({
                 <p>
                   This website does not use analytics or marketing cookies. It does load the Cloudflare
                   Web Analytics beacon described in Section 7. No advertising or marketing trackers are
-                  used.
+                  used. This integration does not use its own user, visitor, or device IDs for individual
+                  recognition and does not create user profiles.
                 </p>
                 <p>
                   If you acknowledge the cookie notice, the website stores only the necessary
@@ -263,9 +266,11 @@ export default function PrivacyStatementContent({
                 </p>
                 <p>
                   Nach Angaben von Cloudflare verwendet Web Analytics keine Cookies oder Local
-                  Storage, kein Fingerprinting und kein Cross-Site-Tracking einzelner Endnutzer.
-                  Cloudflare beschreibt den Dienst außerdem als Verarbeitung ohne personenbezogene
-                  Daten für Web Analytics. Es werden keine Werbe- oder Marketingprofile erstellt.
+                  Storage, kein Fingerprinting und kein Cross-Site-Tracking einzelner Endnutzer. Für
+                  diese Website werden keine eigenen Nutzer-, Besucher- oder Geräte-IDs zur
+                  individuellen Wiedererkennung eingesetzt. Cloudflare beschreibt den Dienst außerdem
+                  als Verarbeitung ohne personenbezogene Daten für Web Analytics. Es werden keine
+                  individuellen Nutzerprofile sowie keine Werbe- oder Marketingprofile erstellt.
                 </p>
                 <p>
                   In der manuellen Einbindung wird der Beacon von{' '}
@@ -314,8 +319,10 @@ export default function PrivacyStatementContent({
                 <p>
                   According to Cloudflare, Web Analytics does not use cookies or Local Storage, does
                   not fingerprint visitors, and does not track individual end users across websites.
-                  Cloudflare also describes the service as operating without collecting personal data
-                  for Web Analytics. No advertising or marketing profiles are created.
+                  This website does not use its own user, visitor, or device IDs for individual
+                  recognition. Cloudflare also describes the service as operating without collecting
+                  personal data for Web Analytics. No individual user profiles or advertising or
+                  marketing profiles are created.
                 </p>
                 <p>
                   With the manual integration used here, the beacon is loaded from{' '}

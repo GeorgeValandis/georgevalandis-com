@@ -10,12 +10,53 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-const NOTICE_VERSION = '3';
-const POLICY_VERSION = 2;
+const NOTICE_VERSION = '4';
+const POLICY_VERSION = 3;
 const NOTICE_COOKIE_KEY = 'gv_cookie_notice';
 const NOTICE_COOKIE_MAX_AGE_SECONDS = 60 * 60 * 24 * 180;
 export const OPEN_COOKIE_SETTINGS_EVENT = 'gv:open-cookie-settings';
 const CLOUDFLARE_ANALYTICS_PREFERENCE_EVENT = 'gv:cloudflare-analytics-preference';
+
+type AnalyticsToggleProps = {
+  enabled: boolean;
+  enabledLabel: string;
+  disabledLabel: string;
+  enableActionLabel: string;
+  disableActionLabel: string;
+  onChange: (enabled: boolean) => void;
+};
+
+function AnalyticsToggle({
+  enabled,
+  enabledLabel,
+  disabledLabel,
+  enableActionLabel,
+  disableActionLabel,
+  onChange,
+}: AnalyticsToggleProps) {
+  const actionLabel = enabled ? disableActionLabel : enableActionLabel;
+
+  return (
+    <button
+      type="button"
+      role="switch"
+      aria-checked={enabled}
+      aria-label={actionLabel}
+      onClick={() => onChange(!enabled)}
+      className={`inline-flex shrink-0 self-end items-center gap-2 rounded-full border px-5 py-2.5 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400/70 sm:self-auto ${enabled ? 'border-emerald-400/20 bg-emerald-400/10 text-emerald-300 hover:bg-emerald-400/15' : 'border-white/10 bg-white/5 text-gray-300 hover:bg-white/10'}`}
+    >
+      <span>{enabled ? enabledLabel : disabledLabel}</span>
+      <span
+        aria-hidden="true"
+        className={`relative h-5 w-9 rounded-full transition-colors ${enabled ? 'bg-emerald-400/35' : 'bg-white/15'}`}
+      >
+        <span
+          className={`absolute left-0.5 top-0.5 h-4 w-4 rounded-full bg-white shadow-sm transition-transform ${enabled ? 'translate-x-[18px]' : ''}`}
+        />
+      </span>
+    </button>
+  );
+}
 
 function sanitizeScope(scope: string): string {
   return scope.replace(/[^a-z0-9_-]/gi, '_');
@@ -196,7 +237,7 @@ export default function CookieConsent() {
     ? copy.notUsedLabel
     : analyticsOptedOut
       ? copy.disabledLabel
-      : copy.activeLabel;
+      : copy.enabledLabel;
   const bannerTitle = hasConfiguredAnalytics && analyticsOptedOut
     ? copy.bannerTitleAnalyticsDisabled
     : copy.bannerTitle;
@@ -258,21 +299,15 @@ export default function CookieConsent() {
             >
               {copy.detailsButton}
             </button>
-            {hasConfiguredAnalytics && !analyticsOptedOut ? (
-              <button
-                type="button"
-                onClick={() => changeAnalyticsPreference(true)}
-                className="rounded-full border border-white/20 px-5 py-2.5 text-sm font-semibold text-gray-200 transition-colors hover:bg-white/5"
-              >
-                {copy.disableAnalyticsButton}
-              </button>
-            ) : hasConfiguredAnalytics && analyticsOptedOut ? (
-              <span
-                role="status"
-                className="rounded-full border border-emerald-400/30 bg-emerald-400/10 px-5 py-2.5 text-sm font-semibold text-emerald-200"
-              >
-                {copy.analyticsDisabledButton}
-              </span>
+            {hasConfiguredAnalytics ? (
+              <AnalyticsToggle
+                enabled={!analyticsOptedOut}
+                enabledLabel={copy.enabledLabel}
+                disabledLabel={copy.disabledLabel}
+                enableActionLabel={copy.enableAnalyticsButton}
+                disableActionLabel={copy.disableAnalyticsButton}
+                onChange={(enabled) => changeAnalyticsPreference(!enabled)}
+              />
             ) : null}
             <button
               type="button"
@@ -291,7 +326,7 @@ export default function CookieConsent() {
             role="dialog"
             aria-modal="true"
             aria-labelledby="cookie-details-title"
-            className="w-full max-w-2xl rounded-2xl border border-white/10 bg-gray-950 p-6 shadow-2xl shadow-black/60 motion-safe:animate-[fadeIn_180ms_ease-out]"
+            className="max-h-[calc(100dvh-3rem)] w-full max-w-2xl overflow-y-auto overscroll-contain rounded-2xl border border-white/10 bg-gray-950 p-6 shadow-2xl shadow-black/60 motion-safe:animate-[fadeIn_180ms_ease-out]"
           >
             <div className="flex items-start justify-between gap-4">
               <div>
@@ -327,14 +362,25 @@ export default function CookieConsent() {
                 </span>
               </div>
 
-              <div className="flex items-start justify-between gap-4 rounded-xl border border-white/10 p-4">
-                <div>
+              <div className="flex flex-col gap-3 rounded-xl border border-white/10 p-4 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
+                <div className="min-w-0">
                   <p className="font-medium text-white">{copy.analyticsTitle}</p>
                   <p className="mt-1 text-sm text-gray-400">{analyticsDescription}</p>
                 </div>
-                <span className={`shrink-0 rounded-full px-3 py-1 text-xs font-semibold ${analyticsStatus === copy.activeLabel ? 'bg-emerald-400/10 text-emerald-300' : 'bg-white/5 text-gray-300'}`}>
-                  {analyticsStatus}
-                </span>
+                {hasConfiguredAnalytics ? (
+                  <AnalyticsToggle
+                    enabled={!analyticsOptedOut}
+                    enabledLabel={copy.enabledLabel}
+                    disabledLabel={copy.disabledLabel}
+                    enableActionLabel={copy.enableAnalyticsButton}
+                    disableActionLabel={copy.disableAnalyticsButton}
+                    onChange={(enabled) => changeAnalyticsPreference(!enabled)}
+                  />
+                ) : (
+                  <span className="shrink-0 rounded-full bg-white/5 px-3 py-1 text-xs font-semibold text-gray-300">
+                    {analyticsStatus}
+                  </span>
+                )}
               </div>
 
               <div className="flex items-start justify-between gap-4 rounded-xl border border-white/10 p-4">
@@ -354,15 +400,6 @@ export default function CookieConsent() {
               <Link href={privacyPath} className="text-sm font-semibold text-amber-300 hover:text-amber-200">
                 {copy.privacyLink}
               </Link>
-              {hasConfiguredAnalytics ? (
-                <button
-                  type="button"
-                  onClick={() => changeAnalyticsPreference(!analyticsOptedOut)}
-                  className="rounded-full border border-white/20 px-4 py-2 text-sm font-semibold text-gray-200 transition-colors hover:bg-white/5"
-                >
-                  {analyticsOptedOut ? copy.enableAnalyticsButton : copy.disableAnalyticsButton}
-                </button>
-              ) : null}
               <button
                 type="button"
                 onClick={acknowledge}
@@ -379,7 +416,7 @@ export default function CookieConsent() {
         <button
           type="button"
           onClick={() => setShowDetails(true)}
-          className="fixed bottom-4 left-4 z-[999] rounded-full border border-white/15 bg-gray-950/90 px-4 py-2 text-xs font-semibold text-gray-200 transition-colors hover:bg-white/10"
+          className="fixed bottom-4 right-4 z-[999] whitespace-nowrap rounded-full border border-white/15 bg-gray-950/90 px-4 py-2 text-xs font-semibold text-gray-200 transition-colors hover:bg-white/10 sm:bottom-6 sm:right-6"
         >
           {copy.settingsButton}
         </button>

@@ -200,7 +200,9 @@ export default async function AppPrivacyStatementPage({
                 <li>
                   Aggregated page-view, referrer, browser/device, and performance metrics processed
                   by Cloudflare Web Analytics without cookies or Local Storage, according to
-                  Cloudflare.
+                  Cloudflare. The integration does not use user, visitor, or device IDs for
+                  individual recognition, create individual visitor profiles, or track individual
+                  end users across websites.
                 </li>
                 <li>
                   If you disable Cloudflare Web Analytics in Cookie Information, the necessary
@@ -225,8 +227,11 @@ export default async function AppPrivacyStatementPage({
               <p>
                 This landing page does not use analytics or marketing cookies. It loads Cloudflare
                 Web Analytics to measure aggregated page views, referrer sources, browser/device
-                information, and technical performance. It does not load advertising SDKs, Meta or
-                TikTok pixels, fingerprinting, or other marketing trackers.
+                information, and technical performance. According to Cloudflare, it does not use
+                cookies or Local Storage, fingerprint visitors, or track individual end users across
+                websites. It does not use user, visitor, or device IDs for individual recognition or
+                create individual visitor profiles. It does not load advertising SDKs, Meta or TikTok
+                pixels, or other marketing trackers.
               </p>
               <p>
                 If you acknowledge the cookie notice, the page stores only the necessary
@@ -345,7 +350,7 @@ export default async function AppPrivacyStatementPage({
                 Cloudflare Web Analytics is used, to the extent personal data is processed, under
                 Art. 6 para. 1 lit. f GDPR based on the legitimate interest in measuring and
                 improving landing-page usage and technical performance in a data-minimizing way. No
-                individual visitor profile is created for advertising purposes.
+                individual visitor or advertising profile is created.
               </p>
               <p>
                 You can disable Cloudflare Web Analytics at any time through the Cookie Information

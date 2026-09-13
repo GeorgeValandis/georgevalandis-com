@@ -308,8 +308,13 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
           background-repeat: no-repeat;
         }
 
+        #preview-blog {
+          background-image: radial-gradient(ellipse 78% 60% at 90% 100%, rgba(196, 138, 74, 0.06), rgba(196, 138, 74, 0.02) 42%, transparent 76%);
+          background-repeat: no-repeat;
+        }
+
         #preview-contact {
-          background-image: radial-gradient(ellipse 100% 70% at 15% 100%, rgba(196, 138, 74, 0.07), rgba(196, 138, 74, 0.03) 40%, transparent 70%);
+          background-image: radial-gradient(ellipse 78% 60% at 90% 0%, rgba(196, 138, 74, 0.06), rgba(196, 138, 74, 0.02) 42%, transparent 76%);
           background-repeat: no-repeat;
         }
 
@@ -318,6 +323,7 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
             background-image: linear-gradient(to right, #050a13 0%, rgba(5, 10, 19, 0.9) 35%, rgba(5, 10, 19, 0.1) 100%);
           }
 
+          #preview-blog,
           #preview-contact {
             background-image: none;
           }
@@ -976,7 +982,7 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
         </div>
       </section>
 
-      <footer className="border-t border-white/[0.06] bg-[#050a13] px-6 py-8 text-xs text-slate-500 lg:px-8">
+      <footer className="border-t border-white/[0.06] bg-[#050a13] px-6 pb-24 pt-8 text-xs text-slate-500 sm:pb-20 lg:px-8">
         <div className="mx-auto flex max-w-[1600px] flex-col items-center justify-between gap-5 sm:flex-row">
           <span>{copy.footer.copyright}</span>
           <nav className="flex flex-wrap items-center justify-center gap-x-5 gap-y-3" aria-label="Footer">
