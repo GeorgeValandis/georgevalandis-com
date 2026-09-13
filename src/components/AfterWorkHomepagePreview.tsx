@@ -214,6 +214,10 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
           max-width: none !important;
         }
 
+        .preview-newsletter-form {
+          --preview-newsletter-control-radius: 8px;
+        }
+
         .preview-newsletter-form .ml-form-embedWrapper,
         .preview-newsletter-form .ml-form-embedBody,
         .preview-newsletter-form .ml-form-embedContent,
@@ -278,12 +282,16 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
         .preview-newsletter-form input.form-control {
           min-height: 52px !important;
           border: 1px solid #d9d0c3 !important;
-          border-radius: 8px !important;
+          border-radius: var(--preview-newsletter-control-radius) !important;
           background: rgb(255 255 255 / 0.8) !important;
           color: #171717 !important;
           font: inherit !important;
           font-size: 13px !important;
           padding: 14px 16px !important;
+        }
+
+        .preview-newsletter-form #mlb2-45845332.ml-form-embedContainer .ml-form-embedWrapper .ml-form-embedBody .ml-form-fieldRow input.form-control {
+          border-radius: var(--preview-newsletter-control-radius) !important;
         }
 
         .preview-newsletter-form input.form-control::placeholder {
@@ -306,7 +314,7 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
           min-height: 52px !important;
           width: 100% !important;
           border: 0 !important;
-          border-radius: 8px !important;
+          border-radius: var(--preview-newsletter-control-radius) !important;
           background: #ff7b39 !important;
           color: #24170b !important;
           font: inherit !important;
@@ -319,7 +327,7 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
           min-height: 52px !important;
           width: 100% !important;
           border: 0 !important;
-          border-radius: 8px !important;
+          border-radius: var(--preview-newsletter-control-radius) !important;
           background: #ff7b39 !important;
           color: #24170b !important;
           font-family: inherit !important;
