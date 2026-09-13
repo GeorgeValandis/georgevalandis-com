@@ -178,9 +178,12 @@ export default function PrivacyStatementContent({
                   Seitenaufruf erneut erscheint. Das Cookie wird bis zu 180 Tage gespeichert.
                 </p>
                 <p>
-                  Für diese Funktion werden kein Local Storage, keine Consent-ID und kein serverseitiges
-                  Consent-Protokoll verwendet. Die Bestätigung des Hinweises ist keine Einwilligung in
-                  Analyse oder Marketing; solche Technologien sind nicht aktiv.
+                  Für die Cookie-Hinweisfunktion selbst werden kein Local Storage und keine Analyse-
+                  oder Marketing-Technologien verwendet. Wenn die serverseitige Protokollierung aktiv
+                  ist, werden die Bestätigung, Version, Geltungsbereich, Zeitpunkt, Seitenadresse,
+                  Sprache und Zeitzone sowie ein gesalzener IP-Hash und der User-Agent in einem
+                  getrennten Consent-Protokoll dokumentiert. Diese Dokumentation ist keine Einwilligung
+                  in Analyse oder Marketing.
                 </p>
                 <p>
                   Du kannst die Angaben jederzeit über den Button &quot;Cookie-Information&quot; erneut
@@ -202,9 +205,11 @@ export default function PrivacyStatementContent({
                   view. The cookie is kept for up to 180 days.
                 </p>
                 <p>
-                  This function does not use local storage, a consent ID, or server-side consent
-                  logging. Acknowledging the notice is not consent to analytics or marketing; those
-                  technologies are not active.
+                  The cookie-notice function itself does not use local storage or analytics and
+                  marketing technologies. If server-side logging is enabled, the acknowledgement,
+                  version, scope, timestamp, page address, language and time zone, together with a
+                  salted IP hash and the user agent, are documented in a separate consent log. This
+                  documentation is not consent to analytics or marketing.
                 </p>
                 <p>
                   You can reopen this information at any time with the &quot;Cookie Information&quot;
@@ -241,7 +246,9 @@ export default function PrivacyStatementContent({
                   DSGVO. Wir verwenden ein Double-Opt-in-Verfahren. Die Bestätigungsnachricht dient
                   ausschließlich der Bestätigung der Anmeldung. Du kannst die Einwilligung jederzeit
                   über den Abmeldelink in jeder Ausgabe widerrufen; die Rechtmäßigkeit der bis dahin
-                  erfolgten Verarbeitung bleibt unberührt.
+                  erfolgten Verarbeitung bleibt unberührt. Alternativ kannst du den Widerruf an die im
+                  Impressum genannte Kontaktadresse richten; die E-Mail-Adresse wird dann zur
+                  Zuordnung im Newsletter-System verwendet.
                 </p>
                 <p>
                   MailerLite Limited, 88 Harcourt Street, Dublin 2, D02 DK18, Irland, verarbeitet die
@@ -259,13 +266,25 @@ export default function PrivacyStatementContent({
                   aktuellen Anbieterinformationen die dafür vorgesehenen Schutzmechanismen.
                 </p>
                 <p>
+                  Für den Nachweis der Einwilligung werden zusätzlich serverseitige Ereignisse aus
+                  MailerLite über signaturgesicherte Webhooks verarbeitet. Das getrennte Protokoll enthält keinen Klartext der
+                  E-Mail-Adresse, sondern einen gesicherten E-Mail-Hash, die MailerLite-
+                  Abonnenten-ID, Statusänderungen, Zeitpunkte, gegebenenfalls einen gesalzenen
+                  Hash der Opt-in-IP sowie die verwendeten Formular- und
+                  Datenschutzerklärungsversionen. Double-Opt-in-Bestätigung, Abmeldung und manuelle
+                  Widerrufe werden als getrennte Ereignisse gespeichert. Die Hashes bleiben
+                  personenbezogen und werden nicht für Marketing verwendet.
+                </p>
+                <p>
                   Für den ersten Versand ist kein Öffnungs-Tracking vorgesehen. MailerLite kann
                   technische Zustell-, Bounce-, Abmelde- und gegebenenfalls Klickdaten verarbeiten;
                   die konkreten Kampagneneinstellungen werden vor einem Versand geprüft. Die
-                  Newsletterdaten werden grundsätzlich bis zur Abmeldung verarbeitet. Begrenzte
-                  Nachweis- oder Sperrlistendaten können darüber hinaus gespeichert werden, soweit
-                  dies zur Vermeidung einer erneuten Anmeldung, zur Erfüllung gesetzlicher Pflichten
-                  oder zur Rechtsverteidigung erforderlich ist.
+                  Newsletterdaten werden grundsätzlich bis zur Abmeldung verarbeitet. Nach einem
+                  Widerruf wird der Versand beendet. Begrenzte Nachweis- oder Sperrlistendaten können
+                  darüber hinaus so lange gespeichert werden, wie dies zur Dokumentation der
+                  Einwilligung, zur Vermeidung einer erneuten ungewollten Anmeldung, zur Erfüllung
+                  gesetzlicher Pflichten oder zur Rechtsverteidigung erforderlich ist. Eine pauschale
+                  feste Frist wird dafür nicht festgelegt.
                 </p>
                 <p>
                   Weitere Informationen zum Anbieter findest du in der{' '}
@@ -292,7 +311,9 @@ export default function PrivacyStatementContent({
                   Processing is based on your consent under Article 6(1)(a) GDPR. We use a double
                   opt-in process. The confirmation message is used only to confirm the subscription.
                   You can withdraw your consent at any time through the unsubscribe link in every
-                  issue; this does not affect the lawfulness of processing before the withdrawal.
+                  issue; this does not affect the lawfulness of processing before the withdrawal. You
+                  can also send the withdrawal to the contact address stated in the imprint; the
+                  email address is then used to locate the newsletter record.
                 </p>
                 <p>
                   MailerLite Limited, 88 Harcourt Street, Dublin 2, D02 DK18, Ireland, processes
@@ -310,12 +331,22 @@ export default function PrivacyStatementContent({
                   in its current provider information.
                 </p>
                 <p>
+                  To document consent, we additionally process server-side events received from
+                  MailerLite through signature-protected webhooks. The separate log does not contain
+                  the email address in plain text; it stores a protected email HMAC, the MailerLite
+                  subscriber ID, status changes, timestamps, where supplied a salted hash of the
+                  opt-in IP, and the form and Privacy Statement versions in use. Double-opt-in
+                  confirmation, unsubscribe events, and manual withdrawals are stored as separate
+                  events. The hashes remain personal data and are not used for marketing.
+                </p>
+                <p>
                   Open tracking is not planned for the first send. MailerLite may process technical
                   delivery, bounce, unsubscribe, and, where applicable, click data; the concrete
                   campaign settings are checked before sending. Newsletter data is generally processed
-                  until you unsubscribe. Limited suppression or consent-evidence data may be retained
-                  afterwards where necessary to prevent re-subscription, comply with legal obligations,
-                  or defend legal claims.
+                  until you unsubscribe. After withdrawal, sending stops. Limited suppression or
+                  consent-evidence data may be retained afterwards only as long as necessary to
+                  document consent, prevent an unwanted re-subscription, comply with legal obligations,
+                  or defend legal claims. No single fixed period is applied to all such records.
                 </p>
                 <p>
                   For more information, see MailerLite’s{' '}

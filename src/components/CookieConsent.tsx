@@ -7,6 +7,7 @@ import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 const NOTICE_VERSION = '2';
+const POLICY_VERSION = 1;
 const NOTICE_COOKIE_KEY = 'gv_cookie_notice';
 const NOTICE_COOKIE_MAX_AGE_SECONDS = 60 * 60 * 24 * 180;
 export const OPEN_COOKIE_SETTINGS_EVENT = 'gv:open-cookie-settings';
@@ -47,8 +48,57 @@ function hasAcknowledgedNotice(scope: string): boolean {
     .some((cookie) => cookie.trim() === `${prefix}${NOTICE_VERSION}`);
 }
 
-function storeAcknowledgement(scope: string): void {
+function createConsentId(): string {
+  const cryptoApi = typeof window !== 'undefined' ? window.crypto : undefined;
+  const randomUUID = cryptoApi?.randomUUID;
+
+  if (typeof randomUUID === 'function') {
+    return randomUUID.call(cryptoApi);
+  }
+
+  if (cryptoApi) {
+    const bytes = new Uint8Array(16);
+    cryptoApi.getRandomValues(bytes);
+    return Array.from(bytes, (byte) => byte.toString(16).padStart(2, '0')).join('');
+  }
+
+  return `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+}
+
+function storeAcknowledgement(scope: string): string {
   document.cookie = `${getCookieName(scope)}=${NOTICE_VERSION}; Max-Age=${NOTICE_COOKIE_MAX_AGE_SECONDS}; Path=/; SameSite=Lax; Secure`;
+  return createConsentId();
+}
+
+function logAcknowledgement(consentId: string, scope: string, locale: string): void {
+  if (typeof window === 'undefined') {
+    return;
+  }
+
+  const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone || null;
+  const payload = {
+    consentId,
+    consentVersion: Number(NOTICE_VERSION),
+    policyVersion: POLICY_VERSION,
+    scope,
+    method: 'acknowledge_notice',
+    necessary: true,
+    analytics: false,
+    marketing: false,
+    decidedAt: new Date().toISOString(),
+    pageUrl: window.location.href,
+    locale,
+    timezone,
+  };
+
+  void fetch('/consent/log.php', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+    keepalive: true,
+  }).catch(() => {
+    // Cookie notice functionality remains fail-safe if the optional log is unavailable.
+  });
 }
 
 function getPrivacyPath(
@@ -110,7 +160,8 @@ export default function CookieConsent() {
   }, []);
 
   const acknowledge = () => {
-    storeAcknowledgement(scope);
+    const consentId = storeAcknowledgement(scope);
+    logAcknowledgement(consentId, scope, locale);
     setAcknowledged(true);
     setShowBanner(false);
     setShowDetails(false);

@@ -119,7 +119,9 @@ Use `consent_id` when a customer requests access to their consent record. Use `s
 
 ## 8. Delete a customer consent record
 
-Ask the customer for the Consent ID shown in the Cookie Settings modal. Then send a POST request to the delete endpoint with the private export token:
+Use the consent ID from the server record when a customer requests deletion. The current notice UI
+does not display the ID; an authenticated operator can obtain it from the consent export. Then send
+a POST request to the delete endpoint with the private export token:
 
 ```bash
 curl -X POST "https://your-domain/consent/delete.php" \
@@ -162,6 +164,7 @@ Each decision stores:
 - IPs are not stored in plain text; only a salted hash is stored.
 - Consent storage is scoped. The main website uses `site`; app landing pages use `app:{slug}`, for example `app:glanceaway`.
 - The browser storage keys are scoped too, so a consent decision on one standalone landing page does not silently cover another app landing page on the same host.
-- The Cookie Settings modal shows the customer's Consent ID for access and deletion requests.
+- The browser generates a Consent ID for each logged acknowledgement. It is sent only with the
+  server record; the current notice UI does not display it.
 - CSV export supports customer lookup by `consent_id` and landing page lookup by `scope`, `page_url`, or `page_contains`.
 - If `config.php` is missing, logging fails safely and the banner still works.

@@ -57,7 +57,7 @@ foreach ($requiredPayloadKeys as $key) {
     }
 }
 
-$allowedMethods = ['accept_all', 'reject_all', 'save_selection'];
+$allowedMethods = ['accept_all', 'reject_all', 'save_selection', 'acknowledge_notice'];
 if (!in_array($payload['method'], $allowedMethods, true)) {
     http_response_code(422);
     echo json_encode(['ok' => false, 'error' => 'invalid_method']);

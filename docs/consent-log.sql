@@ -31,6 +31,5 @@ CREATE TABLE IF NOT EXISTS consent_log (
 -- Existing installations created before scope support need:
 -- ALTER TABLE consent_log ADD COLUMN scope VARCHAR(128) NOT NULL DEFAULT 'site' AFTER policy_version;
 -- ALTER TABLE consent_log ADD KEY idx_consent_log_scope (scope);
--- Retention policy in the privacy statement: usually up to 3 years from the end of the calendar year
--- in which the consent choice was made, unless longer storage is needed for a concrete request,
--- legal obligation, or legal defense.
+-- Retention is defined by the applicable purpose and documented in the privacy statement.
+-- Do not copy the cookie-consent retention rules into the separate newsletter event log.
