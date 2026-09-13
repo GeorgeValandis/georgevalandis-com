@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Inter, JetBrains_Mono } from 'next/font/google';
+import CloudflareWebAnalytics from '@/components/CloudflareWebAnalytics';
 import CookieConsentLoader from '@/components/CookieConsentLoader';
 import HtmlLangSync from '@/components/HtmlLangSync';
 import { siteUrl } from '@/lib/seo';
@@ -35,6 +36,7 @@ export default function RootLayout({
       >
         <HtmlLangSync />
         {children}
+        <CloudflareWebAnalytics />
         <CookieConsentLoader />
       </body>
     </html>

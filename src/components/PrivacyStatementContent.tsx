@@ -115,6 +115,11 @@ export default function PrivacyStatementContent({
                     Technische Daten, die automatisch erfasst werden, etwa Browsertyp,
                     Betriebssystem, Uhrzeit des Zugriffs, Referrer und IP-Adresse in Server-Logfiles.
                   </li>
+                  <li>
+                    Aggregierte Seitenaufrufe, Referrer-Quellen, Browser- und Geräteinformationen
+                    sowie technische Leistungsdaten, die Cloudflare Web Analytics nach eigenen
+                    Angaben ohne Cookies oder Local Storage verarbeitet.
+                  </li>
                 </>
               ) : (
                 <>
@@ -122,6 +127,11 @@ export default function PrivacyStatementContent({
                   <li>
                     Technical data collected automatically, such as browser type, operating system,
                     access time, referrer, and IP address (server log files).
+                  </li>
+                  <li>
+                    Aggregated page views, referrer sources, browser/device information, and
+                    performance data processed by Cloudflare Web Analytics without cookies or Local
+                    Storage, according to Cloudflare.
                   </li>
                 </>
               )}
@@ -141,14 +151,16 @@ export default function PrivacyStatementContent({
               {isGerman ? (
                 <>
                   <li>die Website bereitzustellen und abzusichern,</li>
+                  <li>die Nutzung und technische Leistung der Website aggregiert auszuwerten,</li>
                   <li>Anfragen zu beantworten,</li>
-                  <li>zu speichern, dass der Cookie-Hinweis bestätigt wurde.</li>
+                  <li>zu speichern, dass der Cookie-Hinweis bestätigt wurde und welche Analyse-Einstellung du gewählt hast.</li>
                 </>
               ) : (
                 <>
                   <li>Provide and secure the website.</li>
+                  <li>Measure aggregate website usage and technical performance.</li>
                   <li>Respond to inquiries.</li>
-                  <li>Remember that the cookie notice was acknowledged.</li>
+                  <li>Remember that the cookie notice was acknowledged and which analytics preference you chose.</li>
                 </>
               )}
             </ul>
@@ -168,8 +180,9 @@ export default function PrivacyStatementContent({
             {isGerman ? (
               <>
                 <p>
-                  Diese Website verwendet keine Analyse- oder Marketing-Cookies und lädt keine
-                  Analyse-, Werbe- oder Marketing-Tracker.
+                  Diese Website verwendet keine Analyse- oder Marketing-Cookies. Sie lädt jedoch den
+                  in Abschnitt 7 beschriebenen Cloudflare-Web-Analytics-Beacon. Werbe- oder
+                  Marketing-Tracker werden nicht verwendet.
                 </p>
                 <p>
                   Wenn du den Cookie-Hinweis bestätigst, speichert die Website ausschließlich das
@@ -178,25 +191,34 @@ export default function PrivacyStatementContent({
                   Seitenaufruf erneut erscheint. Das Cookie wird bis zu 180 Tage gespeichert.
                 </p>
                 <p>
-                  Für die Cookie-Hinweisfunktion selbst werden kein Local Storage und keine Analyse-
-                  oder Marketing-Technologien verwendet. Wenn die serverseitige Protokollierung aktiv
-                  ist, werden die Bestätigung, Version, Geltungsbereich, Zeitpunkt, Seitenadresse,
-                  Sprache und Zeitzone sowie ein gesalzener IP-Hash und der User-Agent in einem
-                  getrennten Consent-Protokoll dokumentiert. Diese Dokumentation ist keine Einwilligung
-                  in Analyse oder Marketing.
+                  Wenn du Cloudflare Web Analytics über die Cookie-Information deaktivierst, wird
+                  zusätzlich das notwendige Erstanbieter-Cookie <code>gv_analytics_optout</code> für
+                  bis zu 180 Tage gespeichert. Es enthält keine Analysedaten, sondern merkt sich
+                  ausschließlich deinen Widerspruch. Solange diese Einstellung gespeichert ist,
+                  wird bei künftigen Seitenaufrufen kein Cloudflare-Web-Analytics-Beacon geladen.
+                </p>
+                <p>
+                  Für die Cookie-Hinweisfunktion selbst werden kein Local Storage und keine weiteren
+                  Analyse- oder Marketing-Technologien verwendet. Der Cloudflare-Web-Analytics-Beacon
+                  ist davon getrennt und wird in Abschnitt 7 beschrieben. Wenn die serverseitige
+                  Protokollierung aktiv ist, werden die Bestätigung, Version, Geltungsbereich,
+                  Zeitpunkt, Seitenadresse, Sprache und Zeitzone sowie ein gesalzener IP-Hash und der
+                  User-Agent in einem getrennten Consent-Protokoll dokumentiert. Diese Dokumentation
+                  ist keine Einwilligung in Analyse oder Marketing.
                 </p>
                 <p>
                   Du kannst die Angaben jederzeit über den Button &quot;Cookie-Information&quot; erneut
-                  öffnen. Das notwendige Cookie wird auf Grundlage von § 25 Abs. 2 Nr. 2 TDDDG
-                  eingesetzt, um die von dir angeforderte Speicherung der Hinweisbestätigung
-                  bereitzustellen.
+                  öffnen. Die notwendigen Cookies werden auf Grundlage von § 25 Abs. 2 Nr. 2 TDDDG
+                  eingesetzt, um die von dir angeforderte Speicherung der Hinweisbestätigung und
+                  deiner Analyse-Einstellung bereitzustellen.
                 </p>
               </>
             ) : (
               <>
                 <p>
-                  This website does not use analytics or marketing cookies and does not load
-                  analytics, advertising, or marketing trackers.
+                  This website does not use analytics or marketing cookies. It does load the Cloudflare
+                  Web Analytics beacon described in Section 7. No advertising or marketing trackers are
+                  used.
                 </p>
                 <p>
                   If you acknowledge the cookie notice, the website stores only the necessary
@@ -205,23 +227,137 @@ export default function PrivacyStatementContent({
                   view. The cookie is kept for up to 180 days.
                 </p>
                 <p>
-                  The cookie-notice function itself does not use local storage or analytics and
-                  marketing technologies. If server-side logging is enabled, the acknowledgement,
+                  If you disable Cloudflare Web Analytics through Cookie Information, the website
+                  additionally stores the necessary first-party cookie <code>gv_analytics_optout</code>
+                  for up to 180 days. It contains no analytics data and only remembers your opt-out
+                  preference. While this preference is stored, no Cloudflare Web Analytics beacon is
+                  loaded on future page views.
+                </p>
+                <p>
+                  The cookie-notice function itself does not use local storage or additional analytics
+                  and marketing technologies. The Cloudflare Web Analytics beacon is separate and is
+                  described in Section 7. If server-side logging is enabled, the acknowledgement,
                   version, scope, timestamp, page address, language and time zone, together with a
                   salted IP hash and the user agent, are documented in a separate consent log. This
                   documentation is not consent to analytics or marketing.
                 </p>
                 <p>
                   You can reopen this information at any time with the &quot;Cookie Information&quot;
-                  button. The necessary cookie is used under Section 25(2) no. 2 TDDDG to provide
-                  the notice-memory function you requested.
+                  button. The necessary cookies are used under Section 25(2) no. 2 TDDDG to provide
+                  the notice-memory and analytics-preference functions you requested.
                 </p>
               </>
             )}
           </section>
 
           <section>
-            <h2 className="text-2xl font-semibold text-white mb-3">7. Social Media</h2>
+            <h2 className="text-2xl font-semibold text-white mb-3">
+              {isGerman ? '7. Webanalyse mit Cloudflare Web Analytics' : '7. Web Analytics with Cloudflare Web Analytics'}
+            </h2>
+            {isGerman ? (
+              <>
+                <p>
+                  Diese Website nutzt Cloudflare Web Analytics, einen Dienst der Cloudflare, Inc.,
+                  zur aggregierten Auswertung von Seitenaufrufen, Referrer-Quellen, Browser- und
+                  Geräteinformationen sowie technischen Leistungsdaten wie Ladezeiten.
+                </p>
+                <p>
+                  Nach Angaben von Cloudflare verwendet Web Analytics keine Cookies oder Local
+                  Storage, kein Fingerprinting und kein Cross-Site-Tracking einzelner Endnutzer.
+                  Cloudflare beschreibt den Dienst außerdem als Verarbeitung ohne personenbezogene
+                  Daten für Web Analytics. Es werden keine Werbe- oder Marketingprofile erstellt.
+                </p>
+                <p>
+                  In der manuellen Einbindung wird der Beacon von{' '}
+                  <code>static.cloudflareinsights.com</code> geladen und übermittelt Messdaten an
+                  Cloudflare. Anbieter ist Cloudflare, Inc., 101 Townsend Street, San Francisco, CA
+                  94107, USA. Weitere Informationen findest du in der{' '}
+                  <a
+                    href="https://www.cloudflare.com/privacypolicy/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-amber-300 hover:text-amber-200 transition-colors underline"
+                  >
+                    Datenschutzerklärung von Cloudflare
+                  </a>{' '}
+                  und im{' '}
+                  <a
+                    href="https://www.cloudflare.com/cloudflare-customer-dpa/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-amber-300 hover:text-amber-200 transition-colors underline"
+                  >
+                    Data Processing Addendum
+                  </a>
+                  .
+                </p>
+                <p>
+                  Soweit durch die Nutzung personenbezogene Daten verarbeitet werden, erfolgt die
+                  Verarbeitung auf Grundlage unseres berechtigten Interesses nach Art. 6 Abs. 1 lit. f
+                  DSGVO, die Nutzung und technische Leistung der Website datensparsam zu messen und
+                  zu verbessern.
+                </p>
+                <p>
+                  Du kannst Cloudflare Web Analytics jederzeit über den Button &quot;Cookie-Information&quot;
+                  und die dortige Einstellung &quot;Analyse deaktivieren&quot; ausschalten. Die Einstellung
+                  wirkt für künftige Seitenaufrufe; bereits übermittelte Messdaten werden dadurch
+                  nicht nachträglich gelöscht.
+                </p>
+              </>
+            ) : (
+              <>
+                <p>
+                  This website uses Cloudflare Web Analytics, a service provided by Cloudflare, Inc.,
+                  to measure aggregated page views, referrer sources, browser and device information,
+                  and technical performance data such as load times.
+                </p>
+                <p>
+                  According to Cloudflare, Web Analytics does not use cookies or Local Storage, does
+                  not fingerprint visitors, and does not track individual end users across websites.
+                  Cloudflare also describes the service as operating without collecting personal data
+                  for Web Analytics. No advertising or marketing profiles are created.
+                </p>
+                <p>
+                  With the manual integration used here, the beacon is loaded from{' '}
+                  <code>static.cloudflareinsights.com</code> and measurement data is sent to
+                  Cloudflare. The provider is Cloudflare, Inc., 101 Townsend Street, San Francisco,
+                  CA 94107, USA. Further information is available in Cloudflare’s{' '}
+                  <a
+                    href="https://www.cloudflare.com/privacypolicy/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-amber-300 hover:text-amber-200 transition-colors underline"
+                  >
+                    Privacy Policy
+                  </a>{' '}
+                  and{' '}
+                  <a
+                    href="https://www.cloudflare.com/cloudflare-customer-dpa/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-amber-300 hover:text-amber-200 transition-colors underline"
+                  >
+                    Data Processing Addendum
+                  </a>
+                  .
+                </p>
+                <p>
+                  To the extent personal data is processed, processing is based on our legitimate
+                  interest under Article 6(1)(f) GDPR in measuring and improving website usage and
+                  technical performance in a data-minimizing way.
+                </p>
+                <p>
+                  You can disable Cloudflare Web Analytics at any time through the &quot;Cookie
+                  Information&quot; button and the &quot;Disable analytics&quot; setting. The setting applies
+                  to future page views; it does not retroactively delete measurement data already
+                  transmitted.
+                </p>
+              </>
+            )}
+          </section>
+
+          <section>
+            <h2 className="text-2xl font-semibold text-white mb-3">8. Social Media</h2>
             <p>
               {isGerman
                 ? 'Diese Website enthält Links zu sozialen Netzwerken wie X, Instagram, Threads, TikTok und Bluesky. Beim bloßen Aufruf dieser Website wird über diese Links keine Verbindung zu den jeweiligen Anbietern hergestellt. Erst wenn du einen Link öffnest, gelten die Datenschutzbedingungen des jeweiligen Anbieters.'
@@ -231,7 +367,7 @@ export default function PrivacyStatementContent({
 
           <section>
             <h2 className="text-2xl font-semibold text-white mb-3">
-              {isGerman ? '8. Newsletter „After Work“' : '8. “After Work” Newsletter'}
+              {isGerman ? '9. Newsletter „After Work“' : '9. “After Work” Newsletter'}
             </h2>
             {isGerman ? (
               <>
@@ -373,7 +509,7 @@ export default function PrivacyStatementContent({
 
           <section>
             <h2 className="text-2xl font-semibold text-white mb-3">
-              {isGerman ? '9. Datenschutz in den Apps' : '9. Privacy in the Apps'}
+              {isGerman ? '10. Datenschutz in den Apps' : '10. Privacy in the Apps'}
             </h2>
             {isGerman ? (
               <p>
@@ -410,7 +546,7 @@ export default function PrivacyStatementContent({
 
           <section>
             <h2 className="text-2xl font-semibold text-white mb-3">
-              {isGerman ? '10. Deine Rechte' : '10. Your Rights'}
+              {isGerman ? '11. Deine Rechte' : '11. Your Rights'}
             </h2>
             <p>
               {isGerman
@@ -444,7 +580,7 @@ export default function PrivacyStatementContent({
 
           <section>
             <h2 className="text-2xl font-semibold text-white mb-3">
-              {isGerman ? '11. Kontaktanfragen' : '11. Contact Requests'}
+              {isGerman ? '12. Kontaktanfragen' : '12. Contact Requests'}
             </h2>
             <p>
               {isGerman
@@ -455,7 +591,7 @@ export default function PrivacyStatementContent({
 
           <section>
             <h2 className="text-2xl font-semibold text-white mb-3">
-              {isGerman ? '12. Speicherdauer' : '12. Storage Duration'}
+              {isGerman ? '13. Speicherdauer' : '13. Storage Duration'}
             </h2>
             <p>
               {isGerman
@@ -466,7 +602,7 @@ export default function PrivacyStatementContent({
 
           <section>
             <h2 className="text-2xl font-semibold text-white mb-3">
-              {isGerman ? '13. Sicherheit' : '13. Security'}
+              {isGerman ? '14. Sicherheit' : '14. Security'}
             </h2>
             <p>
               {isGerman

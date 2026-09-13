@@ -99,8 +99,12 @@ export type SiteCopy = {
   consent: {
     bannerEyebrow: string;
     bannerTitle: string;
+    bannerTitleAnalyticsDisabled: string;
     bannerDescription: string;
+    bannerDescriptionWithoutAnalytics: string;
+    bannerDescriptionAnalyticsDisabled: string;
     storageNotice: string;
+    analyticsDisabledStorageNotice: string;
     bannerLegalPrefix: string;
     privacyLink: string;
     imprintLink: string;
@@ -113,10 +117,16 @@ export type SiteCopy = {
     necessaryDescription: string;
     analyticsTitle: string;
     analyticsDescription: string;
+    analyticsDisabledDescription: string;
+    analyticsNotConfiguredDescription: string;
+    disableAnalyticsButton: string;
+    analyticsDisabledButton: string;
+    enableAnalyticsButton: string;
     marketingTitle: string;
     marketingDescription: string;
     updateHint: string;
     activeLabel: string;
+    disabledLabel: string;
     notUsedLabel: string;
     settingsButton: string;
   };
@@ -254,16 +264,23 @@ const siteCopy: Record<SiteLocale, SiteCopy> = {
     },
     consent: {
       bannerEyebrow: 'Cookie Information',
-      bannerTitle: 'Only necessary cookies.',
+      bannerTitle: 'Necessary cookie and privacy-friendly analytics.',
+      bannerTitleAnalyticsDisabled: 'Necessary cookie. Analytics disabled.',
       bannerDescription:
-        'This website does not use analytics or marketing cookies. It uses only a necessary first-party cookie to remember that you acknowledged this notice.',
+        'This website uses one necessary first-party cookie to remember this notice and Cloudflare Web Analytics to measure aggregated page views, referrers, and performance. No advertising or marketing tracking is used.',
+      bannerDescriptionWithoutAnalytics:
+        'This website uses one necessary first-party cookie to remember this notice. No analytics or marketing tracking is active in this build.',
+      bannerDescriptionAnalyticsDisabled:
+        'Cloudflare Web Analytics is disabled for this browser. Only the necessary first-party cookie will remember this notice. You can enable analytics later in Cookie Information.',
       storageNotice:
-        'No analytics, advertising pixels, profiling, or marketing tracking is activated.',
+        'No advertising pixels, profiling, or marketing tracking is active.',
+      analyticsDisabledStorageNotice:
+        'Analytics is disabled for this browser. No advertising pixels, profiling, or marketing tracking is active.',
       bannerLegalPrefix: 'See',
       privacyLink: 'Website Privacy & Cookies',
       imprintLink: 'Imprint',
       detailsButton: 'View details',
-      continueButton: 'Continue with necessary only',
+      continueButton: 'Continue',
       modalEyebrow: 'Cookie Information',
       modalTitle: 'Technologies used on this website',
       close: 'Close',
@@ -271,12 +288,21 @@ const siteCopy: Record<SiteLocale, SiteCopy> = {
       necessaryDescription:
         'A first-party cookie remembers that you acknowledged this notice. It contains only the notice version and is kept for up to 180 days.',
       analyticsTitle: 'Analytics',
-      analyticsDescription: 'Not used. No analytics service or analytics cookie is active.',
+      analyticsDescription:
+        'Cloudflare Web Analytics is active for aggregated page views, referrers, and performance metrics. According to Cloudflare, it does not use cookies or Local Storage.',
+      analyticsDisabledDescription:
+        'Cloudflare Web Analytics is disabled for this browser. The preference is stored in a necessary first-party opt-out cookie.',
+      analyticsNotConfiguredDescription:
+        'Cloudflare Web Analytics is not configured in this build. No analytics service is active.',
+      disableAnalyticsButton: 'Disable analytics',
+      analyticsDisabledButton: 'Analytics disabled',
+      enableAnalyticsButton: 'Enable analytics',
       marketingTitle: 'Marketing',
       marketingDescription: 'Not used. No advertising pixel or marketing tracker is active.',
       updateHint:
-        'Acknowledging this notice is not consent to analytics or marketing. Those technologies are not used.',
+        'Acknowledging this notice is not consent to analytics or marketing. Cloudflare Web Analytics is used without analytics cookies or Local Storage; marketing technologies are not used.',
       activeLabel: 'Always active',
+      disabledLabel: 'Disabled',
       notUsedLabel: 'Not used',
       settingsButton: 'Cookie Information',
     },
@@ -406,16 +432,23 @@ const siteCopy: Record<SiteLocale, SiteCopy> = {
     },
     consent: {
       bannerEyebrow: 'Cookie-Information',
-      bannerTitle: 'Nur notwendige Cookies.',
+      bannerTitle: 'Notwendiges Cookie und datenschutzfreundliche Analyse.',
+      bannerTitleAnalyticsDisabled: 'Notwendiges Cookie. Analyse deaktiviert.',
       bannerDescription:
-        'Diese Website verwendet keine Analyse- oder Marketing-Cookies. Es wird nur ein notwendiges Erstanbieter-Cookie gespeichert, damit wir uns merken können, dass du diesen Hinweis bestätigt hast.',
+        'Diese Website verwendet ein notwendiges Erstanbieter-Cookie, um die Bestätigung dieses Hinweises zu speichern, sowie Cloudflare Web Analytics für aggregierte Seitenaufrufe, Referrer-Quellen und technische Leistungsdaten. Es gibt kein Werbe- oder Marketing-Tracking.',
+      bannerDescriptionWithoutAnalytics:
+        'Diese Website verwendet ein notwendiges Erstanbieter-Cookie, um die Bestätigung dieses Hinweises zu speichern. In diesem Build ist kein Analyse- oder Marketing-Tracking aktiv.',
+      bannerDescriptionAnalyticsDisabled:
+        'Cloudflare Web Analytics ist für diesen Browser deaktiviert. Nur das notwendige Erstanbieter-Cookie merkt sich diesen Hinweis. Du kannst Analytics später über die Cookie-Information wieder aktivieren.',
       storageNotice:
-        'Es sind keine Analyse, Werbepixel, Profilbildung oder Marketing-Tracker aktiviert.',
+        'Keine Werbepixel, Profilbildung oder Marketing-Tracker sind aktiv.',
+      analyticsDisabledStorageNotice:
+        'Die Analyse ist für diesen Browser deaktiviert. Keine Werbepixel, Profilbildung oder Marketing-Tracker sind aktiv.',
       bannerLegalPrefix: 'Siehe',
       privacyLink: 'Website-Datenschutz & Cookies',
       imprintLink: 'Impressum',
       detailsButton: 'Details ansehen',
-      continueButton: 'Nur mit notwendigen fortfahren',
+      continueButton: 'Weiter',
       modalEyebrow: 'Cookie-Information',
       modalTitle: 'Auf dieser Website verwendete Technologien',
       close: 'Schließen',
@@ -423,12 +456,21 @@ const siteCopy: Record<SiteLocale, SiteCopy> = {
       necessaryDescription:
         'Ein Erstanbieter-Cookie merkt sich, dass du diesen Hinweis bestätigt hast. Es enthält nur die Version des Hinweises und wird bis zu 180 Tage gespeichert.',
       analyticsTitle: 'Analyse',
-      analyticsDescription: 'Nicht verwendet. Es ist kein Analysedienst oder Analyse-Cookie aktiv.',
+      analyticsDescription:
+        'Cloudflare Web Analytics ist für aggregierte Seitenaufrufe, Referrer-Quellen und technische Leistungsdaten aktiv. Laut Cloudflare werden dafür keine Cookies oder Local Storage verwendet.',
+      analyticsDisabledDescription:
+        'Cloudflare Web Analytics ist für diesen Browser deaktiviert. Die Einstellung wird in einem notwendigen Erstanbieter-Cookie gespeichert.',
+      analyticsNotConfiguredDescription:
+        'Cloudflare Web Analytics ist in diesem Build nicht konfiguriert. Es ist kein Analysedienst aktiv.',
+      disableAnalyticsButton: 'Analyse deaktivieren',
+      analyticsDisabledButton: 'Analyse deaktiviert',
+      enableAnalyticsButton: 'Analyse aktivieren',
       marketingTitle: 'Marketing',
       marketingDescription: 'Nicht verwendet. Es ist kein Werbepixel oder Marketing-Tracker aktiv.',
       updateHint:
-        'Die Bestätigung dieses Hinweises ist keine Einwilligung in Analyse oder Marketing. Diese Technologien werden nicht verwendet.',
+        'Die Bestätigung dieses Hinweises ist keine Einwilligung in Analyse oder Marketing. Cloudflare Web Analytics wird ohne Analyse-Cookies oder Local Storage eingesetzt; Marketing-Technologien werden nicht verwendet.',
       activeLabel: 'Immer aktiv',
+      disabledLabel: 'Deaktiviert',
       notUsedLabel: 'Nicht verwendet',
       settingsButton: 'Cookie-Information',
     },

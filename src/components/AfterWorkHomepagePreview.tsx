@@ -133,7 +133,8 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
     let isActive = true;
 
     const applyNewsletterInputCopy = () => {
-      const input = formRoot.querySelector<HTMLInputElement>('input[type="email"], input.form-control');
+      const embeddedForm = formRoot.querySelector<HTMLFormElement>('form.ml-block-form');
+      const input = (embeddedForm ?? formRoot).querySelector<HTMLInputElement>('input[type="email"], input.form-control');
 
       if (input) {
         if (input.placeholder !== copy.afterWork.inputPlaceholder) {
@@ -148,7 +149,9 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
         checkboxRow.hidden = true;
       }
 
-      const form = formRoot.querySelector<HTMLFormElement>('form');
+      formRoot.classList.toggle('has-mailerlite-form', Boolean(embeddedForm));
+
+      const form = embeddedForm ?? formRoot.querySelector<HTMLFormElement>('form.preview-newsletter-fallback');
       if (!form || form === currentForm) return;
 
       if (currentForm && submitHandler) {
@@ -219,6 +222,7 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
     return () => {
       isActive = false;
       observer.disconnect();
+      formRoot.classList.remove('has-mailerlite-form');
       if (currentForm && submitHandler) {
         currentForm.removeEventListener('submit', submitHandler, true);
       }
@@ -339,6 +343,69 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
         .preview-newsletter-form .ml-embedded [id^="mlb2-"] {
           width: 100% !important;
           max-width: none !important;
+        }
+
+        .preview-newsletter-form.has-mailerlite-form .preview-newsletter-fallback {
+          display: none !important;
+        }
+
+        .preview-newsletter-fallback {
+          display: grid;
+          grid-template-columns: minmax(0, 1fr) 160px;
+          column-gap: 10px;
+          row-gap: 10px;
+          align-items: flex-start;
+          width: 100%;
+        }
+
+        .preview-newsletter-fallback input {
+          min-height: 52px;
+          width: 100%;
+          border: 1px solid #d9d0c3;
+          border-radius: var(--preview-newsletter-control-radius);
+          background: rgb(255 255 255 / 0.8);
+          color: #171717;
+          font: inherit;
+          font-size: 13px;
+          padding: 14px 16px;
+        }
+
+        .preview-newsletter-fallback input::placeholder {
+          color: #8e867e;
+        }
+
+        .preview-newsletter-fallback input:focus {
+          border-color: #f47734;
+          box-shadow: 0 0 0 2px rgb(244 119 52 / 0.2);
+          outline: none;
+        }
+
+        .preview-newsletter-fallback button {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 9px;
+          min-height: 52px;
+          width: 100%;
+          border: 0;
+          border-radius: var(--preview-newsletter-control-radius);
+          background: #ff7b39;
+          color: #24170b;
+          font: inherit;
+          font-size: 13px;
+          font-weight: 600;
+          padding: 14px 24px;
+        }
+
+        .preview-newsletter-fallback button::before {
+          content: '';
+          display: inline-block;
+          width: 18px;
+          height: 18px;
+          flex-shrink: 0;
+          background-color: currentColor;
+          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2'%3E%3Crect x='3' y='5' width='18' height='14' rx='2'/%3E%3Cpath d='m3 7 9 6 9-6'/%3E%3C/svg%3E") center / contain no-repeat;
+          -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2'%3E%3Crect x='3' y='5' width='18' height='14' rx='2'/%3E%3Cpath d='m3 7 9 6 9-6'/%3E%3C/svg%3E") center / contain no-repeat;
         }
 
         .preview-newsletter-form {
@@ -522,6 +589,17 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
         }
 
         @media (max-width: 520px) {
+          .preview-newsletter-fallback {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+          }
+
+          .preview-newsletter-fallback input,
+          .preview-newsletter-fallback button {
+            width: 100%;
+          }
+
           .preview-newsletter-form .ml-form-embedBody form {
             display: flex !important;
             flex-direction: column !important;
@@ -700,6 +778,26 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
             </ul>
 
             <div className="preview-newsletter-form mt-7 max-w-[445px]">
+              <form
+                className="preview-newsletter-fallback"
+                action="https://assets.mailerlite.com/jsonp/2630673/forms/198351846006327170/subscribe"
+                method="post"
+                target="_blank"
+              >
+                <label htmlFor="preview-newsletter-email" className="sr-only">{copy.afterWork.inputLabel}</label>
+                <input
+                  id="preview-newsletter-email"
+                  type="email"
+                  name="fields[email]"
+                  required
+                  autoComplete="email"
+                  placeholder={copy.afterWork.inputPlaceholder}
+                  aria-label={copy.afterWork.inputLabel}
+                />
+                <input type="hidden" name="ml-submit" value="" />
+                <input type="hidden" name="anticsrf" value="" />
+                <button type="submit">{copy.afterWork.submit}</button>
+              </form>
               <div className="ml-embedded" data-form="Em4Az7" />
               <noscript>
                 <a href="https://preview.mailerlite.io/forms/2630673/198351846006327170/share">

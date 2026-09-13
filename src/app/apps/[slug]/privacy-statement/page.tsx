@@ -197,6 +197,16 @@ export default async function AppPrivacyStatementPage({
                 <li>
                   Data you actively send by contacting George Valandis by email or phone.
                 </li>
+                <li>
+                  Aggregated page-view, referrer, browser/device, and performance metrics processed
+                  by Cloudflare Web Analytics without cookies or Local Storage, according to
+                  Cloudflare.
+                </li>
+                <li>
+                  If you disable Cloudflare Web Analytics in Cookie Information, the necessary
+                  first-party opt-out preference is stored in <code>gv_analytics_optout</code> for up
+                  to 180 days.
+                </li>
                 {usesAggregateCampaignMeasurement ? (
                   <li>
                     The campaign label in a GlanceAway landing-page URL and a daily aggregate
@@ -213,9 +223,10 @@ export default async function AppPrivacyStatementPage({
                   : '5. Cookies and Analytics'}
               </h2>
               <p>
-                This landing page does not use analytics or marketing cookies and does not load
-                analytics services, advertising SDKs, Meta or TikTok pixels, fingerprinting, or
-                other marketing trackers.
+                This landing page does not use analytics or marketing cookies. It loads Cloudflare
+                Web Analytics to measure aggregated page views, referrer sources, browser/device
+                information, and technical performance. It does not load advertising SDKs, Meta or
+                TikTok pixels, fingerprinting, or other marketing trackers.
               </p>
               <p>
                 If you acknowledge the cookie notice, the page stores only the necessary
@@ -224,9 +235,41 @@ export default async function AppPrivacyStatementPage({
                 for up to 180 days.
               </p>
               <p>
+                If you disable Cloudflare Web Analytics through Cookie Information, the page stores
+                the necessary first-party cookie <code>gv_analytics_optout</code> for up to 180 days
+                solely to remember your preference. It contains no analytics data. While the
+                preference is stored, no Cloudflare Web Analytics beacon is loaded on future page
+                views.
+              </p>
+              <p>
                 The cookie-information function does not use local storage, a consent ID, or
-                server-side consent logging. Acknowledging the notice is not consent to analytics
-                or marketing because those technologies are not used.
+                server-side consent logging. The Cloudflare Web Analytics beacon is separate from
+                the notice function and, according to Cloudflare, does not use cookies or Local
+                Storage. Acknowledging the notice is not consent to analytics or marketing.
+              </p>
+              <p>
+                The provider is Cloudflare, Inc., 101 Townsend Street, San Francisco, CA 94107, USA.
+                With the manual integration used here, the beacon is loaded from{' '}
+                <code>static.cloudflareinsights.com</code>. Further information is available in
+                Cloudflare&apos;s{' '}
+                <a
+                  href="https://www.cloudflare.com/privacypolicy/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-amber-300 hover:text-amber-200 transition-colors underline"
+                >
+                  Privacy Policy
+                </a>{' '}
+                and{' '}
+                <a
+                  href="https://www.cloudflare.com/cloudflare-customer-dpa/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-amber-300 hover:text-amber-200 transition-colors underline"
+                >
+                  Data Processing Addendum
+                </a>
+                .
               </p>
               {usesAggregateCampaignMeasurement ? (
                 <>
@@ -284,17 +327,30 @@ export default async function AppPrivacyStatementPage({
               <ul className="list-disc pl-6 space-y-2">
                 <li>provide, display, and secure the landing page,</li>
                 <li>remember that the cookie notice was acknowledged,</li>
+                <li>remember any analytics opt-out preference,</li>
                 <li>respond to direct inquiries,</li>
+                <li>measure aggregate landing-page usage and technical performance.</li>
                 {usesAggregateCampaignMeasurement ? (
                   <li>measure aggregate App Store button interest by shared campaign label.</li>
                 ) : null}
               </ul>
               <p>
-                The notice cookie is used under Section 25(2) no. 2 TDDDG to provide the
-                notice-memory function you requested. Technical delivery and security processing
-                is based on Art. 6 para. 1 lit. f GDPR. Direct inquiries are processed under Art. 6
-                para. 1 lit. b GDPR where they concern pre-contractual communication and otherwise
-                under Art. 6 para. 1 lit. f GDPR.
+                The notice and analytics-preference cookies are used under Section 25(2) no. 2 TDDDG
+                to provide the notice-memory and analytics-preference functions you requested.
+                Technical delivery and security processing is based on Art. 6 para. 1 lit. f GDPR.
+                Direct inquiries are processed under Art. 6 para. 1 lit. b GDPR where they concern
+                pre-contractual communication and otherwise under Art. 6 para. 1 lit. f GDPR.
+              </p>
+              <p>
+                Cloudflare Web Analytics is used, to the extent personal data is processed, under
+                Art. 6 para. 1 lit. f GDPR based on the legitimate interest in measuring and
+                improving landing-page usage and technical performance in a data-minimizing way. No
+                individual visitor profile is created for advertising purposes.
+              </p>
+              <p>
+                You can disable Cloudflare Web Analytics at any time through the Cookie Information
+                button. The setting applies to future page views and does not retroactively delete
+                measurement data already transmitted.
               </p>
               {usesAggregateCampaignMeasurement ? (
                 <p>
@@ -316,8 +372,8 @@ export default async function AppPrivacyStatementPage({
                 retention obligations.
               </p>
               <p>
-                The necessary notice cookie is kept for up to 180 days. No related consent record
-                is stored on the server.
+                The necessary notice and analytics-preference cookies are kept for up to 180 days.
+                No related consent record is stored on the server.
               </p>
               {usesAggregateCampaignMeasurement ? (
                 <p>

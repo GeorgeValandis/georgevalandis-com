@@ -1,16 +1,21 @@
 'use client';
 
 import { getSiteCopy } from '@/content/siteCopy';
+import {
+  hasCloudflareAnalyticsOptOut,
+  setCloudflareAnalyticsOptOut,
+} from '@/lib/cloudflareWebAnalytics';
 import { detectLocaleFromPathname, localizedPath } from '@/lib/siteLocale';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-const NOTICE_VERSION = '2';
-const POLICY_VERSION = 1;
+const NOTICE_VERSION = '3';
+const POLICY_VERSION = 2;
 const NOTICE_COOKIE_KEY = 'gv_cookie_notice';
 const NOTICE_COOKIE_MAX_AGE_SECONDS = 60 * 60 * 24 * 180;
 export const OPEN_COOKIE_SETTINGS_EVENT = 'gv:open-cookie-settings';
+const CLOUDFLARE_ANALYTICS_PREFERENCE_EVENT = 'gv:cloudflare-analytics-preference';
 
 function sanitizeScope(scope: string): string {
   return scope.replace(/[^a-z0-9_-]/gi, '_');
@@ -132,10 +137,13 @@ export default function CookieConsent() {
   const scope = getNoticeScope(pathname);
   const privacyPath = getPrivacyPath(pathname, locale);
   const isAfterWorkPreview = /^\/(?:de\/)?after-work-preview\/?$/.test(pathname ?? '');
+  const hasConfiguredAnalytics = Boolean(process.env.NEXT_PUBLIC_CLOUDFLARE_WEB_ANALYTICS_TOKEN?.trim());
   const [isMounted, setIsMounted] = useState(false);
   const [acknowledged, setAcknowledged] = useState(false);
   const [showBanner, setShowBanner] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
+  const [analyticsOptedOut, setAnalyticsOptedOut] = useState(false);
+  const [analyticsPreferenceChanged, setAnalyticsPreferenceChanged] = useState(false);
 
   useEffect(() => {
     const timeoutId = window.setTimeout(() => {
@@ -143,6 +151,7 @@ export default function CookieConsent() {
       setAcknowledged(hasAcknowledged);
       setShowBanner(!hasAcknowledged);
       setShowDetails(false);
+      setAnalyticsOptedOut(hasCloudflareAnalyticsOptOut());
       setIsMounted(true);
     }, 0);
 
@@ -165,7 +174,40 @@ export default function CookieConsent() {
     setAcknowledged(true);
     setShowBanner(false);
     setShowDetails(false);
+
+    if (analyticsPreferenceChanged) {
+      window.location.reload();
+    }
   };
+
+  const changeAnalyticsPreference = (optedOut: boolean) => {
+    setCloudflareAnalyticsOptOut(optedOut);
+    setAnalyticsOptedOut(optedOut);
+    setAnalyticsPreferenceChanged(true);
+    window.dispatchEvent(new Event(CLOUDFLARE_ANALYTICS_PREFERENCE_EVENT));
+  };
+
+  const analyticsDescription = !hasConfiguredAnalytics
+    ? copy.analyticsNotConfiguredDescription
+    : analyticsOptedOut
+      ? copy.analyticsDisabledDescription
+      : copy.analyticsDescription;
+  const analyticsStatus = !hasConfiguredAnalytics
+    ? copy.notUsedLabel
+    : analyticsOptedOut
+      ? copy.disabledLabel
+      : copy.activeLabel;
+  const bannerTitle = hasConfiguredAnalytics && analyticsOptedOut
+    ? copy.bannerTitleAnalyticsDisabled
+    : copy.bannerTitle;
+  const bannerDescription = !hasConfiguredAnalytics
+    ? copy.bannerDescriptionWithoutAnalytics
+    : analyticsOptedOut
+      ? copy.bannerDescriptionAnalyticsDisabled
+      : copy.bannerDescription;
+  const bannerStorageNotice = hasConfiguredAnalytics && analyticsOptedOut
+    ? copy.analyticsDisabledStorageNotice
+    : copy.storageNotice;
 
   if (!isMounted) {
     return null;
@@ -182,13 +224,13 @@ export default function CookieConsent() {
             {copy.bannerEyebrow}
           </p>
           <h2 id="cookie-notice-title" className="text-xl font-semibold tracking-tight text-white sm:text-2xl">
-            {copy.bannerTitle}
+            {bannerTitle}
           </h2>
           <p className="mt-3 text-sm leading-relaxed text-gray-300">
-            {copy.bannerDescription}
+            {bannerDescription}
           </p>
           <p className="mt-2 text-sm font-medium text-emerald-300">
-            {copy.storageNotice}
+            {bannerStorageNotice}
           </p>
           <p className="mt-3 text-sm text-gray-400">
             {copy.bannerLegalPrefix}{' '}
@@ -216,6 +258,22 @@ export default function CookieConsent() {
             >
               {copy.detailsButton}
             </button>
+            {hasConfiguredAnalytics && !analyticsOptedOut ? (
+              <button
+                type="button"
+                onClick={() => changeAnalyticsPreference(true)}
+                className="rounded-full border border-white/20 px-5 py-2.5 text-sm font-semibold text-gray-200 transition-colors hover:bg-white/5"
+              >
+                {copy.disableAnalyticsButton}
+              </button>
+            ) : hasConfiguredAnalytics && analyticsOptedOut ? (
+              <span
+                role="status"
+                className="rounded-full border border-emerald-400/30 bg-emerald-400/10 px-5 py-2.5 text-sm font-semibold text-emerald-200"
+              >
+                {copy.analyticsDisabledButton}
+              </span>
+            ) : null}
             <button
               type="button"
               onClick={acknowledge}
@@ -272,10 +330,10 @@ export default function CookieConsent() {
               <div className="flex items-start justify-between gap-4 rounded-xl border border-white/10 p-4">
                 <div>
                   <p className="font-medium text-white">{copy.analyticsTitle}</p>
-                  <p className="mt-1 text-sm text-gray-400">{copy.analyticsDescription}</p>
+                  <p className="mt-1 text-sm text-gray-400">{analyticsDescription}</p>
                 </div>
-                <span className="shrink-0 rounded-full bg-white/5 px-3 py-1 text-xs font-semibold text-gray-300">
-                  {copy.notUsedLabel}
+                <span className={`shrink-0 rounded-full px-3 py-1 text-xs font-semibold ${analyticsStatus === copy.activeLabel ? 'bg-emerald-400/10 text-emerald-300' : 'bg-white/5 text-gray-300'}`}>
+                  {analyticsStatus}
                 </span>
               </div>
 
@@ -296,6 +354,15 @@ export default function CookieConsent() {
               <Link href={privacyPath} className="text-sm font-semibold text-amber-300 hover:text-amber-200">
                 {copy.privacyLink}
               </Link>
+              {hasConfiguredAnalytics ? (
+                <button
+                  type="button"
+                  onClick={() => changeAnalyticsPreference(!analyticsOptedOut)}
+                  className="rounded-full border border-white/20 px-4 py-2 text-sm font-semibold text-gray-200 transition-colors hover:bg-white/5"
+                >
+                  {analyticsOptedOut ? copy.enableAnalyticsButton : copy.disableAnalyticsButton}
+                </button>
+              ) : null}
               <button
                 type="button"
                 onClick={acknowledge}
