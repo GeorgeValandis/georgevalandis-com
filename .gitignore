@@ -23,6 +23,9 @@
 # production
 /build
 
+# private source photos used to create preview derivatives
+/assets/after-work-preview/social-media-sources/
+
 # misc
 .DS_Store
 *.pem

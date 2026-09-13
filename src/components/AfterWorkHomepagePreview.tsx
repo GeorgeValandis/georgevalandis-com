@@ -494,7 +494,7 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
       </section>
 
       <section id="preview-after-work" className="relative flex min-h-[620px] items-center scroll-mt-20 bg-[#f7efe3] py-20 text-[#171717] sm:min-h-[700px] sm:scroll-mt-16 sm:py-24 lg:min-h-[720px] lg:py-28">
-        <div className="mx-auto grid w-full max-w-[1600px] items-center gap-10 px-6 sm:px-10 lg:grid-cols-[minmax(0,1fr)_460px] lg:gap-10 lg:pl-[54px] lg:pr-[44px] xl:grid-cols-[minmax(0,1fr)_540px] xl:gap-14">
+        <div className="mx-auto grid w-full max-w-[1600px] items-center gap-10 px-6 sm:px-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-8 lg:pl-[54px] lg:pr-[44px] xl:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] xl:gap-10">
           <div className="max-w-[535px]">
             <p className="mb-4 font-mono text-[11px] font-medium uppercase tracking-[0.27em] text-[#f47734]">
               {copy.afterWork.eyebrow}
@@ -518,7 +518,7 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
 
           <div
             ref={newsletterReelRef}
-            className="preview-newsletter-reel relative w-full max-w-[600px] justify-self-end overflow-hidden"
+            className="preview-newsletter-reel relative w-full max-w-[820px] justify-self-end overflow-hidden"
             role="region"
             aria-label={copy.afterWork.galleryLabel}
           >
