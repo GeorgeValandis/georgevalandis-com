@@ -338,6 +338,25 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
           font-size: 11px !important;
         }
 
+        .preview-newsletter-form .ml-form-embedPermissionsContent.default.privacy-policy p {
+          font-size: 0 !important;
+          line-height: 1.2 !important;
+        }
+
+        .preview-newsletter-form .ml-form-embedPermissionsContent.default.privacy-policy p a {
+          font-size: 11px !important;
+          line-height: 1.4 !important;
+        }
+
+        .preview-newsletter-form .ml-form-embedPermissionsContent.default.privacy-policy p a + a::before {
+          content: '';
+        }
+
+        .preview-newsletter-form .ml-form-embedPermissionsContent.default.privacy-policy p a + a {
+          margin-left: 10px;
+          text-decoration: none;
+        }
+
         .preview-newsletter-form .ml-form-checkboxRow {
           flex: 1 0 100% !important;
           order: 4 !important;
@@ -502,9 +521,11 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
             <h2 className="max-w-[520px] text-[38px] font-bold leading-[1.06] tracking-[-0.045em] sm:text-[42px]">
               {copy.afterWork.title}
             </h2>
-            <p className="mt-6 max-w-[470px] text-[17px] leading-[1.45] text-[#514a43]">
-              {copy.afterWork.description}
-            </p>
+            {copy.afterWork.description ? (
+              <p className="mt-6 max-w-[470px] text-[17px] leading-[1.45] text-[#514a43]">
+                {copy.afterWork.description}
+              </p>
+            ) : null}
 
             <div className="preview-newsletter-form mt-7 max-w-[445px]">
               <div className="ml-embedded" data-form="Em4Az7" />

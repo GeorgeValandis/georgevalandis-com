@@ -118,7 +118,7 @@ export const previewCopy: Record<SiteLocale, PreviewCopy> = {
     afterWork: {
       eyebrow: 'George Valandis — After Work',
       title: 'Notes from building apps after everyone else goes offline.',
-      description: 'A short note every week about apps, decisions, and the work behind them.',
+      description: '',
       inputLabel: 'Email address',
       inputPlaceholder: 'Your email address',
       submit: 'Get the next note',
@@ -206,7 +206,7 @@ export const previewCopy: Record<SiteLocale, PreviewCopy> = {
     afterWork: {
       eyebrow: 'George Valandis — After Work',
       title: 'Notizen vom App-Bauen, nachdem alle anderen offline gegangen sind.',
-      description: 'Eine kurze Notiz pro Woche über Apps, Entscheidungen und die Arbeit dahinter.',
+      description: '',
       inputLabel: 'E-Mail-Adresse',
       inputPlaceholder: 'Deine E-Mail-Adresse',
       submit: 'Nächste Ausgabe erhalten',
