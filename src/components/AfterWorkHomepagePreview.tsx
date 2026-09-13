@@ -471,6 +471,7 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
         }
 
         .preview-newsletter-form .ml-form-embedPermissions {
+          display: none !important;
           grid-column: 2 !important;
           grid-row: 2 !important;
           flex: none !important;
@@ -673,6 +674,15 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
                 {copy.afterWork.description}
               </p>
             ) : null}
+
+            <ul className="mt-6 max-w-[445px] space-y-2 text-[14px] leading-[1.45] text-[#514a43]">
+              {copy.afterWork.expectations.map((expectation) => (
+                <li key={expectation} className="flex items-start gap-3">
+                  <span aria-hidden="true" className="mt-[0.55em] h-1.5 w-1.5 shrink-0 rounded-full bg-[#f47734]" />
+                  <span>{expectation}</span>
+                </li>
+              ))}
+            </ul>
 
             <div className="preview-newsletter-form mt-7 max-w-[445px]">
               <div className="ml-embedded" data-form="Em4Az7" />

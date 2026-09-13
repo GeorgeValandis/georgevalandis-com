@@ -25,6 +25,7 @@ export type PreviewCopy = {
     eyebrow: string;
     title: string;
     description: string;
+    expectations: string[];
     inputLabel: string;
     inputPlaceholder: string;
     submit: string;
@@ -122,6 +123,11 @@ export const previewCopy: Record<SiteLocale, PreviewCopy> = {
       eyebrow: 'George Valandis — After Work',
       title: 'Notes from building apps after everyone else goes offline.',
       description: '',
+      expectations: [
+        'One short note each week',
+        'Behind-the-scenes lessons from building apps',
+        'No noise — unsubscribe anytime',
+      ],
       inputLabel: 'Email address',
       inputPlaceholder: 'Your email for the next note',
       submit: 'Get the next note',
@@ -213,6 +219,11 @@ export const previewCopy: Record<SiteLocale, PreviewCopy> = {
       eyebrow: 'George Valandis — After Work',
       title: 'Notizen vom App-Bauen, nachdem alle anderen offline gegangen sind.',
       description: '',
+      expectations: [
+        'Eine kurze Notiz pro Woche',
+        'Einblicke ins App-Bauen',
+        'Kein Rauschen – jederzeit abbestellbar',
+      ],
       inputLabel: 'E-Mail-Adresse',
       inputPlaceholder: 'Deine E-Mail für die nächste Notiz',
       submit: 'Nächste Ausgabe erhalten',
