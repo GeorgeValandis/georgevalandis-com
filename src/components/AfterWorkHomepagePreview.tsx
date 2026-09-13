@@ -35,7 +35,7 @@ function AppMarqueeSet({ duplicate = false, locale }: { duplicate?: boolean; loc
             alt=""
             width={104}
             height={104}
-            loading="lazy"
+            loading={duplicate ? 'lazy' : 'eager'}
             className="h-[104px] w-[104px] shrink-0 rounded-[25px] object-cover shadow-[0_14px_30px_rgba(0,0,0,0.22)]"
           />
           <div className="min-w-0">
@@ -71,7 +71,7 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
       ([entry]) => {
         marquee.classList.toggle('is-paused', !entry.isIntersecting);
       },
-      { rootMargin: '200px 0px' },
+      { rootMargin: '0px' },
     );
 
     observer.observe(appsSection);
@@ -124,7 +124,7 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
   };
 
   return (
-    <main className="min-h-screen overflow-hidden bg-[#050a13] text-[#f7f8f9]">
+    <main className="min-h-screen overflow-clip bg-[#050a13] text-[#f7f8f9]">
       <Script id="mailerlite-universal" strategy="lazyOnload">
         {`(function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
     .push(arguments);},l=d.createElement(e),l.async=1,l.src=u,
@@ -141,6 +141,7 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
         .preview-app-marquee {
           width: max-content;
           flex-shrink: 0;
+          will-change: transform;
           animation: preview-app-marquee-right 90s linear infinite;
         }
 
