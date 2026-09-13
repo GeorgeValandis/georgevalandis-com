@@ -192,6 +192,29 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
           animation-play-state: paused;
         }
 
+        #preview-home .preview-home-image-overlay {
+          background-image:
+            radial-gradient(ellipse 90% 65% at 78% 12%, rgba(196, 138, 74, 0.10), rgba(196, 138, 74, 0.045) 38%, transparent 72%),
+            radial-gradient(ellipse 120% 80% at 65% 0%, rgba(120, 84, 52, 0.06), transparent 65%),
+            linear-gradient(to right, #050a13 0%, rgba(5, 10, 19, 0.9) 35%, rgba(5, 10, 19, 0.1) 100%);
+          background-repeat: no-repeat;
+        }
+
+        #preview-contact {
+          background-image: radial-gradient(ellipse 100% 70% at 15% 100%, rgba(196, 138, 74, 0.07), rgba(196, 138, 74, 0.03) 40%, transparent 70%);
+          background-repeat: no-repeat;
+        }
+
+        @media (prefers-contrast: more) {
+          #preview-home .preview-home-image-overlay {
+            background-image: linear-gradient(to right, #050a13 0%, rgba(5, 10, 19, 0.9) 35%, rgba(5, 10, 19, 0.1) 100%);
+          }
+
+          #preview-contact {
+            background-image: none;
+          }
+        }
+
         @keyframes preview-newsletter-reel-right {
           from { transform: translate3d(-50%, 0, 0); }
           to { transform: translate3d(0, 0, 0); }
@@ -471,7 +494,7 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
             sizes="(min-width: 1024px) 67vw, 100vw"
             className="object-cover object-center"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#050a13] via-[#050a13]/90 via-35% to-[#050a13]/10" />
+          <div className="preview-home-image-overlay absolute inset-0 bg-gradient-to-r from-[#050a13] via-[#050a13]/90 via-35% to-[#050a13]/10" />
           <div className="absolute inset-0 bg-gradient-to-t from-[#050a13]/65 via-transparent to-[#050a13]/10" />
         </div>
         <div className="pointer-events-none absolute inset-x-0 bottom-0 z-0 h-24 bg-gradient-to-b from-transparent via-[#050a13]/85 to-[#050a13] sm:h-28" />
