@@ -260,14 +260,17 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
         }
 
         .preview-newsletter-form .ml-form-embedBody form {
-          display: flex !important;
-          flex-wrap: wrap !important;
+          display: grid !important;
+          grid-template-columns: minmax(0, 1fr) 160px !important;
+          column-gap: 10px !important;
+          row-gap: 10px !important;
           align-items: flex-start !important;
-          gap: 10px !important;
         }
 
         .preview-newsletter-form .ml-form-formContent {
-          flex: 1 1 0% !important;
+          grid-column: 1 !important;
+          grid-row: 1 !important;
+          flex: none !important;
           min-width: 0 !important;
           order: 1 !important;
           width: auto !important;
@@ -305,7 +308,10 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
         }
 
         .preview-newsletter-form .ml-form-embedSubmit {
-          flex: 0 0 182px !important;
+          grid-column: 2 !important;
+          grid-row: 1 !important;
+          flex: none !important;
+          width: 100% !important;
           margin: 0 !important;
           order: 2 !important;
         }
@@ -338,9 +344,12 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
         }
 
         .preview-newsletter-form .ml-form-embedPermissions {
-          flex: 1 0 100% !important;
+          grid-column: 2 !important;
+          grid-row: 2 !important;
+          flex: none !important;
+          width: 100% !important;
           margin: 0 !important;
-          order: 3 !important;
+          order: 4 !important;
           color: #8c8176 !important;
           font: inherit !important;
           font-size: 11px !important;
@@ -366,20 +375,29 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
         }
 
         .preview-newsletter-form .ml-form-checkboxRow {
-          flex: 1 0 100% !important;
-          order: 4 !important;
+          grid-column: 1 !important;
+          grid-row: 2 !important;
+          flex: none !important;
+          width: 100% !important;
+          order: 3 !important;
           margin: 0 !important;
         }
 
         @media (max-width: 520px) {
           .preview-newsletter-form .ml-form-embedBody form {
+            display: flex !important;
             flex-direction: column !important;
+            gap: 10px !important;
           }
 
           .preview-newsletter-form .ml-form-formContent,
-          .preview-newsletter-form .ml-form-embedSubmit {
+          .preview-newsletter-form .ml-form-embedSubmit,
+          .preview-newsletter-form .ml-form-embedPermissions,
+          .preview-newsletter-form .ml-form-checkboxRow {
             flex-basis: auto !important;
             width: 100% !important;
+            grid-column: auto !important;
+            grid-row: auto !important;
           }
         }
 
