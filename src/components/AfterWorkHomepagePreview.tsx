@@ -6,7 +6,7 @@ import { blogPosts } from '@/content/blogPosts';
 import { getSiteCopy } from '@/content/siteCopy';
 import { localizedAnchor, localizedPath, type SiteLocale } from '@/lib/siteLocale';
 import { OPEN_COOKIE_SETTINGS_EVENT } from '@/components/CookieConsent';
-import { ArrowUp, ArrowUpRight, Menu, Send, X } from 'lucide-react';
+import { ArrowUp, ArrowUpRight, Check, Menu, Send, X } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import Script from 'next/script';
@@ -16,10 +16,65 @@ import LanguageSwitch from './LanguageSwitch';
 const marqueeApps = apps.filter((app) => app.showInAppsSection !== false);
 type ContactSubmissionState = 'idle' | 'sending' | 'success' | 'error';
 type NewsletterConsentState = 'idle' | 'recording' | 'recorded' | 'error';
+type NewsletterSubmissionState = 'idle' | 'submitting' | 'success';
+
+type MailerLiteSubmissionResponse = {
+  success?: boolean;
+};
 
 function getMarqueeLogoPath(logo: string) {
   const filename = logo.split('/').pop();
   return filename ? `/after-work-preview/app-icons/${filename.replace(/\.[^.]+$/, '.webp')}` : logo;
+}
+
+function parseMailerLiteSubmissionResponse(rawResponse: string): MailerLiteSubmissionResponse | null {
+  const trimmedResponse = rawResponse.trim();
+  if (!trimmedResponse) return null;
+
+  try {
+    const parsed = JSON.parse(trimmedResponse) as unknown;
+    return parsed && typeof parsed === 'object' ? parsed as MailerLiteSubmissionResponse : null;
+  } catch {
+    const jsonpMatch = trimmedResponse.match(/^[\w$.]+\(([\s\S]*)\);?$/);
+    if (!jsonpMatch) return null;
+
+    try {
+      const parsed = JSON.parse(jsonpMatch[1]) as unknown;
+      return parsed && typeof parsed === 'object' ? parsed as MailerLiteSubmissionResponse : null;
+    } catch {
+      return null;
+    }
+  }
+}
+
+async function submitMailerLiteForm(form: HTMLFormElement): Promise<void> {
+  const action = form.getAttribute('action');
+  if (!action) {
+    throw new Error('newsletter_provider_action_missing');
+  }
+
+  const method = (form.getAttribute('method') || 'POST').toUpperCase();
+  if (method !== 'POST') {
+    throw new Error('newsletter_provider_method_invalid');
+  }
+
+  const formData = new FormData(form);
+  formData.set('ml-submit', '1');
+  if (formData.has('anticsrf')) {
+    formData.set('anticsrf', 'true');
+  }
+
+  const response = await fetch(action, {
+    method,
+    body: formData,
+    credentials: 'omit',
+    mode: 'cors',
+  });
+  const result = parseMailerLiteSubmissionResponse(await response.text());
+
+  if (!response.ok || result?.success !== true) {
+    throw new Error('newsletter_provider_submission_failed');
+  }
 }
 
 function AppMarqueeSet({ duplicate = false, locale }: { duplicate?: boolean; locale: SiteLocale }) {
@@ -88,6 +143,7 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
   const [contactSubmissionState, setContactSubmissionState] = useState<ContactSubmissionState>('idle');
   const [contactFeedback, setContactFeedback] = useState('');
   const [newsletterConsentState, setNewsletterConsentState] = useState<NewsletterConsentState>('idle');
+  const [newsletterSubmissionState, setNewsletterSubmissionState] = useState<NewsletterSubmissionState>('idle');
   const marqueeRef = useRef<HTMLDivElement>(null);
   const newsletterReelRef = useRef<HTMLDivElement>(null);
 
@@ -177,6 +233,7 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
         event.stopImmediatePropagation();
         form.dataset.newsletterConsentPending = 'true';
         setNewsletterConsentState('recording');
+        setNewsletterSubmissionState('submitting');
 
         const submissionId = typeof crypto !== 'undefined' && 'randomUUID' in crypto
           ? crypto.randomUUID()
@@ -198,17 +255,19 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
             const result = (await response.json().catch(() => null)) as { ok?: boolean } | null;
             if (!response.ok || !result?.ok) throw new Error('newsletter_consent_failed');
           })
-          .then(() => {
+          .then(async () => {
+            await submitMailerLiteForm(form);
+            delete form.dataset.newsletterConsentPending;
             if (!isActive) return;
             recordedEmail = email;
-            delete form.dataset.newsletterConsentPending;
             setNewsletterConsentState('recorded');
-            HTMLFormElement.prototype.submit.call(form);
+            setNewsletterSubmissionState('success');
           })
           .catch(() => {
-            if (!isActive) return;
             delete form.dataset.newsletterConsentPending;
+            if (!isActive) return;
             setNewsletterConsentState('error');
+            setNewsletterSubmissionState('idle');
           });
       };
 
@@ -349,6 +408,37 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
         .preview-newsletter-form .ml-embedded [id^="mlb2-"] {
           width: 100% !important;
           max-width: none !important;
+        }
+
+        .preview-newsletter-success {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          min-height: 52px;
+          width: 100%;
+          border: 1px solid rgb(28 157 117 / 0.35);
+          border-radius: var(--preview-newsletter-control-radius);
+          background: rgb(28 157 117 / 0.1);
+          color: #185e4d;
+          padding: 10px 16px;
+          animation: preview-newsletter-success-in 220ms ease-out both;
+        }
+
+        .preview-newsletter-success-icon {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          height: 30px;
+          width: 30px;
+          flex-shrink: 0;
+          border-radius: 999px;
+          background: #1c9d75;
+          color: #f7efe3;
+        }
+
+        @keyframes preview-newsletter-success-in {
+          from { opacity: 0; transform: translateY(4px); }
+          to { opacity: 1; transform: translateY(0); }
         }
 
         .preview-newsletter-form.has-mailerlite-form .preview-newsletter-fallback {
@@ -783,47 +873,77 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
               ))}
             </ul>
 
-            <div className="preview-newsletter-form mt-7 max-w-[445px]">
-              <form
-                className="preview-newsletter-fallback"
-                action="https://assets.mailerlite.com/jsonp/2630673/forms/198351846006327170/subscribe"
-                method="post"
-                target="_blank"
-              >
-                <label htmlFor="preview-newsletter-email" className="sr-only">{copy.afterWork.inputLabel}</label>
-                <input
-                  id="preview-newsletter-email"
-                  type="email"
-                  name="fields[email]"
-                  required
-                  autoComplete="email"
-                  placeholder={copy.afterWork.inputPlaceholder}
-                  aria-label={copy.afterWork.inputLabel}
-                />
-                <input type="hidden" name="ml-submit" value="" />
-                <input type="hidden" name="anticsrf" value="" />
-                <button type="submit">{copy.afterWork.submit}</button>
-              </form>
-              <div className="ml-embedded" data-form="Em4Az7" />
-              <noscript>
-                <a href="https://preview.mailerlite.io/forms/2630673/198351846006327170/share">
-                  {copy.afterWork.submit}
-                </a>
-              </noscript>
-            </div>
-            <p
-              className={`mt-3 min-h-[1.25rem] text-[12px] leading-[1.4] text-[#8c8176] ${newsletterConsentState === 'idle' ? 'sr-only' : ''}`}
-              role="status"
-              aria-live="polite"
+            <div
+              className="preview-newsletter-form relative mt-7 max-w-[445px]"
+              aria-busy={newsletterSubmissionState === 'submitting'}
             >
-              {newsletterConsentState === 'recording'
-                ? copy.afterWork.consentSaving
-                : newsletterConsentState === 'recorded'
-                  ? copy.afterWork.consentRecorded
-                  : newsletterConsentState === 'error'
-                    ? copy.afterWork.consentError
-                    : ''}
-            </p>
+              {newsletterSubmissionState === 'success' ? (
+                <div className="preview-newsletter-success" role="status" aria-live="polite">
+                  <span className="preview-newsletter-success-icon" aria-hidden="true">
+                    <Check size={18} strokeWidth={2.5} />
+                  </span>
+                  <span className="min-w-0">
+                    <span className="block text-[13px] font-semibold">{copy.afterWork.submitted}</span>
+                    <span className="mt-1 block text-[12px] leading-[1.4] text-[#514a43]">
+                      {copy.afterWork.consentRecorded}
+                    </span>
+                  </span>
+                </div>
+              ) : (
+                <>
+                  <form
+                    className="preview-newsletter-fallback"
+                    action="https://assets.mailerlite.com/jsonp/2630673/forms/198351846006327170/subscribe"
+                    method="post"
+                    target="_blank"
+                  >
+                    <label htmlFor="preview-newsletter-email" className="sr-only">{copy.afterWork.inputLabel}</label>
+                    <input
+                      id="preview-newsletter-email"
+                      type="email"
+                      name="fields[email]"
+                      required
+                      autoComplete="email"
+                      placeholder={copy.afterWork.inputPlaceholder}
+                      aria-label={copy.afterWork.inputLabel}
+                    />
+                    <input type="hidden" name="ml-submit" value="" />
+                    <input type="hidden" name="anticsrf" value="" />
+                    <button type="submit">{copy.afterWork.submit}</button>
+                  </form>
+                  <div className="ml-embedded" data-form="Em4Az7" />
+                  <noscript>
+                    <a href="https://preview.mailerlite.io/forms/2630673/198351846006327170/share">
+                      {copy.afterWork.submit}
+                    </a>
+                  </noscript>
+                </>
+              )}
+            </div>
+            {newsletterSubmissionState !== 'success' ? (
+              <>
+                <p className="mt-3 max-w-[445px] text-[11px] leading-[1.45] text-[#8c8176]">
+                  {copy.afterWork.legalNotice}{' '}
+                  <Link
+                    href={localizedPath(locale, '/privacy-statement/')}
+                    className="underline decoration-[#8c8176]/60 underline-offset-2 transition-colors hover:text-[#514a43]"
+                  >
+                    {copy.afterWork.privacyLink}
+                  </Link>
+                </p>
+                <p
+                  className={`mt-2 min-h-[1.25rem] text-[12px] leading-[1.4] text-[#8c8176] ${newsletterConsentState === 'idle' ? 'sr-only' : ''}`}
+                  role="status"
+                  aria-live="polite"
+                >
+                  {newsletterConsentState === 'recording'
+                    ? copy.afterWork.consentSaving
+                    : newsletterConsentState === 'error'
+                      ? copy.afterWork.consentError
+                      : ''}
+                </p>
+              </>
+            ) : null}
           </div>
 
           <div

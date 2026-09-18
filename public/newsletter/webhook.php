@@ -75,6 +75,9 @@ try {
     $pdo->beginTransaction();
 
     $existing = newsletter_find_subscriber($pdo, $emailHash, $subscriber['id']);
+    $hasExistingConfirmedConsent = is_array($existing)
+        && ($existing['consent_status'] ?? null) === 'confirmed'
+        && ($existing['confirmed_at'] ?? null) !== null;
 
     $consentEvent = 'provider_sync';
     $consentStatus = null;
@@ -90,9 +93,16 @@ try {
         $subscriber['status'] === 'unconfirmed'
         || ($providerEvent === 'subscriber.created' && $subscriber['opted_in_at'] === null)
     ) {
-        $consentEvent = 'signup_requested';
-        $consentStatus = 'pending';
-        $requestedAt = $subscriber['subscribed_at'] ?? $occurredAt;
+        if ($hasExistingConfirmedConsent) {
+            // A provider sync may omit opted_in_at for an already-active subscriber.
+            // Never turn locally verified DOI evidence back into pending in that case.
+            $consentEvent = 'provider_sync';
+            $consentStatus = 'confirmed';
+        } else {
+            $consentEvent = 'signup_requested';
+            $consentStatus = 'pending';
+            $requestedAt = $subscriber['subscribed_at'] ?? $occurredAt;
+        }
     } elseif ($subscriber['opted_in_at'] !== null) {
         $alreadyConfirmedAt = is_array($existing) ? ($existing['confirmed_at'] ?? null) : null;
         $isNewConfirmation = $alreadyConfirmedAt === null || $alreadyConfirmedAt !== $subscriber['opted_in_at'];

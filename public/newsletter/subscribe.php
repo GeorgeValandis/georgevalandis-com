@@ -56,6 +56,9 @@ try {
 
     $existing = newsletter_find_subscriber($pdo, $emailHash, null);
     $subscriberId = is_array($existing) ? ($existing['mailerlite_subscriber_id'] ?? null) : null;
+    $hasExistingConfirmedConsent = is_array($existing)
+        && ($existing['consent_status'] ?? null) === 'confirmed'
+        && ($existing['confirmed_at'] ?? null) !== null;
 
     $inserted = newsletter_insert_event($pdo, [
         'email_hmac' => $emailHash,
@@ -88,18 +91,18 @@ try {
         'email_hmac' => $emailHash,
         'subscriber_id' => $subscriberId,
         'provider_status' => null,
-        'consent_status' => 'pending',
+        'consent_status' => $hasExistingConfirmedConsent ? 'confirmed' : 'pending',
         'form_id' => (string) $config['newsletter_form_id'],
         'consent_version' => (int) $config['newsletter_consent_version'],
         'privacy_version' => (int) $config['newsletter_privacy_version'],
         'requested_at' => $receivedAt,
-        'confirmed_at' => null,
+        'confirmed_at' => $hasExistingConfirmedConsent ? $existing['confirmed_at'] : null,
         'withdrawn_at' => null,
         'provider_event' => 'website.subscribe',
         'last_event_at' => $receivedAt,
         'created_at' => $receivedAt,
         'updated_at' => $receivedAt,
-        'clear_confirmed' => 1,
+        'clear_confirmed' => $hasExistingConfirmedConsent ? 0 : 1,
         'clear_withdrawn' => 1,
     ]);
 

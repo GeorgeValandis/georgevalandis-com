@@ -33,6 +33,8 @@ export type PreviewCopy = {
     consentSaving: string;
     consentRecorded: string;
     consentError: string;
+    legalNotice: string;
+    privacyLink: string;
     previewNote: string;
     helper: string;
     issue: string;
@@ -135,7 +137,9 @@ export const previewCopy: Record<SiteLocale, PreviewCopy> = {
       consentSaving: 'Saving…',
       consentRecorded: 'Check your inbox to confirm.',
       consentError: 'Something went wrong. Please try again.',
-      previewNote: 'Preview confirmation only — MailerLite will be connected after visual approval.',
+      legalNotice: 'By subscribing, you agree to receive the After Work newsletter. You can unsubscribe at any time.',
+      privacyLink: 'Privacy details',
+      previewNote: 'After subscribing, check your inbox to confirm.',
       helper: 'One calm note per week. No noise.',
       issue: 'Issue 001',
       imageAlt: 'A late-night desk with a laptop, notebook, coffee and city lights',
@@ -231,7 +235,9 @@ export const previewCopy: Record<SiteLocale, PreviewCopy> = {
       consentSaving: 'Wird gespeichert …',
       consentRecorded: 'Bestätige die Anmeldung in deinem Postfach.',
       consentError: 'Das hat nicht geklappt. Bitte versuche es erneut.',
-      previewNote: 'Nur eine Preview-Bestätigung — MailerLite wird nach der visuellen Freigabe verbunden.',
+      legalNotice: 'Mit deiner Anmeldung stimmst du dem After-Work-Newsletter zu. Du kannst dich jederzeit abmelden.',
+      privacyLink: 'Datenschutz',
+      previewNote: 'Nach der Anmeldung erhältst du eine E-Mail zur Bestätigung.',
       helper: 'Eine ruhige Notiz pro Woche. Kein Rauschen.',
       issue: 'Ausgabe 001',
       imageAlt: 'Ein nächtlicher Schreibtisch mit Laptop, Notizbuch, Kaffee und Stadtlichtern',

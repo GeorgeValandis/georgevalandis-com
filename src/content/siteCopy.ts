@@ -303,8 +303,8 @@ const siteCopy: Record<SiteLocale, SiteCopy> = {
       updateHint:
         'Acknowledging this notice is not consent to analytics or marketing. Cloudflare Web Analytics is used without analytics cookies or Local Storage, user/visitor/device IDs for individual recognition, user profiles, or cross-site tracking; marketing technologies are not used.',
       activeLabel: 'Always active',
-      enabledLabel: 'Enabled',
-      disabledLabel: 'Disabled',
+      enabledLabel: 'Analytics enabled',
+      disabledLabel: 'Analytics disabled',
       notUsedLabel: 'Not used',
       settingsButton: 'Cookie Information',
     },
@@ -472,8 +472,8 @@ const siteCopy: Record<SiteLocale, SiteCopy> = {
       updateHint:
         'Die Bestätigung dieses Hinweises ist keine Einwilligung in Analyse oder Marketing. Cloudflare Web Analytics wird ohne Analyse-Cookies oder Local Storage, Nutzer-/Besucher-/Geräte-IDs zur individuellen Wiedererkennung, Nutzerprofile oder Cross-Site-Tracking eingesetzt; Marketing-Technologien werden nicht verwendet.',
       activeLabel: 'Immer aktiv',
-      enabledLabel: 'Aktiviert',
-      disabledLabel: 'Deaktiviert',
+      enabledLabel: 'Analytics aktiviert',
+      disabledLabel: 'Analytics deaktiviert',
       notUsedLabel: 'Nicht verwendet',
       settingsButton: 'Cookie-Information',
     },

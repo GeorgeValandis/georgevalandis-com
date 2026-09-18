@@ -387,7 +387,7 @@ export default function PrivacyStatementContent({
                 <p>
                   Die Verarbeitung erfolgt auf Grundlage deiner Einwilligung nach Art. 6 Abs. 1 lit. a
                   DSGVO. Die Einwilligung wird durch das Absenden des eindeutig beschrifteten Buttons
-                  „Subscribe“ erteilt; dieser Anmeldevorgang wird serverseitig als
+                  „Abonnieren“ bzw. „Subscribe“ erteilt; dieser Anmeldevorgang wird serverseitig als
                   <span className="font-mono text-sm">signup_requested</span>-Ereignis mit Zeitstempel
                   protokolliert. Wir verwenden zusätzlich ein Double-Opt-in-Verfahren. Die
                   Bestätigungsnachricht dient ausschließlich der Bestätigung der Anmeldung. Du kannst
