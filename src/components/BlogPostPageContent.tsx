@@ -1,5 +1,7 @@
 import { getSiteCopy } from '@/content/siteCopy';
 import type { BlogContentBlock, BlogPost } from '@/content/blogPosts';
+import { formatBlogPostDate, getLocalizedBlogPost } from '@/content/blogPostTranslations';
+import { blogPostJsonLd } from '@/lib/blogSeo';
 import type { SiteLocale } from '@/lib/siteLocale';
 import { localizedPath } from '@/lib/siteLocale';
 import { ArrowLeft, Calendar } from 'lucide-react';
@@ -41,9 +43,14 @@ export default function BlogPostPageContent({
   post,
 }: BlogPostPageContentProps) {
   const copy = getSiteCopy(locale);
+  const localizedPost = getLocalizedBlogPost(post, locale);
 
   return (
     <main className="min-h-screen bg-gray-950 text-gray-50">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(blogPostJsonLd(post, locale)) }}
+      />
       <article className="max-w-3xl mx-auto px-6 lg:px-8 py-16 md:py-24">
         <Link
           href={localizedPath(locale, '/blog')}
@@ -56,14 +63,14 @@ export default function BlogPostPageContent({
         <header className="mt-8 mb-10">
           <div className="flex items-center gap-2 text-gray-500 text-sm mb-4">
             <Calendar size={14} />
-            <span>{post.date}</span>
+            <span>{formatBlogPostDate(post, locale)}</span>
           </div>
           <h1 className="text-4xl md:text-5xl font-bold tracking-tight leading-tight">
-            {post.title}
+            {localizedPost.title}
           </h1>
         </header>
 
-        <div>{post.content.map((block, index) => renderBlock(block, index))}</div>
+        <div>{localizedPost.content.map((block, index) => renderBlock(block, index))}</div>
       </article>
     </main>
   );

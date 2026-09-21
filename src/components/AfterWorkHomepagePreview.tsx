@@ -3,6 +3,7 @@
 import { apps } from '@/content/apps';
 import { germanAppSubtitles, previewCopy } from '@/content/afterWorkPreviewCopy';
 import { blogPosts } from '@/content/blogPosts';
+import { formatBlogPostDate } from '@/content/blogPostTranslations';
 import { getSiteCopy } from '@/content/siteCopy';
 import { localizedAnchor, localizedPath, type SiteLocale } from '@/lib/siteLocale';
 import { OPEN_COOKIE_SETTINGS_EVENT } from '@/components/CookieConsent';
@@ -1042,13 +1043,20 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
             </Link>
           </div>
           <div className="grid gap-4 md:grid-cols-3">
-            {blogPosts.slice(0, 3).map((post, index) => (
-              <Link key={post.slug} href={`${locale === 'de' ? '/de' : ''}/blog/${post.slug}/`} className="group rounded-2xl border border-white/[0.07] bg-white/[0.02] p-6 transition-colors hover:border-[#ff9d19]/40">
-                <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-slate-600">{post.date}</p>
-                <h3 className="mt-5 text-lg font-semibold leading-snug text-white group-hover:text-[#ffbd65]">{copy.blog.posts[index].title}</h3>
-                <p className="mt-3 text-sm leading-relaxed text-slate-500">{copy.blog.posts[index].excerpt}</p>
-              </Link>
-            ))}
+            {blogPosts.slice(0, 3).map((post) => {
+              const blogCopy = copy.blog.postsBySlug[post.slug] ?? {
+                title: post.title,
+                excerpt: post.excerpt,
+              };
+
+              return (
+                <Link key={post.slug} href={localizedPath(locale, `/blog/${post.slug}/`)} className="group rounded-2xl border border-white/[0.07] bg-white/[0.02] p-6 transition-colors hover:border-[#ff9d19]/40">
+                  <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-slate-600">{formatBlogPostDate(post, locale)}</p>
+                  <h3 className="mt-5 text-lg font-semibold leading-snug text-white group-hover:text-[#ffbd65]">{blogCopy.title}</h3>
+                  <p className="mt-3 text-sm leading-relaxed text-slate-500">{blogCopy.excerpt}</p>
+                </Link>
+              );
+            })}
           </div>
         </div>
       </section>

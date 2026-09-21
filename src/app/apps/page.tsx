@@ -13,10 +13,21 @@ export const metadata: Metadata = {
     canonical: canonicalPath('/apps'),
   },
   openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    siteName: 'George Valandis',
     title: 'Apps by George Valandis',
     description:
       'A focused portfolio of iOS, Android, and Mac apps for health tracking, habits, focus, utilities, and calm companion experiences.',
     url: canonicalPath('/apps'),
+    images: [{ url: '/after-work-preview/hero-desk.webp', alt: 'George Valandis app portfolio' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Apps by George Valandis',
+    description:
+      'A focused portfolio of iOS, Android, and Mac apps for health tracking, habits, focus, utilities, and calm companion experiences.',
+    images: ['/after-work-preview/hero-desk.webp'],
   },
 };
 

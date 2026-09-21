@@ -2,6 +2,7 @@
 
 import { getSiteCopy } from '@/content/siteCopy';
 import { blogPosts, type BlogPost } from '@/content/blogPosts';
+import { formatBlogPostDate, getLocalizedBlogPost } from '@/content/blogPostTranslations';
 import type { SiteLocale } from '@/lib/siteLocale';
 import { localizedPath } from '@/lib/siteLocale';
 import { ArrowLeft, ArrowUpRight, Calendar, Grid3X3, List } from 'lucide-react';
@@ -45,6 +46,8 @@ function ViewButton({
 }
 
 function BlogCard({ locale, post }: { locale: SiteLocale; post: BlogPost }) {
+  const localizedPost = getLocalizedBlogPost(post, locale);
+
   return (
     <Link
       href={localizedPath(locale, `/blog/${post.slug}`)}
@@ -52,12 +55,12 @@ function BlogCard({ locale, post }: { locale: SiteLocale; post: BlogPost }) {
     >
       <div className="flex items-center gap-2 text-gray-500 text-xs mb-4">
         <Calendar size={12} />
-        <span>{post.date}</span>
+        <span>{formatBlogPostDate(post, locale)}</span>
       </div>
 
       <div className="flex items-start justify-between gap-3 mb-3">
         <h2 className="text-xl font-semibold leading-snug transition-colors group-hover:text-white">
-          {post.title}
+          {localizedPost.title}
         </h2>
         <ArrowUpRight
           size={16}
@@ -65,12 +68,14 @@ function BlogCard({ locale, post }: { locale: SiteLocale; post: BlogPost }) {
         />
       </div>
 
-      <p className="text-gray-400 text-sm leading-relaxed">{post.excerpt}</p>
+      <p className="text-gray-400 text-sm leading-relaxed">{localizedPost.excerpt}</p>
     </Link>
   );
 }
 
 function BlogListRow({ locale, post }: { locale: SiteLocale; post: BlogPost }) {
+  const localizedPost = getLocalizedBlogPost(post, locale);
+
   return (
     <Link
       href={localizedPath(locale, `/blog/${post.slug}`)}
@@ -79,13 +84,13 @@ function BlogListRow({ locale, post }: { locale: SiteLocale; post: BlogPost }) {
       <div className="min-w-0">
         <div className="mb-2 flex items-center gap-2 text-xs text-gray-500">
           <Calendar size={12} />
-          <span>{post.date}</span>
+          <span>{formatBlogPostDate(post, locale)}</span>
         </div>
         <h2 className="text-lg font-semibold leading-snug text-white">
-          {post.title}
+          {localizedPost.title}
         </h2>
         <p className="mt-2 max-w-3xl text-sm leading-relaxed text-gray-400">
-          {post.excerpt}
+          {localizedPost.excerpt}
         </p>
       </div>
 

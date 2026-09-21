@@ -107,7 +107,7 @@ const baseApps = [
     title: 'Frokus',
     subtitle: 'Focus Better with Pomodoro Sessions',
     description:
-      'A focus timer app because everybody has to have one in their app portfolio. Built with love and simplicity.',
+      'A simple Pomodoro focus timer for clear work sessions, intentional breaks, and a calmer way to get started.',
     platforms: ['iOS'],
     tags: ['Swift', 'SwiftUI', 'Pomodoro', 'Focus'],
     gradient: 'from-blue-500/20 to-cyan-500/20',

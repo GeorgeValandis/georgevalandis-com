@@ -318,15 +318,17 @@ function appJsonLd(app: AppEntry, content: AppLandingPageContent) {
         screenshot: content.screenshots.map((screenshot) => absoluteUrl(screenshot.src)),
         featureList: content.highlights,
         keywords,
-        offers: {
-          '@type': 'Offer',
-          price: content.price,
-          priceCurrency: content.priceCurrency,
-          url: app.appStoreLink ?? pageUrl,
-          availability: app.appStoreLink
-            ? 'https://schema.org/InStock'
-            : 'https://schema.org/PreOrder',
-        },
+        ...(app.appStoreLink
+          ? {
+              offers: {
+                '@type': 'Offer',
+                price: content.price,
+                priceCurrency: content.priceCurrency,
+                url: app.appStoreLink,
+                availability: 'https://schema.org/InStock',
+              },
+            }
+          : {}),
         publisher: {
           '@type': 'Person',
           name: 'George Valandis',

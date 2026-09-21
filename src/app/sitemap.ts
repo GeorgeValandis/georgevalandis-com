@@ -7,8 +7,8 @@ import type { MetadataRoute } from 'next';
 
 export const dynamic = 'force-static';
 
-const defaultLastModified = new Date('2026-04-24T00:00:00.000Z');
-const siteContentLastModified = new Date('2026-05-23T00:00:00.000Z');
+const defaultLastModified = new Date('2026-09-21T00:00:00.000Z');
+const siteContentLastModified = new Date('2026-09-21T00:00:00.000Z');
 const legalLastModified = new Date('2026-05-23T00:00:00.000Z');
 
 function dateFromIsoDate(date?: string): Date {
@@ -76,14 +76,21 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ];
 
   const blogPages = blogPosts.map((post) => {
-    const postDate = new Date(post.date);
+    const postDate = dateFromIsoDate(post.publishedAt);
 
-    return sitemapEntry(`/blog/${post.slug}/`, {
-      lastModified: postDate,
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    });
-  });
+    return [
+      sitemapEntry(`/blog/${post.slug}/`, {
+        lastModified: postDate,
+        changeFrequency: 'monthly',
+        priority: 0.7,
+      }),
+      sitemapEntry(`/de/blog/${post.slug}/`, {
+        lastModified: postDate,
+        changeFrequency: 'monthly',
+        priority: 0.7,
+      }),
+    ];
+  }).flat();
 
   const appPages = appSlugs.flatMap((slug) => {
     const appDate = dateFromIsoDate(appSeoMetadata[slug]?.updatedAt);

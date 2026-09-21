@@ -57,7 +57,7 @@ export type PreviewCopy = {
     eyebrow: string;
     title: string;
     viewAll: string;
-    posts: { title: string; excerpt: string }[];
+    postsBySlug: Record<string, { title: string; excerpt: string }>;
   };
   contact: {
     eyebrow: string;
@@ -128,7 +128,7 @@ export const previewCopy: Record<SiteLocale, PreviewCopy> = {
     afterWork: {
       eyebrow: 'George Valandis — After Work',
       title: 'Notes from building apps after everyone else goes offline.',
-      description: '',
+      description: "A short weekly note about the apps I'm building, the decisions behind them, and what I learn along the way.",
       expectations: [
         "What I'm building and what I'm stuck on",
         "I'll share new betas here first",
@@ -181,11 +181,20 @@ export const previewCopy: Record<SiteLocale, PreviewCopy> = {
       eyebrow: '03 — Blog',
       title: 'Latest from the journey.',
       viewAll: 'View all posts',
-      posts: [
-        { title: 'Finding a Better Rhythm While the App List Keeps Growing', excerpt: "Quick update from me. The app list keeps growing, and I'm trying to find a better rhythm between building, improving, and sharing..." },
-        { title: 'Juggling 7 Apps and Finding My Way Back', excerpt: "Quick update from me. Right now, I'm juggling 7 apps, getting back into content after a short personal break..." },
-        { title: 'Focus on Marketing', excerpt: "Quick update on what I've been diving into lately. I've started shifting gears towards marketing my apps..." },
-      ],
+      postsBySlug: {
+        'finding-a-better-rhythm-while-the-app-list-keeps-growing': {
+          title: 'Finding a Better Rhythm While the App List Keeps Growing',
+          excerpt: 'A look at finding a steadier rhythm between building new apps, improving existing products, and sharing the work honestly.',
+        },
+        'juggling-7-apps-taking-a-breath-and-creating-more-long-form-content': {
+          title: 'Juggling 7 Apps and Finding My Way Back',
+          excerpt: "I'm juggling seven apps, returning to content after a short break, and experimenting with longer-form videos.",
+        },
+        'focus-on-marketing': {
+          title: 'Focus on Marketing',
+          excerpt: "I'm shifting more attention from building apps to marketing them, learning how UGC, short-form video, and story shape discovery.",
+        },
+      },
     },
     contact: {
       eyebrow: '04 — Contact',
@@ -204,7 +213,7 @@ export const previewCopy: Record<SiteLocale, PreviewCopy> = {
       links: [
         { label: 'Start', href: '#preview-home' },
         { label: 'Apps', href: '#preview-apps' },
-        { label: 'After Hours', href: '#preview-after-work' },
+        { label: 'After Work', href: '#preview-after-work' },
         { label: 'Bio', href: '#preview-about' },
         { label: 'Blog', href: '#preview-blog' },
         { label: 'Kontakt', href: '#preview-contact' },
@@ -230,7 +239,7 @@ export const previewCopy: Record<SiteLocale, PreviewCopy> = {
     afterWork: {
       eyebrow: 'George Valandis — After Work',
       title: 'Notizen vom App-Bauen, nachdem alle anderen offline gegangen sind.',
-      description: '',
+      description: 'Eine kurze wöchentliche Notiz über die Apps, die ich baue, die Entscheidungen dahinter und das, was ich dabei lerne.',
       expectations: [
         'Was ich baue und woran ich gerade hänge',
         'Neue Betas teile ich zuerst hier',
@@ -281,13 +290,22 @@ export const previewCopy: Record<SiteLocale, PreviewCopy> = {
     },
     blog: {
       eyebrow: '03 — Blog',
-      title: 'Neu aus meiner Reise.',
+      title: 'Aktuelles aus meiner Reise.',
       viewAll: 'Alle Beiträge ansehen',
-      posts: [
-        { title: 'Einen besseren Rhythmus finden, obwohl die App-Liste weiter wächst', excerpt: 'Ein kurzes Update von mir. Die App-Liste wächst weiter und ich versuche, einen besseren Rhythmus zwischen Bauen, Verbessern und Teilen zu finden ...' },
-        { title: '7 Apps jonglieren und wieder zurückfinden', excerpt: 'Ein kurzes Update von mir. Gerade jongliere ich mit 7 Apps und finde nach einer kurzen persönlichen Pause wieder zurück zum Content ...' },
-        { title: 'Fokus auf Marketing', excerpt: 'Ein kurzes Update zu dem, womit ich mich gerade beschäftige. Ich richte meinen Fokus langsam stärker auf das Marketing meiner Apps ...' },
-      ],
+      postsBySlug: {
+        'finding-a-better-rhythm-while-the-app-list-keeps-growing': {
+          title: 'Einen besseren Rhythmus finden, während die App-Liste wächst',
+          excerpt: 'Ein Blick darauf, wie ich zwischen neuen Apps, Verbesserungen bestehender Produkte und ehrlichem Teilen einen ruhigeren Rhythmus finde.',
+        },
+        'juggling-7-apps-taking-a-breath-and-creating-more-long-form-content': {
+          title: '7 Apps jonglieren und wieder meinen Weg finden',
+          excerpt: 'Ich jongliere gerade mit sieben Apps, kehre nach einer kurzen Pause zum Content zurück und probiere längere Videos aus.',
+        },
+        'focus-on-marketing': {
+          title: 'Fokus auf Marketing',
+          excerpt: 'Ich richte meine Aufmerksamkeit stärker auf das Marketing meiner Apps und lerne, wie UGC, Kurzvideos und gute Geschichten ihre Entdeckung beeinflussen.',
+        },
+      },
     },
     contact: {
       eyebrow: '04 — Kontakt',

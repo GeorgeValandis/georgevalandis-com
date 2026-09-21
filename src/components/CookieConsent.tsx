@@ -177,6 +177,8 @@ export default function CookieConsent() {
   const copy = getSiteCopy(locale).consent;
   const scope = getNoticeScope(pathname);
   const privacyPath = getPrivacyPath(pathname, locale);
+  // The preview homepage has the same control in its visible footer.
+  const isAfterWorkPreview = /^\/(?:de\/)?after-work-preview\/?$/.test(pathname ?? '');
   const hasConfiguredAnalytics = Boolean(process.env.NEXT_PUBLIC_CLOUDFLARE_WEB_ANALYTICS_TOKEN?.trim());
   const [isMounted, setIsMounted] = useState(false);
   const [acknowledged, setAcknowledged] = useState(false);
@@ -409,6 +411,16 @@ export default function CookieConsent() {
             </div>
           </div>
         </section>
+      ) : null}
+
+      {acknowledged && !showDetails && !isAfterWorkPreview ? (
+        <button
+          type="button"
+          onClick={() => setShowDetails(true)}
+          className="fixed bottom-4 right-4 z-[999] whitespace-nowrap rounded-full border border-white/15 bg-gray-950/90 px-4 py-2 text-xs font-semibold text-gray-200 transition-colors hover:bg-white/10 sm:bottom-6 sm:right-6"
+        >
+          {copy.settingsButton}
+        </button>
       ) : null}
 
     </>

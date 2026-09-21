@@ -3,10 +3,24 @@ export type BlogContentBlock =
   | { type: 'heading'; text: string }
   | { type: 'list'; items: string[] };
 
+export const blogSlugs = [
+  'finding-a-better-rhythm-while-the-app-list-keeps-growing',
+  'juggling-7-apps-taking-a-breath-and-creating-more-long-form-content',
+  'focus-on-marketing',
+  'many-apps-many-ideas-and-juggling-life',
+  'a-little-content-reset-and-glanceaway-is-live',
+  'slowing-down-to-speed-up-shipping-perfect-day-and-building-lookaway',
+  'pushing-content-building-community-the-next-chapter-for-flowa-perfect-day-beyond',
+  'flowa-is-live-my-first-paid-app-on-the-app-store',
+] as const;
+
+export type BlogSlug = (typeof blogSlugs)[number];
+
 export type BlogPost = {
-  slug: string;
+  slug: BlogSlug;
   title: string;
   date: string;
+  publishedAt: string;
   excerpt: string;
   content: BlogContentBlock[];
 };
@@ -16,8 +30,9 @@ export const blogPosts: BlogPost[] = [
     slug: 'finding-a-better-rhythm-while-the-app-list-keeps-growing',
     title: 'Finding a Better Rhythm While the App List Keeps Growing',
     date: 'May 1, 2026',
+    publishedAt: '2026-05-01',
     excerpt:
-      "Quick update from me. The app list keeps growing, and I'm trying to find a better rhythm between building, improving, and sharing...",
+      'A look at finding a steadier rhythm between building new apps, improving existing products, and sharing the work honestly.',
     content: [
       { type: 'paragraph', text: 'Hey friends,' },
       { type: 'paragraph', text: 'Quick update from me.' },
@@ -62,8 +77,9 @@ export const blogPosts: BlogPost[] = [
     slug: 'juggling-7-apps-taking-a-breath-and-creating-more-long-form-content',
     title: 'Juggling 7 Apps and Finding My Way Back',
     date: 'March 5, 2026',
+    publishedAt: '2026-03-05',
     excerpt:
-      "Quick update from me. Right now, I'm juggling 7 apps, getting back into content after a short personal break...",
+      "I'm juggling seven apps, returning to content after a short break, and experimenting with longer-form videos.",
     content: [
       { type: 'paragraph', text: 'Hey friends,' },
       { type: 'paragraph', text: 'Quick update from me.' },
@@ -108,8 +124,9 @@ export const blogPosts: BlogPost[] = [
     slug: 'focus-on-marketing',
     title: 'Focus on Marketing',
     date: 'October 19, 2025',
+    publishedAt: '2025-10-19',
     excerpt:
-      "Quick update on what I've been diving into lately. I've started shifting gears towards marketing my apps...",
+      "I'm shifting more attention from building apps to marketing them, learning how UGC, short-form video, and story shape discovery.",
     content: [
       { type: 'paragraph', text: 'Hey friends,' },
       { type: 'paragraph', text: "Quick update on what I've been diving into lately." },
@@ -150,8 +167,9 @@ export const blogPosts: BlogPost[] = [
     slug: 'many-apps-many-ideas-and-juggling-life',
     title: 'Many Apps, Many Ideas, and Juggling Life',
     date: 'September 24, 2025',
+    publishedAt: '2025-09-24',
     excerpt:
-      "Quick update on where I'm at right now. I've been leaning more into building multiple apps simultaneously...",
+      'Why I keep building several small apps at once, what the App Store teaches me, and how I balance it with family life.',
     content: [
       { type: 'paragraph', text: 'Hey friends,' },
       { type: 'paragraph', text: "Quick update on where I'm at right now." },
@@ -192,8 +210,9 @@ export const blogPosts: BlogPost[] = [
     slug: 'a-little-content-reset-and-glanceaway-is-live',
     title: 'A Little Content Reset and GlanceAway Is Live',
     date: 'September 4, 2025',
+    publishedAt: '2025-09-04',
     excerpt:
-      "Quick life-and-project update. I recently renamed my 'LookAway' app to GlanceAway and it's now live...",
+      'I renamed LookAway to GlanceAway, launched it, and am finding a more sustainable rhythm for sharing the work.',
     content: [
       { type: 'paragraph', text: 'Hey friends,' },
       { type: 'paragraph', text: 'Quick life-and-project update from me.' },
@@ -234,8 +253,9 @@ export const blogPosts: BlogPost[] = [
     slug: 'slowing-down-to-speed-up-shipping-perfect-day-and-building-lookaway',
     title: 'Slowing Down to Speed Up - Shipping Perfect Day and Building LookAway',
     date: 'August 9, 2025',
+    publishedAt: '2025-08-09',
     excerpt:
-      "I've intentionally dialed things down a notch to focus on quality over quantity...",
+      'A slower pace helped me protect energy, ship Perfect Day, and keep building the screen-break app that became GlanceAway.',
     content: [
       { type: 'paragraph', text: 'Hey everyone,' },
       {
@@ -277,8 +297,9 @@ export const blogPosts: BlogPost[] = [
     slug: 'pushing-content-building-community-the-next-chapter-for-flowa-perfect-day-beyond',
     title: 'Pushing Content & Building Community',
     date: 'May 5, 2025',
+    publishedAt: '2025-05-05',
     excerpt:
-      "Since my last update, I've been shifting gears - not just building apps, but growing communities around them...",
+      'An update on short-form content, indie app communities, and the next chapter for Flowa and Perfect Day.',
     content: [
       { type: 'paragraph', text: 'Hey everyone,' },
       {
@@ -337,8 +358,9 @@ export const blogPosts: BlogPost[] = [
     slug: 'flowa-is-live-my-first-paid-app-on-the-app-store',
     title: 'Flowa is Live - My First Paid App on the App Store!',
     date: 'February 16, 2025',
+    publishedAt: '2025-02-16',
     excerpt:
-      'Big news - Flowa is officially live on the App Store! After months of work, my first paid app is out...',
+      'The story behind launching Flowa, my first paid app, and the lessons I learned from building, shipping, and getting through App Store review.',
     content: [
       { type: 'paragraph', text: 'Hey everyone,' },
       {

@@ -1,5 +1,7 @@
 import BlogPostPageContent from '@/components/BlogPostPageContent';
 import { blogPosts, getBlogPostBySlug } from '@/content/blogPosts';
+import { getLocalizedBlogPost } from '@/content/blogPostTranslations';
+import { canonicalPath, localizedAlternates } from '@/lib/seo';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
@@ -23,11 +25,32 @@ export async function generateMetadata({
     };
   }
 
+  const localizedPost = getLocalizedBlogPost(post, 'en');
+  const canonical = canonicalPath(`/blog/${post.slug}`);
+
   return {
-    title: `${post.title} - George Valandis`,
-    description: post.excerpt,
+    title: `${localizedPost.title} - George Valandis`,
+    description: localizedPost.excerpt,
     alternates: {
-      canonical: `/blog/${post.slug}/`,
+      canonical,
+      languages: localizedAlternates(`/blog/${post.slug}/`, `/de/blog/${post.slug}/`),
+    },
+    openGraph: {
+      type: 'article',
+      locale: 'en_US',
+      siteName: 'George Valandis',
+      url: canonical,
+      title: `${localizedPost.title} - George Valandis`,
+      description: localizedPost.excerpt,
+      publishedTime: `${post.publishedAt}T00:00:00.000Z`,
+      authors: ['George Valandis'],
+      images: [{ url: '/after-work-preview/hero-desk.webp', alt: localizedPost.title }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${localizedPost.title} - George Valandis`,
+      description: localizedPost.excerpt,
+      images: ['/after-work-preview/hero-desk.webp'],
     },
   };
 }

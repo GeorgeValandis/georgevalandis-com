@@ -1,6 +1,7 @@
 'use client';
 
 import { blogPosts, type BlogPost } from '@/content/blogPosts';
+import { formatBlogPostDate, getLocalizedBlogPost } from '@/content/blogPostTranslations';
 import { getSiteCopy } from '@/content/siteCopy';
 import { localizedPath, type SiteLocale } from '@/lib/siteLocale';
 import { motion } from 'framer-motion';
@@ -53,6 +54,8 @@ function BlogCard({
   post: BlogPost;
   index: number;
 }) {
+  const localizedPost = getLocalizedBlogPost(post, locale);
+
   return (
     <motion.a
       key={post.slug}
@@ -68,12 +71,12 @@ function BlogCard({
       <div className="relative">
         <div className="mb-4 flex items-center gap-2 text-xs text-gray-500">
           <Calendar size={12} />
-          <span>{post.date}</span>
+          <span>{formatBlogPostDate(post, locale)}</span>
         </div>
 
         <div className="mb-3 flex items-start justify-between gap-3">
           <h3 className="text-lg font-semibold leading-snug transition-colors group-hover:text-white">
-            {post.title}
+            {localizedPost.title}
           </h3>
           <ArrowUpRight
             size={16}
@@ -81,7 +84,7 @@ function BlogCard({
           />
         </div>
 
-        <p className="text-sm leading-relaxed text-gray-500">{post.excerpt}</p>
+        <p className="text-sm leading-relaxed text-gray-500">{localizedPost.excerpt}</p>
       </div>
     </motion.a>
   );
@@ -96,6 +99,8 @@ function BlogListRow({
   post: BlogPost;
   index: number;
 }) {
+  const localizedPost = getLocalizedBlogPost(post, locale);
+
   return (
     <motion.a
       key={post.slug}
@@ -109,13 +114,13 @@ function BlogListRow({
       <div className="min-w-0">
         <div className="mb-2 flex items-center gap-2 text-xs text-gray-500">
           <Calendar size={12} />
-          <span>{post.date}</span>
+          <span>{formatBlogPostDate(post, locale)}</span>
         </div>
         <h3 className="text-lg font-semibold leading-snug text-white">
-          {post.title}
+          {localizedPost.title}
         </h3>
         <p className="mt-2 max-w-3xl text-sm leading-relaxed text-gray-500">
-          {post.excerpt}
+          {localizedPost.excerpt}
         </p>
       </div>
 

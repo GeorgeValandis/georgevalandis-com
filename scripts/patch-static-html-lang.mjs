@@ -62,4 +62,27 @@ for (const file of files) {
   }
 }
 
+const unpatchedFiles = [];
+
+for (const file of files) {
+  let html;
+
+  try {
+    html = await readFile(file, 'utf8');
+  } catch (error) {
+    if (error?.code === 'ENOENT') {
+      continue;
+    }
+    throw error;
+  }
+
+  if (html.includes('<html lang="en"')) {
+    unpatchedFiles.push(file);
+  }
+}
+
+if (unpatchedFiles.length > 0) {
+  throw new Error(`German HTML files still use lang="en": ${unpatchedFiles.join(', ')}`);
+}
+
 console.log(`Patched ${patchedCount} German static HTML file(s) with lang="de".`);
