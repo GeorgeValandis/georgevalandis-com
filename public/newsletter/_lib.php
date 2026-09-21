@@ -264,6 +264,8 @@ function newsletter_upsert_subscriber(PDO $pdo, array $subscriber): void
         return;
     }
 
+    $consentStatus = $subscriber['consent_status'] ?? null;
+
     $statement = $pdo->prepare(
         'INSERT INTO newsletter_subscriber (
             email_hmac,
@@ -300,7 +302,10 @@ function newsletter_upsert_subscriber(PDO $pdo, array $subscriber): void
             email_hmac = COALESCE(VALUES(email_hmac), email_hmac),
             mailerlite_subscriber_id = COALESCE(VALUES(mailerlite_subscriber_id), mailerlite_subscriber_id),
             provider_status = COALESCE(VALUES(provider_status), provider_status),
-            consent_status = COALESCE(VALUES(consent_status), consent_status),
+            consent_status = CASE
+                WHEN :consent_status_provided = 1 THEN VALUES(consent_status)
+                ELSE consent_status
+            END,
             form_id = COALESCE(VALUES(form_id), form_id),
             consent_version = COALESCE(VALUES(consent_version), consent_version),
             privacy_version = COALESCE(VALUES(privacy_version), privacy_version),
@@ -322,7 +327,8 @@ function newsletter_upsert_subscriber(PDO $pdo, array $subscriber): void
         ':email_hmac' => $subscriber['email_hmac'],
         ':subscriber_id' => $subscriber['subscriber_id'],
         ':provider_status' => $subscriber['provider_status'],
-        ':consent_status' => $subscriber['consent_status'] ?? 'unknown',
+        ':consent_status' => $consentStatus ?? 'unknown',
+        ':consent_status_provided' => $consentStatus !== null ? 1 : 0,
         ':form_id' => $subscriber['form_id'],
         ':consent_version' => $subscriber['consent_version'],
         ':privacy_version' => $subscriber['privacy_version'],

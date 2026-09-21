@@ -16,10 +16,16 @@ import LanguageSwitch from './LanguageSwitch';
 const marqueeApps = apps.filter((app) => app.showInAppsSection !== false);
 type ContactSubmissionState = 'idle' | 'sending' | 'success' | 'error';
 type NewsletterConsentState = 'idle' | 'recording' | 'recorded' | 'error';
-type NewsletterSubmissionState = 'idle' | 'submitting' | 'success';
+type NewsletterSubmissionState = 'idle' | 'submitting' | 'success_pending' | 'success_already_subscribed';
 
 type MailerLiteSubmissionResponse = {
   success?: boolean;
+};
+
+type NewsletterSubscribeResponse = {
+  ok?: boolean;
+  already_subscribed?: boolean;
+  requires_confirmation?: boolean;
 };
 
 function getMarqueeLogoPath(logo: string) {
@@ -252,16 +258,24 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
           }),
         })
           .then(async (response) => {
-            const result = (await response.json().catch(() => null)) as { ok?: boolean } | null;
-            if (!response.ok || !result?.ok) throw new Error('newsletter_consent_failed');
+            const result = (await response.json().catch(() => null)) as NewsletterSubscribeResponse | null;
+            if (!response.ok || !result || result.ok !== true) throw new Error('newsletter_consent_failed');
+            return result;
           })
-          .then(async () => {
-            await submitMailerLiteForm(form);
+          .then(async (result) => {
+            const alreadySubscribed = result.already_subscribed === true || result.requires_confirmation === false;
+
+            if (!alreadySubscribed) {
+              await submitMailerLiteForm(form);
+            }
+
             delete form.dataset.newsletterConsentPending;
             if (!isActive) return;
             recordedEmail = email;
             setNewsletterConsentState('recorded');
-            setNewsletterSubmissionState('success');
+            setNewsletterSubmissionState(
+              alreadySubscribed ? 'success_already_subscribed' : 'success_pending',
+            );
           })
           .catch(() => {
             delete form.dataset.newsletterConsentPending;
@@ -332,6 +346,10 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
       );
     }
   };
+
+  const newsletterHasSubmitted = newsletterSubmissionState === 'success_pending'
+    || newsletterSubmissionState === 'success_already_subscribed';
+  const newsletterIsAlreadySubscribed = newsletterSubmissionState === 'success_already_subscribed';
 
   return (
     <main className="min-h-screen overflow-clip bg-[#050a13] text-[#f7f8f9]">
@@ -877,15 +895,17 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
               className="preview-newsletter-form relative mt-7 max-w-[445px]"
               aria-busy={newsletterSubmissionState === 'submitting'}
             >
-              {newsletterSubmissionState === 'success' ? (
+              {newsletterHasSubmitted ? (
                 <div className="preview-newsletter-success" role="status" aria-live="polite">
                   <span className="preview-newsletter-success-icon" aria-hidden="true">
                     <Check size={18} strokeWidth={2.5} />
                   </span>
                   <span className="min-w-0">
-                    <span className="block text-[13px] font-semibold">{copy.afterWork.submitted}</span>
+                    <span className="block text-[13px] font-semibold">
+                      {newsletterIsAlreadySubscribed ? copy.afterWork.submitted : copy.afterWork.confirmationRequired}
+                    </span>
                     <span className="mt-1 block text-[12px] leading-[1.4] text-[#514a43]">
-                      {copy.afterWork.consentRecorded}
+                      {newsletterIsAlreadySubscribed ? copy.afterWork.alreadySubscribed : copy.afterWork.consentRecorded}
                     </span>
                   </span>
                 </div>
@@ -920,7 +940,7 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
                 </>
               )}
             </div>
-            {newsletterSubmissionState !== 'success' ? (
+            {!newsletterHasSubmitted ? (
               <>
                 <p className="mt-3 max-w-[445px] text-[11px] leading-[1.45] text-[#8c8176]">
                   {copy.afterWork.legalNotice}{' '}
@@ -1009,7 +1029,18 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
 
       <section id="preview-blog" className="min-h-[560px] bg-[#050a13] px-6 pb-36 lg:px-8">
         <div className="mx-auto max-w-[1600px] px-0 pt-28 sm:px-4 lg:px-[46px]">
-          <p className="mb-3 font-mono text-xs uppercase tracking-[0.24em] text-[#ff9d19]">{copy.blog.eyebrow}</p>
+          <div className="mb-10 flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
+            <div>
+              <p className="mb-3 font-mono text-xs uppercase tracking-[0.24em] text-[#ff9d19]">{copy.blog.eyebrow}</p>
+              <h2 className="text-[36px] font-bold tracking-[-0.045em] text-white sm:text-[38px]">{copy.blog.title}</h2>
+            </div>
+            <Link
+              href={localizedPath(locale, '/blog/')}
+              className="inline-flex items-center gap-2 pb-1 text-[13px] text-[#ff8a3d] hover:text-[#ffb27b]"
+            >
+              {copy.blog.viewAll} <ArrowUpRight size={15} />
+            </Link>
+          </div>
           <div className="grid gap-4 md:grid-cols-3">
             {blogPosts.slice(0, 3).map((post, index) => (
               <Link key={post.slug} href={`${locale === 'de' ? '/de' : ''}/blog/${post.slug}/`} className="group rounded-2xl border border-white/[0.07] bg-white/[0.02] p-6 transition-colors hover:border-[#ff9d19]/40">

@@ -59,12 +59,17 @@ if ($subscriber['email'] !== null) {
 
 $eventFingerprint = hash('sha256', $rawBody);
 $receivedAt = newsletter_now();
-$occurredAt = $subscriber['updated_at']
-    ?? $subscriber['unsubscribed_at']
-    ?? $subscriber['opted_in_at']
-    ?? $subscriber['subscribed_at']
-    ?? $subscriber['created_at']
-    ?? $receivedAt;
+$occurredAt = $providerEvent === 'subscriber.unsubscribed'
+    ? ($subscriber['unsubscribed_at']
+        ?? $subscriber['updated_at']
+        ?? $subscriber['subscribed_at']
+        ?? $subscriber['created_at']
+        ?? $receivedAt)
+    : ($subscriber['opted_in_at']
+        ?? $subscriber['updated_at']
+        ?? $subscriber['subscribed_at']
+        ?? $subscriber['created_at']
+        ?? $receivedAt);
 $optedInAt = $subscriber['opted_in_at'];
 $optinIpHash = $subscriber['optin_ip'] !== null
     ? hash_hmac('sha256', $subscriber['optin_ip'], (string) $config['newsletter_ip_hash_salt'])
@@ -75,9 +80,12 @@ try {
     $pdo->beginTransaction();
 
     $existing = newsletter_find_subscriber($pdo, $emailHash, $subscriber['id']);
-    $hasExistingConfirmedConsent = is_array($existing)
-        && ($existing['consent_status'] ?? null) === 'confirmed'
-        && ($existing['confirmed_at'] ?? null) !== null;
+    $existingConsentStatus = is_array($existing) ? ($existing['consent_status'] ?? null) : null;
+    $existingConfirmedAt = is_array($existing) ? ($existing['confirmed_at'] ?? null) : null;
+    $hasExistingConfirmedConsent = $existingConsentStatus === 'confirmed';
+    $isProviderActive = $providerEvent === 'subscriber.active'
+        || strcasecmp((string) ($subscriber['status'] ?? ''), 'active') === 0;
+    $isProviderUnconfirmed = strcasecmp((string) ($subscriber['status'] ?? ''), 'unconfirmed') === 0;
 
     $consentEvent = 'provider_sync';
     $consentStatus = null;
@@ -89,8 +97,14 @@ try {
         $consentEvent = 'withdrawn';
         $consentStatus = 'withdrawn';
         $withdrawnAt = $occurredAt;
+    } elseif ($isProviderActive || $subscriber['opted_in_at'] !== null) {
+        // MailerLite can signal an active subscriber without opted_in_at. The
+        // active status itself is confirmation evidence for the local record.
+        $consentEvent = $hasExistingConfirmedConsent ? 'provider_sync' : 'doi_confirmed';
+        $consentStatus = 'confirmed';
+        $confirmedAt = $existingConfirmedAt ?? $subscriber['opted_in_at'] ?? $occurredAt;
     } elseif (
-        $subscriber['status'] === 'unconfirmed'
+        $isProviderUnconfirmed
         || ($providerEvent === 'subscriber.created' && $subscriber['opted_in_at'] === null)
     ) {
         if ($hasExistingConfirmedConsent) {
@@ -98,22 +112,11 @@ try {
             // Never turn locally verified DOI evidence back into pending in that case.
             $consentEvent = 'provider_sync';
             $consentStatus = 'confirmed';
+            $confirmedAt = $existingConfirmedAt;
         } else {
             $consentEvent = 'signup_requested';
             $consentStatus = 'pending';
             $requestedAt = $subscriber['subscribed_at'] ?? $occurredAt;
-        }
-    } elseif ($subscriber['opted_in_at'] !== null) {
-        $alreadyConfirmedAt = is_array($existing) ? ($existing['confirmed_at'] ?? null) : null;
-        $isNewConfirmation = $alreadyConfirmedAt === null || $alreadyConfirmedAt !== $subscriber['opted_in_at'];
-
-        if ($isNewConfirmation) {
-            $consentEvent = 'doi_confirmed';
-            $consentStatus = 'confirmed';
-            $confirmedAt = $subscriber['opted_in_at'];
-        } elseif (is_array($existing) && ($existing['consent_status'] ?? null) === 'withdrawn') {
-            $consentStatus = 'withdrawn';
-            $withdrawnAt = $existing['withdrawn_at'] ?? null;
         }
     }
 
@@ -158,8 +161,8 @@ try {
         'last_event_at' => $occurredAt,
         'created_at' => $receivedAt,
         'updated_at' => $receivedAt,
-        'clear_confirmed' => $consentEvent === 'signup_requested' ? 1 : 0,
-        'clear_withdrawn' => in_array($consentEvent, ['signup_requested', 'doi_confirmed'], true) ? 1 : 0,
+        'clear_confirmed' => 0,
+        'clear_withdrawn' => $consentEvent === 'doi_confirmed' ? 1 : 0,
     ]);
 
     $pdo->commit();

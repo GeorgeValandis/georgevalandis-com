@@ -30,6 +30,8 @@ export type PreviewCopy = {
     inputPlaceholder: string;
     submit: string;
     submitted: string;
+    confirmationRequired: string;
+    alreadySubscribed: string;
     consentSaving: string;
     consentRecorded: string;
     consentError: string;
@@ -53,6 +55,8 @@ export type PreviewCopy = {
   };
   blog: {
     eyebrow: string;
+    title: string;
+    viewAll: string;
     posts: { title: string; excerpt: string }[];
   };
   contact: {
@@ -134,6 +138,8 @@ export const previewCopy: Record<SiteLocale, PreviewCopy> = {
       inputPlaceholder: 'you@your.email',
       submit: 'Subscribe',
       submitted: "You're on the list",
+      confirmationRequired: 'Please confirm your email',
+      alreadySubscribed: 'You are already subscribed. No further action is needed.',
       consentSaving: 'Saving…',
       consentRecorded: 'Check your inbox to confirm.',
       consentError: 'Something went wrong. Please try again.',
@@ -173,6 +179,8 @@ export const previewCopy: Record<SiteLocale, PreviewCopy> = {
     },
     blog: {
       eyebrow: '03 — Blog',
+      title: 'Latest from the journey.',
+      viewAll: 'View all posts',
       posts: [
         { title: 'Finding a Better Rhythm While the App List Keeps Growing', excerpt: "Quick update from me. The app list keeps growing, and I'm trying to find a better rhythm between building, improving, and sharing..." },
         { title: 'Juggling 7 Apps and Finding My Way Back', excerpt: "Quick update from me. Right now, I'm juggling 7 apps, getting back into content after a short personal break..." },
@@ -232,6 +240,8 @@ export const previewCopy: Record<SiteLocale, PreviewCopy> = {
       inputPlaceholder: 'du@deine.email',
       submit: 'Abonnieren',
       submitted: 'Du bist dabei',
+      confirmationRequired: 'Bitte bestätige deine E-Mail-Adresse',
+      alreadySubscribed: 'Du bist bereits angemeldet. Es ist nichts weiter nötig.',
       consentSaving: 'Wird gespeichert …',
       consentRecorded: 'Bestätige die Anmeldung in deinem Postfach.',
       consentError: 'Das hat nicht geklappt. Bitte versuche es erneut.',
@@ -271,6 +281,8 @@ export const previewCopy: Record<SiteLocale, PreviewCopy> = {
     },
     blog: {
       eyebrow: '03 — Blog',
+      title: 'Neu aus meiner Reise.',
+      viewAll: 'Alle Beiträge ansehen',
       posts: [
         { title: 'Einen besseren Rhythmus finden, obwohl die App-Liste weiter wächst', excerpt: 'Ein kurzes Update von mir. Die App-Liste wächst weiter und ich versuche, einen besseren Rhythmus zwischen Bauen, Verbessern und Teilen zu finden ...' },
         { title: '7 Apps jonglieren und wieder zurückfinden', excerpt: 'Ein kurzes Update von mir. Gerade jongliere ich mit 7 Apps und finde nach einer kurzen persönlichen Pause wieder zurück zum Content ...' },

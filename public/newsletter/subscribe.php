@@ -56,9 +56,14 @@ try {
 
     $existing = newsletter_find_subscriber($pdo, $emailHash, null);
     $subscriberId = is_array($existing) ? ($existing['mailerlite_subscriber_id'] ?? null) : null;
-    $hasExistingConfirmedConsent = is_array($existing)
-        && ($existing['consent_status'] ?? null) === 'confirmed'
-        && ($existing['confirmed_at'] ?? null) !== null;
+    $existingConsentStatus = is_array($existing) ? ($existing['consent_status'] ?? null) : null;
+    $hasExistingConfirmedConsent = $existingConsentStatus === 'confirmed';
+    $hasExistingActiveSubscription = is_array($existing)
+        && $existingConsentStatus !== 'withdrawn'
+        && (
+            $hasExistingConfirmedConsent
+            || strcasecmp((string) ($existing['provider_status'] ?? ''), 'active') === 0
+        );
 
     $inserted = newsletter_insert_event($pdo, [
         'email_hmac' => $emailHash,
@@ -83,7 +88,8 @@ try {
             'ok' => true,
             'duplicate' => true,
             'event' => 'signup_requested',
-            'requires_confirmation' => true,
+            'already_subscribed' => $hasExistingActiveSubscription,
+            'requires_confirmation' => !$hasExistingActiveSubscription,
         ]);
     }
 
@@ -91,19 +97,19 @@ try {
         'email_hmac' => $emailHash,
         'subscriber_id' => $subscriberId,
         'provider_status' => null,
-        'consent_status' => $hasExistingConfirmedConsent ? 'confirmed' : 'pending',
+        'consent_status' => $hasExistingActiveSubscription ? 'confirmed' : 'pending',
         'form_id' => (string) $config['newsletter_form_id'],
         'consent_version' => (int) $config['newsletter_consent_version'],
         'privacy_version' => (int) $config['newsletter_privacy_version'],
         'requested_at' => $receivedAt,
-        'confirmed_at' => $hasExistingConfirmedConsent ? $existing['confirmed_at'] : null,
+        'confirmed_at' => is_array($existing) ? ($existing['confirmed_at'] ?? null) : null,
         'withdrawn_at' => null,
         'provider_event' => 'website.subscribe',
         'last_event_at' => $receivedAt,
         'created_at' => $receivedAt,
         'updated_at' => $receivedAt,
-        'clear_confirmed' => $hasExistingConfirmedConsent ? 0 : 1,
-        'clear_withdrawn' => 1,
+        'clear_confirmed' => 0,
+        'clear_withdrawn' => 0,
     ]);
 
     $pdo->commit();
@@ -112,7 +118,8 @@ try {
         'ok' => true,
         'stored' => true,
         'event' => 'signup_requested',
-        'requires_confirmation' => true,
+        'already_subscribed' => $hasExistingActiveSubscription,
+        'requires_confirmation' => !$hasExistingActiveSubscription,
     ]);
 } catch (Throwable $exception) {
     if (isset($pdo) && $pdo instanceof PDO && $pdo->inTransaction()) {
