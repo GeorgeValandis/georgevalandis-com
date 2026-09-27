@@ -338,9 +338,8 @@ export default function AfterWorkSignupPage() {
           align-items: center;
           gap: 12px;
           min-height: 54px;
-          border: 1px solid rgb(28 157 117 / 0.45);
           border-radius: 8px;
-          background: rgb(28 157 117 / 0.12);
+          background: rgb(28 157 117 / 0.14);
           padding: 12px 16px;
           animation: aw-success-in 220ms ease-out both;
         }
