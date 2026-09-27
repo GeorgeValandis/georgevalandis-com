@@ -56,15 +56,12 @@ try {
 
     $existing = newsletter_find_subscriber($pdo, $emailHash, null);
     $subscriberId = is_array($existing) ? ($existing['mailerlite_subscriber_id'] ?? null) : null;
-    $existingConsentStatus = is_array($existing) ? ($existing['consent_status'] ?? null) : null;
-    $hasExistingConfirmedConsent = $existingConsentStatus === 'confirmed';
-    $hasExistingActiveSubscription = is_array($existing)
-        && $existingConsentStatus !== 'withdrawn'
-        && (
-            $hasExistingConfirmedConsent
-            || strcasecmp((string) ($existing['provider_status'] ?? ''), 'active') === 0
-        );
+    // Only a recorded double opt-in counts; a provider status of "active" alone is no evidence.
+    $hasExistingConfirmedConsent = is_array($existing)
+        && ($existing['consent_status'] ?? null) === 'confirmed'
+        && ($existing['confirmed_at'] ?? null) !== null;
 
+    // The public response must not depend on the address's subscription status (no enumeration).
     $inserted = newsletter_insert_event($pdo, [
         'email_hmac' => $emailHash,
         'subscriber_id' => $subscriberId,
@@ -88,8 +85,6 @@ try {
             'ok' => true,
             'duplicate' => true,
             'event' => 'signup_requested',
-            'already_subscribed' => $hasExistingActiveSubscription,
-            'requires_confirmation' => !$hasExistingActiveSubscription,
         ]);
     }
 
@@ -97,7 +92,7 @@ try {
         'email_hmac' => $emailHash,
         'subscriber_id' => $subscriberId,
         'provider_status' => null,
-        'consent_status' => $hasExistingActiveSubscription ? 'confirmed' : 'pending',
+        'consent_status' => $hasExistingConfirmedConsent ? 'confirmed' : 'pending',
         'form_id' => (string) $config['newsletter_form_id'],
         'consent_version' => (int) $config['newsletter_consent_version'],
         'privacy_version' => (int) $config['newsletter_privacy_version'],
@@ -118,8 +113,6 @@ try {
         'ok' => true,
         'stored' => true,
         'event' => 'signup_requested',
-        'already_subscribed' => $hasExistingActiveSubscription,
-        'requires_confirmation' => !$hasExistingActiveSubscription,
     ]);
 } catch (Throwable $exception) {
     if (isset($pdo) && $pdo instanceof PDO && $pdo->inTransaction()) {

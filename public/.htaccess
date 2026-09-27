@@ -4,6 +4,9 @@ RedirectMatch 410 ^/wp-content/(?!uploads/).*$
 RedirectMatch 410 ^/wp-[^/]+\.php$
 RedirectMatch 410 ^/(xmlrpc|wp-cron)\.php$
 RedirectMatch 410 ^/(.*/)?feed/?$
+RedirectMatch 410 ^/page/2/?$
+RedirectMatch 410 ^/my-setup/?$
+RedirectMatch 410 ^/time-for-a-fresh-look-moodfloras-upcoming-redesign-[^/]+/?$
 
 Redirect 301 /privacy-policy-for-lookaway/ /apps/glanceaway/privacy/
 Redirect 301 /privacy-policy-for-glanceaway/ /apps/glanceaway/privacy/
@@ -22,7 +25,7 @@ Redirect 301 /privacy-statement-perfect-day-app/ /apps/perfect-day/privacy/
 Redirect 301 /terms-and-conditions-perfect-day-app/ /apps/perfect-day/terms-and-conditions/
 Redirect 301 /privacy-statement-savetap-app/ /apps/savetap/privacy/
 Redirect 301 /terms-and-conditions-savetap-app/ /apps/savetap/terms-and-conditions/
-RedirectMatch 301 ^/sample-page/?$ /
+RedirectMatch 410 ^/sample-page/?$
 RedirectMatch 301 ^/perfectday/?$ /apps/perfect-day/
 RedirectMatch 301 ^/perfect-day/?$ /apps/perfect-day/
 RedirectMatch 301 ^/flowa/?$ /apps/flowa/
@@ -51,13 +54,13 @@ RedirectMatch 301 ^/medi-memo/?$ /apps/medimemo/
 RedirectMatch 301 ^/lifechron/?$ /apps/lifechron/
 RedirectMatch 301 ^/nightlock/?$ /apps/nightlock/
 RedirectMatch 301 ^/my-apps/?$ /apps/
-RedirectMatch 301 ^/author/georgevalandis/?$ /
+RedirectMatch 301 ^/author/georgevalandis/?$ /blog/
 RedirectMatch 301 ^/legal-notice-impressum/?$ /de/imprint/
 RedirectMatch 301 ^/privacy-datenschutzerklaerung/?$ /de/privacy-statement/
-RedirectMatch 301 ^/progress-bug-fixes-and-twitter-networking/?$ /blog/
-RedirectMatch 301 ^/a-new-chapter-building-my-next-app/?$ /blog/
+RedirectMatch 410 ^/progress-bug-fixes-and-twitter-networking/?$
+RedirectMatch 410 ^/a-new-chapter-building-my-next-app/?$
 RedirectMatch 301 ^/track-your-cycle-flowa-expanding-optimizing-and-reaching-new-users/?$ /apps/flowa/
-RedirectMatch 301 ^/moodflora-redesign-completed-lessons-learned-along-the-way/?$ /apps/moodflora/
+RedirectMatch 410 ^/moodflora-redesign-completed-lessons-learned-along-the-way/?$
 RedirectMatch 301 ^/savetap-turn-daily-choices-into-real-savings/?$ /apps/savetap/
 RedirectMatch 301 ^/flowa-tracking-life-together/?$ /apps/flowa/
 RedirectMatch 301 ^/focus-on-marketing/?$ /blog/focus-on-marketing/

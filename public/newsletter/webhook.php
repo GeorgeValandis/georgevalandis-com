@@ -37,6 +37,17 @@ $allowedEvents = [
     'subscriber.updated',
     'subscriber.unsubscribed',
     'subscriber.active',
+    'subscriber.deleted',
+    'subscriber.bounced',
+    'subscriber.spam_reported',
+];
+// Events that end the subscription. They are evaluated by event type first, because
+// MailerLite payloads for these events can still carry status "active".
+$removalEvents = [
+    'subscriber.unsubscribed' => 'withdrawn',
+    'subscriber.deleted' => 'deleted',
+    'subscriber.bounced' => 'bounced',
+    'subscriber.spam_reported' => 'spam_reported',
 ];
 
 if ($providerEvent === null || !in_array($providerEvent, $allowedEvents, true)) {
@@ -59,14 +70,14 @@ if ($subscriber['email'] !== null) {
 
 $eventFingerprint = hash('sha256', $rawBody);
 $receivedAt = newsletter_now();
-$occurredAt = $providerEvent === 'subscriber.unsubscribed'
+$isRemovalEvent = isset($removalEvents[$providerEvent]);
+// Time of the provider-side change, used to order events (all values are UTC 'Y-m-d H:i:s.u').
+$occurredAt = $isRemovalEvent
     ? ($subscriber['unsubscribed_at']
         ?? $subscriber['updated_at']
-        ?? $subscriber['subscribed_at']
-        ?? $subscriber['created_at']
         ?? $receivedAt)
-    : ($subscriber['opted_in_at']
-        ?? $subscriber['updated_at']
+    : ($subscriber['updated_at']
+        ?? $subscriber['opted_in_at']
         ?? $subscriber['subscribed_at']
         ?? $subscriber['created_at']
         ?? $receivedAt);
@@ -82,10 +93,16 @@ try {
     $existing = newsletter_find_subscriber($pdo, $emailHash, $subscriber['id']);
     $existingConsentStatus = is_array($existing) ? ($existing['consent_status'] ?? null) : null;
     $existingConfirmedAt = is_array($existing) ? ($existing['confirmed_at'] ?? null) : null;
-    $hasExistingConfirmedConsent = $existingConsentStatus === 'confirmed';
-    $isProviderActive = $providerEvent === 'subscriber.active'
-        || strcasecmp((string) ($subscriber['status'] ?? ''), 'active') === 0;
+    $existingWithdrawnAt = is_array($existing) ? ($existing['withdrawn_at'] ?? null) : null;
+    $existingLastEventAt = is_array($existing) ? ($existing['last_event_at'] ?? null) : null;
+    $hasExistingConfirmedConsent = $existingConsentStatus === 'confirmed' && $existingConfirmedAt !== null;
     $isProviderUnconfirmed = strcasecmp((string) ($subscriber['status'] ?? ''), 'unconfirmed') === 0;
+    // An opt-in only counts as confirmation if it happened after the last removal;
+    // otherwise it is the old opt-in of a contact that has since unsubscribed.
+    $hasFreshOptIn = $optedInAt !== null
+        && ($existingWithdrawnAt === null || strcmp((string) $optedInAt, (string) $existingWithdrawnAt) > 0);
+    // Delayed or retried deliveries must not roll back a newer local state.
+    $isStale = $existingLastEventAt !== null && strcmp($occurredAt, (string) $existingLastEventAt) < 0;
 
     $consentEvent = 'provider_sync';
     $consentStatus = null;
@@ -93,27 +110,22 @@ try {
     $confirmedAt = null;
     $withdrawnAt = null;
 
-    if ($providerEvent === 'subscriber.unsubscribed') {
-        $consentEvent = 'withdrawn';
-        $consentStatus = 'withdrawn';
+    if ($isRemovalEvent) {
+        $consentStatus = $removalEvents[$providerEvent];
+        $consentEvent = $consentStatus;
         $withdrawnAt = $occurredAt;
-    } elseif ($isProviderActive || $subscriber['opted_in_at'] !== null) {
-        // MailerLite can signal an active subscriber without opted_in_at. The
-        // active status itself is confirmation evidence for the local record.
-        $consentEvent = $hasExistingConfirmedConsent ? 'provider_sync' : 'doi_confirmed';
+    } elseif ($hasFreshOptIn) {
+        // Only MailerLite's recorded opt-in time is evidence of a double opt-in.
+        // "active" without opted_in_at (imports, manual adds) is not.
+        $isNewConfirmation = !$hasExistingConfirmedConsent || $existingConfirmedAt !== $optedInAt;
+        $consentEvent = $isNewConfirmation ? 'doi_confirmed' : 'provider_sync';
         $consentStatus = 'confirmed';
-        $confirmedAt = $existingConfirmedAt ?? $subscriber['opted_in_at'] ?? $occurredAt;
+        $confirmedAt = $optedInAt;
     } elseif (
         $isProviderUnconfirmed
-        || ($providerEvent === 'subscriber.created' && $subscriber['opted_in_at'] === null)
+        || ($providerEvent === 'subscriber.created' && $optedInAt === null)
     ) {
-        if ($hasExistingConfirmedConsent) {
-            // A provider sync may omit opted_in_at for an already-active subscriber.
-            // Never turn locally verified DOI evidence back into pending in that case.
-            $consentEvent = 'provider_sync';
-            $consentStatus = 'confirmed';
-            $confirmedAt = $existingConfirmedAt;
-        } else {
+        if (!$hasExistingConfirmedConsent) {
             $consentEvent = 'signup_requested';
             $consentStatus = 'pending';
             $requestedAt = $subscriber['subscribed_at'] ?? $occurredAt;
@@ -122,16 +134,18 @@ try {
 
     $localEmailHash = $emailHash ?? (is_array($existing) ? ($existing['email_hmac'] ?? null) : null);
     $subscriberId = $subscriber['id'] ?? (is_array($existing) ? ($existing['mailerlite_subscriber_id'] ?? null) : null);
+    // Form and consent/privacy versions describe the website click recorded by subscribe.php.
+    // Provider events are not tied to that click, so they do not carry or overwrite them.
     $event = [
         'email_hmac' => $localEmailHash,
         'subscriber_id' => $subscriberId,
         'provider_event' => $providerEvent,
-        'consent_event' => $consentEvent,
+        'consent_event' => $isStale ? 'stale_ignored' : $consentEvent,
         'provider_status' => $subscriber['status'],
         'source' => $subscriber['source'],
-        'form_id' => (string) $config['newsletter_form_id'],
-        'consent_version' => (int) $config['newsletter_consent_version'],
-        'privacy_version' => (int) $config['newsletter_privacy_version'],
+        'form_id' => null,
+        'consent_version' => null,
+        'privacy_version' => null,
         'occurred_at' => $occurredAt,
         'received_at' => $receivedAt,
         'opted_in_at' => $optedInAt,
@@ -146,14 +160,19 @@ try {
         newsletter_json_response(['ok' => true, 'duplicate' => true]);
     }
 
+    if ($isStale) {
+        $pdo->commit();
+        newsletter_json_response(['ok' => true, 'stale' => true, 'stored' => true]);
+    }
+
     newsletter_upsert_subscriber($pdo, [
         'email_hmac' => $localEmailHash,
         'subscriber_id' => $subscriberId,
         'provider_status' => $subscriber['status'],
         'consent_status' => $consentStatus,
-        'form_id' => (string) $config['newsletter_form_id'],
-        'consent_version' => (int) $config['newsletter_consent_version'],
-        'privacy_version' => (int) $config['newsletter_privacy_version'],
+        'form_id' => null,
+        'consent_version' => null,
+        'privacy_version' => null,
         'requested_at' => $requestedAt,
         'confirmed_at' => $confirmedAt,
         'withdrawn_at' => $withdrawnAt,
@@ -161,7 +180,8 @@ try {
         'last_event_at' => $occurredAt,
         'created_at' => $receivedAt,
         'updated_at' => $receivedAt,
-        'clear_confirmed' => 0,
+        // A removal ends the confirmation; a fresh opt-in ends the removal.
+        'clear_confirmed' => $isRemovalEvent ? 1 : 0,
         'clear_withdrawn' => $consentEvent === 'doi_confirmed' ? 1 : 0,
     ]);
 

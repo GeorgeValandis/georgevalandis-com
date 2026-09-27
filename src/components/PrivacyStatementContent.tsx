@@ -382,7 +382,10 @@ export default function PrivacyStatementContent({
                   Wenn du dich für den Newsletter „After Work“ anmeldest, verarbeiten wir deine
                   E-Mail-Adresse sowie die mit Anmeldung und Bestätigung verbundenen Nachweisdaten,
                   um dir redaktionelle Nachrichten aus George Valandis’ Indie-App-Developer-Alltag
-                  zu senden. Die Anmeldung erfolgt über ein eingebettetes Formular von MailerLite.
+                  zu senden. Die Anmeldung erfolgt über ein Formular auf dieser Website. Erst beim
+                  Absenden wird deine E-Mail-Adresse direkt an MailerLite übermittelt; vorher lädt die
+                  Website keine Skripte von MailerLite und legt keine Einträge von MailerLite in deinem
+                  Browser ab.
                 </p>
                 <p>
                   Die Verarbeitung erfolgt auf Grundlage deiner Einwilligung nach Art. 6 Abs. 1 lit. a
@@ -451,8 +454,10 @@ export default function PrivacyStatementContent({
                 <p>
                   If you subscribe to the “After Work” newsletter, we process your email address and
                   the evidence connected with the sign-up and confirmation in order to send editorial
-                  notes from George Valandis’ indie app development life. The subscription uses an
-                  embedded MailerLite form.
+                  notes from George Valandis’ indie app development life. You subscribe through a form
+                  on this website. Your email address is sent directly to MailerLite only when you
+                  submit it; before that, the website loads no MailerLite scripts and stores no
+                  MailerLite entries in your browser.
                 </p>
                 <p>
                   Processing is based on your consent under Article 6(1)(a) GDPR. Consent is given by

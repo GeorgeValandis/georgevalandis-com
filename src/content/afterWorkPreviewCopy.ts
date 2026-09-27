@@ -40,6 +40,7 @@ export type PreviewCopy = {
     previewNote: string;
     helper: string;
     issue: string;
+    galleryTitle: string;
     imageAlt: string;
     footer: string;
     galleryLabel: string;
@@ -102,7 +103,7 @@ export const previewCopy: Record<SiteLocale, PreviewCopy> = {
       links: [
         { label: 'Home', href: '#preview-home' },
         { label: 'Apps', href: '#preview-apps' },
-        { label: 'After Hours', href: '#preview-after-work' },
+        { label: 'Newsletter', href: '#preview-after-work' },
         { label: 'Bio', href: '#preview-about' },
         { label: 'Blog', href: '#preview-blog' },
         { label: 'Contact', href: '#preview-contact' },
@@ -116,17 +117,17 @@ export const previewCopy: Record<SiteLocale, PreviewCopy> = {
       suffix: 'from 5 to 9.',
       description: "Indie iOS apps. Real problems. A calmer kind of work life. I'm George Valandis, an independent developer based in Germany, building useful tools for everyday life.",
       primaryCta: 'Explore My Apps',
-      secondaryCta: 'Get in Touch',
+      secondaryCta: 'Join my Newsletter',
       imageAlt: 'A warm late-night developer desk with a laptop and notebook',
     },
     apps: {
       eyebrow: '01 — Apps',
-      title: 'My iOS apps',
+      title: 'My Apps',
       viewAll: 'View all apps',
       ariaLabel: 'All apps',
     },
     afterWork: {
-      eyebrow: 'George Valandis — After Work',
+      eyebrow: 'George Valandis — Afterwork Newsletter',
       title: 'Notes from building apps after everyone else goes offline.',
       description: "A short weekly note about the apps I'm building, the decisions behind them, and what I learn along the way.",
       expectations: [
@@ -137,20 +138,21 @@ export const previewCopy: Record<SiteLocale, PreviewCopy> = {
       inputLabel: 'Email address',
       inputPlaceholder: 'you@your.email',
       submit: 'Subscribe',
-      submitted: "You're on the list",
+      submitted: 'Thanks for signing up',
       confirmationRequired: 'Please confirm your email',
       alreadySubscribed: 'You are already subscribed. No further action is needed.',
       consentSaving: 'Saving…',
-      consentRecorded: 'Check your inbox to confirm.',
+      consentRecorded: "If a confirmation is needed, you'll receive an email.",
       consentError: 'Something went wrong. Please try again.',
-      legalNotice: 'By subscribing, you agree to receive the After Work newsletter. You can unsubscribe at any time.',
+      legalNotice: 'By subscribing, you agree to receive the Afterwork Newsletter. You can unsubscribe at any time.',
       privacyLink: 'Privacy details',
       previewNote: 'After subscribing, check your inbox to confirm.',
       helper: 'One calm note per week. No noise.',
       issue: 'Issue 001',
+      galleryTitle: 'Afterwork Newsletter',
       imageAlt: 'A late-night desk with a laptop, notebook, coffee and city lights',
       footer: 'Apps / Decisions / A calmer kind of progress',
-      galleryLabel: 'After Work newsletter preview',
+      galleryLabel: 'Afterwork Newsletter preview',
       gallery: [
         {
           image: '/after-work-preview/newsletter-social-desk-01.webp',
@@ -213,7 +215,7 @@ export const previewCopy: Record<SiteLocale, PreviewCopy> = {
       links: [
         { label: 'Start', href: '#preview-home' },
         { label: 'Apps', href: '#preview-apps' },
-        { label: 'After Work', href: '#preview-after-work' },
+        { label: 'Newsletter', href: '#preview-after-work' },
         { label: 'Bio', href: '#preview-about' },
         { label: 'Blog', href: '#preview-blog' },
         { label: 'Kontakt', href: '#preview-contact' },
@@ -227,17 +229,17 @@ export const previewCopy: Record<SiteLocale, PreviewCopy> = {
       suffix: 'von 17 bis 21 Uhr.',
       description: 'Indie-iOS-Apps. Echte Probleme. Eine ruhigere Art zu arbeiten. Ich bin George Valandis, unabhängiger Entwickler aus Deutschland, und baue nützliche Werkzeuge für den Alltag.',
       primaryCta: 'Meine Apps ansehen',
-      secondaryCta: 'Kontakt aufnehmen',
+      secondaryCta: 'Newsletter abonnieren',
       imageAlt: 'Ein warmer Entwicklerarbeitsplatz am späten Abend mit Laptop und Notizbuch',
     },
     apps: {
       eyebrow: '01 — Apps',
-      title: 'Meine iOS-Apps',
+      title: 'Meine Apps',
       viewAll: 'Alle Apps ansehen',
       ariaLabel: 'Alle Apps',
     },
     afterWork: {
-      eyebrow: 'George Valandis — After Work',
+      eyebrow: 'George Valandis — Afterwork-Newsletter',
       title: 'Notizen vom App-Bauen, nachdem alle anderen offline gegangen sind.',
       description: 'Eine kurze wöchentliche Notiz über die Apps, die ich baue, die Entscheidungen dahinter und das, was ich dabei lerne.',
       expectations: [
@@ -248,20 +250,21 @@ export const previewCopy: Record<SiteLocale, PreviewCopy> = {
       inputLabel: 'E-Mail-Adresse',
       inputPlaceholder: 'du@deine.email',
       submit: 'Abonnieren',
-      submitted: 'Du bist dabei',
+      submitted: 'Danke für deine Anmeldung',
       confirmationRequired: 'Bitte bestätige deine E-Mail-Adresse',
       alreadySubscribed: 'Du bist bereits angemeldet. Es ist nichts weiter nötig.',
       consentSaving: 'Wird gespeichert …',
-      consentRecorded: 'Bestätige die Anmeldung in deinem Postfach.',
+      consentRecorded: 'Wenn eine Bestätigung erforderlich ist, erhältst du eine E-Mail.',
       consentError: 'Das hat nicht geklappt. Bitte versuche es erneut.',
-      legalNotice: 'Mit deiner Anmeldung stimmst du dem After-Work-Newsletter zu. Du kannst dich jederzeit abmelden.',
+      legalNotice: 'Mit deiner Anmeldung stimmst du dem Afterwork-Newsletter zu. Du kannst dich jederzeit abmelden.',
       privacyLink: 'Datenschutz',
       previewNote: 'Nach der Anmeldung erhältst du eine E-Mail zur Bestätigung.',
       helper: 'Eine ruhige Notiz pro Woche. Kein Rauschen.',
       issue: 'Ausgabe 001',
+      galleryTitle: 'Afterwork-Newsletter',
       imageAlt: 'Ein nächtlicher Schreibtisch mit Laptop, Notizbuch, Kaffee und Stadtlichtern',
       footer: 'Apps / Entscheidungen / Ein ruhigerer Fortschritt',
-      galleryLabel: 'After-Work-Newsletter-Vorschau',
+      galleryLabel: 'Afterwork-Newsletter-Vorschau',
       gallery: [
         {
           image: '/after-work-preview/newsletter-social-desk-01.webp',

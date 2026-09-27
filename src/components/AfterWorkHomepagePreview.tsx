@@ -10,14 +10,13 @@ import { OPEN_COOKIE_SETTINGS_EVENT } from '@/components/CookieConsent';
 import { ArrowUp, ArrowUpRight, Check, Menu, Send, X } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import Script from 'next/script';
 import { useEffect, useRef, useState } from 'react';
 import LanguageSwitch from './LanguageSwitch';
 
 const marqueeApps = apps.filter((app) => app.showInAppsSection !== false);
 type ContactSubmissionState = 'idle' | 'sending' | 'success' | 'error';
 type NewsletterConsentState = 'idle' | 'recording' | 'recorded' | 'error';
-type NewsletterSubmissionState = 'idle' | 'submitting' | 'success_pending' | 'success_already_subscribed';
+type NewsletterSubmissionState = 'idle' | 'submitting' | 'success_pending';
 
 type MailerLiteSubmissionResponse = {
   success?: boolean;
@@ -25,8 +24,6 @@ type MailerLiteSubmissionResponse = {
 
 type NewsletterSubscribeResponse = {
   ok?: boolean;
-  already_subscribed?: boolean;
-  requires_confirmation?: boolean;
 };
 
 function getMarqueeLogoPath(logo: string) {
@@ -187,121 +184,74 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
   }, []);
 
   useEffect(() => {
-    const formRoot = document.querySelector<HTMLElement>('.preview-newsletter-form');
-    if (!formRoot) return;
+    // Own form only: no MailerLite script is loaded. The form posts the same fields as
+    // MailerLite's embed to the form endpoint, so the form's double opt-in and group still apply.
+    const form = document.querySelector<HTMLFormElement>('.preview-newsletter-form form.preview-newsletter-fallback');
+    if (!form) return;
 
-    let currentForm: HTMLFormElement | null = null;
-    let submitHandler: ((event: Event) => void) | null = null;
     let recordedEmail: string | null = null;
     let isActive = true;
+    let submissionPending = false;
 
-    const applyNewsletterInputCopy = () => {
-      const embeddedForm = formRoot.querySelector<HTMLFormElement>('form.ml-block-form');
-      const input = (embeddedForm ?? formRoot).querySelector<HTMLInputElement>('input[type="email"], input.form-control');
+    const submitHandler = (event: Event) => {
+      const emailInput = form.querySelector<HTMLInputElement>('input[type="email"]');
+      const email = emailInput?.value.trim() ?? '';
 
-      if (input) {
-        if (input.placeholder !== copy.afterWork.inputPlaceholder) {
-          input.placeholder = copy.afterWork.inputPlaceholder;
-        }
-        input.setAttribute('aria-label', copy.afterWork.inputLabel);
-      }
+      if (!email || !emailInput?.checkValidity()) return;
 
-      const checkboxRow = formRoot.querySelector<HTMLElement>('.ml-form-checkboxRow');
-      if (checkboxRow) {
-        checkboxRow.classList.remove('ml-validate-required');
-        checkboxRow.hidden = true;
-      }
+      event.preventDefault();
+      if (submissionPending || recordedEmail === email) return;
 
-      formRoot.classList.toggle('has-mailerlite-form', Boolean(embeddedForm));
+      submissionPending = true;
+      setNewsletterConsentState('recording');
+      setNewsletterSubmissionState('submitting');
 
-      const form = embeddedForm ?? formRoot.querySelector<HTMLFormElement>('form.preview-newsletter-fallback');
-      if (!form || form === currentForm) return;
+      const submissionId = typeof crypto !== 'undefined' && 'randomUUID' in crypto
+        ? crypto.randomUUID()
+        : `${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`;
 
-      if (currentForm && submitHandler) {
-        currentForm.removeEventListener('submit', submitHandler, true);
-      }
-
-      currentForm = form;
-      submitHandler = (event: Event) => {
-        const emailInput = form.querySelector<HTMLInputElement>('input[type="email"], input.form-control');
-        const email = emailInput?.value.trim() ?? '';
-
-        if (!email || !emailInput?.checkValidity()) return;
-
-        if (form.dataset.newsletterConsentPending === 'true') {
-          event.preventDefault();
-          event.stopImmediatePropagation();
-          return;
-        }
-
-        if (recordedEmail === email) return;
-
-        event.preventDefault();
-        event.stopImmediatePropagation();
-        form.dataset.newsletterConsentPending = 'true';
-        setNewsletterConsentState('recording');
-        setNewsletterSubmissionState('submitting');
-
-        const submissionId = typeof crypto !== 'undefined' && 'randomUUID' in crypto
-          ? crypto.randomUUID()
-          : `${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`;
-
-        void fetch('/newsletter/subscribe.php', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          credentials: 'same-origin',
-          body: JSON.stringify({
-            email,
-            consent: true,
-            method: 'subscribe_button',
-            submissionId,
-            locale,
-          }),
+      void fetch('/newsletter/subscribe.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'same-origin',
+        body: JSON.stringify({
+          email,
+          consent: true,
+          method: 'subscribe_button',
+          submissionId,
+          locale,
+        }),
+      })
+        .then(async (response) => {
+          const result = (await response.json().catch(() => null)) as NewsletterSubscribeResponse | null;
+          if (!response.ok || !result || result.ok !== true) throw new Error('newsletter_consent_failed');
         })
-          .then(async (response) => {
-            const result = (await response.json().catch(() => null)) as NewsletterSubscribeResponse | null;
-            if (!response.ok || !result || result.ok !== true) throw new Error('newsletter_consent_failed');
-            return result;
-          })
-          .then(async (result) => {
-            const alreadySubscribed = result.already_subscribed === true || result.requires_confirmation === false;
+        .then(async () => {
+          // Always hand over to MailerLite: a local status can be stale (deleted or
+          // unsubscribed contacts), and skipping would reveal whether an address is subscribed.
+          await submitMailerLiteForm(form);
 
-            if (!alreadySubscribed) {
-              await submitMailerLiteForm(form);
-            }
-
-            delete form.dataset.newsletterConsentPending;
-            if (!isActive) return;
-            recordedEmail = email;
-            setNewsletterConsentState('recorded');
-            setNewsletterSubmissionState(
-              alreadySubscribed ? 'success_already_subscribed' : 'success_pending',
-            );
-          })
-          .catch(() => {
-            delete form.dataset.newsletterConsentPending;
-            if (!isActive) return;
-            setNewsletterConsentState('error');
-            setNewsletterSubmissionState('idle');
-          });
-      };
-
-      form.addEventListener('submit', submitHandler, true);
+          submissionPending = false;
+          if (!isActive) return;
+          recordedEmail = email;
+          setNewsletterConsentState('recorded');
+          setNewsletterSubmissionState('success_pending');
+        })
+        .catch(() => {
+          submissionPending = false;
+          if (!isActive) return;
+          setNewsletterConsentState('error');
+          setNewsletterSubmissionState('idle');
+        });
     };
 
-    applyNewsletterInputCopy();
-    const observer = new MutationObserver(applyNewsletterInputCopy);
-    observer.observe(formRoot, { attributes: true, childList: true, subtree: true, attributeFilter: ['placeholder'] });
+    form.addEventListener('submit', submitHandler);
 
     return () => {
       isActive = false;
-      observer.disconnect();
-      formRoot.classList.remove('has-mailerlite-form');
-      if (currentForm && submitHandler) {
-        currentForm.removeEventListener('submit', submitHandler, true);
-      }
+      form.removeEventListener('submit', submitHandler);
     };
-  }, [copy.afterWork.inputLabel, copy.afterWork.inputPlaceholder, locale]);
+  }, [locale]);
 
   const getContactErrorMessage = (errorCode?: string) => {
     switch (errorCode) {
@@ -348,19 +298,10 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
     }
   };
 
-  const newsletterHasSubmitted = newsletterSubmissionState === 'success_pending'
-    || newsletterSubmissionState === 'success_already_subscribed';
-  const newsletterIsAlreadySubscribed = newsletterSubmissionState === 'success_already_subscribed';
+  const newsletterHasSubmitted = newsletterSubmissionState === 'success_pending';
 
   return (
     <main className="min-h-screen overflow-clip bg-[#050a13] text-[#f7f8f9]">
-      <Script id="mailerlite-universal" strategy="lazyOnload">
-        {`(function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
-    .push(arguments);},l=d.createElement(e),l.async=1,l.src=u,
-    n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})
-    (window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');
-    ml('account', '2630673');`}
-      </Script>
       <style>{`
         @keyframes preview-app-marquee-right {
           from { transform: translate3d(-50%, 0, 0); }
@@ -423,12 +364,6 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
           animation-play-state: paused;
         }
 
-        .preview-newsletter-form .ml-embedded,
-        .preview-newsletter-form .ml-embedded [id^="mlb2-"] {
-          width: 100% !important;
-          max-width: none !important;
-        }
-
         .preview-newsletter-success {
           display: flex;
           align-items: center;
@@ -458,10 +393,6 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
         @keyframes preview-newsletter-success-in {
           from { opacity: 0; transform: translateY(4px); }
           to { opacity: 1; transform: translateY(0); }
-        }
-
-        .preview-newsletter-form.has-mailerlite-form .preview-newsletter-fallback {
-          display: none !important;
         }
 
         .preview-newsletter-fallback {
@@ -527,27 +458,6 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
           --preview-newsletter-control-radius: 8px;
         }
 
-        .preview-newsletter-form .ml-form-embedWrapper,
-        .preview-newsletter-form .ml-form-embedBody,
-        .preview-newsletter-form .ml-form-embedContent,
-        .preview-newsletter-form .ml-form-align-center,
-        .preview-newsletter-form .ml-form-embedBody form {
-          width: 100% !important;
-        }
-
-        .preview-newsletter-form .ml-form-align-center {
-          text-align: left !important;
-        }
-
-        .preview-newsletter-form .ml-form-embedWrapper,
-        .preview-newsletter-form .ml-form-embedBody,
-        .preview-newsletter-form .ml-form-embedContent {
-          background: transparent !important;
-          border: 0 !important;
-          box-shadow: none !important;
-          padding: 0 !important;
-        }
-
         #preview-after-work,
         #preview-about,
         #preview-blog,
@@ -563,146 +473,6 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
           }
         }
 
-        .preview-newsletter-form .ml-form-embedContent h4,
-        .preview-newsletter-form .ml-form-embedContent > p {
-          display: none !important;
-        }
-
-        .preview-newsletter-form .ml-form-embedBody form {
-          display: grid !important;
-          grid-template-columns: minmax(0, 1fr) 160px !important;
-          column-gap: 10px !important;
-          row-gap: 10px !important;
-          align-items: flex-start !important;
-        }
-
-        .preview-newsletter-form .ml-form-formContent {
-          grid-column: 1 !important;
-          grid-row: 1 !important;
-          flex: none !important;
-          min-width: 0 !important;
-          order: 1 !important;
-          width: auto !important;
-          margin-bottom: 0 !important;
-        }
-
-        .preview-newsletter-form .ml-form-fieldRow,
-        .preview-newsletter-form .ml-field-group {
-          margin: 0 !important;
-        }
-
-        .preview-newsletter-form input.form-control {
-          min-height: 52px !important;
-          border: 1px solid #d9d0c3 !important;
-          border-radius: var(--preview-newsletter-control-radius) !important;
-          background: rgb(255 255 255 / 0.8) !important;
-          color: #171717 !important;
-          font: inherit !important;
-          font-size: 13px !important;
-          padding: 14px 16px !important;
-        }
-
-        .preview-newsletter-form #mlb2-45845332.ml-form-embedContainer .ml-form-embedWrapper .ml-form-embedBody .ml-form-fieldRow input.form-control {
-          border-radius: var(--preview-newsletter-control-radius) !important;
-        }
-
-        .preview-newsletter-form input.form-control::placeholder {
-          color: #8e867e !important;
-        }
-
-        .preview-newsletter-form input.form-control:focus {
-          border-color: #f47734 !important;
-          box-shadow: 0 0 0 2px rgb(244 119 52 / 0.2) !important;
-          outline: none !important;
-        }
-
-        .preview-newsletter-form .ml-form-embedSubmit {
-          grid-column: 2 !important;
-          grid-row: 1 !important;
-          flex: none !important;
-          width: 100% !important;
-          margin: 0 !important;
-          order: 2 !important;
-        }
-
-        .preview-newsletter-form .ml-form-embedSubmit button.primary {
-          display: inline-flex !important;
-          align-items: center !important;
-          justify-content: center !important;
-          gap: 9px !important;
-          min-height: 52px !important;
-          width: 100% !important;
-          border: 0 !important;
-          border-radius: var(--preview-newsletter-control-radius) !important;
-          background: #ff7b39 !important;
-          color: #24170b !important;
-          font: inherit !important;
-          font-size: 13px !important;
-          font-weight: 600 !important;
-          padding: 14px 24px !important;
-        }
-
-        .preview-newsletter-form .ml-form-embedSubmit button.primary::before {
-          content: '';
-          display: inline-block;
-          width: 18px;
-          height: 18px;
-          flex-shrink: 0;
-          background-color: currentColor;
-          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2'%3E%3Crect x='3' y='5' width='18' height='14' rx='2'/%3E%3Cpath d='m3 7 9 6 9-6'/%3E%3C/svg%3E") center / contain no-repeat;
-          -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2'%3E%3Crect x='3' y='5' width='18' height='14' rx='2'/%3E%3Cpath d='m3 7 9 6 9-6'/%3E%3C/svg%3E") center / contain no-repeat;
-        }
-
-        .preview-newsletter-form #mlb2-45845332.ml-form-embedContainer .ml-form-embedWrapper .ml-form-embedBody .ml-form-embedSubmit button.primary {
-          min-height: 52px !important;
-          width: 100% !important;
-          border: 0 !important;
-          border-radius: var(--preview-newsletter-control-radius) !important;
-          background: #ff7b39 !important;
-          color: #24170b !important;
-          font-family: inherit !important;
-          font-size: 13px !important;
-          font-weight: 600 !important;
-          line-height: inherit !important;
-          padding: 14px 24px !important;
-        }
-
-        .preview-newsletter-form .ml-form-embedPermissions {
-          display: none !important;
-          grid-column: 2 !important;
-          grid-row: 2 !important;
-          flex: none !important;
-          width: 100% !important;
-          margin: 0 !important;
-          order: 4 !important;
-          color: #8c8176 !important;
-          font: inherit !important;
-          font-size: 11px !important;
-        }
-
-        .preview-newsletter-form .ml-form-embedPermissionsContent.default.privacy-policy p {
-          font-size: 0 !important;
-          line-height: 1.2 !important;
-        }
-
-        .preview-newsletter-form .ml-form-embedPermissionsContent.default.privacy-policy p a {
-          font-size: 11px !important;
-          line-height: 1.4 !important;
-        }
-
-        .preview-newsletter-form .ml-form-embedPermissionsContent.default.privacy-policy p a + a::before {
-          content: '';
-        }
-
-        .preview-newsletter-form .ml-form-embedPermissionsContent.default.privacy-policy p a + a {
-          margin-left: 10px;
-          text-decoration: none;
-        }
-
-        .preview-newsletter-form .ml-form-checkboxRow {
-          display: none !important;
-        }
-
         @media (max-width: 520px) {
           .preview-newsletter-fallback {
             display: flex;
@@ -713,21 +483,6 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
           .preview-newsletter-fallback input,
           .preview-newsletter-fallback button {
             width: 100%;
-          }
-
-          .preview-newsletter-form .ml-form-embedBody form {
-            display: flex !important;
-            flex-direction: column !important;
-            gap: 10px !important;
-          }
-
-          .preview-newsletter-form .ml-form-formContent,
-          .preview-newsletter-form .ml-form-embedSubmit,
-          .preview-newsletter-form .ml-form-embedPermissions {
-            flex-basis: auto !important;
-            width: 100% !important;
-            grid-column: auto !important;
-            grid-row: auto !important;
           }
         }
 
@@ -831,8 +586,8 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
                 {copy.hero.primaryCta} <ArrowUpRight size={16} />
               </a>
               <a
-                href="#preview-contact"
-                className="inline-flex h-11 items-center justify-center rounded-[8px] border border-white/60 px-5 text-[14px] font-medium text-white transition-colors hover:border-white hover:bg-white/10"
+                href="#preview-after-work"
+                className="inline-flex h-11 items-center justify-center rounded-[8px] border border-white bg-white px-5 text-[14px] font-medium text-[#171717] transition-colors hover:border-[#f3f4f6] hover:bg-[#f3f4f6]"
               >
                 {copy.hero.secondaryCta}
               </a>
@@ -903,10 +658,10 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
                   </span>
                   <span className="min-w-0">
                     <span className="block text-[13px] font-semibold">
-                      {newsletterIsAlreadySubscribed ? copy.afterWork.submitted : copy.afterWork.confirmationRequired}
+                      {copy.afterWork.submitted}
                     </span>
                     <span className="mt-1 block text-[12px] leading-[1.4] text-[#514a43]">
-                      {newsletterIsAlreadySubscribed ? copy.afterWork.alreadySubscribed : copy.afterWork.consentRecorded}
+                      {copy.afterWork.consentRecorded}
                     </span>
                   </span>
                 </div>
@@ -928,11 +683,10 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
                       placeholder={copy.afterWork.inputPlaceholder}
                       aria-label={copy.afterWork.inputLabel}
                     />
-                    <input type="hidden" name="ml-submit" value="" />
-                    <input type="hidden" name="anticsrf" value="" />
+                    <input type="hidden" name="ml-submit" value="1" />
+                    <input type="hidden" name="anticsrf" value="true" />
                     <button type="submit">{copy.afterWork.submit}</button>
                   </form>
-                  <div className="ml-embedded" data-form="Em4Az7" />
                   <noscript>
                     <a href="https://preview.mailerlite.io/forms/2630673/198351846006327170/share">
                       {copy.afterWork.submit}
@@ -974,7 +728,7 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
             aria-label={copy.afterWork.galleryLabel}
           >
             <div className="mb-4 flex items-baseline justify-between border-b border-[#d6c9b8] pb-3">
-              <h3 className="font-serif text-[32px] leading-none tracking-[-0.035em] text-[#171717]">After Work</h3>
+              <h3 className="font-serif text-[32px] leading-none tracking-[-0.035em] text-[#171717]">{copy.afterWork.galleryTitle}</h3>
               <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#514a43]">{copy.afterWork.issue}</span>
             </div>
             <div className="relative -mx-1 overflow-hidden px-1">
@@ -1016,7 +770,7 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
             </p>
             <a
               href="#preview-contact"
-              className="mt-7 inline-flex h-11 items-center gap-2 rounded-[8px] border border-white/65 px-5 text-[13px] font-medium text-white transition-colors hover:border-white hover:bg-white/10"
+              className="mt-7 inline-flex h-11 items-center gap-2 rounded-[8px] border border-white bg-white px-5 text-[13px] font-medium text-[#171717] transition-colors hover:border-[#f3f4f6] hover:bg-[#f3f4f6]"
             >
               {copy.about.cta} <ArrowUpRight size={15} />
             </a>
