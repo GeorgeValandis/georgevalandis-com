@@ -419,7 +419,7 @@ export default function AfterWorkSignupPage() {
 
         <div className="relative mx-auto flex max-w-[1600px] items-center px-6 pb-20 sm:px-10 lg:min-h-[min(100svh,860px)] lg:px-[54px] lg:py-28">
           <div className="relative z-10 -mt-20 max-w-[560px] lg:mt-0">
-            <div className="mb-6 inline-flex h-[30px] items-center gap-3 whitespace-nowrap rounded-full border border-[#ff8a3d]/[0.28] bg-[#111c28]/[0.55] px-3.5 text-[10px] font-medium uppercase tracking-[0.18em] text-slate-300 backdrop-blur-md">
+            <div className="mb-6 inline-flex h-[30px] items-center gap-3 whitespace-nowrap rounded-full bg-[#111c28]/[0.55] px-3.5 text-[10px] font-medium uppercase tracking-[0.18em] text-slate-300 backdrop-blur-md">
               <span aria-hidden="true" className="h-1.5 w-1.5 shrink-0 rounded-full bg-[#ff8a3d]" />
               <span>Afterwork Newsletter</span>
               <span aria-hidden="true" className="text-[#ff8a3d]/70">/</span>

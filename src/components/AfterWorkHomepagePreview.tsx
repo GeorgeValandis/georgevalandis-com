@@ -370,7 +370,6 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
           gap: 12px;
           min-height: 52px;
           width: 100%;
-          border: 1px solid rgb(28 157 117 / 0.35);
           border-radius: var(--preview-newsletter-control-radius);
           background: rgb(28 157 117 / 0.1);
           color: #185e4d;
@@ -563,7 +562,7 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
 
         <div className="relative mx-auto flex min-h-[590px] max-w-[1600px] items-center px-6 py-20 sm:px-10 lg:min-h-[640px] lg:px-[54px] lg:py-20 xl:min-h-[calc(100svh-64px)]">
           <div className="relative z-10 max-w-[635px]">
-            <div className="mb-5 inline-flex h-7 items-center gap-2.5 whitespace-nowrap rounded-full border border-[#ff8a3d]/[0.28] bg-[#111c28]/[0.55] px-3 text-[10px] font-medium uppercase tracking-[0.14em] text-slate-300 backdrop-blur-md sm:h-[30px] sm:gap-3 sm:px-3.5 sm:tracking-[0.18em]">
+            <div className="mb-5 inline-flex h-7 items-center gap-2.5 whitespace-nowrap rounded-full bg-[#111c28]/[0.55] px-3 text-[10px] font-medium uppercase tracking-[0.14em] text-slate-300 backdrop-blur-md sm:h-[30px] sm:gap-3 sm:px-3.5 sm:tracking-[0.18em]">
               <span aria-hidden="true" className="h-1.5 w-1.5 shrink-0 rounded-full bg-[#ff8a3d]" />
               <span>{copy.hero.badge[0]}</span>
               <span aria-hidden="true" className="text-[#ff8a3d]/70">/</span>
