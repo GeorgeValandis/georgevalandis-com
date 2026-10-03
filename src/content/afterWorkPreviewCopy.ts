@@ -69,6 +69,7 @@ export type PreviewCopy = {
     cookieSettings: string;
     privacy: string;
     imprint: string;
+    setup: string;
     backToTop: string;
   };
 };
@@ -207,6 +208,7 @@ export const previewCopy: Record<SiteLocale, PreviewCopy> = {
       cookieSettings: 'Cookie Information',
       privacy: 'Website Privacy & Cookies',
       imprint: 'Imprint',
+      setup: 'My setup',
       backToTop: 'Back to top',
     },
   },
@@ -319,6 +321,7 @@ export const previewCopy: Record<SiteLocale, PreviewCopy> = {
       cookieSettings: 'Cookie-Information',
       privacy: 'Datenschutz & Cookies',
       imprint: 'Impressum',
+      setup: 'Mein Setup',
       backToTop: 'Nach oben',
     },
   },

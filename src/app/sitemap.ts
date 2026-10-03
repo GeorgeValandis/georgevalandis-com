@@ -63,6 +63,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'yearly',
       priority: 0.4,
     }),
+    sitemapEntry('/setup/', {
+      lastModified: new Date('2026-10-03T00:00:00.000Z'),
+      changeFrequency: 'monthly',
+      priority: 0.6,
+    }),
+    sitemapEntry('/de/setup/', {
+      lastModified: new Date('2026-10-03T00:00:00.000Z'),
+      changeFrequency: 'monthly',
+      priority: 0.5,
+    }),
     sitemapEntry('/imprint/', {
       lastModified: legalLastModified,
       changeFrequency: 'yearly',

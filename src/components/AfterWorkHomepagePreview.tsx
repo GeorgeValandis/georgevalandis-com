@@ -911,6 +911,9 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
             <Link href={localizedPath(locale, '/imprint')} className="transition-colors hover:text-white">
               {copy.footer.imprint}
             </Link>
+            <Link href={localizedPath(locale, '/setup')} className="transition-colors hover:text-white">
+              {copy.footer.setup}
+            </Link>
             <LanguageSwitch locale={locale} variant="footer" />
             <a href={localizedAnchor(locale, '#preview-home')} className="group inline-flex items-center gap-1.5 transition-colors hover:text-white">
               {copy.footer.backToTop}

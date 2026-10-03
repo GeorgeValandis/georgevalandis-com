@@ -370,6 +370,11 @@ export default function PrivacyStatementContent({
                 ? 'Diese Website enthält Links zu sozialen Netzwerken wie X, Instagram, Threads, TikTok und Bluesky. Beim bloßen Aufruf dieser Website wird über diese Links keine Verbindung zu den jeweiligen Anbietern hergestellt. Erst wenn du einen Link öffnest, gelten die Datenschutzbedingungen des jeweiligen Anbieters.'
                 : 'This website contains links to social networks such as X, Instagram, Threads, TikTok, and Bluesky. Merely opening this website does not create a connection to those providers through the links. Their privacy terms apply only after you open a link.'}
             </p>
+            <p className="mt-4">
+              {isGerman
+                ? 'Auf der Seite „Setup“ verlinke ich Produkte bei Amazon.de über das Amazon-Partnerprogramm (Amazon Europe Core S.à r.l.). Die Links sind reine Textlinks: Beim Aufruf dieser Website werden dafür keine Daten an Amazon übertragen und keine Cookies gesetzt. Erst wenn du einen Link öffnest, verarbeitet Amazon auf amazon.de Daten und kann über die Partner-ID in der URL Käufe meinem Partnerkonto zuordnen. Es gilt dann die Datenschutzerklärung von Amazon.'
+                : 'On the “Setup” page I link to products on Amazon.de through the Amazon Associates program (Amazon Europe Core S.à r.l.). These are plain text links: opening this website sends no data to Amazon and sets no cookies for them. Only when you open a link does Amazon process data on amazon.de and may attribute purchases to my associate account via the partner ID in the URL. Amazon’s privacy notice then applies.'}
+            </p>
           </section>
 
           <section>
