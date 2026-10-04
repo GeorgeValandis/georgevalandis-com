@@ -9,6 +9,8 @@ export type SetupItem = {
   note: LocalizedText;
   asin?: string;
   search?: string;
+  /** Own product link instead of an Amazon affiliate link. */
+  href?: string;
 };
 
 export type SetupSection = {
@@ -17,7 +19,11 @@ export type SetupSection = {
   items: SetupItem[];
 };
 
-export function amazonUrl(item: SetupItem): string {
+export function setupItemUrl(item: SetupItem): string {
+  if (item.href) {
+    return item.href;
+  }
+
   if (item.asin) {
     return `https://www.amazon.de/dp/${item.asin}?tag=${amazonPartnerTag}`;
   }
@@ -42,6 +48,11 @@ export const setupSections: SetupSection[] = [
     id: 'coding',
     title: { en: 'Coding', de: 'Coding' },
     items: [
+      {
+        name: 'GlanceAway',
+        href: 'https://apps.apple.com/app/id6751297230?ct=setup-page',
+        note: { en: 'Eye breaks while I code', de: 'Augenpausen beim Coden' },
+      },
       { name: 'NuPhy Air75', search: 'NuPhy Air75', note: { en: 'Low-profile mechanical keyboard', de: 'Flache mechanische Tastatur' } },
       { name: 'Logitech MX Vertical', asin: 'B07FNHV4MW', note: { en: 'Vertical mouse', de: 'Vertikale Maus' } },
       { name: 'Apple Magic Trackpad', search: 'Apple Magic Trackpad', note: { en: 'Gestures in Xcode and Figma', de: 'Gesten in Xcode und Figma' } },
@@ -82,9 +93,10 @@ export const setupCopy = {
     intro: 'The gear I build my iOS apps and content with.',
     imageAlt: 'George Valandis desk setup with two monitors, a MacBook, keyboard and microphone',
     cta: 'Amazon',
+    ownCta: 'My app',
     back: 'Back to home',
     disclosure:
-      'Links on this page are Amazon affiliate links (ads). As an Amazon Associate I earn from qualifying purchases. The price stays the same for you.',
+      'Amazon links on this page are affiliate links (ads). As an Amazon Associate I earn from qualifying purchases. The price stays the same for you.',
   },
   de: {
     eyebrow: 'Setup',
@@ -92,8 +104,9 @@ export const setupCopy = {
     intro: 'Das Equipment, mit dem ich meine iOS-Apps und Inhalte baue.',
     imageAlt: 'Schreibtisch-Setup von George Valandis mit zwei Monitoren, MacBook, Tastatur und Mikrofon',
     cta: 'Amazon',
+    ownCta: 'Meine App',
     back: 'Zur Startseite',
     disclosure:
-      'Die Links auf dieser Seite sind Amazon-Partnerlinks (Werbung). Als Amazon-Partner verdiene ich an qualifizierten Verkäufen. Für dich ändert sich der Preis nicht.',
+      'Die Amazon-Links auf dieser Seite sind Partnerlinks (Werbung). Als Amazon-Partner verdiene ich an qualifizierten Verkäufen. Für dich ändert sich der Preis nicht.',
   },
 } satisfies Record<SiteLocale, Record<string, string>>;

@@ -1,4 +1,4 @@
-import { amazonUrl, setupCopy, setupSections } from '@/content/setupGear';
+import { setupCopy, setupItemUrl, setupSections } from '@/content/setupGear';
 import type { SiteLocale } from '@/lib/siteLocale';
 import { localizedPath } from '@/lib/siteLocale';
 import { ArrowLeft, ArrowUpRight } from 'lucide-react';
@@ -50,9 +50,9 @@ export default function SetupPage({ locale }: SetupPageProps) {
                 {section.items.map((item) => (
                   <li key={item.name}>
                     <a
-                      href={amazonUrl(item)}
+                      href={setupItemUrl(item)}
                       target="_blank"
-                      rel="sponsored nofollow noopener noreferrer"
+                      rel={item.href ? 'noopener noreferrer' : 'sponsored nofollow noopener noreferrer'}
                       className="group flex items-center justify-between gap-4 rounded-xl px-3 py-3 -mx-3 transition-colors hover:bg-white/[0.04]"
                     >
                       <span className="min-w-0">
@@ -60,7 +60,7 @@ export default function SetupPage({ locale }: SetupPageProps) {
                         <span className="block text-sm text-gray-500">{item.note[locale]}</span>
                       </span>
                       <span className="inline-flex shrink-0 items-center gap-1 text-xs text-gray-500 transition-colors group-hover:text-amber-400">
-                        {copy.cta}
+                        {item.href ? copy.ownCta : copy.cta}
                         <ArrowUpRight size={14} />
                       </span>
                     </a>
