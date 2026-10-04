@@ -50,7 +50,7 @@ export const setupSections: SetupSection[] = [
     items: [
       {
         name: 'GlanceAway',
-        href: 'https://apps.apple.com/app/id6751297230?ct=setup-page',
+        href: 'https://apps.apple.com/app/apple-store/id6751297230?pt=126900140&ct=setup-page&mt=8',
         note: { en: 'Eye breaks while I code', de: 'Augenpausen beim Coden' },
       },
       { name: 'NuPhy Air75', search: 'NuPhy Air75', note: { en: 'Low-profile mechanical keyboard', de: 'Flache mechanische Tastatur' } },
