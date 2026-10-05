@@ -9,7 +9,8 @@
     "lint": "eslint",
     "validate:landing-screens": "node scripts/validate-landing-screens.mjs",
     "preview:static": "npx serve@latest out -l 3005",
-    "stage": "npm run build && npm run preview:static"
+    "stage": "npm run build && npm run preview:static",
+    "deploy": "bash scripts/deploy.sh"
   },
   "dependencies": {
     "framer-motion": "^12.35.0",
