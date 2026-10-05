@@ -560,7 +560,7 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
         </div>
         <div className="pointer-events-none absolute inset-x-0 bottom-0 z-0 h-24 bg-gradient-to-b from-transparent via-[#050a13]/85 to-[#050a13] sm:h-28" />
 
-        <div className="relative mx-auto flex min-h-[590px] max-w-[1600px] items-center px-6 py-20 sm:px-10 lg:min-h-[640px] lg:px-[54px] lg:py-20 xl:min-h-[calc(100svh-64px)]">
+        <div className="relative mx-auto flex max-w-[1600px] items-center px-6 pb-12 pt-16 sm:min-h-[590px] sm:px-10 sm:py-20 lg:min-h-[640px] lg:px-[54px] lg:py-20 xl:min-h-[calc(100svh-64px)]">
           <div className="relative z-10 max-w-[635px]">
             <div className="mb-5 inline-flex h-7 items-center gap-2.5 whitespace-nowrap rounded-full bg-[#111c28]/[0.55] px-3 text-[10px] font-medium uppercase tracking-[0.14em] text-slate-300 backdrop-blur-md sm:h-[30px] sm:gap-3 sm:px-3.5 sm:tracking-[0.18em]">
               <span aria-hidden="true" className="h-1.5 w-1.5 shrink-0 rounded-full bg-[#ff8a3d]" />
@@ -577,25 +577,26 @@ export default function AfterWorkHomepagePreview({ locale }: { locale: SiteLocal
             <p className="mt-5 max-w-[430px] text-[16px] leading-[1.5] text-slate-200/90 sm:text-[17px]">
               {copy.hero.description}
             </p>
-            <div className="mt-5 flex flex-col gap-3 sm:flex-row">
-              <a
-                href="#preview-apps"
-                className="inline-flex h-11 items-center justify-center gap-2 rounded-[8px] bg-[#ff8a3d] px-4 text-[14px] font-semibold text-[#18120d] transition-transform hover:-translate-y-0.5 hover:bg-[#ff9b59]"
-              >
-                {copy.hero.primaryCta} <ArrowUpRight size={16} />
-              </a>
+            <div className="mt-6 flex items-center gap-5 sm:mt-5 sm:gap-3">
               <a
                 href="#preview-after-work"
-                className="inline-flex h-11 items-center justify-center rounded-[8px] border border-white bg-white px-5 text-[14px] font-medium text-[#171717] transition-colors hover:border-[#f3f4f6] hover:bg-[#f3f4f6]"
+                className="inline-flex h-10 items-center justify-center gap-2 rounded-full bg-[#ff8a3d] px-4 text-[14px] font-semibold sm:h-11 sm:rounded-[8px] text-[#18120d] transition-transform hover:-translate-y-0.5 hover:bg-[#ff9b59]"
               >
-                {copy.hero.secondaryCta}
+                {copy.hero.secondaryCta} <ArrowUpRight size={16} />
+              </a>
+              <a
+                href="#preview-apps"
+                className="inline-flex h-10 items-center justify-center gap-1.5 text-[14px] font-medium text-slate-300 transition-colors hover:text-white sm:h-11 sm:rounded-[8px] sm:border sm:border-white sm:bg-white sm:px-5 sm:text-[#171717] sm:hover:border-[#f3f4f6] sm:hover:bg-[#f3f4f6]"
+              >
+                {copy.hero.primaryCta}
+                <ArrowUpRight size={15} className="sm:hidden" />
               </a>
             </div>
           </div>
         </div>
       </section>
 
-      <section id="preview-apps" className="flex min-h-[430px] items-center py-20 sm:min-h-[480px] sm:py-24 lg:min-h-[520px] lg:py-28">
+      <section id="preview-apps" className="flex min-h-[430px] items-center pb-20 pt-8 sm:min-h-[480px] sm:py-24 lg:min-h-[520px] lg:py-28">
         <div className="mx-auto w-full max-w-[1600px] px-6 sm:px-10 lg:px-[54px]">
           <div className="mb-10 flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
             <div>
