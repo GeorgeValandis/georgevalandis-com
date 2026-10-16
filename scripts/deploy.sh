@@ -78,8 +78,19 @@ cp -cR "$REPO/node_modules" "$BUILD_DIR/node_modules"
 OUT="$BUILD_DIR/out"
 
 # Without the token the Cloudflare beacon never loads and visits stop being counted.
-CF_TOKEN="$(sed -nE 's/^NEXT_PUBLIC_CLOUDFLARE_WEB_ANALYTICS_TOKEN=["'\'']?([^"'\'']*)["'\'']?$/\1/p' "$BUILD_DIR/.env.local" 2>/dev/null | tail -n 1 || true)"
-if [[ -z "$CF_TOKEN" ]] || ! grep -rqF "$CF_TOKEN" "$OUT/_next/static"; then
+# Resolve the token the way Next.js does (process.env first, then .env* files), so the check matches the build.
+CF_TOKEN="$(cd "$BUILD_DIR" && env PATH="/usr/local/bin:$PATH" NODE_ENV=production node -e '
+  require("@next/env").loadEnvConfig(process.cwd(), false, { info() {}, error() {} });
+  process.stdout.write((process.env.NEXT_PUBLIC_CLOUDFLARE_WEB_ANALYTICS_TOKEN || "").trim());
+' || true)"
+# Plausibility check: token and beacon URL must sit in the same chunk (not proof per module).
+CF_OK=""
+if [[ -n "$CF_TOKEN" ]]; then
+  while IFS= read -r f; do
+    grep -qF -e "$CF_TOKEN" "$f" && { CF_OK=1; break; }
+  done < <(grep -rlF "static.cloudflareinsights.com/beacon.min.js" "$OUT/_next/static" || true)
+fi
+if [[ -z "$CF_OK" ]]; then
   echo "❌ Cloudflare-Analytics-Token fehlt im Build (.env.local prüfen). Abbruch, damit die Statistik nicht ausfällt." >&2
   exit 1
 fi
@@ -108,7 +119,8 @@ if [[ "$COUNT" == "0" ]]; then
 fi
 
 echo "→ $COUNT Datei(en) neu oder geändert:"
-sed 's/^/   /' "$CHANGED" | head -n 60
+# sed reads the whole file; "| head" could SIGPIPE sed and pipefail would abort before the upload.
+sed -n '1,60s/^/   /p' "$CHANGED"
 [[ "$COUNT" -gt 60 ]] && echo "   … und $((COUNT - 60)) weitere (komplett: $CHANGED)"
 
 if [[ "$MODE" == "dry" ]]; then
