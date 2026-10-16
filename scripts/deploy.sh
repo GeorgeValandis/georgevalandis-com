@@ -71,9 +71,18 @@ BUILD_DIR="$(mktemp -d "${TMPDIR:-/tmp}/georgevalandis-deploy.XXXXXX")"
 echo "→ Baue $HEAD_SHA in $BUILD_DIR"
 git archive HEAD | tar -x -C "$BUILD_DIR"
 cp -cR "$REPO/node_modules" "$BUILD_DIR/node_modules"
+# .env.local is gitignored, so git archive leaves it out; NEXT_PUBLIC_* values must exist at build time.
+[[ -f "$REPO/.env.local" ]] && cp "$REPO/.env.local" "$BUILD_DIR/.env.local"
 (cd "$BUILD_DIR" && env PATH="/usr/local/bin:$PATH" npm run build >"$BUILD_DIR/build.log" 2>&1) || {
   echo "❌ Build fehlgeschlagen, siehe $BUILD_DIR/build.log" >&2; exit 1; }
 OUT="$BUILD_DIR/out"
+
+# Without the token the Cloudflare beacon never loads and visits stop being counted.
+CF_TOKEN="$(sed -nE 's/^NEXT_PUBLIC_CLOUDFLARE_WEB_ANALYTICS_TOKEN=["'\'']?([^"'\'']*)["'\'']?$/\1/p' "$BUILD_DIR/.env.local" 2>/dev/null | tail -n 1 || true)"
+if [[ -z "$CF_TOKEN" ]] || ! grep -rqF "$CF_TOKEN" "$OUT/_next/static"; then
+  echo "❌ Cloudflare-Analytics-Token fehlt im Build (.env.local prüfen). Abbruch, damit die Statistik nicht ausfällt." >&2
+  exit 1
+fi
 
 # 2. Diff against the manifest of the last successful deploy
 mkdir -p "$STATE_DIR"
