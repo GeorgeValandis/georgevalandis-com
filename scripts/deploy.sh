@@ -98,7 +98,7 @@ fi
 # 2. Diff against the manifest of the last successful deploy
 mkdir -p "$STATE_DIR"
 NEW_MANIFEST="$BUILD_DIR/manifest.sha256"
-(cd "$OUT" && find . -type f ! -name .DS_Store -print0 | sort -z | xargs -0 shasum -a 256) >"$NEW_MANIFEST"
+(cd "$OUT" && find . -type f ! -name .DS_Store ! -name '._*' -print0 | sort -z | xargs -0 shasum -a 256) >"$NEW_MANIFEST"
 CHANGED="$BUILD_DIR/changed.txt"
 if [[ -f "$MANIFEST" ]]; then
   comm -13 <(sort "$MANIFEST") <(sort "$NEW_MANIFEST") | sed -E 's/^[0-9a-f]+  \.\///' >"$CHANGED"
