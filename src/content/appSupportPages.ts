@@ -210,7 +210,7 @@ export const appSupportPages: Record<string, AppSupportPageContent> = {
       },
     ],
     contact:
-      'For support, email hello@georgevalandis.com and mention QuietRide in the message.',
+      'For support, email support@georgevalandis.com and mention QuietRide in the message.',
   },
 };
 
