@@ -162,6 +162,56 @@ export const appSupportPages: Record<string, AppSupportPageContent> = {
     contact:
       'For support, email info@georgevalandis.com and mention Darts Scorekeeper in the message.',
   },
+  quietride: {
+    intro:
+      'QuietRide is a quiet game for families on car trips. These notes cover setup, the microphone, privacy, and purchase questions.',
+    notes: [
+      {
+        title: 'For passengers, set up while parked',
+        description:
+          'Choose the reward and trip length and mount the phone before you drive. Once the trip starts, the game runs on its own and the driver never needs to touch it.',
+      },
+      {
+        title: 'Loudness only, no audio saved',
+        description:
+          'The microphone measures how loud it is relative to the car’s own background noise. No audio is recorded, saved, or sent, and there are no accounts, ads, or analytics.',
+      },
+      {
+        title: 'Purchase support',
+        description:
+          'QuietRide Premium is a one-time unlock through Apple In-App Purchase. Use Restore purchases in Settings to unlock it again on the same Apple ID.',
+      },
+    ],
+    faq: [
+      {
+        question: 'Can the driver use QuietRide?',
+        answer:
+          'No. QuietRide is made for passengers. Set it up while parked; during the trip it needs no input from the driver.',
+      },
+      {
+        question: 'Does QuietRide record our conversations?',
+        answer:
+          'No. It only measures loudness levels on the device. No audio is saved or sent.',
+      },
+      {
+        question: 'Why does it react to road noise?',
+        answer:
+          'QuietRide adapts to the car’s own background noise. If the noise changes a lot, for example when you enter a highway, give it a moment to adjust.',
+      },
+      {
+        question: 'How do I restore Premium?',
+        answer:
+          'Open Settings in the app and tap Restore purchases while signed in with the Apple ID used for the purchase.',
+      },
+      {
+        question: 'Is QuietRide a safety device?',
+        answer:
+          'No. It is a game and does not replace adult supervision or safe driving.',
+      },
+    ],
+    contact:
+      'For support, email hello@georgevalandis.com and mention QuietRide in the message.',
+  },
 };
 
 export const appSupportSlugs = Object.keys(appSupportPages);

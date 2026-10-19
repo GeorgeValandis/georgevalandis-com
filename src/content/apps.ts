@@ -305,6 +305,20 @@ const baseApps = [
     websitePath: '/apps/one-sentence/',
     logo: '/apps/one-sentence-icon.png',
   },
+  {
+    slug: 'quietride',
+    title: 'QuietRide',
+    subtitle: 'The quiet car game for family road trips',
+    description:
+      'A calm car game for families: the phone measures loudness on the device, calm rounds fill a shared star jar, and no audio is saved or sent.',
+    platforms: ['iOS'],
+    tags: ['React Native', 'Expo', 'Family', 'Game', 'Local-first'],
+    gradient: 'from-indigo-500/20 to-amber-500/20',
+    accentBorder: 'group-hover:border-indigo-400/40',
+    websitePath: '/apps/quietride/',
+    showInAppsSection: false,
+    logo: '/apps/quietride-icon.png',
+  },
 ] as const;
 
 export const apps: AppEntry[] = baseApps.map((app) => ({
