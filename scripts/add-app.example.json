@@ -1,0 +1,64 @@
+{
+  "_note": "Paths (icon, screens) are relative to this JSON file. Raw app screenshots only, no store posters. services: revenuecat, telemetrydeck or []. appStoreId optional (add later, then rerun with --update). Run: node scripts/add-app.mjs <file> [--dry-run] [--update]",
+  "name": "Example App",
+  "slug": "example-app",
+  "subtitle": "A throwaway example app for the generator",
+  "keyword": "demo timer app",
+  "secondaryKeywords": [
+    "example timer",
+    "test balloon app"
+  ],
+  "group": "utilities-tools",
+  "icon": "icon.png",
+  "screens": [
+    {
+      "path": "screens/home.png",
+      "label": "Home"
+    },
+    {
+      "path": "screens/timer.png",
+      "label": "Timer",
+      "alt": "Demo Testballon timer screen counting down a focus block."
+    },
+    {
+      "path": "screens/history.png",
+      "label": "History"
+    }
+  ],
+  "hero": {
+    "headline": "A demo timer app that proves the app factory works.",
+    "intro": "Demo Testballon is only an example entry created by the add-app generator to test the landing page, hub tile and privacy page."
+  },
+  "benefits": [
+    {
+      "title": "Start in one tap",
+      "description": "Open the app and the timer is ready."
+    },
+    {
+      "title": "Stay on track",
+      "description": "A calm countdown keeps one block of time in focus."
+    },
+    {
+      "title": "See your history",
+      "description": "Every finished block is saved on your device."
+    }
+  ],
+  "faq": [
+    {
+      "question": "What is Demo Testballon?",
+      "answer": "A throwaway example used to test the app factory generator."
+    },
+    {
+      "question": "Does it need an account?",
+      "answer": "No. There is no account or login."
+    },
+    {
+      "question": "Which data does it collect?",
+      "answer": "Only anonymous usage statistics and anonymous purchase information, as described in the privacy policy."
+    }
+  ],
+  "services": [
+    "revenuecat",
+    "telemetrydeck"
+  ]
+}
