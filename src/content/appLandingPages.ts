@@ -2392,7 +2392,7 @@ export const appLandingPages: Record<string, AppLandingPageContent> = {
   },
   // app-fabrik:begin quietride
   quietride: {
-    appStoreName: 'QuietRide: Quiet Road Trip Game',
+    appStoreName: 'QuietRide: Family Noise Meter',
     eyebrow: 'quiet road trip game',
     headline: 'The quiet road trip game with a noise traffic light.',
     intro:
