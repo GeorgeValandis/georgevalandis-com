@@ -2501,6 +2501,110 @@ export const appLandingPages: Record<string, AppLandingPageContent> = {
     ],
   },
   // app-fabrik:end kennzeichen
+  // app-fabrik:begin perfect75
+  perfect75: {
+    appStoreName: 'Perfect75: 75 day challenge tracker, Strict or Soft',
+    eyebrow: '75 day challenge',
+    headline: '75 days. One sentence a day.',
+    intro:
+      'Perfect75 tracks your 75 day challenge as one sentence you fill in by tapping. Strict or Soft rules, no account, and nothing resets silently at midnight.',
+    primaryCta: 'Coming soon to the App Store',
+    secondaryCta: 'See the app',
+    availability: 'Coming soon to the App Store for iPhone.',
+    accent: '#e0602a',
+    background: 'from-[#fbece5] via-[#fafaf8] to-[#fdf5f2]',
+    category: 'UtilitiesApplication',
+    price: 0,
+    priceCurrency: 'USD',
+    highlights: [
+      'One sentence a day',
+      'Rules that forgive a forgotten tap',
+      'Pay once, no account',
+      'No account, no ads, anonymous by design',
+    ],
+    screenshots: [
+      {
+        src: '/apps/perfect75/screens/today.png',
+        alt: 'Perfect75 Today screen: the day as one sentence, finished parts glow orange.',
+        label: 'Today',
+      },
+      {
+        src: '/apps/perfect75/screens/journey.png',
+        alt: 'Perfect75 journey: a polaroid of today and a film strip of all 75 days.',
+        label: 'Journey',
+      },
+      {
+        src: '/apps/perfect75/screens/yesterday.png',
+        alt: 'Perfect75 asks the next morning: did it all, or start over at day 1.',
+        label: 'Yesterday',
+      },
+      {
+        src: '/apps/perfect75/screens/rules.png',
+        alt: 'Perfect75 start screen: pick Strict or Soft rules and start day 1.',
+        label: 'Rules',
+      },
+    ],
+    featureTitle: 'How Perfect75 works',
+    featureIntro: '75 day challenge tracker, Strict or Soft.',
+    features: [
+      {
+        title: 'One sentence a day',
+        description: 'Tap each part when it\'s true. The ember grows with your day.',
+      },
+      {
+        title: 'Rules that forgive a forgotten tap',
+        description:
+          'Catch up yesterday, use a grace day on Soft, or undo a restart within 24 hours.',
+      },
+      {
+        title: 'Pay once, no account',
+        description:
+          'First 7 days free, then one purchase for all 75 days. Your photos stay on your iPhone.',
+      },
+    ],
+    workflowTitle: 'Perfect75 in three steps',
+    workflow: [
+      {
+        title: 'One sentence a day',
+        description: 'Tap each part when it\'s true. The ember grows with your day.',
+      },
+      {
+        title: 'Rules that forgive a forgotten tap',
+        description:
+          'Catch up yesterday, use a grace day on Soft, or undo a restart within 24 hours.',
+      },
+      {
+        title: 'Pay once, no account',
+        description:
+          'First 7 days free, then one purchase for all 75 days. Your photos stay on your iPhone.',
+      },
+    ],
+    privacyTitle: 'Private by design',
+    privacyDescription:
+      'No account and no ads. Purchases are handled by Apple and RevenueCat with an anonymous ID. Anonymous usage statistics from TelemetryDeck cannot be traced back to you.',
+    finalCtaDescription: 'Perfect75 is coming soon to the App Store.',
+    faq: [
+      {
+        question: 'What are the Strict and Soft rules?',
+        answer:
+          'Strict: two workouts (one outside), a gallon of water, 10 pages, clean eating and a progress photo. Soft: one workout, 3 liters of water, 10 pages, eating well and a photo, plus one grace day every 25 days.',
+      },
+      {
+        question: 'Is there a subscription?',
+        answer: 'No. The first 7 days are free. After that you pay once for all 75 days.',
+      },
+      {
+        question: 'Does it need an account?',
+        answer: 'No. There is no account or login. Your challenge and photos stay on your iPhone.',
+      },
+      {
+        question: 'Which data does it collect?',
+        answer:
+          'Only anonymous usage statistics and anonymous purchase information, as described in the privacy policy.',
+      },
+    ],
+  },
+  // app-fabrik:end perfect75
 };
 
 export function getAppLandingPage(slug: string) {

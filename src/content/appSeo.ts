@@ -225,6 +225,15 @@ export const appSeoMetadata: Record<string, AppSeoMetadata> = {
     updatedAt: '2026-10-21',
   },
   // app-fabrik:end kennzeichen
+  // app-fabrik:begin perfect75
+  perfect75: {
+    primaryKeyword: '75 day challenge',
+    secondaryKeywords: ['75 soft challenge', 'challenge tracker'],
+    searchIntent: 'Find a 75 day challenge: 75 day challenge tracker, Strict or Soft.',
+    group: 'habits-focus-wellbeing',
+    updatedAt: '2026-10-21',
+  },
+  // app-fabrik:end perfect75
 };
 
 export const supportSeoMetadata: Record<string, { updatedAt: string }> = {

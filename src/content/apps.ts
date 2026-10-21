@@ -334,6 +334,21 @@ const baseApps = [
     logo: '/apps/kennzeichen-icon.png',
   },
   // app-fabrik:end kennzeichen
+  // app-fabrik:begin perfect75
+  {
+    slug: 'perfect75',
+    title: 'Perfect75',
+    subtitle: '75 day challenge tracker, Strict or Soft',
+    description:
+      'Perfect75 tracks your 75 day challenge as one sentence you fill in by tapping. Strict or Soft rules, no account, and nothing resets silently at midnight.',
+    platforms: ['iOS'],
+    tags: ['Swift', 'SwiftUI'],
+    gradient: 'from-[#f1b79f]/30 to-[#f9dfd4]/30',
+    accentBorder: 'group-hover:border-[#e0602a]/40',
+    websitePath: '/apps/perfect75/',
+    logo: '/apps/perfect75-icon.png',
+  },
+  // app-fabrik:end perfect75
 ] as const;
 
 export const apps: AppEntry[] = baseApps.map((app) => ({
