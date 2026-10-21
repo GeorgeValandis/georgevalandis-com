@@ -216,6 +216,15 @@ export const appSeoMetadata: Record<string, AppSeoMetadata> = {
     group: 'habits-focus-wellbeing',
     updatedAt: '2026-09-02',
   },
+  // app-fabrik:begin kennzeichen
+  kennzeichen: {
+    primaryKeyword: 'kennzeichensammler',
+    secondaryKeywords: ['kennzeichen sammeln', 'nummernschilder sammeln'],
+    searchIntent: 'Find a kennzeichensammler: The license plate game for German family road trips.',
+    group: 'utilities-tools',
+    updatedAt: '2026-10-21',
+  },
+  // app-fabrik:end kennzeichen
 };
 
 export const supportSeoMetadata: Record<string, { updatedAt: string }> = {

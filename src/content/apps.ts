@@ -319,6 +319,21 @@ const baseApps = [
     showInAppsSection: false,
     logo: '/apps/quietride-icon.png',
   },
+  // app-fabrik:begin kennzeichen
+  {
+    slug: 'kennzeichen',
+    title: 'Kennzeichensammler: Familie',
+    subtitle: 'The license plate game for German family road trips',
+    description:
+      'Kennzeichensammler: Familie turns every car ride in Germany into a game for the whole family: call out a license plate, collect points, guess the town and grow one shared collection of all 713 German plate codes.',
+    platforms: ['iOS'],
+    tags: ['Swift', 'SwiftUI'],
+    gradient: 'from-[#f1b79f]/30 to-[#f9dfd4]/30',
+    accentBorder: 'group-hover:border-[#e0602a]/40',
+    websitePath: '/apps/kennzeichen/',
+    logo: '/apps/kennzeichen-icon.png',
+  },
+  // app-fabrik:end kennzeichen
 ] as const;
 
 export const apps: AppEntry[] = baseApps.map((app) => ({

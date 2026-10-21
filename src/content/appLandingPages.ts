@@ -2390,6 +2390,117 @@ export const appLandingPages: Record<string, AppLandingPageContent> = {
       },
     ],
   },
+  // app-fabrik:begin kennzeichen
+  kennzeichen: {
+    appStoreName:
+      'Kennzeichensammler: Familie: The license plate game for German family road trips',
+    eyebrow: 'kennzeichensammler',
+    headline: 'Spot the plate first, then guess where it comes from.',
+    intro:
+      'Kennzeichensammler: Familie turns every car ride in Germany into a game for the whole family: call out a license plate, collect points, guess the town and grow one shared collection of all 713 German plate codes.',
+    primaryCta: 'Coming soon to the App Store',
+    secondaryCta: 'See the app',
+    availability: 'Coming soon to the App Store for iPhone.',
+    accent: '#e0602a',
+    background: 'from-[#fbece5] via-[#fafaf8] to-[#fdf5f2]',
+    category: 'UtilitiesApplication',
+    price: 0,
+    priceCurrency: 'USD',
+    highlights: [
+      'Spot and call it',
+      'Guess together',
+      'Collect as a family',
+      'No account, no ads, anonymous by design',
+    ],
+    screenshots: [
+      {
+        src: '/apps/kennzeichen/screens/01.png',
+        alt: 'Kennzeichensammler ride screen: choose which family member spotted the plate.',
+        label: 'Who spotted it?',
+      },
+      {
+        src: '/apps/kennzeichen/screens/02.png',
+        alt: 'Guessing round with three German towns for a license plate code.',
+        label: 'Where is it from?',
+      },
+      {
+        src: '/apps/kennzeichen/screens/03.png',
+        alt: 'Shared family collection of German license plate codes by federal state.',
+        label: 'Family collection',
+      },
+      {
+        src: '/apps/kennzeichen/screens/04.png',
+        alt: 'End of the ride with the winner on the podium.',
+        label: 'Winner podium',
+      },
+      {
+        src: '/apps/kennzeichen/screens/05.png',
+        alt: 'Home screen with the yellow car to start a ride.',
+        label: 'Home',
+      },
+    ],
+    featureTitle: 'How Kennzeichensammler: Familie works',
+    featureIntro: 'The license plate game for German family road trips.',
+    features: [
+      {
+        title: 'Spot and call it',
+        description:
+          'Whoever sees a plate first gets the points: +150 for a new code, +50 for one you already have.',
+      },
+      {
+        title: 'Guess together',
+        description: 'Three towns, one right answer. Everyone who guesses right scores too.',
+      },
+      {
+        title: 'Collect as a family',
+        description:
+          'Every plate goes into one shared family collection that grows ride after ride.',
+      },
+    ],
+    workflowTitle: 'Kennzeichensammler: Familie in three steps',
+    workflow: [
+      {
+        title: 'Spot and call it',
+        description:
+          'Whoever sees a plate first gets the points: +150 for a new code, +50 for one you already have.',
+      },
+      {
+        title: 'Guess together',
+        description: 'Three towns, one right answer. Everyone who guesses right scores too.',
+      },
+      {
+        title: 'Collect as a family',
+        description:
+          'Every plate goes into one shared family collection that grows ride after ride.',
+      },
+    ],
+    privacyTitle: 'Private by design',
+    privacyDescription:
+      'No account and no ads. Purchases are handled by Apple and RevenueCat with an anonymous ID. Anonymous usage statistics from TelemetryDeck cannot be traced back to you.',
+    finalCtaDescription: 'Kennzeichensammler: Familie is coming soon to the App Store.',
+    faq: [
+      {
+        question: 'Is it free?',
+        answer:
+          'Yes. Collecting, guessing, the collection and 2 players are free with no limit and no ads. The one-time Family Pack unlocks up to 6 players.',
+      },
+      {
+        question: 'Does the driver have to use the phone?',
+        answer:
+          'No. The game is played by the passengers; the driver keeps their eyes on the road.',
+      },
+      {
+        question: 'Does it need an account or internet?',
+        answer: 'No account. The game works offline; only the purchase needs a connection.',
+      },
+      {
+        question: 'Which data does it collect?',
+        answer:
+          'Only anonymous usage statistics and anonymous purchase information, as described in the privacy policy.',
+      },
+    ],
+  },
+  // app-fabrik:end kennzeichen
 };
 
 export function getAppLandingPage(slug: string) {
