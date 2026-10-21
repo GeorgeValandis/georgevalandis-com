@@ -216,6 +216,16 @@ export const appSeoMetadata: Record<string, AppSeoMetadata> = {
     group: 'habits-focus-wellbeing',
     updatedAt: '2026-09-02',
   },
+  // app-fabrik:begin quietride
+  quietride: {
+    primaryKeyword: 'quiet road trip game',
+    secondaryKeywords: ['quiet car game', 'road trip game for families', 'car ride game', 'noise traffic light', 'back seat quiet game'],
+    searchIntent:
+      'Find a quiet road trip game for the car: a traffic light shows how loud the back seat is, calm minutes fill a star jar and Pip the fox sleeps.',
+    group: 'cozy-companions',
+    updatedAt: '2026-10-21',
+  },
+  // app-fabrik:end quietride
 };
 
 export const supportSeoMetadata: Record<string, { updatedAt: string }> = {
