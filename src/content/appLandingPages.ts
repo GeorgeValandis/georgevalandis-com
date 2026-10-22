@@ -2605,6 +2605,128 @@ export const appLandingPages: Record<string, AppLandingPageContent> = {
     ],
   },
   // app-fabrik:end perfect75
+  // app-fabrik:begin quietride
+  quietride: {
+    appStoreName: 'QuietRide: Family Noise Meter',
+    eyebrow: 'quiet road trip game',
+    headline: 'The quiet road trip game with a noise traffic light.',
+    intro:
+      'Mount the phone on the headrest. While the back seat stays calm, Pip the fox sleeps and every quiet minute drops a star into the jar. A traffic light shows how the car is doing, and a full jar earns the reward you promised.',
+    primaryCta: 'Coming soon to the App Store',
+    secondaryCta: 'See the app',
+    availability: 'Coming soon to the App Store for iPhone.',
+    accent: '#f0a63a',
+    background: 'from-[#fdf4e7] via-[#fafaf8] to-[#fefaf3]',
+    category: 'GameApplication',
+    price: 0,
+    priceCurrency: 'USD',
+    highlights: [
+      'Set up while parked',
+      'Stay quiet, fill the jar',
+      'Win the promised reward',
+      'No account, no ads, anonymous by design',
+    ],
+    screenshots: [
+      {
+        src: '/apps/quietride/screens/keep-pip-asleep.png',
+        alt:
+          'QuietRide trip screen: Pip the fox sleeps under a glowing dream star while the star jar fills and the traffic light is green.',
+        label: 'Trip',
+      },
+      {
+        src: '/apps/quietride/screens/noise-meter.png',
+        alt: 'QuietRide noise traffic light on yellow with the message Shh! Pip\'s stirring.',
+        label: 'Traffic light',
+      },
+      {
+        src: '/apps/quietride/screens/loud-wakes-pip.png',
+        alt:
+          'QuietRide with Pip the fox awake after a loud moment and a ten second countdown until he can sleep again.',
+        label: 'Too loud',
+      },
+      {
+        src: '/apps/quietride/screens/pick-the-reward.png',
+        alt:
+          'QuietRide reward picker with snack stop, ice cream, song pick, screen time, stay up late and playground, plus trip length.',
+        label: 'Reward',
+      },
+      {
+        src: '/apps/quietride/screens/no-audio-saved.png',
+        alt: 'QuietRide setup explainer showing the phone mounted on the headrest with Pip asleep.',
+        label: 'Setup',
+      },
+    ],
+    featureTitle: 'How QuietRide works',
+    featureIntro:
+      'A calm game for the back seat that the whole car plays together on a long drive.',
+    features: [
+      {
+        title: 'Set up while parked',
+        description:
+          'Pick a reward and a trip length, mount the phone on the headrest and start. Setup takes about 20 seconds, and nobody up front touches the phone again.',
+      },
+      {
+        title: 'Stay quiet, fill the jar',
+        description:
+          'Green grows stars, yellow grows them slowly, red wakes Pip. Ten quiet seconds and he curls up again. Stars in the jar are never taken away, so the whole car plays as one team.',
+      },
+      {
+        title: 'Win the promised reward',
+        description:
+          'Fill the jar and the reward you picked is earned: a snack stop, ice cream, a song pick or anything you like.',
+      },
+    ],
+    workflowTitle: 'QuietRide in three steps',
+    workflow: [
+      {
+        title: 'Set up while parked',
+        description:
+          'Pick a reward and a trip length, mount the phone on the headrest and start. Setup takes about 20 seconds, and nobody up front touches the phone again.',
+      },
+      {
+        title: 'Stay quiet, fill the jar',
+        description:
+          'Green grows stars, yellow grows them slowly, red wakes Pip. Ten quiet seconds and he curls up again. Stars in the jar are never taken away, so the whole car plays as one team.',
+      },
+      {
+        title: 'Win the promised reward',
+        description:
+          'Fill the jar and the reward you picked is earned: a snack stop, ice cream, a song pick or anything you like.',
+      },
+    ],
+    privacyTitle: 'Private by design',
+    privacyDescription:
+      'No account and no ads. Purchases are handled by Apple and RevenueCat with an anonymous ID.',
+    finalCtaDescription: 'QuietRide is coming soon to the App Store.',
+    faq: [
+      {
+        question: 'What is QuietRide?',
+        answer:
+          'A quiet road trip game for families. Pip the fox sleeps on the phone while the back seat stays calm, a noise traffic light shows how the car is doing, and quiet minutes fill a star jar towards a reward you choose.',
+      },
+      {
+        question: 'Is QuietRide a decibel meter?',
+        answer:
+          'No. It shows a traffic light, not decibel readings. QuietRide compares the sound in the car with the car\'s own background noise, so it adapts from an idling engine to highway speed. Results are for fun, not exact measurements.',
+      },
+      {
+        question: 'Does QuietRide record audio?',
+        answer:
+          'No. The microphone only measures loudness on your device while a trip runs. No audio is saved or sent, and there is no account and no ads.',
+      },
+      {
+        question: 'Can the driver use it while driving?',
+        answer:
+          'QuietRide is made for passengers. Set it up while parked, mount the phone safely and let the game run on its own. The driver never needs to touch or watch it.',
+      },
+      {
+        question: 'Is QuietRide free?',
+        answer:
+          'Free trips up to 45 minutes come with every reward. QuietRide Premium is an optional one-time purchase, not a subscription, for 1-hour, 2-hour and open trips, three reward steps on the way and the full sticker book.',
+      },
+    ],
+  },
+  // app-fabrik:end quietride
 };
 
 export function getAppLandingPage(slug: string) {
