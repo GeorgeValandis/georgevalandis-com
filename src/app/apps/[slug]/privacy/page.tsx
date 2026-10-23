@@ -69,6 +69,18 @@ export default async function AppPrivacyPage({ params }: AppPrivacyPageProps) {
           <h1 className="text-4xl md:text-5xl font-bold tracking-tight">
             {privacyContent.sourceTitle}
           </h1>
+          {legal.de ? (
+            <p className="mt-3 text-sm">
+              <Link
+                href={`/apps/${app.slug}/datenschutz/`}
+                hrefLang="de"
+                lang="de"
+                className="text-gray-400 hover:text-white transition-colors underline"
+              >
+                Deutsche Fassung
+              </Link>
+            </p>
+          ) : null}
           {app.appStoreLink ? (
             <a
               href={app.appStoreLink}

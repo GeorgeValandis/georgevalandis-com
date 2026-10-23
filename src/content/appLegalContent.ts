@@ -11,6 +11,10 @@ type LegacyLegalDocument = {
 type LegacyAppLegalContent = {
   terms: LegacyLegalDocument;
   privacy: LegacyLegalDocument;
+  de?: {
+    terms: LegacyLegalDocument;
+    privacy: LegacyLegalDocument;
+  };
 };
 
 const appLegalContent = appLegalContentJson as Record<string, LegacyAppLegalContent>;
@@ -63,4 +67,8 @@ export function getAppLegalContentBySlug(slug: string) {
   }
 
   return slug === 'one-sentence' ? oneSentenceLegalContent : appLegalContent[slug];
+}
+
+export function getGermanAppLegalSlugs() {
+  return Object.keys(appLegalContent).filter((slug) => appLegalContent[slug].de);
 }

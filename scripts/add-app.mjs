@@ -8,7 +8,8 @@
  *   src/content/apps.ts              hub tile (marker block)
  *   src/content/appLandingPages.ts   landing page record (marker block)
  *   src/content/appSeo.ts            SEO/AEO record (marker block)
- *   src/content/appLegalContent.json terms + privacy text (key marked "generator": "app-fabrik")
+ *   src/content/appLegalContent.json terms + privacy text, English plus German under `de`
+ *                                    (key marked "generator": "app-fabrik")
  *   public/apps/{slug}-icon.*        icon
  *   public/apps/{slug}/screens/*     raw screenshots
  *   privacy-asc.json                 App Privacy answers for `asc web privacy plan`
@@ -524,6 +525,90 @@ const termsHtml = [
   p(`If you have questions about these Terms, please contact ${mail}.`),
 ].join('\n\n');
 
+// German legal text: faithful translation of the English text above (draft, review pending).
+
+const privacyTitleDe = `Datenschutzerklärung - App ${name}`;
+const termsTitleDe = `Nutzungsbedingungen - App ${name}`;
+
+const privacySectionsDe = [
+  {
+    title: 'Einleitung',
+    paragraphs: [
+      `Diese Datenschutzerklärung gilt für die App ${safeName}, entwickelt von ${OPERATOR}. Bei Fragen zum Datenschutz wenden Sie sich an ${mail}.`,
+    ],
+  },
+  {
+    title: 'Auf Ihrem Gerät gespeicherte Daten',
+    paragraphs: [
+      `${safeName} speichert Ihre Inhalte, Einstellungen und Ihren Kaufstatus lokal auf Ihrem Gerät. Diese Daten werden zur Bereitstellung der App verwendet und nicht an Server von George Valandis gesendet.`,
+    ],
+  },
+  {
+    title: 'Konten und Datenübertragung',
+    paragraphs: [`${safeName} erfordert kein Konto und keine Anmeldung.`],
+  },
+  ...(hasRevenueCat
+    ? [
+        {
+          title: 'Käufe',
+          paragraphs: [
+            `Wenn Sie den Premium-Zugang kaufen oder wiederherstellen, verarbeitet Apple die Zahlung. RevenueCat verarbeitet technische Informationen zu Kauf, Berechtigung und Wiederherstellung zusammen mit einer anonymen, von der App erzeugten App-Nutzer-ID, um den Premium-Zugang zu validieren, freizuschalten und wiederherzustellen. Diese Informationen werden nicht mit Ihrem Namen verknüpft und nicht für Werbung verwendet. Einzelheiten finden Sie in der <a href="https://www.revenuecat.com/privacy/">Datenschutzerklärung von RevenueCat</a>.`,
+          ],
+        },
+      ]
+    : []),
+  {
+    title: 'Analyse, Werbung und Tracking',
+    paragraphs: hasTelemetryDeck
+      ? [
+          `${safeName} nutzt TelemetryDeck für anonyme Nutzungsstatistiken, zum Beispiel welche Funktionen genutzt werden, ob das Onboarding abgeschlossen wurde, die App-Version und die Version des Betriebssystems. TelemetryDeck verwendet eine anonymisierte Kennung, die nicht auf Sie zurückgeführt werden kann, und speichert Ihre IP-Adresse nicht. Diese Daten werden nicht mit Ihrer Identität verknüpft und nicht für Werbung verwendet. Einzelheiten finden Sie in der <a href="https://telemetrydeck.com/privacy/">Datenschutzerklärung von TelemetryDeck</a>.`,
+          `${safeName} verwendet keine Werbe-SDKs, zeigt keine Werbung an und verfolgt Sie nicht über Apps, Websites oder Dienste hinweg.`,
+        ]
+      : [
+          `${safeName} verwendet weder Analyse-SDKs noch Werbe-SDKs, zeigt keine Werbung an und verfolgt Sie nicht über Apps, Websites oder Dienste hinweg.`,
+        ],
+  },
+  {
+    title: 'Löschung von Daten',
+    paragraphs: [
+      `Wenn Sie ${safeName} von Ihrem Gerät entfernen, werden die lokal gespeicherten App-Daten auf diesem Gerät gelöscht. Von der Plattform verwaltete Backups können lokale App-Daten entsprechend den Einstellungen Ihres Apple Accounts weiterhin enthalten.`,
+    ],
+  },
+  {
+    title: 'Kontakt',
+    paragraphs: [`Wenn Sie Fragen zum Datenschutz haben, wenden Sie sich bitte an ${mail}.`],
+  },
+];
+
+const privacyHtmlDe = [
+  `<h3 class="wp-block-heading"><strong>Datenschutzerklärung für ${safeName}</strong></h3>`,
+  h(`Zuletzt aktualisiert: ${updatedDisplay}`),
+  numbered(privacySectionsDe),
+].join('\n\n');
+
+const termsHtmlDe = [
+  `<h3 class="wp-block-heading"><strong>Nutzungsbedingungen - App ${safeName}</strong></h3>`,
+  h(`Zuletzt aktualisiert: ${updatedDisplay}`),
+  p(
+    `${safeName} unterliegt den Nutzungsbedingungen von Apple, dem <a href="${APPLE_EULA}">Endbenutzer-Lizenzvertrag für lizenzierte Apps</a>.`
+  ),
+  p(`${safeName}: ${htmlEscape(spec.subtitle)}. Die App wird von ${OPERATOR} bereitgestellt.`),
+  ...(hasRevenueCat
+    ? [
+        h('Käufe'),
+        p(
+          `Premium-Funktionen sind optionale In-App-Käufe. Abrechnung und Erstattungen werden von Apple über den App Store abgewickelt. RevenueCat kann technische Kauf- und Berechtigungsdaten verarbeiten, die erforderlich sind, um den Premium-Zugang zu validieren, freizuschalten und wiederherzustellen.`
+        ),
+      ]
+    : []),
+  h('Verfügbarkeit'),
+  p(
+    `Einige Funktionen können vom Gerätespeicher, von den Möglichkeiten von iOS und von der App-Version abhängen. Wir können Funktionen im Laufe der Zeit aktualisieren, verbessern oder entfernen.`
+  ),
+  h('Kontakt'),
+  p(`Wenn Sie Fragen zu diesen Nutzungsbedingungen haben, wenden Sie sich bitte an ${mail}.`),
+].join('\n\n');
+
 const legalEntry = {
   generator: GENERATOR,
   updated,
@@ -536,6 +621,18 @@ const legalEntry = {
     sourceUrl: `https://georgevalandis.com/apps/${slug}/privacy/`,
     sourceTitle: `Privacy Policy - ${name} App`,
     html: privacyHtml,
+  },
+  de: {
+    terms: {
+      sourceUrl: `https://georgevalandis.com/apps/${slug}/nutzungsbedingungen/`,
+      sourceTitle: termsTitleDe,
+      html: termsHtmlDe,
+    },
+    privacy: {
+      sourceUrl: `https://georgevalandis.com/apps/${slug}/datenschutz/`,
+      sourceTitle: privacyTitleDe,
+      html: privacyHtmlDe,
+    },
   },
 };
 
@@ -637,13 +734,13 @@ if (existingLegal && existingLegal.generator !== GENERATOR) {
   report.push(`ERROR appLegalContent.json: "${slug}" already exists and was not created by add-app; refusing to touch it`);
   blocking = true;
 } else if (existingLegal && JSON.stringify(existingLegal) === JSON.stringify(legalEntry)) {
-  report.push('unchanged  appLegalContent.json (terms + privacy)');
+  report.push('unchanged  appLegalContent.json (terms + privacy, EN + DE)');
 } else if (existingLegal && !update) {
   report.push('differs    appLegalContent.json (generated earlier, left unchanged; use --update)');
 } else {
   legalJson[slug] = legalEntry;
   writes.push({ file: legalPath, content: `${JSON.stringify(legalJson, null, 2)}\n` });
-  report.push(existingLegal ? 'updated    appLegalContent.json (terms + privacy)' : 'added      appLegalContent.json (terms + privacy)');
+  report.push(existingLegal ? 'updated    appLegalContent.json (terms + privacy, EN + DE)' : 'added      appLegalContent.json (terms + privacy, EN + DE)');
 }
 
 // assets
