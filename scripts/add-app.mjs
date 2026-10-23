@@ -27,6 +27,8 @@ const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..'
 const GENERATOR = 'app-fabrik';
 const CONTACT_EMAIL = 'support@georgevalandis.com';
 const OPERATOR = 'Georgios Andi Avenidis';
+const OPERATOR_ADDRESS = 'Berliner Strasse 235, 65205 Wiesbaden, Germany';
+const OPERATOR_ADDRESS_DE = 'Berliner Straße 235, 65205 Wiesbaden, Deutschland';
 const APPLE_EULA = 'https://www.apple.com/legal/internet-services/itunes/dev/stdeula/';
 
 const SEO_GROUPS = [
@@ -446,6 +448,8 @@ function numbered(sections) {
     .join('\n\n');
 }
 
+const thirdParties = [hasRevenueCat && 'RevenueCat', hasTelemetryDeck && 'TelemetryDeck'].filter(Boolean);
+
 const privacySections = [
   {
     title: 'Introduction',
@@ -488,6 +492,42 @@ const privacySections = [
     title: 'Data deletion',
     paragraphs: [
       `Removing ${safeName} from your device deletes locally stored app data from that device. Platform-managed backups may retain local app data according to your Apple account settings.`,
+    ],
+  },
+  {
+    title: 'Controller, legal bases, and your rights',
+    paragraphs: [
+      `The controller for data processing in connection with ${safeName} is ${OPERATOR}, ${OPERATOR_ADDRESS}, ${mail}.`,
+      ...(hasRevenueCat || hasTelemetryDeck
+        ? [
+            [
+              hasRevenueCat &&
+                'Processing purchase and entitlement data serves the performance of the contract with you (Art. 6(1)(b) GDPR).',
+              hasTelemetryDeck &&
+                `Anonymous usage statistics serve our legitimate interest in understanding how ${safeName} is used and improving the app (Art. 6(1)(f) GDPR).`,
+            ]
+              .filter(Boolean)
+              .join(' '),
+          ]
+        : []),
+      ...(hasRevenueCat
+        ? [
+            `RevenueCat, Inc. is based in the USA and stores data on Amazon Web Services servers in the USA. This transfer is based on the EU standard contractual clauses in RevenueCat's data processing agreement.`,
+          ]
+        : []),
+      ...(hasTelemetryDeck
+        ? ['TelemetryDeck GmbH is based in Germany and, according to its own information, processes the data on servers in the EU.']
+        : []),
+      `If you contact us by email, for example for support or feedback, we receive your email address, your message, and any technical details it contains, such as the app and operating system version. We use this data only to handle your enquiry (Art. 6(1)(b) GDPR for support relating to the app, otherwise Art. 6(1)(f) GDPR) and delete it once the enquiry is settled, unless statutory retention obligations apply.`,
+      [
+        'Data on your device remains until you delete it or remove the app.',
+        thirdParties.length
+          ? `${thirdParties.join(' and ')} ${thirdParties.length > 1 ? 'retain' : 'retains'} data according to the privacy ${thirdParties.length > 1 ? 'policies' : 'policy'} linked above.`
+          : '',
+      ]
+        .filter(Boolean)
+        .join(' '),
+      'Under the GDPR, you have the right to access, rectification, erasure, restriction of processing, data portability, and objection, and the right to lodge a complaint with a supervisory authority, for example the Hessian Commissioner for Data Protection and Freedom of Information (HBDI) in Wiesbaden.',
     ],
   },
   {
@@ -572,6 +612,42 @@ const privacySectionsDe = [
     title: 'Löschung von Daten',
     paragraphs: [
       `Wenn Sie ${safeName} von Ihrem Gerät entfernen, werden die lokal gespeicherten App-Daten auf diesem Gerät gelöscht. Von der Plattform verwaltete Backups können lokale App-Daten entsprechend den Einstellungen Ihres Apple Accounts weiterhin enthalten.`,
+    ],
+  },
+  {
+    title: 'Verantwortlicher, Rechtsgrundlagen und Ihre Rechte',
+    paragraphs: [
+      `Verantwortlicher für die Datenverarbeitung im Zusammenhang mit ${safeName} ist ${OPERATOR}, ${OPERATOR_ADDRESS_DE}, ${mail}.`,
+      ...(hasRevenueCat || hasTelemetryDeck
+        ? [
+            [
+              hasRevenueCat &&
+                'Die Verarbeitung von Kauf- und Berechtigungsdaten dient der Erfüllung des Vertrags mit Ihnen (Art. 6 Abs. 1 lit. b DSGVO).',
+              hasTelemetryDeck &&
+                `Anonyme Nutzungsstatistiken dienen unserem berechtigten Interesse, zu verstehen, wie ${safeName} genutzt wird, und die App zu verbessern (Art. 6 Abs. 1 lit. f DSGVO).`,
+            ]
+              .filter(Boolean)
+              .join(' '),
+          ]
+        : []),
+      ...(hasRevenueCat
+        ? [
+            'Die RevenueCat, Inc. hat ihren Sitz in den USA und speichert Daten auf Servern von Amazon Web Services in den USA. Grundlage dieser Übermittlung sind die EU-Standardvertragsklauseln im Auftragsverarbeitungsvertrag von RevenueCat.',
+          ]
+        : []),
+      ...(hasTelemetryDeck
+        ? ['Die TelemetryDeck GmbH hat ihren Sitz in Deutschland und verarbeitet die Daten nach eigenen Angaben auf Servern in der EU.']
+        : []),
+      'Wenn Sie uns per E-Mail kontaktieren, zum Beispiel für Support oder Feedback, erhalten wir Ihre E-Mail-Adresse, Ihre Nachricht und die darin enthaltenen technischen Angaben, etwa die Version der App und des Betriebssystems. Wir verwenden diese Daten nur zur Bearbeitung Ihrer Anfrage (Art. 6 Abs. 1 lit. b DSGVO bei Support zur App, sonst Art. 6 Abs. 1 lit. f DSGVO) und löschen sie, sobald die Anfrage erledigt ist, sofern keine gesetzlichen Aufbewahrungspflichten bestehen.',
+      [
+        'Daten auf Ihrem Gerät bleiben gespeichert, bis Sie sie löschen oder die App entfernen.',
+        thirdParties.length
+          ? `${thirdParties.join(' und ')} ${thirdParties.length > 1 ? 'speichern' : 'speichert'} Daten nach ${thirdParties.length > 1 ? 'ihren oben verlinkten Datenschutzerklärungen' : 'der oben verlinkten Datenschutzerklärung'}.`
+          : '',
+      ]
+        .filter(Boolean)
+        .join(' '),
+      'Sie haben nach der DSGVO das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung, Datenübertragbarkeit und Widerspruch sowie das Recht auf Beschwerde bei einer Aufsichtsbehörde, zum Beispiel beim Hessischen Beauftragten für Datenschutz und Informationsfreiheit (HBDI) in Wiesbaden.',
     ],
   },
   {

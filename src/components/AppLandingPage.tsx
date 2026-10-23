@@ -1,4 +1,5 @@
 import { AppEntry } from '@/content/apps';
+import { getAppLegalContentBySlug } from '@/content/appLegalContent';
 import { AppLandingPageContent } from '@/content/appLandingPages';
 import { getAppSeoMetadata } from '@/content/appSeo';
 import { getAppSupportPage } from '@/content/appSupportPages';
@@ -613,10 +614,12 @@ export default function AppLandingPage({ app, content }: AppLandingPageProps) {
   const featureShot = settingsShot ?? progressShot ?? secondaryShot ?? heroShot;
   const supportingShot = secondaryShot ?? heroShot;
   const tertiaryShot = progressShot ?? supportingShot;
-  const privacyUrl = absoluteUrl(app.legal.privacyPath);
+  // German pages link the German legal texts when the app has them.
+  const germanLegal = content.lang === 'de' && Boolean(getAppLegalContentBySlug(app.slug)?.de);
+  const privacyUrl = absoluteUrl(germanLegal ? `/apps/${app.slug}/datenschutz/` : app.legal.privacyPath);
   const appPrivacyUrl = absoluteUrl(`/apps/${app.slug}/privacy/`);
-  const termsUrl = absoluteUrl(app.legal.termsPath);
-  const imprintUrl = absoluteUrl('/imprint/');
+  const termsUrl = absoluteUrl(germanLegal ? `/apps/${app.slug}/nutzungsbedingungen/` : app.legal.termsPath);
+  const imprintUrl = absoluteUrl(content.lang === 'de' ? '/de/imprint/' : '/imprint/');
   const supportPage = getAppSupportPage(app.slug);
   const appStoreLink = app.appStoreLink;
   const storeLabel = app.platforms.includes('Android')

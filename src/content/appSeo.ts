@@ -223,7 +223,7 @@ export const appSeoMetadata: Record<string, AppSeoMetadata> = {
     searchIntent:
       'Kennzeichensammler: Kennzeichen sammeln & raten auf der Autofahrt mit der Familie.',
     group: 'utilities-tools',
-    updatedAt: '2026-10-21',
+    updatedAt: '2026-10-23',
   },
   // app-fabrik:end kennzeichen
   // app-fabrik:begin perfect75
