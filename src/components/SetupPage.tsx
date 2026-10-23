@@ -14,7 +14,7 @@ export default function SetupPage({ locale }: SetupPageProps) {
 
   return (
     <main className="min-h-screen bg-gray-950 text-gray-50">
-      <div className="max-w-5xl mx-auto px-6 lg:px-8 py-16 md:py-24">
+      <div className="max-w-5xl mx-auto px-6 lg:px-8 pt-6 pb-16 md:pt-10 md:pb-24">
         <Link
           href={localizedPath(locale, '/')}
           className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors"
@@ -23,24 +23,28 @@ export default function SetupPage({ locale }: SetupPageProps) {
           {copy.back}
         </Link>
 
-        <header className="mt-8 mb-10">
-          <p className="text-amber-400 font-mono text-sm tracking-wider uppercase mb-3">
-            {copy.eyebrow}
-          </p>
-          <h1 className="text-4xl md:text-5xl font-bold tracking-tight">{copy.title}</h1>
-          <p className="text-gray-400 mt-4 max-w-2xl">{copy.intro}</p>
+        <header className="relative mt-5 aspect-[4/5] overflow-hidden rounded-3xl md:aspect-[16/10]">
+          <Image
+            src="/setup/desk.jpg"
+            alt={copy.imageAlt}
+            fill
+            priority
+            sizes="(min-width: 1024px) 1024px, 100vw"
+            className="object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-gray-950 via-gray-950/40 to-transparent" />
+          <div className="absolute inset-x-0 bottom-0 p-6 md:p-10">
+            <p className="text-amber-400 font-mono text-xs md:text-sm tracking-wider uppercase mb-2 md:mb-3">
+              {copy.eyebrow}
+            </p>
+            <h1 className="text-3xl md:text-5xl font-bold tracking-tight">{copy.title}</h1>
+            <p className="text-gray-300 mt-2 md:mt-4 max-w-2xl">{copy.intro}</p>
+          </div>
         </header>
 
-        <Image
-          src="/setup/desk.jpg"
-          alt={copy.imageAlt}
-          width={1791}
-          height={1440}
-          priority
-          className="w-full h-auto rounded-3xl"
-        />
+        <p className="mt-10 max-w-2xl leading-relaxed md:text-lg text-gray-300">{copy.story}</p>
 
-        <div className="mt-16 grid gap-14 md:grid-cols-2 md:gap-x-12">
+        <div className="mt-14 grid gap-14 md:grid-cols-2 md:gap-x-12">
           {setupSections.map((section) => (
             <section key={section.id}>
               <h2 className="text-sm font-semibold text-gray-300 uppercase tracking-wider mb-4">

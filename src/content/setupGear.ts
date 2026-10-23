@@ -92,6 +92,8 @@ export const setupCopy = {
     title: 'My desk setup',
     intro: 'The gear I build my iOS apps and content with.',
     imageAlt: 'George Valandis desk setup with two monitors, a MacBook, keyboard and microphone',
+    story:
+      'I build and ship my own iOS apps from this desk and film most of my reels right here. The 4K Dell runs Xcode, the portable screen shows the simulator, and the camera sits on an arm so I can hit record without rebuilding anything. Everything below is what I actually use every day.',
     cta: 'Amazon',
     ownCta: 'My app',
     back: 'Back to home',
@@ -103,6 +105,8 @@ export const setupCopy = {
     title: 'Mein Schreibtisch-Setup',
     intro: 'Das Equipment, mit dem ich meine iOS-Apps und Inhalte baue.',
     imageAlt: 'Schreibtisch-Setup von George Valandis mit zwei Monitoren, MacBook, Tastatur und Mikrofon',
+    story:
+      'An diesem Schreibtisch baue und veröffentliche ich meine eigenen iOS-Apps und drehe die meisten meiner Reels. Auf dem 4K-Dell läuft Xcode, der tragbare Screen zeigt den Simulator, und die Kamera hängt an einem Arm, damit ich ohne Umbau auf Aufnahme drücken kann. Alles darunter nutze ich wirklich jeden Tag.',
     cta: 'Amazon',
     ownCta: 'Meine App',
     back: 'Zur Startseite',
