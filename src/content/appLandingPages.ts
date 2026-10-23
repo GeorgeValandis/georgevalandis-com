@@ -2559,7 +2559,7 @@ export const appLandingPages: Record<string, AppLandingPageContent> = {
       {
         title: 'Pay once, no account',
         description:
-          'First 7 days free, then one purchase for all 75 days. Your photos stay on your iPhone.',
+          'First 7 days free, then one purchase for all 75 days. Your photos are quietly backed up to your iCloud.',
       },
     ],
     workflowTitle: 'Perfect75 in three steps',
@@ -2576,7 +2576,7 @@ export const appLandingPages: Record<string, AppLandingPageContent> = {
       {
         title: 'Pay once, no account',
         description:
-          'First 7 days free, then one purchase for all 75 days. Your photos stay on your iPhone.',
+          'First 7 days free, then one purchase for all 75 days. Your photos are quietly backed up to your iCloud.',
       },
     ],
     privacyTitle: 'Private by design',
@@ -2595,7 +2595,7 @@ export const appLandingPages: Record<string, AppLandingPageContent> = {
       },
       {
         question: 'Does it need an account?',
-        answer: 'No. There is no account or login. Your challenge and photos stay on your iPhone.',
+        answer: 'No. There is no account or login. Your challenge and photos are quietly backed up to your own iCloud.',
       },
       {
         question: 'Which data does it collect?',
