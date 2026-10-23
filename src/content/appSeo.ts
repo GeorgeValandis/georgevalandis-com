@@ -220,7 +220,8 @@ export const appSeoMetadata: Record<string, AppSeoMetadata> = {
   kennzeichen: {
     primaryKeyword: 'kennzeichensammler',
     secondaryKeywords: ['kennzeichen sammeln', 'nummernschilder sammeln'],
-    searchIntent: 'Find a kennzeichensammler: The license plate game for German family road trips.',
+    searchIntent:
+      'Kennzeichensammler: Kennzeichen sammeln & raten auf der Autofahrt mit der Familie.',
     group: 'utilities-tools',
     updatedAt: '2026-10-21',
   },

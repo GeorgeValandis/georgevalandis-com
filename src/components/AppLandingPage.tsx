@@ -23,6 +23,78 @@ type AppLandingPageProps = {
 
 type StoreBrand = 'app-store' | 'google-play';
 
+/** Fixed page text. English is the default; `content.lang: 'de'` switches the whole page to German. */
+const UI_TEXT = {
+  en: {
+    apps: 'Apps',
+    // Text around a name is split into prefix/suffix so English pages keep their exact markup.
+    storePrefix: {} as Record<string, string | undefined>,
+    storeSuffix: ' coming soon' as string | null,
+    appIconAlt: (title: string) => `${title} app icon`,
+    productView: 'Product view',
+    privacy: 'Privacy',
+    appPrivacy: 'App Privacy',
+    faqTitle: 'Common questions before you install.',
+    readyPrefix: 'Ready to try ',
+    appBySuffix: ' is an app by George Valandis.',
+    legalLinks: (title: string) => `${title} legal links`,
+    websitePrivacy: 'Website Privacy & Cookies',
+    privacyPolicy: 'Privacy Policy',
+    terms: 'Terms',
+    support: 'Support',
+    imprint: 'Imprint',
+    qrCode: 'QR code',
+    storeLinkSoon: 'Store link coming soon',
+    storeLinkSoonBody: 'A scan-to-install code will appear here once the public store listing is available.',
+    scanToInstall: 'Scan to install',
+    downloadPrefix: 'Download ' as string | null,
+    downloadSuffix: null as string | null,
+    scanBody: 'Scan the QR code with your phone camera to open the store listing directly.',
+    openStore: 'Open store',
+    openListing: (title: string) => `Open the store listing for ${title}`,
+    openOnStore: (title: string, brand: StoreBrand) =>
+      `Open ${title} on ${brand === 'google-play' ? 'Google Play' : 'the App Store'}`,
+    googleBadgeTop: 'Get it on',
+    appleBadgeTop: 'Download on the',
+  },
+  de: {
+    apps: 'Apps',
+    storePrefix: { 'App Store': 'Bald im ', 'Google Play': 'Bald bei ', Stores: 'Bald in den ' } as Record<
+      string,
+      string | undefined
+    >,
+    storeSuffix: null as string | null,
+    appIconAlt: (title: string) => `App-Icon von ${title}`,
+    productView: 'Einblick',
+    privacy: 'Datenschutz',
+    appPrivacy: 'App-Datenschutz',
+    faqTitle: 'Häufige Fragen vor dem Installieren.',
+    readyPrefix: 'Bereit für ',
+    appBySuffix: ' ist eine App von George Valandis.',
+    legalLinks: (title: string) => `Rechtliches zu ${title}`,
+    websitePrivacy: 'Website-Datenschutz & Cookies',
+    privacyPolicy: 'Datenschutzerklärung',
+    terms: 'Nutzungsbedingungen',
+    support: 'Support',
+    imprint: 'Impressum',
+    qrCode: 'QR-Code',
+    storeLinkSoon: 'Store-Link folgt bald',
+    storeLinkSoonBody: 'Hier erscheint ein Code zum Installieren, sobald die App im Store ist.',
+    scanToInstall: 'Scannen und installieren',
+    downloadPrefix: null as string | null,
+    downloadSuffix: ' laden' as string | null,
+    scanBody: 'Scanne den QR-Code mit der Handykamera, um die App direkt im Store zu öffnen.',
+    openStore: 'Store öffnen',
+    openListing: (title: string) => `Store-Eintrag von ${title} öffnen`,
+    openOnStore: (title: string, brand: StoreBrand) =>
+      `${title} ${brand === 'google-play' ? 'bei Google Play' : 'im App Store'} öffnen`,
+    googleBadgeTop: 'Jetzt bei',
+    appleBadgeTop: 'Laden im',
+  },
+};
+
+type UiText = (typeof UI_TEXT)['en'];
+
 function getStoreBrand(app: AppEntry, storeUrl?: string): StoreBrand {
   const normalizedUrl = storeUrl?.toLowerCase() ?? '';
 
@@ -46,10 +118,12 @@ function StoreBadge({
   brand,
   showArrow = false,
   size = 'regular',
+  ui,
 }: {
   brand: StoreBrand;
   showArrow?: boolean;
   size?: 'compact' | 'regular';
+  ui: UiText;
 }) {
   const isCompact = size === 'compact';
   const badgeClass = isCompact
@@ -72,7 +146,7 @@ function StoreBadge({
         </svg>
         <span className="min-w-0 flex-1 leading-none">
           <span className={`block whitespace-nowrap font-bold uppercase tracking-wide ${isCompact ? 'text-[0.45rem]' : 'text-[0.48rem]'}`}>
-            Get it on
+            {ui.googleBadgeTop}
           </span>
           <span className={`block whitespace-nowrap font-bold tracking-tight ${isCompact ? 'text-base' : 'text-[1.02rem]'}`}>
             Google Play
@@ -93,7 +167,7 @@ function StoreBadge({
       </svg>
       <span className="min-w-0 flex-1 leading-none">
         <span className={`block whitespace-nowrap font-bold ${isCompact ? 'text-[0.5rem]' : 'text-[0.5rem]'}`}>
-          Download on the
+          {ui.appleBadgeTop}
         </span>
         <span className={`block whitespace-nowrap font-bold tracking-tight ${isCompact ? 'text-base' : 'text-[1.06rem]'}`}>
           App Store
@@ -111,6 +185,7 @@ function StoreQrLink({
   badgeSize = 'regular',
   qrClassName,
   qrCodeSvg,
+  ui,
 }: {
   app: AppEntry;
   appStoreLink: string;
@@ -118,6 +193,7 @@ function StoreQrLink({
   className?: string;
   qrClassName: string;
   qrCodeSvg: string;
+  ui: UiText;
 }) {
   const storeBrand = getStoreBrand(app, appStoreLink);
 
@@ -126,14 +202,14 @@ function StoreQrLink({
       href={appStoreLink}
       target="_blank"
       rel="noopener noreferrer"
-      aria-label={`Open the store listing for ${app.title}`}
+      aria-label={ui.openListing(app.title)}
       className={`flex flex-col items-center gap-2 transition hover:scale-[1.02] ${className}`}
     >
       <span
         className={`block bg-white shadow-sm ring-1 ring-slate-950/10 [&_svg]:h-full [&_svg]:w-full ${qrClassName}`}
         dangerouslySetInnerHTML={{ __html: qrCodeSvg }}
       />
-      <StoreBadge brand={storeBrand} showArrow size={badgeSize} />
+      <StoreBadge brand={storeBrand} showArrow size={badgeSize} ui={ui} />
     </a>
   );
 }
@@ -143,24 +219,25 @@ function StoreBadgeLink({
   appStoreLink,
   className = '',
   size = 'regular',
+  ui,
 }: {
   app: AppEntry;
   appStoreLink: string;
   className?: string;
   size?: 'compact' | 'regular';
+  ui: UiText;
 }) {
   const storeBrand = getStoreBrand(app, appStoreLink);
-  const storeName = storeBrand === 'google-play' ? 'Google Play' : 'the App Store';
 
   return (
     <a
       href={appStoreLink}
       target="_blank"
       rel="noopener noreferrer"
-      aria-label={`Open ${app.title} on ${storeName}`}
+      aria-label={ui.openOnStore(app.title, storeBrand)}
       className={`inline-flex transition hover:scale-[1.02] ${className}`}
     >
-      <StoreBadge brand={storeBrand} showArrow size={size} />
+      <StoreBadge brand={storeBrand} showArrow size={size} ui={ui} />
     </a>
   );
 }
@@ -247,6 +324,7 @@ function PhoneShot({
 }
 
 function appJsonLd(app: AppEntry, content: AppLandingPageContent) {
+  const inLanguage = content.lang ?? 'en';
   const seo = getAppSeoMetadata(app.slug);
   const pageUrl = absoluteUrl(`/apps/${app.slug}/`);
   const supportUrl = absoluteUrl(`/apps/${app.slug}/support/`);
@@ -264,7 +342,7 @@ function appJsonLd(app: AppEntry, content: AppLandingPageContent) {
         name: `${content.appStoreName} - ${content.eyebrow}`,
         description: content.intro,
         url: pageUrl,
-        inLanguage: 'en',
+        inLanguage,
         isPartOf: {
           '@type': 'WebSite',
           name: 'George Valandis',
@@ -356,11 +434,13 @@ function DownloadQrCard({
   appStoreLink,
   className = '',
   qrCodeSvg,
+  ui,
 }: {
   app: AppEntry;
   appStoreLink?: string;
   className?: string;
   qrCodeSvg?: string;
+  ui: UiText;
 }) {
   if (!appStoreLink || !qrCodeSvg) {
     return (
@@ -371,13 +451,13 @@ function DownloadQrCard({
           </span>
           <div>
             <p className="text-sm font-bold uppercase tracking-[0.16em] text-slate-500">
-              QR code
+              {ui.qrCode}
             </p>
             <p className="mt-2 text-base font-bold text-slate-950">
-              Store link coming soon
+              {ui.storeLinkSoon}
             </p>
             <p className="mt-2 text-sm leading-6 text-slate-600">
-              A scan-to-install code will appear here once the public store listing is available.
+              {ui.storeLinkSoonBody}
             </p>
           </div>
         </div>
@@ -392,16 +472,17 @@ function DownloadQrCard({
         appStoreLink={appStoreLink}
         qrClassName="h-40 w-40 rounded-2xl p-2"
         qrCodeSvg={qrCodeSvg}
+        ui={ui}
       />
       <div>
         <p className="text-sm font-bold uppercase tracking-[0.16em] text-slate-500">
-          Scan to install
+          {ui.scanToInstall}
         </p>
         <p className="mt-2 text-lg font-bold tracking-tight text-slate-950">
-          Download {app.title}
+          {ui.downloadPrefix}{app.title}{ui.downloadSuffix}
         </p>
         <p className="mt-2 text-sm leading-6 text-slate-600">
-          Scan the QR code with your phone camera to open the store listing directly.
+          {ui.scanBody}
         </p>
         <a
           href={appStoreLink}
@@ -409,7 +490,7 @@ function DownloadQrCard({
           rel="noopener noreferrer"
           className="mt-3 inline-flex items-center gap-2 text-sm font-bold text-slate-950 transition hover:text-slate-700"
         >
-          Open store
+          {ui.openStore}
           <ExternalLink size={15} />
         </a>
       </div>
@@ -423,12 +504,14 @@ function HeroInstallActions({
   ctaLabel,
   isDarkHero,
   qrCodeSvg,
+  ui,
 }: {
   app: AppEntry;
   appStoreLink?: string;
   ctaLabel: string;
   isDarkHero: boolean;
   qrCodeSvg?: string;
+  ui: UiText;
 }) {
   if (!appStoreLink) {
     return (
@@ -451,6 +534,7 @@ function HeroInstallActions({
           ctaLabel={ctaLabel}
           isDarkHero={isDarkHero}
           qrCodeSvg={qrCodeSvg}
+          ui={ui}
         />
       ) : (
         <a
@@ -477,12 +561,14 @@ function HeroDownloadQrCard({
   ctaLabel,
   isDarkHero,
   qrCodeSvg,
+  ui,
 }: {
   app: AppEntry;
   appStoreLink: string;
   ctaLabel: string;
   isDarkHero: boolean;
   qrCodeSvg: string;
+  ui: UiText;
 }) {
   return (
     <aside className="grid w-full max-w-xl grid-cols-[7rem_1fr] items-center gap-4 rounded-3xl border border-slate-950/10 bg-white/70 p-4 shadow-2xl shadow-slate-950/10 backdrop-blur sm:grid-cols-[8.5rem_1fr] sm:p-5">
@@ -492,16 +578,17 @@ function HeroDownloadQrCard({
         className="gap-0 [&>span:last-child]:hidden"
         qrClassName="h-28 w-28 rounded-2xl p-2 shadow-sm sm:h-[8.5rem] sm:w-[8.5rem]"
         qrCodeSvg={qrCodeSvg}
+        ui={ui}
       />
       <div className="min-w-0">
         <p className="text-xs font-bold uppercase tracking-[0.18em] text-slate-500 sm:text-sm">
-          Scan to install
+          {ui.scanToInstall}
         </p>
         <p className="mt-1.5 text-base font-bold tracking-tight text-slate-950 sm:mt-2 sm:text-lg">
-          Download {app.title}
+          {ui.downloadPrefix}{app.title}{ui.downloadSuffix}
         </p>
         <p className="mt-2 hidden text-sm leading-6 text-slate-600 sm:block">
-          Scan the QR code with your phone camera to open the store listing directly.
+          {ui.scanBody}
         </p>
       </div>
       <a
@@ -549,9 +636,10 @@ export default function AppLandingPage({ app, content }: AppLandingPageProps) {
   const privacyButtonClass = 'border-slate-950/15 text-slate-950 hover:bg-slate-950/5';
   const downloadQrSvg = appStoreLink ? createDownloadQrSvg(appStoreLink) : undefined;
   const usesGlanceAwayCampaignMeasurement = app.slug === 'glanceaway';
+  const ui = UI_TEXT[content.lang ?? 'en'];
 
   return (
-    <main className="min-h-screen bg-slate-50 text-slate-950">
+    <main lang={content.lang} className="min-h-screen bg-slate-50 text-slate-950">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(appJsonLd(app, content)) }}
@@ -569,7 +657,7 @@ export default function AppLandingPage({ app, content }: AppLandingPageProps) {
             }`}
           >
             <ArrowLeft size={16} />
-            Apps
+            {ui.apps}
           </Link>
           {appStoreLink ? (
             <a
@@ -591,7 +679,7 @@ export default function AppLandingPage({ app, content }: AppLandingPageProps) {
                 isDarkHero ? 'bg-white/10 text-slate-300' : 'bg-slate-950/10 text-slate-600'
               }`}
             >
-              {storeLabel} coming soon
+              {ui.storePrefix[storeLabel]}{storeLabel}{ui.storeSuffix}
             </span>
           )}
         </div>
@@ -601,7 +689,7 @@ export default function AppLandingPage({ app, content }: AppLandingPageProps) {
             <div className="mb-8 flex items-center gap-4">
               <Image
                 src={app.logo}
-                alt={`${app.title} app icon`}
+                alt={ui.appIconAlt(app.title)}
                 width={64}
                 height={64}
                 className="h-16 w-16 rounded-2xl shadow-xl shadow-slate-950/10"
@@ -629,6 +717,7 @@ export default function AppLandingPage({ app, content }: AppLandingPageProps) {
                   ctaLabel={content.primaryCta}
                   isDarkHero={isDarkHero}
                   qrCodeSvg={downloadQrSvg}
+                  ui={ui}
                 />
               ) : (
                 <>
@@ -717,7 +806,7 @@ export default function AppLandingPage({ app, content }: AppLandingPageProps) {
           <div className="grid items-end gap-10 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1fr)]">
             <div>
               <p className="text-sm font-bold uppercase tracking-[0.2em] text-slate-500">
-                Product view
+                {ui.productView}
               </p>
               <h2 className="mt-4 max-w-2xl text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl">
                 {content.featureTitle}
@@ -829,7 +918,7 @@ export default function AppLandingPage({ app, content }: AppLandingPageProps) {
               href={usesGlanceAwayCampaignMeasurement ? appPrivacyUrl : privacyUrl}
               className={`inline-flex items-center justify-center rounded-full border px-5 py-3 text-sm font-bold transition ${privacyButtonClass}`}
             >
-              {usesGlanceAwayCampaignMeasurement ? 'App Privacy' : 'Privacy'}
+              {usesGlanceAwayCampaignMeasurement ? ui.appPrivacy : ui.privacy}
             </a>
           </div>
         </div>
@@ -842,7 +931,7 @@ export default function AppLandingPage({ app, content }: AppLandingPageProps) {
               FAQ
             </p>
             <h2 className="mt-4 text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl">
-              Common questions before you install.
+              {ui.faqTitle}
             </h2>
           </div>
           <div className="divide-y divide-slate-950/10">
@@ -863,14 +952,14 @@ export default function AppLandingPage({ app, content }: AppLandingPageProps) {
           <div className="grid gap-8 border-t border-slate-950/10 pt-10 lg:grid-cols-[minmax(0,0.85fr)_minmax(22rem,0.5fr)] lg:items-center">
             <div>
               <p className="text-2xl font-bold tracking-tight text-slate-950">
-                Ready to try {app.title}?
+                {ui.readyPrefix}{app.title}?
               </p>
               <p className="mt-2 text-sm text-slate-600">
                 {content.finalCtaDescription}
               </p>
               <div className="mt-6">
                 {appStoreLink ? (
-                  <StoreBadgeLink app={app} appStoreLink={appStoreLink} />
+                  <StoreBadgeLink app={app} appStoreLink={appStoreLink} ui={ui} />
                 ) : (
                   <span className="inline-flex items-center justify-center rounded-full bg-slate-950/10 px-6 py-3.5 text-sm font-bold text-slate-600">
                     {content.primaryCta}
@@ -882,6 +971,7 @@ export default function AppLandingPage({ app, content }: AppLandingPageProps) {
               app={app}
               appStoreLink={appStoreLink}
               qrCodeSvg={downloadQrSvg}
+              ui={ui}
             />
           </div>
         </div>
@@ -889,33 +979,33 @@ export default function AppLandingPage({ app, content }: AppLandingPageProps) {
         <footer className="mx-auto mt-12 max-w-7xl px-6 lg:px-8">
           <div className="flex flex-col gap-5 border-t border-slate-950/10 py-8 text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between">
             <p>
-              &copy; {new Date().getFullYear()} George Valandis. {app.title} is an app by George Valandis.
+              &copy; {new Date().getFullYear()} George Valandis. {app.title}{ui.appBySuffix}
             </p>
-            <nav aria-label={`${app.title} legal links`} className="flex flex-wrap gap-x-5 gap-y-2">
+            <nav aria-label={ui.legalLinks(app.title)} className="flex flex-wrap gap-x-5 gap-y-2">
               {usesGlanceAwayCampaignMeasurement ? (
                 <>
                   <a href={privacyUrl} className="font-semibold text-slate-600 transition hover:text-slate-950">
-                    Website Privacy &amp; Cookies
+                    {ui.websitePrivacy}
                   </a>
                   <a href={appPrivacyUrl} className="font-semibold text-slate-600 transition hover:text-slate-950">
-                    App Privacy
+                    {ui.appPrivacy}
                   </a>
                 </>
               ) : (
                 <a href={privacyUrl} className="font-semibold text-slate-600 transition hover:text-slate-950">
-                  Privacy Policy
+                  {ui.privacyPolicy}
                 </a>
               )}
               <a href={termsUrl} className="font-semibold text-slate-600 transition hover:text-slate-950">
-                Terms
+                {ui.terms}
               </a>
               {supportPage ? (
                 <a href={`/apps/${app.slug}/support/`} className="font-semibold text-slate-600 transition hover:text-slate-950">
-                  Support
+                  {ui.support}
                 </a>
               ) : null}
               <a href={imprintUrl} className="font-semibold text-slate-600 transition hover:text-slate-950">
-                Imprint
+                {ui.imprint}
               </a>
             </nav>
           </div>

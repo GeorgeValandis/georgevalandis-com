@@ -323,9 +323,9 @@ const baseApps = [
   {
     slug: 'kennzeichen',
     title: 'Kennzeichensammler: Familie',
-    subtitle: 'The license plate game for German family road trips',
+    subtitle: 'Kennzeichen sammeln & raten',
     description:
-      'Kennzeichensammler: Familie turns every car ride in Germany into a game for the whole family: call out a license plate, collect points, guess the town and grow one shared collection of all 713 German plate codes.',
+      'Das Kennzeichen-Spiel für die ganze Familie: Sammelt auf jeder Autofahrt gemeinsam Kennzeichen aus ganz Deutschland und ratet, woher sie kommen.',
     platforms: ['iOS'],
     tags: ['Swift', 'SwiftUI'],
     gradient: 'from-[#f1b79f]/30 to-[#f9dfd4]/30',

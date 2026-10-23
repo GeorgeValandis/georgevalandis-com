@@ -6,6 +6,8 @@ export type AppScreenshot = {
 };
 
 export type AppLandingPageContent = {
+  /** Page language; omitted = English. German pages get German UI text and lang="de". */
+  lang?: 'de';
   appStoreName: string;
   eyebrow: string;
   headline: string;
@@ -2392,111 +2394,109 @@ export const appLandingPages: Record<string, AppLandingPageContent> = {
   },
   // app-fabrik:begin kennzeichen
   kennzeichen: {
-    appStoreName:
-      'Kennzeichensammler: Familie: The license plate game for German family road trips',
+    lang: 'de',
+    appStoreName: 'Kennzeichensammler: Familie – Kennzeichen sammeln & raten',
     eyebrow: 'kennzeichensammler',
-    headline: 'Spot the plate first, then guess where it comes from.',
+    headline: 'Wer sieht das Kennzeichen zuerst?',
     intro:
-      'Kennzeichensammler: Familie turns every car ride in Germany into a game for the whole family: call out a license plate, collect points, guess the town and grow one shared collection of all 713 German plate codes.',
-    primaryCta: 'Coming soon to the App Store',
-    secondaryCta: 'See the app',
-    availability: 'Coming soon to the App Store for iPhone.',
+      'Das Kennzeichen-Spiel für die ganze Familie: Sammelt auf jeder Autofahrt gemeinsam Kennzeichen aus ganz Deutschland und ratet, woher sie kommen.',
+    primaryCta: 'Bald im App Store',
+    secondaryCta: 'App ansehen',
+    availability: 'Bald im App Store für iPhone.',
     accent: '#e0602a',
     background: 'from-[#fbece5] via-[#fafaf8] to-[#fdf5f2]',
     category: 'UtilitiesApplication',
     price: 0,
     priceCurrency: 'USD',
     highlights: [
-      'Spot and call it',
-      'Guess together',
-      'Collect as a family',
-      'No account, no ads, anonymous by design',
+      'Entdecken und rufen',
+      'Gemeinsam raten',
+      'Als Familie sammeln',
+      'Kein Konto, keine Werbung, anonym',
     ],
     screenshots: [
       {
         src: '/apps/kennzeichen/screens/01.png',
-        alt: 'Kennzeichensammler ride screen: choose which family member spotted the plate.',
-        label: 'Who spotted it?',
+        alt:
+          'Fahrtbildschirm von Kennzeichensammler: Auswählen, wer das Kennzeichen zuerst entdeckt hat.',
+        label: 'Wer hat\'s entdeckt?',
       },
       {
         src: '/apps/kennzeichen/screens/02.png',
-        alt: 'Guessing round with three German towns for a license plate code.',
-        label: 'Where is it from?',
+        alt: 'Ratrunde mit drei deutschen Orten zu einem Kennzeichenkürzel.',
+        label: 'Woher kommt das?',
       },
       {
         src: '/apps/kennzeichen/screens/03.png',
-        alt: 'Shared family collection of German license plate codes by federal state.',
-        label: 'Family collection',
+        alt: 'Gemeinsame Familiensammlung deutscher Kennzeichenkürzel mit Bundesland.',
+        label: 'Familiensammlung',
       },
       {
         src: '/apps/kennzeichen/screens/04.png',
-        alt: 'End of the ride with the winner on the podium.',
-        label: 'Winner podium',
+        alt: 'Ende der Fahrt mit der Gewinnerin auf dem Podest.',
+        label: 'Lena gewinnt!',
       },
       {
         src: '/apps/kennzeichen/screens/05.png',
-        alt: 'Home screen with the yellow car to start a ride.',
-        label: 'Home',
+        alt: 'Startseite mit dem gelben Auto, um eine Fahrt zu starten.',
+        label: 'Startseite',
       },
     ],
-    featureTitle: 'How Kennzeichensammler: Familie works',
-    featureIntro: 'The license plate game for German family road trips.',
+    featureTitle: 'So spielt ihr',
+    featureIntro: 'Kennzeichen sammeln & raten, auf jeder Autofahrt.',
     features: [
       {
-        title: 'Spot and call it',
+        title: 'Entdecken und rufen',
         description:
-          'Whoever sees a plate first gets the points: +150 for a new code, +50 for one you already have.',
+          'Wer ein Kennzeichen zuerst entdeckt, bekommt Punkte: +150 für ein neues, +50 für ein schon gesammeltes.',
       },
       {
-        title: 'Guess together',
-        description: 'Three towns, one right answer. Everyone who guesses right scores too.',
+        title: 'Gemeinsam raten',
+        description: 'Drei Orte zur Auswahl. Wer richtig liegt, bekommt +50.',
       },
       {
-        title: 'Collect as a family',
-        description:
-          'Every plate goes into one shared family collection that grows ride after ride.',
+        title: 'Als Familie sammeln',
+        description: 'Jedes Kennzeichen landet in eurer gemeinsamen Sammlung, Fahrt für Fahrt.',
       },
     ],
-    workflowTitle: 'Kennzeichensammler: Familie in three steps',
+    workflowTitle: 'Kennzeichensammler: Familie in drei Schritten',
     workflow: [
       {
-        title: 'Spot and call it',
+        title: 'Entdecken und rufen',
         description:
-          'Whoever sees a plate first gets the points: +150 for a new code, +50 for one you already have.',
+          'Wer ein Kennzeichen zuerst entdeckt, bekommt Punkte: +150 für ein neues, +50 für ein schon gesammeltes.',
       },
       {
-        title: 'Guess together',
-        description: 'Three towns, one right answer. Everyone who guesses right scores too.',
+        title: 'Gemeinsam raten',
+        description: 'Drei Orte zur Auswahl. Wer richtig liegt, bekommt +50.',
       },
       {
-        title: 'Collect as a family',
-        description:
-          'Every plate goes into one shared family collection that grows ride after ride.',
+        title: 'Als Familie sammeln',
+        description: 'Jedes Kennzeichen landet in eurer gemeinsamen Sammlung, Fahrt für Fahrt.',
       },
     ],
-    privacyTitle: 'Private by design',
+    privacyTitle: 'Privat von Anfang an',
     privacyDescription:
-      'No account and no ads. Purchases are handled by Apple and RevenueCat with an anonymous ID. Anonymous usage statistics from TelemetryDeck cannot be traced back to you.',
-    finalCtaDescription: 'Kennzeichensammler: Familie is coming soon to the App Store.',
+      'Kein Konto und keine Werbung. Käufe laufen über Apple und RevenueCat mit einer anonymen ID. Anonyme Nutzungsstatistiken von TelemetryDeck lassen sich nicht auf dich zurückführen.',
+    finalCtaDescription: 'Kennzeichensammler: Familie kommt bald in den App Store.',
     faq: [
       {
-        question: 'Is it free?',
+        question: 'Ist es gratis?',
         answer:
-          'Yes. Collecting, guessing, the collection and 2 players are free with no limit and no ads. The one-time Family Pack unlocks up to 6 players.',
+          'Ja. Sammeln, Raten, die Sammlung und 2 Mitspieler sind immer gratis. Keine Werbung, kein Konto, kein Abo. Mit dem Familienpaket (einmal zahlen) spielen bis zu 6 mit.',
       },
       {
-        question: 'Does the driver have to use the phone?',
-        answer:
-          'No. The game is played by the passengers; the driver keeps their eyes on the road.',
+        question: 'Muss der Fahrer das Handy bedienen?',
+        answer: 'Nein. Der Fahrer schaut auf die Straße, gespielt wird von den Mitfahrern.',
       },
       {
-        question: 'Does it need an account or internet?',
-        answer: 'No account. The game works offline; only the purchase needs a connection.',
+        question: 'Brauche ich ein Konto oder Internet?',
+        answer: 'Kein Konto. Das Spiel funktioniert auch ohne Internet.',
       },
       {
-        question: 'Which data does it collect?',
+        question: 'Welche Daten werden erfasst?',
         answer:
-          'Only anonymous usage statistics and anonymous purchase information, as described in the privacy policy.',
+          'Nur anonyme Nutzungsstatistiken und anonyme Kaufinformationen, wie in der Datenschutzerklärung beschrieben.',
       },
     ],
   },

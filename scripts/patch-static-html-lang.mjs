@@ -53,7 +53,22 @@ async function patchFile(filePath) {
   return true;
 }
 
-const files = [...candidateFiles, ...(await collectHtmlFiles(germanRoot))];
+// App landing pages marked German by the page itself (`<main lang="de">`, see AppLandingPage).
+async function collectGermanAppPages() {
+  const files = [];
+  for (const file of await collectHtmlFiles(path.join(outputRoot, 'apps'))) {
+    if (/<main lang="de"/.test(await readFile(file, 'utf8'))) {
+      files.push(file);
+    }
+  }
+  return files;
+}
+
+const files = [
+  ...candidateFiles,
+  ...(await collectHtmlFiles(germanRoot)),
+  ...(await collectGermanAppPages()),
+];
 let patchedCount = 0;
 
 for (const file of files) {

@@ -157,6 +157,9 @@ function validate(s) {
   if (s.group !== undefined && !SEO_GROUPS.includes(s.group)) {
     errors.push(`group must be one of: ${SEO_GROUPS.join(', ')}`);
   }
+  if (s.lang !== undefined && !['en', 'de'].includes(s.lang)) {
+    errors.push('lang must be "en" or "de"');
+  }
   if (s.updated !== undefined && !/^\d{4}-\d{2}-\d{2}$/.test(s.updated)) {
     errors.push('updated must be YYYY-MM-DD');
   }
@@ -174,6 +177,8 @@ const services = [...new Set(spec.services)].sort();
 const hasRevenueCat = services.includes('revenuecat');
 const hasTelemetryDeck = services.includes('telemetrydeck');
 const accent = (spec.accent ?? '#e0602a').toLowerCase();
+// Landing page language. Legal texts stay English (no German version yet).
+const de = spec.lang === 'de';
 const platforms = spec.platforms ?? ['iOS'];
 const appStoreLink = spec.appStoreId
   ? `https://apps.apple.com/us/app/id${spec.appStoreId}?uo=4`
@@ -218,7 +223,7 @@ const screens = spec.screens.map((screen) => {
   return {
     src: publicPath,
     label: screen.label.trim(),
-    alt: (screen.alt ?? `${name} ${screen.label.trim()} screen.`).trim(),
+    alt: (screen.alt ?? (de ? `${name}: ${screen.label.trim()}` : `${name} ${screen.label.trim()} screen.`)).trim(),
   };
 });
 if (assetErrors.length > 0) fail(`invalid assets:\n- ${assetErrors.join('\n- ')}`);
@@ -291,6 +296,13 @@ const appsBlock = (() => {
 // ---------------------------------------------------------------- landing block
 
 const privacyDescription = (() => {
+  if (de) {
+    const parts = ['Kein Konto und keine Werbung.'];
+    if (hasRevenueCat) parts.push('Käufe laufen über Apple und RevenueCat mit einer anonymen ID.');
+    if (hasTelemetryDeck) parts.push('Anonyme Nutzungsstatistiken von TelemetryDeck lassen sich nicht auf dich zurückführen.');
+    if (!hasRevenueCat && !hasTelemetryDeck) parts.push('Nichts verlässt dein Gerät.');
+    return parts.join(' ');
+  }
   const parts = ['No account and no ads.'];
   if (hasRevenueCat) parts.push('Purchases are handled by Apple and RevenueCat with an anonymous ID.');
   if (hasTelemetryDeck) parts.push('Anonymous usage statistics from TelemetryDeck cannot be traced back to you.');
@@ -320,26 +332,41 @@ const landingBlock = (() => {
   const highlights = [
     ...spec.benefits.map((b) => quote(b.title)),
     quote(
-      hasRevenueCat || hasTelemetryDeck
-        ? 'No account, no ads, anonymous by design'
-        : 'No account, no ads, no tracking'
+      de
+        ? hasRevenueCat || hasTelemetryDeck
+          ? 'Kein Konto, keine Werbung, anonym'
+          : 'Kein Konto, keine Werbung, kein Tracking'
+        : hasRevenueCat || hasTelemetryDeck
+          ? 'No account, no ads, anonymous by design'
+          : 'No account, no ads, no tracking'
     ),
   ];
   const lines = [
     `  ${begin}`,
     `  ${bareKey(slug)}: {`,
+    ...(de ? [prop(i1, 'lang', quote('de'))] : []),
     prop(i1, 'appStoreName', quote(spec.appStoreName ?? `${name}: ${spec.subtitle}`)),
     prop(i1, 'eyebrow', quote(spec.keyword)),
     prop(i1, 'headline', quote(spec.hero.headline)),
     prop(i1, 'intro', quote(spec.hero.intro)),
-    prop(i1, 'primaryCta', quote(appStoreLink ? 'View in the App Store' : 'Coming soon to the App Store')),
-    prop(i1, 'secondaryCta', quote('See the app')),
+    prop(
+      i1,
+      'primaryCta',
+      quote(
+        de
+          ? appStoreLink ? 'Im App Store ansehen' : 'Bald im App Store'
+          : appStoreLink ? 'View in the App Store' : 'Coming soon to the App Store'
+      )
+    ),
+    prop(i1, 'secondaryCta', quote(de ? 'App ansehen' : 'See the app')),
     prop(
       i1,
       'availability',
       quote(
         spec.availability ??
-          (appStoreLink ? 'Available on the App Store for iPhone.' : 'Coming soon to the App Store for iPhone.')
+          (de
+            ? appStoreLink ? 'Im App Store für iPhone erhältlich.' : 'Bald im App Store für iPhone.'
+            : appStoreLink ? 'Available on the App Store for iPhone.' : 'Coming soon to the App Store for iPhone.')
       )
     ),
     prop(i1, 'accent', quote(accent)),
@@ -353,21 +380,29 @@ const landingBlock = (() => {
     prop(i1, 'priceCurrency', quote('USD')),
     list(i1, 'highlights', highlights),
     list(i1, 'screenshots', screenshots),
-    prop(i1, 'featureTitle', quote(spec.featureTitle ?? `How ${name} works`)),
+    prop(i1, 'featureTitle', quote(spec.featureTitle ?? (de ? `So funktioniert ${name}` : `How ${name} works`))),
     prop(i1, 'featureIntro', quote(spec.featureIntro ?? `${spec.subtitle}.`)),
     list(i1, 'features', features),
-    prop(i1, 'workflowTitle', quote(spec.workflowTitle ?? `${name} in three steps`)),
+    prop(
+      i1,
+      'workflowTitle',
+      quote(spec.workflowTitle ?? (de ? `${name} in drei Schritten` : `${name} in three steps`))
+    ),
     list(i1, 'workflow', workflow),
-    prop(i1, 'privacyTitle', quote('Private by design')),
+    prop(i1, 'privacyTitle', quote(de ? 'Privat von Anfang an' : 'Private by design')),
     prop(i1, 'privacyDescription', quote(privacyDescription)),
     prop(
       i1,
       'finalCtaDescription',
       quote(
         spec.finalCtaDescription ??
-          (appStoreLink
-            ? `Install ${name} from the App Store and get started in seconds.`
-            : `${name} is coming soon to the App Store.`)
+          (de
+            ? appStoreLink
+              ? `Lade ${name} aus dem App Store und leg in Sekunden los.`
+              : `${name} kommt bald in den App Store.`
+            : appStoreLink
+              ? `Install ${name} from the App Store and get started in seconds.`
+              : `${name} is coming soon to the App Store.`)
       )
     ),
     list(i1, 'faq', faq),
@@ -388,7 +423,7 @@ const seoBlock = [
   prop(
     '    ',
     'searchIntent',
-    quote(spec.searchIntent ?? `Find a ${spec.keyword}: ${spec.subtitle}.`)
+    quote(spec.searchIntent ?? (de ? `${spec.keyword}: ${spec.subtitle}.` : `Find a ${spec.keyword}: ${spec.subtitle}.`))
   ),
   prop('    ', 'group', quote(spec.group ?? 'utilities-tools')),
   prop('    ', 'updatedAt', quote(updated)),
