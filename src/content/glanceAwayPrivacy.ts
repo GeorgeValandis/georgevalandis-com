@@ -1,8 +1,8 @@
 export const glanceAwayPrivacyHtml = `
 <h3 class="wp-block-heading"><strong>Privacy Policy for GlanceAway</strong></h3>
 
-<h5 class="wp-block-heading"><strong>Effective Date: August 5, 2026</strong></h5>
-<h5 class="wp-block-heading"><strong>Version: 1.3</strong></h5>
+<h5 class="wp-block-heading"><strong>Effective Date: October 24, 2026</strong></h5>
+<h5 class="wp-block-heading"><strong>Version: 1.4</strong></h5>
 
 <h5 class="wp-block-heading"><strong>Controller</strong></h5>
 <p>Georgios Andi Avenidis<br>Berliner Strasse 235<br>65205 Wiesbaden, Germany<br>Email: <a href="mailto:info@georgevalandis.com">info@georgevalandis.com</a></p>
@@ -19,6 +19,7 @@ export const glanceAwayPrivacyHtml = `
 <p>If you buy or restore premium access, Apple processes the payment through the App Store. GlanceAway uses RevenueCat to validate purchases, restore access, and unlock premium features.</p>
 <p>Apple and RevenueCat may process technical purchase and entitlement information, such as product identifiers, purchase or restore status, receipt-related validation data, an anonymous app user identifier, device and app metadata required for purchase validation, and entitlement state.</p>
 <p>GlanceAway does not send your timer settings, session history, break statistics, reminder preferences, or routine data to RevenueCat. Purchase validation data is not used for advertising or cross-app tracking.</p>
+<p><strong>Refund requests.</strong> By making an in-app purchase on or after October 24, 2026, you consent to GlanceAway sharing information about the delivery and consumption of your purchase with Apple when you request a refund, so that Apple can make an informed refund decision in accordance with its policies. RevenueCat transmits this information on our behalf. It is limited to technical purchase information, such as whether the purchased content was delivered, whether you consented to this sharing, and our refund preference, and does not include your timer settings, session history, break statistics, or other app content. Apple alone decides whether a refund is granted. You can withdraw this consent at any time by contacting <a href="mailto:info@georgevalandis.com">info@georgevalandis.com</a>; we will then stop sharing this information for your future refund requests.</p>
 
 <h5 class="wp-block-heading"><strong>4. Product Analytics and Diagnostics</strong></h5>
 <p>GlanceAway includes a privacy-focused analytics layer to help test and improve product flows, especially where users may get stuck, where purchases are attempted, and where review prompts are shown.</p>
