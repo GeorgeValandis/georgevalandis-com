@@ -212,6 +212,56 @@ export const appSupportPages: Record<string, AppSupportPageContent> = {
     contact:
       'For support, email support@georgevalandis.com and mention QuietRide in the message.',
   },
+  swush: {
+    intro:
+      'Swush is a Mac app for dictation anywhere, a shooting-star confirmation where your text lands, and a stack of results from AI agents such as Claude Code. These notes cover setup, permissions, and privacy.',
+    notes: [
+      {
+        title: 'Three permissions',
+        description:
+          'Microphone for dictation, Input Monitoring for the right Command key, and Accessibility to insert text. If one is missing, the Swush menu shows a shortcut to the right setting.',
+      },
+      {
+        title: 'On your Mac',
+        description:
+          'Speech recognition runs on your Mac. Recordings, transcripts, and agent cards stay local. There is no account, no analytics, and no ads.',
+      },
+      {
+        title: 'Works with Claude Code',
+        description:
+          'Choose Connect to Claude Code in the Swush menu to see finished sessions and questions as cards. Swush is independent and not affiliated with Anthropic.',
+      },
+    ],
+    faq: [
+      {
+        question: 'How do I dictate?',
+        answer:
+          'Tap the right Command key, speak, and tap it again. Swush inserts the text and presses Return. Hold Shift on the second tap to insert without sending, or press Escape to cancel.',
+      },
+      {
+        question: 'Why is no text inserted?',
+        answer:
+          'Swush needs Accessibility to insert text. Open the Swush menu and use the shortcut shown there, then allow Swush in System Settings. The text also stays available under Copy Last Dictation.',
+      },
+      {
+        question: 'Which speech recognition does Swush use?',
+        answer:
+          'Apple speech recognition on your Mac by default. You can switch to Whisper in the Dictation menu; its model is downloaded once and then also runs on your Mac.',
+      },
+      {
+        question: 'Can I use Swush in light mode?',
+        answer:
+          'Yes. Under Appearance in the Swush menu, choose Match System, Light, or Dark. It changes the pill, the stack, and the Dock icon.',
+      },
+      {
+        question: 'How do I remove Swush completely?',
+        answer:
+          'If you connected Claude Code, choose Connect to Claude Code again to remove the hook. Then quit Swush, delete the app, and delete its folder in Library/Application Support.',
+      },
+    ],
+    contact:
+      'For support or feature requests, email info@georgevalandis.com and mention Swush in the message.',
+  },
 };
 
 export const appSupportSlugs = Object.keys(appSupportPages);

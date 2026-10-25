@@ -349,6 +349,19 @@ const baseApps = [
     logo: '/apps/perfect75-icon.png',
   },
   // app-fabrik:end perfect75
+  {
+    slug: 'swush',
+    title: 'Swush',
+    subtitle: 'Dictation and agent results for your Mac',
+    description:
+      'A Mac app for dictation anywhere, a shooting-star confirmation where your text lands, and a calm stack of results from AI agents such as Claude Code.',
+    platforms: ['macOS'],
+    tags: ['Swift', 'SwiftUI', 'macOS', 'Dictation', 'Local-first'],
+    gradient: 'from-[#d97857]/30 to-[#1c1c1a]/30',
+    accentBorder: 'group-hover:border-[#d97857]/40',
+    showInAppsSection: false,
+    logo: '/apps/swush-icon.png',
+  },
 ] as const;
 
 export const apps: AppEntry[] = baseApps.map((app) => ({
