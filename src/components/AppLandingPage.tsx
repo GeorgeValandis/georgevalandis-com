@@ -1015,7 +1015,7 @@ export default function AppLandingPage({ app, content }: AppLandingPageProps) {
         </footer>
       </section>
       {usesGlanceAwayCampaignMeasurement ? (
-        <script src="/apps/glanceaway/campaign.js" defer />
+        <script src="/apps/glanceaway/campaign.js" data-source-prefix="landing" defer />
       ) : null}
     </main>
   );

@@ -77,6 +77,7 @@ export default function SetupPage({ locale }: SetupPageProps) {
 
         <p className="mt-16 max-w-2xl text-xs leading-relaxed text-gray-600">{copy.disclosure}</p>
       </div>
+      <script src="/apps/glanceaway/campaign.js" data-campaign="setup-page" data-source-prefix="setup" defer />
     </main>
   );
 }
