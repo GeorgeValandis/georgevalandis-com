@@ -2,6 +2,7 @@ import { appSlugs } from '@/content/apps';
 import { appSeoMetadata, supportSeoMetadata } from '@/content/appSeo';
 import { appSupportSlugs } from '@/content/appSupportPages';
 import { blogPosts } from '@/content/blogPosts';
+import { glanceAwayMacPage, glanceAwayMacPath } from '@/content/glanceawayMacPage';
 import { absoluteUrl, canonicalPath } from '@/lib/seo';
 import type { MetadataRoute } from 'next';
 
@@ -122,5 +123,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })
   );
 
-  return [...staticPages, ...blogPages, ...appPages, ...supportPages];
+  const macPages = [
+    sitemapEntry(glanceAwayMacPath, {
+      lastModified: dateFromIsoDate(glanceAwayMacPage.updatedAt),
+      changeFrequency: 'monthly',
+      priority: 0.65,
+    }),
+  ];
+
+  return [...staticPages, ...blogPages, ...appPages, ...macPages, ...supportPages];
 }
