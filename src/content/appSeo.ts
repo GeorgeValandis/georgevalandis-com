@@ -76,17 +76,19 @@ export const appSeoMetadata: Record<string, AppSeoMetadata> = {
     updatedAt: '2026-05-23',
   },
   glanceaway: {
-    primaryKeyword: 'eye break timer app',
+    primaryKeyword: 'break reminder for Mac',
     secondaryKeywords: [
+      'eye break timer app',
+      'eye break app mac',
       '20-20-20 rule app',
       '20-20-20 eye break reminder',
       'screen break reminder',
       'eye rest reminder',
     ],
     searchIntent:
-      'Find an eye break timer app for 20-20-20 rule reminders, screen breaks, and progress stats.',
+      'Find a break reminder for Mac with 20-20-20 eye breaks, full-screen break overlays, and progress stats.',
     group: 'habits-focus-wellbeing',
-    updatedAt: '2026-06-19',
+    updatedAt: '2026-11-06',
   },
   'perfect-day': {
     primaryKeyword: 'habit tracker app',

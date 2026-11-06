@@ -80,7 +80,7 @@ const baseApps = [
     subtitle: 'Your Gentle Reminder to Protect Your Eyes',
     description:
       'A gentle reminder app that helps you protect your eyes by encouraging regular screen breaks throughout the day.',
-    platforms: ['iOS'],
+    platforms: ['iOS', 'macOS'],
     tags: ['Swift', 'SwiftUI', 'Notifications', 'Health'],
     gradient: 'from-sky-500/20 to-blue-500/20',
     accentBorder: 'group-hover:border-sky-500/40',

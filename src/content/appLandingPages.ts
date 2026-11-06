@@ -377,10 +377,10 @@ export const appLandingPages: Record<string, AppLandingPageContent> = {
   },
   glanceaway: {
     appStoreName: 'Eye Break Timer: GlanceAway',
-    eyebrow: 'eye break timer app',
-    headline: 'An eye break timer app for long screen days.',
+    eyebrow: 'break reminder for Mac',
+    headline: 'A break reminder for Mac that actually makes you look away.',
     intro:
-      'GlanceAway is an eye break timer app and 20-20-20 rule app with gentle alerts, custom break intervals, and simple progress stats across iPhone and Mac.',
+      'GlanceAway is a break reminder for Mac and iPhone: 20-20-20 eye breaks, a calm full-screen overlay, menu bar controls, and breaks that wait during video calls.',
     primaryCta: 'View in the App Store',
     secondaryCta: 'See the app',
     availability: 'Free on the App Store. Optional premium features may be available in the app.',
@@ -390,7 +390,9 @@ export const appLandingPages: Record<string, AppLandingPageContent> = {
     price: 0,
     priceCurrency: 'USD',
     highlights: [
-      'Eye break timer app for the 20-20-20 rule',
+      'Break reminder for Mac with menu bar controls',
+      'Full-screen breaks that pause during video calls',
+      'Eye break timer for the 20-20-20 rule',
       'Custom work and break intervals',
       'Session stats, streaks, and trends',
       'No account required',
@@ -417,19 +419,19 @@ export const appLandingPages: Record<string, AppLandingPageContent> = {
         label: 'Settings',
       },
     ],
-    featureTitle: 'A small eye break timer app for healthier screen habits.',
+    featureTitle: 'A small break reminder for healthier screen habits.',
     featureIntro:
       'The app is intentionally simple: set a rhythm, stay in your flow, and let GlanceAway create moments where your eyes can reset.',
     features: [
       {
-        title: 'Start a focused screen session',
+        title: 'Lives in your Mac menu bar',
         description:
-          'Use a clean eye break timer app that tells you when to rest your eyes without turning the habit into another distraction.',
+          'Start, pause, or check the next break from the menu bar. A heads-up comes 30 seconds before each break, and you can snooze when you are mid-sentence.',
       },
       {
         title: 'Take the break when it matters',
         description:
-          'Full-screen break moments make the reminder obvious and calm, so you actually look away instead of dismissing another tiny alert.',
+          'A calm full-screen break makes the reminder obvious, so you actually look away instead of dismissing another tiny alert. During video calls, breaks wait until you are done.',
       },
       {
         title: 'Track consistency over time',
@@ -459,7 +461,7 @@ export const appLandingPages: Record<string, AppLandingPageContent> = {
     privacyDescription:
       'GlanceAway keeps timer settings, session history, statistics, and reminder preferences on your device. After a cancelled session, an optional anonymous Tally survey may collect the answers you choose to submit, without asking for your name or email address. Purchase validation and privacy-focused product analytics may be handled by Apple, RevenueCat, and TelemetryDeck without advertising tracking.',
     finalCtaDescription:
-      'Install the eye break timer app from the App Store and start with a simple 20-20-20 rhythm.',
+      'Install the break reminder for Mac and iPhone from the App Store and start with a simple 20-20-20 rhythm.',
     faq: [
       {
         question: 'What is an eye break timer app?',
@@ -472,9 +474,9 @@ export const appLandingPages: Record<string, AppLandingPageContent> = {
           'The 20-20-20 rule is a common screen-break habit: after about 20 minutes of screen time, look at something roughly 20 feet away for about 20 seconds.',
       },
       {
-        question: 'Is GlanceAway only for iPhone?',
+        question: 'Does GlanceAway work as a break reminder on Mac?',
         answer:
-          'GlanceAway is designed for Apple devices and supports iPhone and Mac, so it can fit both mobile and desk-based screen routines.',
+          'Yes. On Mac, GlanceAway runs from the menu bar, shows a full-screen break overlay, warns you 30 seconds before a break, and holds breaks while you are in a video call. The same app also runs on iPhone and iPad.',
       },
       {
         question: 'Does GlanceAway need an account?',
