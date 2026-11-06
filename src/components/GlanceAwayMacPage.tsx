@@ -269,8 +269,12 @@ export default function GlanceAwayMacPage({ app }: GlanceAwayMacPageProps) {
 
           <div className="mt-20 grid gap-x-8 gap-y-12 sm:grid-cols-2">
             {moreShots.map((screenshot) => (
-              <figure key={screenshot.src} className="min-w-0">
-                <MacShot screenshot={screenshot} sizes="(min-width: 640px) 50vw, calc(100vw - 3rem)" />
+              <figure key={screenshot.src} className="flex min-w-0 flex-col justify-end">
+                <MacShot
+                  screenshot={screenshot}
+                  sizes="(min-width: 640px) 50vw, calc(100vw - 3rem)"
+                  className={screenshot.height > screenshot.width ? 'mx-auto max-w-[22rem]' : ''}
+                />
                 <figcaption className="mt-4 text-center text-sm font-bold uppercase tracking-[0.16em] text-slate-500">
                   {screenshot.label}
                 </figcaption>
