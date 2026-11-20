@@ -148,3 +148,24 @@ body {
     animation: none;
   }
 }
+
+/* GlanceAway v2: browser surfaces in the page palette. */
+.ga2 ::selection {
+  background: #00cfc0;
+  color: #06131c;
+}
+
+.ga2 {
+  caret-color: #00cfc0;
+}
+
+/* Darker teal on light sections (3:1 contrast), bright teal on dark ones. */
+.ga2 :focus-visible {
+  outline: 2px solid #008f85;
+  outline-offset: 3px;
+  border-radius: 9999px;
+}
+
+.ga2 .ga2-dark :focus-visible {
+  outline-color: #00cfc0;
+}
