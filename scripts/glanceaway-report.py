@@ -40,6 +40,7 @@ PATHS = {
     "/apps/glanceaway/20-20-20-rule-app/": "Ratgeber App-Vergleich",
     "/apps/glanceaway/eye-strain-from-screens/": "Ratgeber Augenbelastung",
     "/apps/glanceaway/mac/": "Mac-Seite",
+    "/apps/glanceaway/privacy-statement/": "Datenschutz (aus der App)",
 }
 PATH_PREFIX = "/apps/glanceaway"
 
@@ -60,21 +61,10 @@ SOURCE_NAMES = {
     "Institutional purchase": "Firmenkauf",
     "Unavailable": "Unbekannt",
 }
-REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
-def cloudflare_site_tag():
-    """The public beacon token from .env.local doubles as the Web Analytics site tag."""
-    try:
-        with open(os.path.join(REPO, ".env.local")) as handle:
-            for line in handle:
-                if line.startswith("NEXT_PUBLIC_CLOUDFLARE_WEB_ANALYTICS_TOKEN="):
-                    return line.split("=", 1)[1].strip().strip('"')
-    except OSError:
-        pass
-    return ""
-
-
+# Site tag of georgevalandis.com in Cloudflare Web Analytics (public, not the beacon token).
+CLOUDFLARE_SITE_TAG = "c712361ff8da481893336258866e9f78"
 CLOUDFLARE_KEYCHAIN = ("glanceaway-report-cloudflare", "api-token")
 
 
@@ -174,9 +164,9 @@ def click_section(counts, start, end, prev_start):
 def visitor_section(start, end, prev_start):
     """Page views and visits per page plus top referrers (Cloudflare Web Analytics, no cookies)."""
     token = keychain(*CLOUDFLARE_KEYCHAIN)
-    site_tag = cloudflare_site_tag()
-    if not (token and site_tag):
-        raise RuntimeError("Cloudflare-Zugang fehlt (Token im Schlüsselbund oder Site-Tag)")
+    site_tag = CLOUDFLARE_SITE_TAG
+    if not token:
+        raise RuntimeError("Cloudflare-Token fehlt im Schlüsselbund (glanceaway-report-cloudflare)")
     query = """
     query ($account: string!, $filter: AccountRumPageloadEventsAdaptiveGroupsFilter_InputObject!) {
       viewer { accounts(filter: {accountTag: $account}) {
