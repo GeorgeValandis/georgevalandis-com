@@ -178,15 +178,18 @@ export default function V2Hero({
         >
           {/* Entrance animation on an inner layer: its fill would override the break fade. */}
           <div className="ga-rise relative [animation-delay:160ms]">
-            <Image
-              src="/apps/glanceaway/mac/overlay.webp"
-              alt="GlanceAway full-screen break on Mac asking you to look at the farthest thing you can see."
-              width={1600}
-              height={1002}
-              priority
-              sizes="(min-width: 1024px) 680px, calc(100vw - 3rem)"
-              className="block h-auto w-full rounded-2xl shadow-[0_50px_120px_rgba(0,0,0,0.55)]"
-            />
+            {/* The Mac break floats on the sky: the black screen fades out at the edges. */}
+            <div className="[mask-image:radial-gradient(ellipse_50%_46%_at_50%_50%,#000_50%,transparent_100%)]">
+              <Image
+                src="/apps/glanceaway/mac/overlay.webp"
+                alt="GlanceAway full-screen break on Mac asking you to look at the farthest thing you can see."
+                width={1600}
+                height={1002}
+                priority
+                sizes="(min-width: 1024px) 680px, calc(100vw - 3rem)"
+                className="block h-auto w-full"
+              />
+            </div>
             <div className="absolute -bottom-11 left-[5%] w-[25%] max-w-[10.5rem] rounded-[1.4rem] bg-[#0b1114] p-1 shadow-[0_36px_80px_rgba(2,12,18,0.45)] sm:-bottom-15 sm:rounded-[2rem] sm:p-[0.35rem]">
               <Image
                 src="/apps/glanceaway/screens/ios-home.webp"
