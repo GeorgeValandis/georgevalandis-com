@@ -1,0 +1,17 @@
+# .htaccess for the old subdomain glanceaway.georgevalandis.com (FTP: /glanceaway.georgevalandis.com/.htaccess).
+# Not part of the Next.js build; upload by hand after approval.
+# Moves every page to the main site (301) so Google keeps one copy, but keeps /download/ working
+# because older social links and campaigns point to it.
+
+<FilesMatch "^(\.download-clicks\.csv|download-clicks\.csv|\.download-click-counts\.json|download-click-counts\.json)$">
+  Require all denied
+</FilesMatch>
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteRule ^\.well-known/ - [L]
+  RewriteRule ^download(/|$) - [L]
+  RewriteRule ^privacy-statement/?$ https://georgevalandis.com/apps/glanceaway/privacy/ [R=301,L,QSD]
+  RewriteRule ^terms-and-conditions/?$ https://georgevalandis.com/apps/glanceaway/terms-and-conditions/ [R=301,L,QSD]
+  RewriteRule ^ https://georgevalandis.com/apps/glanceaway/ [R=301,L,QSD]
+</IfModule>

@@ -129,7 +129,7 @@ export const glanceAwayMacPage = {
     {
       question: 'Does GlanceAway work as a break reminder on Mac?',
       answer:
-        'Yes. On Mac, GlanceAway runs from the menu bar, shows a full-screen break overlay, warns you 30 seconds before a break, and holds breaks while you are in a video call. The same app also runs on iPhone and iPad.',
+        'Yes. On Mac, GlanceAway runs from the menu bar, shows a full-screen break overlay, warns you 30 seconds before a break, and holds breaks while you are in a video call. The same app also runs on iPhone.',
     },
     {
       question: 'What is the 20-20-20 rule?',

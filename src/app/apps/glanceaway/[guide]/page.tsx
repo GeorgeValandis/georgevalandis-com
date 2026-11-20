@@ -35,6 +35,8 @@ export async function generateMetadata({ params }: GuideRouteProps): Promise<Met
     description: guide.description,
     keywords: [guide.primaryKeyword, ...guide.secondaryKeywords],
     alternates: { canonical: path },
+    // Safari Smart App Banner for GlanceAway on iPhone.
+    itunes: { appId: '6751297230' },
     openGraph: {
       type: 'article',
       title: guide.title,

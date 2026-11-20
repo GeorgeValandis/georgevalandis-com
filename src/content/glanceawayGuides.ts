@@ -1,6 +1,7 @@
 /**
  * Search-intent guide pages for GlanceAway under /apps/glanceaway/{slug}/.
- * Each page answers one Google question and points to the App Store (tagged per page via campaign.js).
+ * Each page answers one Google question and points to the App Store through the download redirect
+ * (campaign token per page, position per link). Copy supports inline links as [text](url).
  * Keyword map and measurement: LookAway repo docs/seo-landingpage-2026-11-20.md.
  */
 
@@ -9,6 +10,8 @@ export type GuideSection = {
   paragraphs?: string[];
   bullets?: string[];
   steps?: { title: string; text: string }[];
+  /** Emit this section's steps as HowTo structured data. */
+  howTo?: boolean;
 };
 
 export type GuideComparisonRow = {
@@ -18,6 +21,9 @@ export type GuideComparisonRow = {
   bestFor: string;
   note: string;
   ours?: boolean;
+  /** Official page of a third-party app (nofollow). */
+  url?: string;
+  urlLabel?: string;
 };
 
 export type GuideSource = { label: string; url: string };
@@ -35,13 +41,15 @@ export type GlanceAwayGuide = {
   secondaryKeywords: string[];
   publishedAt: string;
   updatedAt: string;
-  /** Token for campaign.js: tags App Store clicks from this page. */
+  /** App Store Connect campaign token (ct) for clicks from this page. */
   campaign: string;
   hasTimer?: boolean;
   sections: GuideSection[];
   comparisonTitle?: string;
   comparisonIntro?: string;
   comparison?: GuideComparisonRow[];
+  /** Screenshot and App Store link placed after sections[afterSection]. */
+  midCta?: { afterSection: number; title: string; text: string };
   cta: { title: string; text: string };
   faq: { question: string; answer: string }[];
   sources: GuideSource[];
@@ -68,11 +76,11 @@ export const glanceAwayGuides: GlanceAwayGuide[] = [
     navLabel: '20-20-20 timer',
     title: '20-20-20 Rule Timer: Free Online Eye Break Timer',
     description:
-      'Free 20-20-20 rule timer in your browser: work for 20 minutes, then look 20 feet away for 20 seconds. With a chime, tab countdown, and a simple explanation of the rule.',
+      'Free 20-20-20 rule timer in your browser: work for 20 minutes, then look 20 feet away for 20 seconds. With a chime, a countdown in the tab, and a 30 minute option.',
     eyebrow: '20-20-20 rule timer',
     headline: 'A free 20-20-20 timer that tells you when to look away.',
     intro:
-      'Press start and keep working. After 20 minutes the timer chimes and counts down a 20 second break. Look at something about 20 feet away until it ends.',
+      'The 20-20-20 rule: every 20 minutes, look at something about 20 feet away for 20 seconds. Press start and keep working. The timer chimes when it is time to look away and counts the 20 seconds for you.',
     primaryKeyword: '20 20 20 rule timer',
     secondaryKeywords: [
       '20-20-20 timer online',
@@ -90,15 +98,16 @@ export const glanceAwayGuides: GlanceAwayGuide[] = [
         heading: 'What is the 20-20-20 rule?',
         paragraphs: [
           'Every 20 minutes of screen time, look at something about 20 feet (6 meters) away for at least 20 seconds. The American Optometric Association recommends the rule to ease digital eye strain.',
-          'Up close, the focusing muscles in your eyes work the whole time. Looking into the distance lets them relax for a moment. You also tend to blink again, which you do much less while staring at a screen.',
+          'Up close, the focusing muscles in your eyes work the whole time. Looking into the distance lets them relax for a moment. You also tend to blink again, which you do much less while staring at a screen. For the full picture, see [how to reduce eye strain from screens](/apps/glanceaway/eye-strain-from-screens/).',
         ],
       },
       {
         heading: 'How to use this timer',
+        howTo: true,
         steps: [
           {
             title: 'Start the timer and go back to work',
-            text: 'Keep this tab open. The tab title shows the countdown, so you can check it without switching windows.',
+            text: 'Pick 20 or 30 minutes and press start. Keep this tab open; the tab title shows the countdown, so you can check it without switching windows.',
           },
           {
             title: 'Look away when it chimes',
@@ -106,7 +115,7 @@ export const glanceAwayGuides: GlanceAwayGuide[] = [
           },
           {
             title: 'Repeat for the rest of the day',
-            text: 'The next 20 minutes start automatically after each break. The habit only helps if it repeats.',
+            text: 'The next focus block starts automatically after each break. The habit only helps if it repeats.',
           },
         ],
       },
@@ -114,7 +123,7 @@ export const glanceAwayGuides: GlanceAwayGuide[] = [
         heading: 'Why a browser timer is only half the solution',
         paragraphs: [
           'A browser tab works while you sit at the computer with this tab open. It does not follow you to your phone, it stops when you close the browser, and a chime is easy to ignore when you are in the middle of something.',
-          'That is why I built GlanceAway. It runs the same 20-20-20 rhythm on iPhone, iPad, and Mac, shows a calm full-screen break on Mac so you actually look away, waits while you are in a video call, and keeps a streak so you can see whether the habit sticks.',
+          'That is why I built GlanceAway. It runs the same 20-20-20 rhythm on iPhone and Mac, shows a calm full-screen break on Mac so you actually look away, waits while you are in a video call, and keeps a streak so you can see whether the habit sticks. If you want to compare options first, here are [the best 20-20-20 rule apps](/apps/glanceaway/20-20-20-rule-app/).',
         ],
       },
       {
@@ -123,13 +132,18 @@ export const glanceAwayGuides: GlanceAwayGuide[] = [
           'Look as far as you can. A window is better than the wall behind your monitor.',
           'Blink slowly a few times during the break.',
           'Stand up every second or third break. Your neck and back will thank you too.',
-          'If 20 minutes feels too often at first, start with 30 and work down. Consistency beats perfection.',
+          'If 20 minutes feels too often at first, switch the timer to 30 minutes and work your way down. A break you actually take beats a perfect schedule you skip.',
         ],
       },
     ],
+    midCta: {
+      afterSection: 2,
+      title: 'The same timer, on your iPhone and Mac.',
+      text: 'GlanceAway keeps the 20-20-20 rhythm going when this tab is closed. Free to try with 3 breaks a day; premium removes the limit.',
+    },
     cta: {
       title: 'Let your iPhone and Mac do the timing.',
-      text: 'GlanceAway runs the 20-20-20 rhythm in the background on iPhone, iPad, and Mac, with full-screen breaks on Mac and stats that show your streak. Free on the App Store.',
+      text: 'GlanceAway runs the 20-20-20 rhythm in the background on iPhone and Mac, with full-screen breaks on Mac and stats that show your streak. Free to try with 3 breaks a day; premium removes the limit.',
     },
     faq: [
       {
@@ -145,12 +159,12 @@ export const glanceAwayGuides: GlanceAwayGuide[] = [
       {
         question: 'Will this timer work in the background?',
         answer:
-          'On a computer, yes, as long as the tab stays open. The countdown runs in the tab title and a chime plays when a break starts; browsers may delay the chime a little in background tabs. Phones pause web pages when you switch apps, so on a phone keep the page open or use an app.',
+          'On a computer, yes, as long as the tab stays open. It keeps time in background tabs, shows the countdown in the tab title, and can send a notification when a break starts if you allow it. Phones pause web pages when you switch apps, so on a phone keep the page open or use an app.',
       },
       {
         question: 'Is there a 20-20-20 timer app for iPhone and Mac?',
         answer:
-          'Yes. GlanceAway is a free eye break timer for iPhone, iPad, and Mac built around the 20-20-20 rule, with optional premium features.',
+          'Yes. GlanceAway is an eye break timer for iPhone and Mac built around the 20-20-20 rule. The free version covers 3 breaks a day; premium removes the limit.',
       },
     ],
     sources: [aoaComputerVision, aaoComputerUsage],
@@ -164,7 +178,7 @@ export const glanceAwayGuides: GlanceAwayGuide[] = [
     eyebrow: '20-20-20 rule apps',
     headline: 'The best 20-20-20 rule apps for iPhone and Mac.',
     intro:
-      'Most eye break apps do the same thing: start a timer, remind you after 20 minutes. The differences are in the details: does the reminder actually make you look away, does it run on all your devices, and does it get in the way during a call?',
+      'Short answer: for one rhythm on iPhone and Mac, try GlanceAway (my own app, disclosed below). On a Mac alone, LookAway, Time Out, and Intermission are good picks, and Stretchly is free on every desktop system. For a simple phone reminder, Eye Care 20 20 20 or 20.20.20 will do.',
     primaryKeyword: '20-20-20 rule app',
     secondaryKeywords: [
       '20 20 20 rule app iphone',
@@ -190,8 +204,8 @@ export const glanceAwayGuides: GlanceAwayGuide[] = [
       {
         heading: 'How I picked these apps',
         paragraphs: [
-          'I looked at the apps that show up when you search the App Store for 20-20-20, eye break, and break reminder, and checked their current listings in November 2026. Prices and features change, so check the App Store before you decide.',
-          'Full disclosure: GlanceAway is my own app. I built it because I wanted full-screen breaks on my Mac and the same rhythm on my iPhone in one app. I still list the others because one of them may fit you better.',
+          'I looked at the apps that show up when you search the App Store and Google for 20-20-20, eye break, and break reminder, and checked their official listings and websites in November 2026. Prices and features change, so check before you decide. No app at all yet? The [free 20-20-20 timer](/apps/glanceaway/20-20-20-rule-timer/) runs in your browser.',
+          'Full disclosure: GlanceAway is my own app. I built it because I wanted full-screen breaks on my Mac and the same rhythm on my iPhone in one app. I still list the others because one of them may fit you better. Most of them differ less in the timer itself than in how hard the reminder is to ignore and which devices it covers.',
         ],
       },
     ],
@@ -200,51 +214,84 @@ export const glanceAwayGuides: GlanceAwayGuide[] = [
     comparison: [
       {
         name: 'GlanceAway',
-        platforms: 'iPhone, iPad, Mac',
-        price: 'Free, optional premium',
+        platforms: 'iPhone, Mac',
+        price: 'Free: 3 breaks a day, premium unlimited',
         bestFor: 'One rhythm across iPhone and Mac',
-        note: 'Full-screen breaks on Mac, menu bar timer, 30 second heads-up, waits during video calls, streaks and stats. No account.',
+        note: 'Full-screen breaks on Mac, menu bar timer, a heads-up before each break, waits during video calls, streaks and stats. No account.',
         ours: true,
       },
       {
-        name: 'Eye Care 20 20 20',
-        platforms: 'iPhone, iPad',
-        price: 'Free',
-        bestFor: 'A simple phone reminder',
-        note: 'A straightforward repeating 20 minute reminder for your phone.',
-      },
-      {
-        name: '20.20.20: Eye Care & Tracker',
-        platforms: 'iPhone, iPad, Apple Watch',
-        price: 'Free',
-        bestFor: 'Achievements and longer intervals',
-        note: 'Tracks progress with achievements and lets you choose 20, 30, 40, or 60 minute intervals.',
-      },
-      {
-        name: 'Eye Reliever',
-        platforms: 'iPhone, iPad',
-        price: 'Free',
-        bestFor: 'Break and blink reminders',
-        note: 'Reminds you to take breaks and blink.',
+        name: 'LookAway',
+        platforms: 'Mac (iPhone and iPad through the LookAway Mirror companion)',
+        price: 'One-time purchase from $19',
+        bestFor: 'A polished Mac break app',
+        note: 'Waits for a natural moment before a break and adds posture and blink reminders.',
+        url: 'https://lookaway.com',
+        urlLabel: 'lookaway.com',
       },
       {
         name: 'Time Out',
         platforms: 'Mac',
-        price: 'Free, optional supporter tiers',
+        price: 'Free, optional supporter purchases',
         bestFor: 'Customizable Mac breaks',
-        note: 'Established Mac app with many break options. Can optionally lock you out until a break ends.',
+        note: 'A long-running Mac app with short and long breaks and many options for how they look and behave.',
+        url: 'https://www.dejal.com/timeout/',
+        urlLabel: 'dejal.com',
       },
       {
         name: 'Intermission',
         platforms: 'Mac',
-        price: 'Free',
-        bestFor: 'Strict screen blocking',
-        note: 'Built around blocking the screen during breaks, for people who need a firm stop.',
+        price: '7-day trial, then $7.99 once',
+        bestFor: 'Choosing how strict breaks are',
+        note: 'Shows breaks as a subtle reminder or full screen, depending on how firm a stop you want.',
+        url: 'https://tryintermission.com',
+        urlLabel: 'tryintermission.com',
+      },
+      {
+        name: 'Stretchly',
+        platforms: 'Mac, Windows, Linux',
+        price: 'Free, open source',
+        bestFor: 'Windows and Linux, or zero cost',
+        note: 'Break reminders for any desktop computer, with short micro breaks and longer pauses.',
+        url: 'https://hovancik.net/stretchly/',
+        urlLabel: 'hovancik.net',
+      },
+      {
+        name: 'Eye Care 20 20 20',
+        platforms: 'iPhone, iPad',
+        price: 'Free, optional subscription',
+        bestFor: 'A simple phone reminder',
+        note: 'A repeating 20 minute reminder for your phone.',
+        url: 'https://apps.apple.com/us/app/eye-care-20-20-20/id967901219',
+        urlLabel: 'App Store',
+      },
+      {
+        name: '20.20.20: Eye Care & Tracker',
+        platforms: 'iPhone, Apple Watch',
+        price: 'Free, Plus from $0.99 a month',
+        bestFor: 'Reminders on your wrist',
+        note: 'Reminds you every 20 minutes and tracks your progress over time.',
+        url: 'https://apps.apple.com/us/app/20-20-20-eye-care-tracker/id872763741',
+        urlLabel: 'App Store',
+      },
+      {
+        name: 'Eye Reliever',
+        platforms: 'iPhone',
+        price: 'Free, no in-app purchases',
+        bestFor: 'A free phone reminder',
+        note: 'Simple break reminders on iPhone without any purchases.',
+        url: 'https://apps.apple.com/us/app/eye-reliever/id1451148741',
+        urlLabel: 'App Store',
       },
     ],
+    midCta: {
+      afterSection: 1,
+      title: 'Want to try mine first?',
+      text: 'GlanceAway runs on iPhone and Mac, shows a full-screen break on Mac, and needs no account. Free to try with 3 breaks a day; premium removes the limit.',
+    },
     cta: {
       title: 'Try the one that works on iPhone and Mac.',
-      text: 'GlanceAway keeps the 20-20-20 rhythm on every Apple device you use, with full-screen breaks on Mac and stats that show your streak. Free on the App Store.',
+      text: 'GlanceAway keeps the 20-20-20 rhythm on your iPhone and Mac, with full-screen breaks on Mac and stats that show your streak. Free to try with 3 breaks a day; premium removes the limit.',
     },
     faq: [
       {
@@ -255,17 +302,17 @@ export const glanceAwayGuides: GlanceAwayGuide[] = [
       {
         question: 'Is there a 20-20-20 app for Mac?',
         answer:
-          'Yes. GlanceAway, Time Out, and Intermission all run on Mac. GlanceAway also runs on iPhone and iPad with the same rhythm.',
+          'Yes. GlanceAway, LookAway, Time Out, Intermission, and Stretchly all run on Mac. GlanceAway also runs on iPhone with the same rhythm.',
       },
       {
         question: 'Can I use the 20-20-20 rule without an app?',
         answer:
-          'Yes, any timer works. The free 20-20-20 timer on this site runs in your browser. Apps help because they keep running when the tab is closed and make the break harder to ignore.',
+          'Yes, any timer works. The [free 20-20-20 timer](/apps/glanceaway/20-20-20-rule-timer/) on this site runs in your browser. Apps help because they keep running when the tab is closed and make the break harder to ignore.',
       },
       {
         question: 'Do eye break apps help with eye strain?',
         answer:
-          'They help you take the regular breaks that eye care organizations recommend for digital eye strain. They are not a treatment. If symptoms persist, see an eye doctor.',
+          'They help you take the regular breaks that eye care organizations recommend for digital eye strain. They are not a treatment. More habits that help are in [how to reduce eye strain from screens](/apps/glanceaway/eye-strain-from-screens/). If symptoms persist, see an eye doctor.',
       },
     ],
     sources: [aoaComputerVision],
@@ -279,7 +326,7 @@ export const glanceAwayGuides: GlanceAwayGuide[] = [
     eyebrow: 'eye strain from screens',
     headline: 'How to reduce eye strain from screens.',
     intro:
-      'Tired eyes, headaches, and blurry vision after long screen sessions are common enough to have a name: digital eye strain. The good news is that a few small habits make a real difference.',
+      'To reduce eye strain from screens, take a 20 second break every 20 minutes, blink more, and keep your screen at arm’s length and slightly below eye level. Those three habits do most of the work. Here are all eight, and when to see an eye doctor.',
     primaryKeyword: 'how to reduce eye strain from screens',
     secondaryKeywords: [
       'eye strain from computer',
@@ -304,7 +351,7 @@ export const glanceAwayGuides: GlanceAwayGuide[] = [
         steps: [
           {
             title: 'Follow the 20-20-20 rule',
-            text: 'Every 20 minutes, look at something about 20 feet away for 20 seconds. It is the single most recommended habit, and the easiest to forget. A timer or an eye break app solves that.',
+            text: 'Every 20 minutes, look at something about 20 feet away for 20 seconds. It is the single most recommended habit, and the easiest to forget. A [free 20-20-20 timer](/apps/glanceaway/20-20-20-rule-timer/) or an [eye break app](/apps/glanceaway/20-20-20-rule-app/) solves that.',
           },
           {
             title: 'Blink on purpose',
@@ -349,9 +396,14 @@ export const glanceAwayGuides: GlanceAwayGuide[] = [
         ],
       },
     ],
+    midCta: {
+      afterSection: 1,
+      title: 'Habit one, on autopilot.',
+      text: 'GlanceAway reminds you every 20 minutes on iPhone and Mac and shows a calm full-screen break on Mac. Free to try with 3 breaks a day; premium removes the limit.',
+    },
     cta: {
       title: 'Make the breaks automatic.',
-      text: 'GlanceAway reminds you to look away every 20 minutes on iPhone, iPad, and Mac, shows a calm full-screen break on Mac, and tracks your streak. Free on the App Store.',
+      text: 'GlanceAway reminds you to look away every 20 minutes on iPhone and Mac, shows a calm full-screen break on Mac, and tracks your streak. Free to try with 3 breaks a day; premium removes the limit.',
     },
     faq: [
       {

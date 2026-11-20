@@ -5,8 +5,50 @@ import { GlanceAwayGuide, glanceAwayGuidePath, glanceAwayGuides } from '@/conten
 import { absoluteUrl } from '@/lib/seo';
 import { ArrowLeft, ArrowRight, Check, ExternalLink } from 'lucide-react';
 import Image from 'next/image';
+import { Fragment, ReactNode } from 'react';
 
 const ACCENT = '#00cfc0';
+const DOWNLOAD_PATH = '/apps/glanceaway/download/';
+const inlineLinkClass =
+  'font-semibold text-slate-950 underline underline-offset-4 transition hover:text-slate-600 active:opacity-60';
+
+type StorePosition = 'hero' | 'timer' | 'mid' | 'compare' | 'cta';
+
+/** Static download link; the PHP redirect counts the click per page and position. */
+function storeHref(guide: GlanceAwayGuide, position: StorePosition): string {
+  return `${DOWNLOAD_PATH}?campaign=${guide.campaign}&pos=${position}`;
+}
+
+const INLINE_LINK = /\[([^\]]+)\]\(([^)\s]+)\)/g;
+
+/** Renders [text](url) links inside guide copy; internal paths stay in the same tab. */
+function renderInline(text: string): ReactNode {
+  const parts: ReactNode[] = [];
+  let last = 0;
+  for (const match of text.matchAll(INLINE_LINK)) {
+    const [whole, label, url] = match;
+    const index = match.index ?? 0;
+    if (index > last) parts.push(text.slice(last, index));
+    const external = /^https?:\/\//.test(url);
+    parts.push(
+      <a
+        key={`${index}-${url}`}
+        href={url}
+        className={inlineLinkClass}
+        {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+      >
+        {label}
+      </a>
+    );
+    last = index + whole.length;
+  }
+  if (last < text.length) parts.push(text.slice(last));
+  return parts.length === 1 ? parts[0] : <Fragment>{parts}</Fragment>;
+}
+
+function plainText(text: string): string {
+  return text.replace(INLINE_LINK, '$1');
+}
 const linkClass = 'font-semibold text-slate-600 transition hover:text-slate-950 active:opacity-60';
 
 const ctaShot = {
@@ -28,6 +70,7 @@ function formatDate(isoDate: string): string {
 function guideJsonLd(app: AppEntry, guide: GlanceAwayGuide) {
   const pageUrl = absoluteUrl(glanceAwayGuidePath(guide.slug));
   const author = { '@type': 'Person', name: 'George Valandis', url: absoluteUrl('/') };
+  const howTo = guide.sections.find((section) => section.howTo);
 
   return {
     '@context': 'https://schema.org',
@@ -64,9 +107,24 @@ function guideJsonLd(app: AppEntry, guide: GlanceAwayGuide) {
         mainEntity: guide.faq.map((item) => ({
           '@type': 'Question',
           name: item.question,
-          acceptedAnswer: { '@type': 'Answer', text: item.answer },
+          acceptedAnswer: { '@type': 'Answer', text: plainText(item.answer) },
         })),
       },
+      ...(howTo?.steps
+        ? [
+            {
+              '@type': 'HowTo',
+              '@id': `${pageUrl}#howto`,
+              name: howTo.heading,
+              step: howTo.steps.map((step, index) => ({
+                '@type': 'HowToStep',
+                position: index + 1,
+                name: step.title,
+                text: plainText(step.text),
+              })),
+            },
+          ]
+        : []),
     ],
   };
 }
@@ -76,7 +134,7 @@ function StoreButton({ href, label }: { href: string; label: string }) {
     <a
       href={href}
       target="_blank"
-      rel="noopener noreferrer"
+      rel="nofollow noopener noreferrer"
       className="inline-flex h-14 shrink-0 cursor-pointer items-center justify-center gap-2 rounded-full bg-slate-950 px-6 text-sm font-bold text-white shadow-lg shadow-slate-950/15 transition hover:scale-[1.02] hover:bg-slate-800 active:scale-[0.97]"
     >
       {label}
@@ -85,9 +143,92 @@ function StoreButton({ href, label }: { href: string; label: string }) {
   );
 }
 
+const iphoneShot = {
+  src: '/apps/glanceaway/screens/timer.webp',
+  alt: 'GlanceAway on iPhone counting down to the next eye break, with a reminder to look 20 feet away for 20 seconds.',
+  width: 720,
+  height: 1565,
+};
+
+function GuideSectionBlock({ section }: { section: GlanceAwayGuide['sections'][number] }) {
+  return (
+    <section className="mb-16 last:mb-0">
+      <h2 className="text-3xl font-bold tracking-tight text-slate-950 sm:text-4xl">{section.heading}</h2>
+      {section.paragraphs?.map((paragraph) => (
+        <p key={paragraph} className="mt-5 text-lg leading-8 text-slate-700">
+          {renderInline(paragraph)}
+        </p>
+      ))}
+      {section.bullets ? (
+        <ul className="mt-6 grid gap-4">
+          {section.bullets.map((bullet) => (
+            <li key={bullet} className="flex gap-3 text-lg leading-8 text-slate-700">
+              <span
+                className="mt-[0.45rem] inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full"
+                style={{ backgroundColor: ACCENT }}
+              >
+                <Check size={12} className="text-slate-950" />
+              </span>
+              <span>{renderInline(bullet)}</span>
+            </li>
+          ))}
+        </ul>
+      ) : null}
+      {section.steps ? (
+        <ol className="mt-8 grid gap-8">
+          {section.steps.map((step, index) => (
+            <li key={step.title} className="grid grid-cols-[2.5rem_1fr] gap-4">
+              <span className="font-mono text-sm leading-8 text-slate-400">
+                {(index + 1).toString().padStart(2, '0')}
+              </span>
+              <div>
+                <h3 className="text-xl font-bold leading-8 tracking-tight text-slate-950">{step.title}</h3>
+                <p className="mt-2 text-lg leading-8 text-slate-700">{renderInline(step.text)}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      ) : null}
+    </section>
+  );
+}
+
+function MidArticleCta({ guide }: { guide: GlanceAwayGuide }) {
+  if (!guide.midCta) return null;
+  return (
+    <figure
+      className="mb-16 grid grid-cols-[6.5rem_1fr] items-center gap-6 rounded-3xl p-6 sm:grid-cols-[8rem_1fr] sm:gap-8 sm:p-8"
+      style={{ backgroundColor: `${ACCENT}17` }}
+    >
+      <Image
+        src={iphoneShot.src}
+        alt={iphoneShot.alt}
+        width={iphoneShot.width}
+        height={iphoneShot.height}
+        loading="lazy"
+        sizes="8rem"
+        className="block h-auto w-full rounded-[1.1rem] shadow-[0_16px_36px_rgba(15,23,42,0.18)]"
+      />
+      <figcaption>
+        <p className="text-lg font-bold leading-7 tracking-tight text-slate-950">{guide.midCta.title}</p>
+        <p className="mt-2 text-base leading-7 text-slate-600">{guide.midCta.text}</p>
+        <a
+          href={storeHref(guide, 'mid')}
+          target="_blank"
+          rel="nofollow noopener noreferrer"
+          className="mt-4 inline-flex cursor-pointer items-center gap-2 text-sm font-bold text-slate-950 underline underline-offset-4 transition hover:text-slate-600 active:scale-[0.97]"
+        >
+          Get GlanceAway on the App Store
+          <ExternalLink size={14} />
+        </a>
+      </figcaption>
+    </figure>
+  );
+}
+
 export default function GlanceAwayGuidePage({ app, guide }: { app: AppEntry; guide: GlanceAwayGuide }) {
-  const appStoreLink = app.appStoreLink;
   const related = glanceAwayGuides.filter((item) => item.slug !== guide.slug);
+  const midIndex = guide.midCta?.afterSection;
 
   return (
     <main lang="en" className="min-h-screen bg-white text-slate-950">
@@ -108,8 +249,8 @@ export default function GlanceAwayGuidePage({ app, guide }: { app: AppEntry; gui
         </div>
 
         <div
-          className={`relative mx-auto grid max-w-7xl gap-12 px-6 pb-16 pt-6 lg:px-8 lg:pb-24 ${
-            guide.hasTimer ? 'lg:grid-cols-[minmax(0,1fr)_minmax(0,28rem)] lg:items-center lg:gap-16' : ''
+          className={`relative mx-auto grid max-w-7xl gap-y-8 px-6 pb-16 pt-6 lg:px-8 lg:pb-24 ${
+            guide.hasTimer ? 'lg:grid-cols-[minmax(0,1fr)_minmax(0,28rem)] lg:gap-x-16 lg:gap-y-6' : ''
           }`}
         >
           <div
@@ -117,7 +258,7 @@ export default function GlanceAwayGuidePage({ app, guide }: { app: AppEntry; gui
             style={{ backgroundColor: `${ACCENT}44` }}
           />
 
-          <div className="relative z-10 max-w-3xl">
+          <div className="relative z-10 max-w-3xl lg:col-start-1 lg:row-start-1 lg:self-end">
             <div className="mb-7 flex items-center gap-3">
               <Image
                 src={app.logo}
@@ -131,65 +272,34 @@ export default function GlanceAwayGuidePage({ app, guide }: { app: AppEntry; gui
             <h1 className="text-4xl font-bold tracking-tight text-slate-950 sm:text-6xl sm:leading-[1.05]">
               {guide.headline}
             </h1>
-            <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-700">{guide.intro}</p>
-            <p className="mt-6 text-sm text-slate-500">
-              By George Valandis · Updated {formatDate(guide.updatedAt)}
-            </p>
-            {!guide.hasTimer && appStoreLink ? (
-              <div className="mt-8">
-                <StoreButton href={appStoreLink} label="Get GlanceAway" />
-              </div>
-            ) : null}
           </div>
 
           {guide.hasTimer ? (
-            <div className="relative z-10">
-              <EyeBreakTimer accent={ACCENT} appStoreLink={appStoreLink} />
+            <div className="relative z-10 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:self-center">
+              <EyeBreakTimer accent={ACCENT} storeHref={storeHref(guide, 'timer')} />
             </div>
           ) : null}
+
+          <div className="relative z-10 max-w-3xl lg:col-start-1 lg:row-start-2 lg:self-start">
+            <p className="max-w-2xl text-lg leading-8 text-slate-700">{renderInline(guide.intro)}</p>
+            <p className="mt-6 text-sm text-slate-500">
+              By George Valandis · Updated {formatDate(guide.updatedAt)}
+            </p>
+            {!guide.hasTimer ? (
+              <div className="mt-8">
+                <StoreButton href={storeHref(guide, 'hero')} label="Get GlanceAway" />
+              </div>
+            ) : null}
+          </div>
         </div>
       </section>
 
       <article className="mx-auto max-w-3xl px-6 py-20 sm:py-24 lg:px-8">
-        {guide.sections.map((section) => (
-          <section key={section.heading} className="mb-16 last:mb-0">
-            <h2 className="text-3xl font-bold tracking-tight text-slate-950 sm:text-4xl">{section.heading}</h2>
-            {section.paragraphs?.map((paragraph) => (
-              <p key={paragraph} className="mt-5 text-lg leading-8 text-slate-700">
-                {paragraph}
-              </p>
-            ))}
-            {section.bullets ? (
-              <ul className="mt-6 grid gap-4">
-                {section.bullets.map((bullet) => (
-                  <li key={bullet} className="flex gap-3 text-lg leading-8 text-slate-700">
-                    <span
-                      className="mt-[0.45rem] inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full"
-                      style={{ backgroundColor: ACCENT }}
-                    >
-                      <Check size={12} className="text-slate-950" />
-                    </span>
-                    {bullet}
-                  </li>
-                ))}
-              </ul>
-            ) : null}
-            {section.steps ? (
-              <ol className="mt-8 grid gap-8">
-                {section.steps.map((step, index) => (
-                  <li key={step.title} className="grid grid-cols-[2.5rem_1fr] gap-4">
-                    <span className="font-mono text-sm leading-8 text-slate-400">
-                      {(index + 1).toString().padStart(2, '0')}
-                    </span>
-                    <div>
-                      <h3 className="text-xl font-bold leading-8 tracking-tight text-slate-950">{step.title}</h3>
-                      <p className="mt-2 text-lg leading-8 text-slate-700">{step.text}</p>
-                    </div>
-                  </li>
-                ))}
-              </ol>
-            ) : null}
-          </section>
+        {guide.sections.map((section, index) => (
+          <Fragment key={section.heading}>
+            <GuideSectionBlock section={section} />
+            {index === midIndex ? <MidArticleCta guide={guide} /> : null}
+          </Fragment>
         ))}
 
         {guide.comparison ? (
@@ -210,15 +320,25 @@ export default function GlanceAwayGuidePage({ app, guide }: { app: AppEntry; gui
                     </p>
                   </div>
                   <p className="mt-1 text-sm font-bold text-slate-700">Best for: {row.bestFor}</p>
-                  <p className="mt-3 text-base leading-7 text-slate-600">{row.note}</p>
-                  {row.ours && appStoreLink ? (
+                  <p className="mt-3 text-base leading-7 text-slate-600">{renderInline(row.note)}</p>
+                  {row.ours ? (
                     <a
-                      href={appStoreLink}
+                      href={storeHref(guide, 'compare')}
                       target="_blank"
-                      rel="noopener noreferrer"
-                      className="mt-4 inline-flex cursor-pointer items-center gap-2 text-sm font-bold text-slate-950 underline underline-offset-4 active:scale-[0.97]"
+                      rel="nofollow noopener noreferrer"
+                      className="mt-4 inline-flex cursor-pointer items-center gap-2 text-sm font-bold text-slate-950 underline underline-offset-4 transition hover:text-slate-600 active:scale-[0.97]"
                     >
                       View on the App Store
+                      <ExternalLink size={14} />
+                    </a>
+                  ) : row.url ? (
+                    <a
+                      href={row.url}
+                      target="_blank"
+                      rel="nofollow noopener noreferrer"
+                      className="mt-4 inline-flex cursor-pointer items-center gap-2 text-sm font-semibold text-slate-600 underline underline-offset-4 transition hover:text-slate-950 active:scale-[0.97]"
+                    >
+                      {row.urlLabel ?? 'Official page'}
                       <ExternalLink size={14} />
                     </a>
                   ) : null}
@@ -245,7 +365,7 @@ export default function GlanceAwayGuidePage({ app, guide }: { app: AppEntry; gui
             <h2 className="mt-6 text-3xl font-bold tracking-tight text-slate-950 sm:text-4xl">{guide.cta.title}</h2>
             <p className="mt-4 max-w-xl text-lg leading-8 text-slate-700">{guide.cta.text}</p>
             <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4">
-              {appStoreLink ? <StoreButton href={appStoreLink} label="View in the App Store" /> : null}
+              <StoreButton href={storeHref(guide, 'cta')} label="View in the App Store" />
               <a href={glanceAwayMacPath} className={`inline-flex items-center gap-2 text-sm ${linkClass}`}>
                 GlanceAway for Mac
                 <ArrowRight size={15} />
@@ -270,7 +390,7 @@ export default function GlanceAwayGuidePage({ app, guide }: { app: AppEntry; gui
           {guide.faq.map((item) => (
             <div key={item.question}>
               <h3 className="text-xl font-bold tracking-tight text-slate-950">{item.question}</h3>
-              <p className="mt-3 text-lg leading-8 text-slate-700">{item.answer}</p>
+              <p className="mt-3 text-lg leading-8 text-slate-700">{renderInline(item.answer)}</p>
             </div>
           ))}
         </div>
@@ -312,7 +432,7 @@ export default function GlanceAwayGuidePage({ app, guide }: { app: AppEntry; gui
                 href={`/apps/${app.slug}/`}
                 className="inline-flex items-center gap-2 text-lg font-semibold text-slate-950 transition hover:text-slate-600 active:opacity-60"
               >
-                GlanceAway: eye break timer for iPhone
+                GlanceAway: eye break timer for iPhone and Mac
                 <ArrowRight size={16} />
               </a>
             </li>
@@ -341,7 +461,6 @@ export default function GlanceAwayGuidePage({ app, guide }: { app: AppEntry; gui
           </nav>
         </div>
       </footer>
-      <script src="/apps/glanceaway/campaign.js" data-campaign={guide.campaign} defer />
     </main>
   );
 }

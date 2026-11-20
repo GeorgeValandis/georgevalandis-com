@@ -59,6 +59,11 @@ function record_aggregate_click(string $source, string $campaign): void
 }
 
 $source = 'landing';
+$position = $_GET['pos'] ?? null;
+if (is_string($position) && preg_match('/^[a-z]{1,12}$/', $position)) {
+    // Position of the link on the page (hero, timer, mid, compare, cta); only for the click counter.
+    $source .= '-' . $position;
+}
 $campaign = campaign_token($_GET['campaign'] ?? null, 'organic_direct');
 
 record_aggregate_click($source, $campaign);
