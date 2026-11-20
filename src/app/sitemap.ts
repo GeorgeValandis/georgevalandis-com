@@ -2,6 +2,7 @@ import { appSlugs } from '@/content/apps';
 import { appSeoMetadata, supportSeoMetadata } from '@/content/appSeo';
 import { appSupportSlugs } from '@/content/appSupportPages';
 import { blogPosts } from '@/content/blogPosts';
+import { glanceAwayGuidePath, glanceAwayGuides } from '@/content/glanceawayGuides';
 import { glanceAwayMacPage, glanceAwayMacPath } from '@/content/glanceawayMacPage';
 import { absoluteUrl, canonicalPath } from '@/lib/seo';
 import type { MetadataRoute } from 'next';
@@ -131,5 +132,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }),
   ];
 
-  return [...staticPages, ...blogPages, ...appPages, ...macPages, ...supportPages];
+  const guidePages = glanceAwayGuides.map((guide) =>
+    sitemapEntry(glanceAwayGuidePath(guide.slug), {
+      lastModified: dateFromIsoDate(guide.updatedAt),
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    })
+  );
+
+  return [...staticPages, ...blogPages, ...appPages, ...macPages, ...guidePages, ...supportPages];
 }

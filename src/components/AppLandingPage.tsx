@@ -1,3 +1,4 @@
+import GlanceAwayGuideLinks from '@/components/GlanceAwayGuideLinks';
 import { AppEntry } from '@/content/apps';
 import { getAppLegalContentBySlug } from '@/content/appLegalContent';
 import { AppLandingPageContent } from '@/content/appLandingPages';
@@ -980,6 +981,7 @@ export default function AppLandingPage({ app, content }: AppLandingPageProps) {
         </div>
 
         <footer className="mx-auto mt-12 max-w-7xl px-6 lg:px-8">
+          {usesGlanceAwayCampaignMeasurement ? <GlanceAwayGuideLinks /> : null}
           <div className="flex flex-col gap-5 border-t border-slate-950/10 py-8 text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between">
             <p>
               &copy; {new Date().getFullYear()} George Valandis. {app.title}{ui.appBySuffix}

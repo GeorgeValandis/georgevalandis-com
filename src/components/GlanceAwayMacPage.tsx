@@ -1,3 +1,4 @@
+import GlanceAwayGuideLinks from '@/components/GlanceAwayGuideLinks';
 import { AppEntry } from '@/content/apps';
 import { glanceAwayMacPage as content, glanceAwayMacPath, MacScreenshot } from '@/content/glanceawayMacPage';
 import { absoluteUrl } from '@/lib/seo';
@@ -363,6 +364,7 @@ export default function GlanceAwayMacPage({ app }: GlanceAwayMacPageProps) {
         </div>
 
         <footer className="mx-auto mt-12 max-w-7xl px-6 lg:px-8">
+          <GlanceAwayGuideLinks />
           <div className="flex flex-col gap-5 border-t border-slate-950/10 py-8 text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between">
             <p>
               &copy; {new Date().getFullYear()} George Valandis. {app.title} is an app by George Valandis.
