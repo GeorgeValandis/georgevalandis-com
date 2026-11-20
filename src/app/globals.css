@@ -70,3 +70,81 @@ body {
 .animate-pulse-glow {
   animation: pulse-glow 4s ease-in-out infinite;
 }
+/* GlanceAway guides: hero entrance, break glow, scroll reveals (content stays visible without support). */
+@keyframes ga-rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.ga-rise {
+  animation: ga-rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes ga-breathe {
+
+  0%,
+  100% {
+    transform: scale(0.88);
+  }
+
+  50% {
+    transform: scale(1.08);
+  }
+}
+
+.ga-breathe {
+  animation: ga-breathe 4s ease-in-out infinite;
+}
+
+@keyframes ga-drift {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.ga-drift {
+  animation: ga-drift 7s ease-in-out infinite;
+}
+
+@keyframes ga-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@supports (animation-timeline: view()) {
+  .ga-reveal {
+    animation: ga-reveal linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 35%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .ga-rise,
+  .ga-breathe,
+  .ga-drift,
+  .ga-reveal {
+    animation: none;
+  }
+}

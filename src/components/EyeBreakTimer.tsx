@@ -17,10 +17,14 @@ const TICK_WORKER_SOURCE =
 type Phase = 'idle' | 'focus' | 'break';
 type FocusMinutes = (typeof FOCUS_OPTIONS)[number];
 
+export type EyeBreakPhase = Phase;
+
 type EyeBreakTimerProps = {
   accent: string;
   /** Download link for the app line under the timer. */
   storeHref?: string;
+  /** Lets the page react to breaks (the hero horizon lights up). */
+  onPhaseChange?: (phase: Phase) => void;
 };
 
 function formatTime(totalSeconds: number): string {
@@ -90,7 +94,7 @@ function startTicker(onTick: () => void): () => void {
   };
 }
 
-export default function EyeBreakTimer({ accent, storeHref }: EyeBreakTimerProps) {
+export default function EyeBreakTimer({ accent, storeHref, onPhaseChange }: EyeBreakTimerProps) {
   const [focusMinutes, setFocusMinutes] = useState<FocusMinutes>(20);
   const [phase, setPhase] = useState<Phase>('idle');
   const [paused, setPaused] = useState(false);
@@ -152,6 +156,10 @@ export default function EyeBreakTimer({ accent, storeHref }: EyeBreakTimerProps)
       document.removeEventListener('visibilitychange', tick);
     };
   }, [running, phase, startPhase]);
+
+  useEffect(() => {
+    onPhaseChange?.(phase);
+  }, [phase, onPhaseChange]);
 
   // Countdown in the tab title, restored when the timer stops.
   useEffect(() => {
@@ -231,7 +239,7 @@ export default function EyeBreakTimer({ accent, storeHref }: EyeBreakTimerProps)
   const primaryLabel = phase === 'idle' ? 'Start' : paused ? 'Resume' : 'Pause';
   const statusLabel =
     phase === 'break'
-      ? 'Look 20 feet away'
+      ? 'Look at the horizon'
       : phase === 'focus'
         ? paused
           ? 'Paused'
@@ -243,15 +251,15 @@ export default function EyeBreakTimer({ accent, storeHref }: EyeBreakTimerProps)
 
   return (
     <div
-      className="relative overflow-hidden rounded-[2rem] p-8 shadow-[0_24px_60px_rgba(15,23,42,0.10)] transition-colors duration-700 sm:p-10"
-      style={{ backgroundColor: isBreak ? `${accent}26` : 'rgba(255,255,255,0.85)' }}
+      className="relative overflow-hidden rounded-[2.25rem] px-7 py-8 text-white shadow-[0_40px_100px_rgba(2,12,18,0.45)] backdrop-blur-2xl transition-colors duration-[1600ms] sm:px-10 sm:py-10"
+      style={{ backgroundColor: isBreak ? 'rgba(8,36,42,0.62)' : 'rgba(8,28,36,0.55)' }}
     >
       <div className="flex flex-col items-center">
         <div
           role="group"
           aria-label="Time between breaks"
-          className={`mb-6 inline-flex rounded-full bg-slate-950/[0.05] p-1 transition-opacity duration-300 ${
-            phase === 'idle' ? 'opacity-100' : 'opacity-40'
+          className={`mb-7 inline-flex rounded-full bg-white/[0.08] p-1 transition-opacity duration-300 ${
+            phase === 'idle' ? 'opacity-100' : 'opacity-35'
           }`}
         >
           {FOCUS_OPTIONS.map((minutes) => {
@@ -263,8 +271,8 @@ export default function EyeBreakTimer({ accent, storeHref }: EyeBreakTimerProps)
                 aria-pressed={selected}
                 disabled={phase !== 'idle'}
                 onClick={() => handleChooseFocus(minutes)}
-                className={`h-9 w-24 cursor-pointer rounded-full text-sm font-bold transition-colors duration-200 active:scale-[0.96] disabled:cursor-default disabled:active:scale-100 ${
-                  selected ? 'bg-white text-slate-950 shadow-sm' : 'text-slate-500 hover:text-slate-900'
+                className={`h-9 w-24 cursor-pointer rounded-full text-sm font-semibold transition-colors duration-200 active:scale-[0.96] disabled:cursor-default disabled:active:scale-100 ${
+                  selected ? 'bg-white text-slate-950' : 'text-white/75 hover:text-white'
                 }`}
               >
                 {minutes} min
@@ -273,31 +281,37 @@ export default function EyeBreakTimer({ accent, storeHref }: EyeBreakTimerProps)
           })}
         </div>
 
-        <div className="relative h-56 w-56 sm:h-64 sm:w-64">
-          <svg viewBox="0 0 200 200" className="h-full w-full -rotate-90" aria-hidden="true">
-            <circle cx="100" cy="100" r={RING_RADIUS} fill="none" stroke="rgba(15,23,42,0.07)" strokeWidth="10" />
+        <div className="relative h-60 w-60 sm:h-72 sm:w-72">
+          <div
+            className={`absolute inset-6 rounded-full blur-2xl transition-opacity duration-1000 ${
+              isBreak ? 'ga-breathe opacity-100' : 'opacity-0'
+            }`}
+            style={{ backgroundColor: `${accent}55` }}
+          />
+          <svg viewBox="0 0 200 200" className="relative h-full w-full -rotate-90" aria-hidden="true">
+            <circle cx="100" cy="100" r={RING_RADIUS} fill="none" stroke="rgba(255,255,255,0.10)" strokeWidth="6" />
             <circle
               cx="100"
               cy="100"
               r={RING_RADIUS}
               fill="none"
               stroke={accent}
-              strokeWidth="10"
+              strokeWidth="6"
               strokeLinecap="round"
               strokeDasharray={RING_LENGTH}
               strokeDashoffset={RING_LENGTH * (1 - progress)}
-              style={{ transition: 'stroke-dashoffset 300ms linear' }}
+              style={{ transition: 'stroke-dashoffset 300ms linear', filter: `drop-shadow(0 0 6px ${accent}aa)` }}
             />
           </svg>
           <div className="absolute inset-0 flex flex-col items-center justify-center">
             <p
-              className="text-5xl font-bold tabular-nums tracking-tight text-slate-950 sm:text-6xl"
+              className="text-6xl font-semibold tabular-nums tracking-[-0.04em] text-white sm:text-7xl"
               role="timer"
               aria-live="off"
             >
               {formatTime(phase === 'idle' ? focusSeconds : remaining)}
             </p>
-            <p className="mt-2 text-sm font-semibold text-slate-500" aria-live="polite">
+            <p className="mt-2 text-sm font-medium text-white/80" aria-live="polite">
               {statusLabel}
             </p>
           </div>
@@ -307,7 +321,7 @@ export default function EyeBreakTimer({ accent, storeHref }: EyeBreakTimerProps)
           <button
             type="button"
             onClick={handlePrimary}
-            className="inline-flex h-12 w-32 cursor-pointer items-center justify-center rounded-full bg-slate-950 text-sm font-bold text-white shadow-lg shadow-slate-950/15 transition hover:bg-slate-800 active:scale-[0.96]"
+            className="inline-flex h-12 w-32 cursor-pointer items-center justify-center rounded-full bg-white text-sm font-bold text-slate-950 shadow-lg shadow-black/20 transition hover:bg-white/90 active:scale-[0.96]"
           >
             {primaryLabel}
           </button>
@@ -315,7 +329,7 @@ export default function EyeBreakTimer({ accent, storeHref }: EyeBreakTimerProps)
             type="button"
             onClick={handleReset}
             disabled={phase === 'idle'}
-            className="inline-flex h-12 w-28 cursor-pointer items-center justify-center rounded-full bg-slate-950/[0.06] text-sm font-bold text-slate-800 transition hover:bg-slate-950/10 active:scale-[0.96] disabled:cursor-default disabled:opacity-40 disabled:hover:bg-slate-950/[0.06] disabled:active:scale-100"
+            className="inline-flex h-12 w-28 cursor-pointer items-center justify-center rounded-full bg-white/[0.08] text-sm font-semibold text-white transition hover:bg-white/[0.14] active:scale-[0.96] disabled:cursor-default disabled:opacity-40 disabled:hover:bg-white/[0.08] disabled:active:scale-100"
           >
             Reset
           </button>
@@ -325,20 +339,20 @@ export default function EyeBreakTimer({ accent, storeHref }: EyeBreakTimerProps)
           type="button"
           onClick={handleTryBreak}
           disabled={isBreak}
-          className="mt-4 cursor-pointer text-sm font-semibold text-slate-500 underline-offset-4 transition hover:text-slate-900 hover:underline active:scale-[0.97] disabled:cursor-default disabled:opacity-0"
+          className="mt-4 cursor-pointer text-sm font-medium text-white/75 underline-offset-4 transition hover:text-white hover:underline active:scale-[0.97] disabled:cursor-default disabled:opacity-0"
         >
           Try a 20 second break now
         </button>
 
         {storeHref ? (
-          <p className="mt-6 flex min-h-[3rem] max-w-sm items-center justify-center text-center text-sm leading-6 text-slate-600">
+          <p className="mt-6 flex min-h-[3rem] max-w-sm items-center justify-center text-center text-sm leading-6 text-white/80">
             <span>
               {appLead}{' '}
               <a
                 href={storeHref}
                 target="_blank"
                 rel="nofollow noopener noreferrer"
-                className="font-bold text-slate-950 underline underline-offset-4 transition hover:text-slate-600 active:opacity-60"
+                className="font-semibold text-white underline decoration-white/40 underline-offset-4 transition hover:decoration-white active:opacity-60"
               >
                 GlanceAway runs it on iPhone and Mac
               </a>
