@@ -50,7 +50,7 @@ function renderInline(text: string, className = inlineLinkClass): ReactNode {
 const NUMBER_RUN = /(\d+(?:-\d+)+)/;
 
 /** Keeps runs like "20-20-20" on one line in headings. */
-function keepTogether(text: string): ReactNode {
+export function keepTogether(text: string): ReactNode {
   const parts = text.split(NUMBER_RUN);
   if (parts.length === 1) return text;
   return parts.map((part, index) =>
@@ -162,7 +162,7 @@ const RULE = [
   { value: '20', unit: 's', text: 'Hold it for twenty seconds, then blink.' },
 ];
 
-function StoreButton({ href, label, dark = false }: { href: string; label: string; dark?: boolean }) {
+export function StoreButton({ href, label, dark = false }: { href: string; label: string; dark?: boolean }) {
   return (
     <a
       href={href}
@@ -180,7 +180,7 @@ function StoreButton({ href, label, dark = false }: { href: string; label: strin
   );
 }
 
-function PhoneFrame({ className = '', sizes = '12rem' }: { className?: string; sizes?: string }) {
+export function PhoneFrame({ className = '', sizes = '12rem' }: { className?: string; sizes?: string }) {
   return (
     <div className={`rounded-[1.5rem] bg-[#0b1114] p-1 shadow-[0_36px_80px_rgba(2,12,18,0.35)] sm:rounded-[2.25rem] sm:p-[0.4rem] ${className}`}>
       <Image
@@ -197,7 +197,7 @@ function PhoneFrame({ className = '', sizes = '12rem' }: { className?: string; s
 }
 
 /** Two-column editorial row: sticky heading on the left, reading column on the right. */
-function EditorialRow({ heading, children, id }: { heading: string; children: ReactNode; id?: string }) {
+export function EditorialRow({ heading, children, id }: { heading: string; children: ReactNode; id?: string }) {
   return (
     <section id={id} className="ga-reveal grid gap-6 py-14 first:pt-0 last:pb-0 lg:grid-cols-[minmax(0,19rem)_minmax(0,40rem)] lg:gap-20 lg:py-20">
       <h2 className="text-3xl font-semibold leading-[1.1] tracking-[-0.025em] text-slate-950 sm:text-4xl lg:sticky lg:top-12 lg:self-start">
@@ -249,7 +249,7 @@ function GuideSectionBlock({ section }: { section: GlanceAwayGuide['sections'][n
   );
 }
 
-function RuleBand() {
+export function RuleBand() {
   return (
     <section aria-label="The 20-20-20 rule at a glance" className="bg-[#071a20] text-white">
       <div className="mx-auto grid max-w-7xl grid-cols-3 gap-5 px-6 pb-20 pt-6 sm:gap-8 sm:pb-24 lg:px-8 lg:pb-32">
@@ -356,7 +356,18 @@ function Comparison({ guide }: { guide: GlanceAwayGuide }) {
   );
 }
 
-function ClosingCta({ app, guide }: { app: AppEntry; guide: GlanceAwayGuide }) {
+/** Dark horizon closing section with the Mac overlay and the iPhone in front. */
+export function GlanceAwayClosingCta({
+  app,
+  title,
+  text,
+  href,
+}: {
+  app: AppEntry;
+  title: string;
+  text: string;
+  href: string;
+}) {
   return (
     <section className="relative isolate overflow-hidden bg-[#06131c] text-white">
       <GlanceAwayHorizon bright className="-z-10" />
@@ -370,10 +381,10 @@ function ClosingCta({ app, guide }: { app: AppEntry; guide: GlanceAwayGuide }) {
             <Image src={app.logo} alt="" width={44} height={44} className="h-11 w-11 rounded-xl" />
             <p className="text-lg font-semibold tracking-tight">{app.title}</p>
           </div>
-          <h2 className="mt-8 text-4xl font-semibold leading-[1.05] tracking-[-0.03em] sm:text-5xl">{keepTogether(guide.cta.title)}</h2>
-          <p className="mt-5 max-w-xl text-lg leading-8 text-white/85">{guide.cta.text}</p>
+          <h2 className="mt-8 text-4xl font-semibold leading-[1.05] tracking-[-0.03em] sm:text-5xl">{keepTogether(title)}</h2>
+          <p className="mt-5 max-w-xl text-lg leading-8 text-white/85">{text}</p>
           <div className="mt-10 flex flex-wrap items-center gap-x-7 gap-y-4">
-            <StoreButton href={storeHref(guide, 'cta')} label="View in the App Store" dark />
+            <StoreButton href={href} label="View in the App Store" dark />
             <a
               href={glanceAwayMacPath}
               className="inline-flex cursor-pointer items-center gap-2 text-sm font-semibold text-white/85 transition hover:text-white active:opacity-60"
@@ -397,6 +408,33 @@ function ClosingCta({ app, guide }: { app: AppEntry; guide: GlanceAwayGuide }) {
         </div>
       </div>
     </section>
+  );
+}
+
+/** Legal footer shared by the GlanceAway landing page and guides. */
+export function GlanceAwayFooter({ app }: { app: AppEntry }) {
+  return (
+    <footer className="mx-auto max-w-7xl px-6 lg:px-8">
+      <div className="flex flex-col gap-5 py-8 text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between">
+        <p>
+          &copy; {new Date().getFullYear()} George Valandis. {app.title} is an app by George Valandis.
+        </p>
+        <nav aria-label={`${app.title} legal links`} className="flex flex-wrap gap-x-5 gap-y-2">
+          <a href={absoluteUrl(app.legal.privacyPath)} className={linkClass}>
+            Website Privacy &amp; Cookies
+          </a>
+          <a href={absoluteUrl(`/apps/${app.slug}/privacy/`)} className={linkClass}>
+            App Privacy
+          </a>
+          <a href={absoluteUrl(app.legal.termsPath)} className={linkClass}>
+            Terms
+          </a>
+          <a href={absoluteUrl('/imprint/')} className={linkClass}>
+            Imprint
+          </a>
+        </nav>
+      </div>
+    </footer>
   );
 }
 
@@ -439,7 +477,7 @@ export default function GlanceAwayGuidePage({ app, guide }: { app: AppEntry; gui
         <Comparison guide={guide} />
       </article>
 
-      <ClosingCta app={app} guide={guide} />
+      <GlanceAwayClosingCta app={app} title={guide.cta.title} text={guide.cta.text} href={storeHref(guide, 'cta')} />
 
       <div className="mx-auto max-w-7xl px-6 py-24 sm:py-28 lg:px-8 lg:py-32">
         <EditorialRow heading="Frequently asked questions">
@@ -499,27 +537,7 @@ export default function GlanceAwayGuidePage({ app, guide }: { app: AppEntry; gui
         </div>
       </div>
 
-      <footer className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="flex flex-col gap-5 py-8 text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between">
-          <p>
-            &copy; {new Date().getFullYear()} George Valandis. {app.title} is an app by George Valandis.
-          </p>
-          <nav aria-label={`${app.title} legal links`} className="flex flex-wrap gap-x-5 gap-y-2">
-            <a href={absoluteUrl(app.legal.privacyPath)} className={linkClass}>
-              Website Privacy &amp; Cookies
-            </a>
-            <a href={absoluteUrl(`/apps/${app.slug}/privacy/`)} className={linkClass}>
-              App Privacy
-            </a>
-            <a href={absoluteUrl(app.legal.termsPath)} className={linkClass}>
-              Terms
-            </a>
-            <a href={absoluteUrl('/imprint/')} className={linkClass}>
-              Imprint
-            </a>
-          </nav>
-        </div>
-      </footer>
+      <GlanceAwayFooter app={app} />
     </main>
   );
 }

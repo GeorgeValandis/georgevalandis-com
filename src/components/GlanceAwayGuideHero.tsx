@@ -20,6 +20,8 @@ type GlanceAwayGuideHeroProps = {
   intro: ReactNode;
   byline: string;
   hasTimer?: boolean;
+  /** Optional line under the hero store button (no-timer variant only). */
+  extra?: ReactNode;
   navHref: string;
   heroHref: string;
   timerHref: string;
@@ -37,6 +39,7 @@ export default function GlanceAwayGuideHero({
   intro,
   byline,
   hasTimer = false,
+  extra,
   navHref,
   heroHref,
   timerHref,
@@ -136,6 +139,7 @@ export default function GlanceAwayGuideHero({
                 <ExternalLink size={16} />
               </a>
             ) : null}
+            {!hasTimer && extra ? <div className="mt-5">{extra}</div> : null}
           </div>
         </div>
       </div>

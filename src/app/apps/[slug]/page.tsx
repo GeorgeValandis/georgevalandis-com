@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import AppLandingPage from '@/components/AppLandingPage';
+import GlanceAwayLandingPage from '@/components/GlanceAwayLandingPage';
 import { getAppLandingPage } from '@/content/appLandingPages';
 import { getAppSeoMetadata } from '@/content/appSeo';
 import { appSlugs, getAppBySlug } from '@/content/apps';
@@ -79,6 +80,10 @@ export default async function AppPage({ params }: AppPageProps) {
   }
 
   const landingPage = getAppLandingPage(app.slug);
+
+  if (landingPage && app.slug === 'glanceaway') {
+    return <GlanceAwayLandingPage app={app} content={landingPage} />;
+  }
 
   if (landingPage) {
     return <AppLandingPage app={app} content={landingPage} />;

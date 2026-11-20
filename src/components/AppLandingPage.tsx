@@ -325,7 +325,7 @@ function PhoneShot({
   );
 }
 
-function appJsonLd(app: AppEntry, content: AppLandingPageContent) {
+export function appJsonLd(app: AppEntry, content: AppLandingPageContent) {
   const inLanguage = content.lang ?? 'en';
   const seo = getAppSeoMetadata(app.slug);
   const pageUrl = absoluteUrl(`/apps/${app.slug}/`);
@@ -750,15 +750,6 @@ export default function AppLandingPage({ app, content }: AppLandingPageProps) {
             <p className={`mt-5 max-w-lg text-sm leading-6 ${heroSoftText}`}>
               {content.availability}
             </p>
-            {content.heroLink ? (
-              <a
-                href={content.heroLink.href}
-                className={`mt-2 inline-flex items-center gap-1.5 text-sm font-semibold underline-offset-4 transition hover:underline active:opacity-60 ${heroMutedText}`}
-              >
-                {content.heroLink.label}
-                <ArrowRight size={14} />
-              </a>
-            ) : null}
 
             <div className="mt-8 lg:hidden">
               <PhoneShot
@@ -946,7 +937,6 @@ export default function AppLandingPage({ app, content }: AppLandingPageProps) {
             <h2 className="mt-4 text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl">
               {ui.faqTitle}
             </h2>
-            {usesGlanceAwayCampaignMeasurement ? <GlanceAwayGuideLinks stacked /> : null}
           </div>
           <div className="divide-y divide-slate-950/10">
             {content.faq.map((item) => (
@@ -991,6 +981,7 @@ export default function AppLandingPage({ app, content }: AppLandingPageProps) {
         </div>
 
         <footer className="mx-auto mt-12 max-w-7xl px-6 lg:px-8">
+          {usesGlanceAwayCampaignMeasurement ? <GlanceAwayGuideLinks /> : null}
           <div className="flex flex-col gap-5 border-t border-slate-950/10 py-8 text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between">
             <p>
               &copy; {new Date().getFullYear()} George Valandis. {app.title}{ui.appBySuffix}
