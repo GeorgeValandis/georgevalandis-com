@@ -27,6 +27,9 @@ export const metadata: Metadata = {
     description: glanceAwayMacPage.intro,
     images: [heroShot.src],
   },
+  other: {
+    'apple-itunes-app': 'app-id=6751297230, affiliate-data=ct=mac_landing_banner&pt=126900140',
+  },
 };
 
 export default function GlanceAwayMacRoute() {

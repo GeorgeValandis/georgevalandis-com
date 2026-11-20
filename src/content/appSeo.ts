@@ -76,15 +76,17 @@ export const appSeoMetadata: Record<string, AppSeoMetadata> = {
     updatedAt: '2026-05-23',
   },
   glanceaway: {
-    primaryKeyword: 'eye break timer app',
+    primaryKeyword: '20-20-20 eye break reminder',
     secondaryKeywords: [
-      '20-20-20 rule app',
-      '20-20-20 eye break reminder',
-      'screen break reminder',
-      'eye rest reminder',
+      '20-20-20 rule app iPhone',
+      '20-20-20 rule app Mac',
+      '20-20-20 rule reminder',
+      'eye break timer app',
+      'eye rest timer app',
+      'break reminder app iPhone',
     ],
     searchIntent:
-      'Find an eye break timer app for 20-20-20 rule reminders, screen breaks, and progress stats.',
+      'Find a 20-20-20 rule app for iPhone and Mac that reminds you to rest your eyes during long screen sessions.',
     group: 'habits-focus-wellbeing',
     updatedAt: '2026-06-19',
   },

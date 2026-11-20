@@ -29,12 +29,16 @@ export async function generateMetadata({ params }: AppPageProps): Promise<Metada
 
   const landingPage = getAppLandingPage(app.slug);
   const seo = getAppSeoMetadata(app.slug);
+  const pageTitle = landingPage
+    ? landingPage.metaTitle ?? `${landingPage.appStoreName} - ${landingPage.eyebrow}`
+    : `${app.title} - George Valandis`;
+  const pageDescription = landingPage
+    ? landingPage.metaDescription ?? landingPage.intro
+    : app.description;
 
   return {
-    title: landingPage
-      ? `${landingPage.appStoreName} - ${landingPage.eyebrow}`
-      : `${app.title} - George Valandis`,
-    description: landingPage?.intro ?? app.description,
+    title: pageTitle,
+    description: pageDescription,
     keywords: seo
       ? [seo.primaryKeyword, ...seo.secondaryKeywords, app.title, ...app.tags]
       : [...app.tags],
@@ -43,8 +47,8 @@ export async function generateMetadata({ params }: AppPageProps): Promise<Metada
     },
     openGraph: landingPage
       ? {
-          title: landingPage.appStoreName,
-          description: landingPage.intro,
+          title: pageTitle,
+          description: pageDescription,
           url: canonicalPath(`/apps/${app.slug}`),
           images: landingPage.screenshots.slice(0, 1).map((screenshot) => ({
             url: screenshot.src,
@@ -55,11 +59,14 @@ export async function generateMetadata({ params }: AppPageProps): Promise<Metada
     twitter: landingPage
       ? {
           card: 'summary_large_image',
-          title: landingPage.appStoreName,
-          description: landingPage.intro,
+          title: pageTitle,
+          description: pageDescription,
           images: landingPage.screenshots.slice(0, 1).map((screenshot) => screenshot.src),
         }
       : undefined,
+    ...(landingPage?.smartAppBanner
+      ? { other: { 'apple-itunes-app': landingPage.smartAppBanner } }
+      : {}),
   };
 }
 

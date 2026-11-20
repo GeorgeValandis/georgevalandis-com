@@ -18,7 +18,7 @@ export const glanceAwayMacPage = {
     'GlanceAway is a break reminder for Mac and iPhone: 20-20-20 eye breaks, a calm full-screen overlay, menu bar controls, and breaks that wait during video calls.',
   primaryCta: 'View in the App Store',
   secondaryCta: 'See the app',
-  availability: 'Free on the App Store. Optional premium features may be available in the app.',
+  availability: 'Free with 3 breaks a day. Premium unlocks unlimited breaks for $9.99 a year or $24.99 once.',
   accent: '#00cfc0',
   background: 'from-[#ecfff7] via-[#f7fbf8] to-[#eef7ff]',
   primaryKeyword: 'break reminder for Mac',
