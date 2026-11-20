@@ -35,8 +35,10 @@ export async function generateMetadata({ params }: GuideRouteProps): Promise<Met
     description: guide.description,
     keywords: [guide.primaryKeyword, ...guide.secondaryKeywords],
     alternates: { canonical: path },
-    // Safari Smart App Banner for GlanceAway on iPhone.
-    itunes: { appId: '6751297230' },
+    // Safari Smart App Banner for GlanceAway on iPhone, with the page's campaign so banner installs show up in App Analytics.
+    other: {
+      'apple-itunes-app': `app-id=6751297230, affiliate-data=ct=${guide.campaign}_banner&pt=126900140`,
+    },
     openGraph: {
       type: 'article',
       title: guide.title,

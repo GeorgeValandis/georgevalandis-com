@@ -65,6 +65,16 @@ const aoaComputerVision: GuideSource = {
   url: 'https://www.aoa.org/healthy-eyes/eye-and-vision-conditions/computer-vision-syndrome',
 };
 
+const studyTalens: GuideSource = {
+  label: 'Talens-Estarelles et al. (2023): Testing the 20-20-20 rule, Contact Lens and Anterior Eye',
+  url: 'https://pubmed.ncbi.nlm.nih.gov/35963776/',
+};
+
+const studyJohnson: GuideSource = {
+  label: 'Johnson and Rosenfield (2023): 20-20-20 rule, are these numbers justified? Optometry and Vision Science',
+  url: 'https://pubmed.ncbi.nlm.nih.gov/36473088/',
+};
+
 const aaoBlueLight: GuideSource = {
   label: 'American Academy of Ophthalmology: Should you be worried about blue light?',
   url: 'https://www.aao.org/eye-health/tips-prevention/should-you-be-worried-about-blue-light',
@@ -78,9 +88,9 @@ export const glanceAwayGuides: GlanceAwayGuide[] = [
     description:
       'Free 20-20-20 rule timer in your browser: work for 20 minutes, then look 20 feet away for 20 seconds. With a chime, a countdown in the tab, and a 30 minute option.',
     eyebrow: '20-20-20 rule timer',
-    headline: 'A free 20-20-20 timer that tells you when to look away.',
+    headline: 'The free 20-20-20 rule timer that tells you when to look away.',
     intro:
-      'The 20-20-20 rule: every 20 minutes, look at something about 20 feet away for 20 seconds. Press start and keep working. The timer chimes when it is time to look away and counts the 20 seconds for you.',
+      'The 20-20-20 rule: every 20 minutes, look at something about 20 feet away for 20 seconds. Press start and keep working. This eye break reminder chimes when it is time to look away and counts the 20 seconds for you.',
     primaryKeyword: '20 20 20 rule timer',
     secondaryKeywords: [
       '20-20-20 timer online',
@@ -88,6 +98,7 @@ export const glanceAwayGuides: GlanceAwayGuide[] = [
       '20 20 20 rule for eye strain',
       '20 20 20 rule for screen time',
       'eye break timer',
+      '20 20 20 rule reminder',
     ],
     publishedAt: '2026-11-20',
     updatedAt: '2026-11-20',
@@ -95,14 +106,22 @@ export const glanceAwayGuides: GlanceAwayGuide[] = [
     hasTimer: true,
     sections: [
       {
-        heading: 'What is the 20-20-20 rule?',
+        heading: 'What is the 20-20-20 rule for eyes?',
         paragraphs: [
           'Every 20 minutes of screen time, look at something about 20 feet (6 meters) away for at least 20 seconds. The American Optometric Association recommends the rule to ease digital eye strain.',
           'Up close, the focusing muscles in your eyes work the whole time. Looking into the distance lets them relax for a moment. You also tend to blink again, which you do much less while staring at a screen. For the full picture, see [how to reduce eye strain from screens](/apps/glanceaway/eye-strain-from-screens/).',
         ],
       },
       {
-        heading: 'How to use this timer',
+        heading: 'Does the 20-20-20 rule work?',
+        paragraphs: [
+          'The research is thinner than the rule’s popularity suggests. In one 2023 study, 29 computer users with eye strain got 20-20-20 reminders on their laptops for two weeks. Their eye strain and dry eye symptoms went down, but came back within a week after the reminders stopped.',
+          'Another 2023 study had 30 young adults read on a tablet for 40 minutes, with a 20 second break every 5, 10, or 20 minutes, or no break at all. The breaks made no measurable difference to their symptoms, and the authors concluded that 20 second breaks are not supported as a treatment for digital eye strain.',
+          'My take: treat the rule as an easy way to remember regular breaks, not as a cure. If 20 seconds feels too short, look away for longer. And if your eyes keep bothering you, see an eye doctor.',
+        ],
+      },
+      {
+        heading: 'How to do the 20-20-20 rule with this timer',
         howTo: true,
         steps: [
           {
@@ -137,19 +156,24 @@ export const glanceAwayGuides: GlanceAwayGuide[] = [
       },
     ],
     midCta: {
-      afterSection: 2,
+      afterSection: 3,
       title: 'The same timer, on your iPhone and Mac.',
-      text: 'GlanceAway keeps the 20-20-20 rhythm going when this tab is closed. Free to try with 3 breaks a day; premium removes the limit.',
+      text: 'GlanceAway keeps the 20-20-20 rhythm going when this tab is closed, and shows a full-screen break on Mac that is hard to ignore.',
     },
     cta: {
       title: 'Let your iPhone and Mac do the timing.',
-      text: 'GlanceAway runs the 20-20-20 rhythm in the background on iPhone and Mac, with full-screen breaks on Mac and stats that show your streak. Free to try with 3 breaks a day; premium removes the limit.',
+      text: 'GlanceAway runs the 20-20-20 rhythm in the background on iPhone and Mac, with full-screen breaks on Mac and stats that show your streak.',
     },
     faq: [
       {
-        question: 'Does the 20-20-20 rule actually work?',
+        question: 'Is it better to close your eyes or look far away?',
         answer:
-          'It is a simple, widely recommended way to give your eyes regular breaks. Eye care organizations such as the American Optometric Association recommend it to reduce digital eye strain. The hard part is remembering to do it, which is what a timer solves.',
+          'Both give your eyes a rest. The 20-20-20 rule asks you to look into the distance because that lets the focusing muscles relax. Closing your eyes or blinking slowly a few times during the break helps against dryness, so you can combine the two.',
+      },
+      {
+        question: 'Do I do the 20-20-20 rule with or without glasses?',
+        answer:
+          'Keep wearing the glasses you see far away with, so the faraway point is sharp. If you wear reading or computer glasses that blur the distance, look over them or take them off for the 20 seconds.',
       },
       {
         question: 'Is 20 feet a strict distance?',
@@ -159,7 +183,12 @@ export const glanceAwayGuides: GlanceAwayGuide[] = [
       {
         question: 'Will this timer work in the background?',
         answer:
-          'On a computer, yes, as long as the tab stays open. It keeps time in background tabs, shows the countdown in the tab title, and can send a notification when a break starts if you allow it. Phones pause web pages when you switch apps, so on a phone keep the page open or use an app.',
+          'On a computer, yes, as long as the tab stays open and the computer stays awake. It keeps time in background tabs, shows the countdown in the tab title, and can send a notification when a break starts if you turn notifications on. Phones pause web pages when you switch apps, so on a phone keep the page open or use an app.',
+      },
+      {
+        question: 'Can I get a 20-20-20 reminder on Windows or Android?',
+        answer:
+          'This browser timer works on any computer, Windows included. For a desktop app, Stretchly is free on Windows, Mac, and Linux; more options are in the [20-20-20 rule apps compared](/apps/glanceaway/20-20-20-rule-app/). GlanceAway itself runs on iPhone and Mac only.',
       },
       {
         question: 'Is there a 20-20-20 timer app for iPhone and Mac?',
@@ -167,16 +196,16 @@ export const glanceAwayGuides: GlanceAwayGuide[] = [
           'Yes. GlanceAway is an eye break timer for iPhone and Mac built around the 20-20-20 rule. The free version covers 3 breaks a day; premium removes the limit.',
       },
     ],
-    sources: [aoaComputerVision, aaoComputerUsage],
+    sources: [aoaComputerVision, aaoComputerUsage, studyTalens, studyJohnson],
   },
   {
     slug: '20-20-20-rule-app',
     navLabel: '20-20-20 apps',
-    title: 'Best 20-20-20 Rule Apps for iPhone and Mac (2026)',
+    title: '20-20-20 Rule Apps for iPhone and Mac: 8 Compared',
     description:
-      'An honest look at 20-20-20 rule apps for iPhone and Mac in 2026: what each app does well, what it costs, and which one fits how you work.',
+      'Eight 20-20-20 rule apps for iPhone and Mac compared: what each app does well, what it costs, and which one fits how you work. Plus options for Windows.',
     eyebrow: '20-20-20 rule apps',
-    headline: 'The best 20-20-20 rule apps for iPhone and Mac.',
+    headline: '20-20-20 rule apps for iPhone and Mac, compared.',
     intro:
       'Short answer: for one rhythm on iPhone and Mac, try GlanceAway (my own app, disclosed below). On a Mac alone, LookAway, Time Out, and Intermission are good picks, and Stretchly is free on every desktop system. For a simple phone reminder, Eye Care 20 20 20 or 20.20.20 will do.',
     primaryKeyword: '20-20-20 rule app',
@@ -197,7 +226,7 @@ export const glanceAwayGuides: GlanceAwayGuide[] = [
           'A reminder you cannot miss. A small notification is easy to swipe away. A full-screen break works better at a desk.',
           'Respect for your work. Breaks should wait during video calls and give you a short heads-up before they start.',
           'Every device you use. If you switch between Mac and iPhone during the day, the rhythm should follow you.',
-          'Proof that it works. Stats and streaks show whether you are actually taking breaks, not just dismissing them.',
+          'Stats you can check. Streaks show whether you are actually taking breaks, not just dismissing them.',
           'No account, little data. A timer does not need your email address.',
         ],
       },
@@ -205,7 +234,7 @@ export const glanceAwayGuides: GlanceAwayGuide[] = [
         heading: 'How I picked these apps',
         paragraphs: [
           'I looked at the apps that show up when you search the App Store and Google for 20-20-20, eye break, and break reminder, and checked their official listings and websites in November 2026. Prices and features change, so check before you decide. No app at all yet? The [free 20-20-20 timer](/apps/glanceaway/20-20-20-rule-timer/) runs in your browser.',
-          'Full disclosure: GlanceAway is my own app. I built it because I wanted full-screen breaks on my Mac and the same rhythm on my iPhone in one app. I still list the others because one of them may fit you better. Most of them differ less in the timer itself than in how hard the reminder is to ignore and which devices it covers.',
+          'Full disclosure: GlanceAway is my own app. I built it because I wanted full-screen breaks on my Mac and the same rhythm on my iPhone in one app. I still list the others because one of them may fit you better. Most of them differ less in the timer itself than in how hard the reminder is to ignore and which devices it covers. If you mainly want a [break reminder app for Mac](/apps/glanceaway/mac/), start there.',
         ],
       },
     ],
@@ -215,7 +244,7 @@ export const glanceAwayGuides: GlanceAwayGuide[] = [
       {
         name: 'GlanceAway',
         platforms: 'iPhone, Mac',
-        price: 'Free: 3 breaks a day, premium unlimited',
+        price: 'Free: 3 breaks a day. Premium $9.99 a year or $24.99 once',
         bestFor: 'One rhythm across iPhone and Mac',
         note: 'Full-screen breaks on Mac, menu bar timer, a heads-up before each break, waits during video calls, streaks and stats. No account.',
         ours: true,
@@ -287,11 +316,11 @@ export const glanceAwayGuides: GlanceAwayGuide[] = [
     midCta: {
       afterSection: 1,
       title: 'Want to try mine first?',
-      text: 'GlanceAway runs on iPhone and Mac, shows a full-screen break on Mac, and needs no account. Free to try with 3 breaks a day; premium removes the limit.',
+      text: 'GlanceAway runs on iPhone and Mac, shows a full-screen break on Mac, and needs no account.',
     },
     cta: {
       title: 'Try the one that works on iPhone and Mac.',
-      text: 'GlanceAway keeps the 20-20-20 rhythm on your iPhone and Mac, with full-screen breaks on Mac and stats that show your streak. Free to try with 3 breaks a day; premium removes the limit.',
+      text: 'GlanceAway keeps the 20-20-20 rhythm on your iPhone and Mac, with full-screen breaks on Mac and stats that show your streak.',
     },
     faq: [
       {
@@ -303,6 +332,16 @@ export const glanceAwayGuides: GlanceAwayGuide[] = [
         question: 'Is there a 20-20-20 app for Mac?',
         answer:
           'Yes. GlanceAway, LookAway, Time Out, Intermission, and Stretchly all run on Mac. GlanceAway also runs on iPhone with the same rhythm.',
+      },
+      {
+        question: 'Is there a 20-20-20 rule app for iPhone?',
+        answer:
+          'Yes. On iPhone (iOS), GlanceAway, Eye Care 20 20 20, 20.20.20, and Eye Reliever all remind you every 20 minutes. 20.20.20 also runs on Apple Watch.',
+      },
+      {
+        question: 'Is there a 20-20-20 rule app for Windows?',
+        answer:
+          'Stretchly is free and open source on Windows, Mac, and Linux. Without installing anything, the [free 20-20-20 timer](/apps/glanceaway/20-20-20-rule-timer/) runs in any browser.',
       },
       {
         question: 'Can I use the 20-20-20 rule without an app?',
@@ -326,7 +365,7 @@ export const glanceAwayGuides: GlanceAwayGuide[] = [
     eyebrow: 'eye strain from screens',
     headline: 'How to reduce eye strain from screens.',
     intro:
-      'To reduce eye strain from screens, take a 20 second break every 20 minutes, blink more, and keep your screen at arm’s length and slightly below eye level. Those three habits do most of the work. Here are all eight, and when to see an eye doctor.',
+      'Eye strain from screens, also called digital eye strain or computer vision syndrome, usually eases with a few habits: take a break every 20 minutes, blink more, and keep your screen at arm’s length and slightly below eye level. Here are eight habits eye care organizations recommend, and when to see an eye doctor.',
     primaryKeyword: 'how to reduce eye strain from screens',
     secondaryKeywords: [
       'eye strain from computer',
@@ -340,7 +379,7 @@ export const glanceAwayGuides: GlanceAwayGuide[] = [
     campaign: 'seo_strain',
     sections: [
       {
-        heading: 'Why screens strain your eyes',
+        heading: 'What causes digital eye strain?',
         paragraphs: [
           'Looking at something close for a long time keeps the focusing muscles in your eyes working without a pause. On top of that, we blink far less at a screen: about 5 to 7 times a minute instead of the usual 15, according to the American Academy of Ophthalmology. Fewer blinks mean drier eyes.',
           'Typical signs are eye strain, headaches, blurred vision, dry eyes, and neck and shoulder pain, as the American Optometric Association lists them. They usually ease once you step away from the screen.',
@@ -351,7 +390,7 @@ export const glanceAwayGuides: GlanceAwayGuide[] = [
         steps: [
           {
             title: 'Follow the 20-20-20 rule',
-            text: 'Every 20 minutes, look at something about 20 feet away for 20 seconds. It is the single most recommended habit, and the easiest to forget. A [free 20-20-20 timer](/apps/glanceaway/20-20-20-rule-timer/) or an [eye break app](/apps/glanceaway/20-20-20-rule-app/) solves that.',
+            text: 'Every 20 minutes, look at something about 20 feet away for 20 seconds. Eye care organizations recommend it often, and it is easy to forget. A [free 20-20-20 timer](/apps/glanceaway/20-20-20-rule-timer/) or an [eye break app](/apps/glanceaway/20-20-20-rule-app/) solves that.',
           },
           {
             title: 'Blink on purpose',
@@ -363,7 +402,7 @@ export const glanceAwayGuides: GlanceAwayGuide[] = [
           },
           {
             title: 'Match brightness to the room',
-            text: 'A screen that is much brighter than its surroundings makes your eyes work harder. Turn brightness down in dim rooms and raise contrast instead.',
+            text: 'A screen that is much brighter than its surroundings makes your eyes work harder. Turn brightness down in dim rooms and at night, and raise contrast instead.',
           },
           {
             title: 'Cut glare',
@@ -371,7 +410,7 @@ export const glanceAwayGuides: GlanceAwayGuide[] = [
           },
           {
             title: 'Keep your eyes moist',
-            text: 'Artificial tears can help when your eyes feel dry. In a dry, warm room, a humidifier adds moisture to the air.',
+            text: 'Lubricating eye drops (artificial tears) can help when your eyes feel dry. In a dry, warm room, a humidifier adds moisture to the air.',
           },
           {
             title: 'Give your phone the same rules',
@@ -386,7 +425,7 @@ export const glanceAwayGuides: GlanceAwayGuide[] = [
       {
         heading: 'What about blue light glasses?',
         paragraphs: [
-          'The American Academy of Ophthalmology does not recommend blue light glasses for eye strain. Discomfort from screens comes mostly from how we use them, long close-up focus and too little blinking, not from the blue light itself. Breaks do more than filters.',
+          'The American Academy of Ophthalmology does not recommend blue light glasses for eye strain. Discomfort from screens comes mostly from how we use them, long close-up focus and too little blinking, not from the blue light itself.',
         ],
       },
       {
@@ -399,7 +438,7 @@ export const glanceAwayGuides: GlanceAwayGuide[] = [
     midCta: {
       afterSection: 1,
       title: 'Habit one, on autopilot.',
-      text: 'GlanceAway reminds you every 20 minutes on iPhone and Mac and shows a calm full-screen break on Mac. Free to try with 3 breaks a day; premium removes the limit.',
+      text: 'GlanceAway reminds you every 20 minutes on iPhone and Mac and shows a calm full-screen break on Mac.',
     },
     cta: {
       title: 'Make the breaks automatic.',
@@ -412,9 +451,9 @@ export const glanceAwayGuides: GlanceAwayGuide[] = [
           'Usually not long. Symptoms typically ease after you rest your eyes or stop using the screen. If they last or keep returning, talk to an eye doctor.',
       },
       {
-        question: 'Can eye strain from screens damage your eyes?',
+        question: 'Is eye strain from screens permanent?',
         answer:
-          'Eye care organizations describe digital eye strain as uncomfortable but generally temporary. Persistent symptoms are worth checking, since they can point to an uncorrected vision problem or dry eye.',
+          'Eye care organizations describe digital eye strain as uncomfortable but generally temporary; it usually goes away with rest. Persistent symptoms are worth checking, since they can point to an uncorrected vision problem or dry eye.',
       },
       {
         question: 'Is phone eye strain different from computer eye strain?',

@@ -66,7 +66,15 @@ if (is_string($position) && preg_match('/^[a-z]{1,12}$/', $position)) {
 }
 $campaign = campaign_token($_GET['campaign'] ?? null, 'organic_direct');
 
-record_aggregate_click($source, $campaign);
+$userAgent = $_SERVER['HTTP_USER_AGENT'] ?? '';
+$isBot = !is_string($userAgent)
+    || $userAgent === ''
+    || preg_match('/bot|crawl|spider|slurp|preview|fetch|monitor|curl|wget|python|headless|lighthouse|facebookexternalhit|embedly|quora link/i', $userAgent) === 1;
+
+// Bots still get redirected, but only people count as clicks.
+if (!$isBot) {
+    record_aggregate_click($source, $campaign);
+}
 
 $query = [];
 

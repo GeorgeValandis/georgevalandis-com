@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from 'react';
 
 const FOCUS_OPTIONS = [20, 30] as const;
 const BREAK_SECONDS = 20;
@@ -15,6 +15,7 @@ const TICK_WORKER_SOURCE =
   'let t;onmessage=function(e){clearInterval(t);if(e.data>0){t=setInterval(function(){postMessage(0)},e.data)}}';
 
 type Phase = 'idle' | 'focus' | 'break';
+type NotifyState = 'unsupported' | NotificationPermission;
 type FocusMinutes = (typeof FOCUS_OPTIONS)[number];
 
 export type EyeBreakPhase = Phase;
@@ -26,6 +27,13 @@ type EyeBreakTimerProps = {
   /** Lets the page react to breaks (the hero horizon lights up). */
   onPhaseChange?: (phase: Phase) => void;
 };
+
+const subscribeNothing = () => () => undefined;
+// Phone browsers expose the API but only deliver notifications from a service worker.
+const readPermission = (): NotifyState =>
+  'Notification' in window && !window.matchMedia('(pointer: coarse)').matches ? Notification.permission : 'unsupported';
+// The server render cannot know whether notifications exist.
+const serverPermission = (): NotifyState => 'unsupported';
 
 function formatTime(totalSeconds: number): string {
   const safe = Math.max(0, Math.ceil(totalSeconds));
@@ -100,6 +108,9 @@ export default function EyeBreakTimer({ accent, storeHref, onPhaseChange }: EyeB
   const [paused, setPaused] = useState(false);
   const [remaining, setRemaining] = useState(20 * 60);
   const [breaksDone, setBreaksDone] = useState(0);
+  const browserPermission = useSyncExternalStore(subscribeNothing, readPermission, serverPermission);
+  const [answeredPermission, setAnsweredPermission] = useState<NotifyState | null>(null);
+  const notifyState = answeredPermission ?? browserPermission;
 
   const deadlineRef = useRef<number | null>(null);
   const audioRef = useRef<AudioContext | null>(null);
@@ -202,9 +213,6 @@ export default function EyeBreakTimer({ accent, storeHref, onPhaseChange }: EyeB
     ensureAudio();
 
     if (phase === 'idle') {
-      if ('Notification' in window && Notification.permission === 'default') {
-        void Notification.requestPermission().catch(() => undefined);
-      }
       startPhase('focus');
       return;
     }
@@ -230,6 +238,13 @@ export default function EyeBreakTimer({ accent, storeHref, onPhaseChange }: EyeB
     startPhase('break');
   };
 
+  const handleNotify = () => {
+    if (!('Notification' in window) || notifyState !== 'default') return;
+    Notification.requestPermission()
+      .then(setAnsweredPermission)
+      .catch(() => undefined);
+  };
+
   const handleChooseFocus = (minutes: FocusMinutes) => {
     if (phase !== 'idle') return;
     setFocusMinutes(minutes);
@@ -239,15 +254,20 @@ export default function EyeBreakTimer({ accent, storeHref, onPhaseChange }: EyeB
   const primaryLabel = phase === 'idle' ? 'Start' : paused ? 'Resume' : 'Pause';
   const statusLabel =
     phase === 'break'
-      ? 'Look at the horizon'
+      ? 'Look at something 20 feet away'
       : phase === 'focus'
         ? paused
           ? 'Paused'
           : 'Until your next break'
         : `${focusMinutes} min focus, 20 s break`;
   const isBreak = phase === 'break';
-  const appLead =
-    breaksDone === 0 ? 'Want this on your phone too?' : breaksDone === 1 ? 'First break done.' : `${breaksDone} breaks done.`;
+  const breakLead = breaksDone === 1 ? 'First break done.' : `${breaksDone} breaks done.`;
+  const notifyLabel =
+    notifyState === 'granted'
+      ? 'Notifications on'
+      : notifyState === 'denied'
+        ? 'Notifications blocked in this browser'
+        : 'Notify me at breaks';
 
   return (
     <div
@@ -344,20 +364,50 @@ export default function EyeBreakTimer({ accent, storeHref, onPhaseChange }: EyeB
           Try a 20 second break now
         </button>
 
+        {/* Fixed height: the switch appears after mount without moving anything. */}
+        <div className="mt-2 flex h-6 items-center justify-center">
+          {notifyState !== 'unsupported' ? (
+            <button
+              type="button"
+              onClick={handleNotify}
+              disabled={notifyState !== 'default'}
+              className="ga-rise inline-flex cursor-pointer items-center gap-2 text-sm font-medium text-white/75 underline-offset-4 transition hover:text-white hover:underline active:scale-[0.97] disabled:cursor-default disabled:no-underline disabled:hover:text-white/75 disabled:active:scale-100"
+            >
+              <span
+                aria-hidden="true"
+                className="h-1.5 w-1.5 rounded-full transition-colors duration-300"
+                style={{ backgroundColor: notifyState === 'granted' ? accent : 'rgba(255,255,255,0.35)' }}
+              />
+              {notifyLabel}
+            </button>
+          ) : null}
+        </div>
+
         {storeHref ? (
-          <p className="mt-6 flex min-h-[3rem] max-w-sm items-center justify-center text-center text-sm leading-6 text-white/80">
-            <span>
-              {appLead}{' '}
+          <div className="mt-5 flex min-h-[5.5rem] max-w-sm flex-col items-center justify-center text-center text-sm leading-6 text-white/80">
+            {breaksDone === 0 ? (
               <a
                 href={storeHref}
                 target="_blank"
                 rel="nofollow noopener noreferrer"
                 className="font-semibold text-white underline decoration-white/40 underline-offset-4 transition hover:decoration-white active:opacity-60"
               >
-                GlanceAway runs it on iPhone and Mac
+                Get eye break reminders on iPhone and Mac
               </a>
-            </span>
-          </p>
+            ) : (
+              <div key="done" className="ga-rise flex flex-col items-center gap-3">
+                <span>{breakLead}</span>
+                <a
+                  href={storeHref}
+                  target="_blank"
+                  rel="nofollow noopener noreferrer"
+                  className="inline-flex h-11 cursor-pointer items-center justify-center rounded-full bg-white px-6 text-sm font-bold text-slate-950 shadow-lg shadow-black/20 transition hover:bg-white/90 active:scale-[0.96]"
+                >
+                  Get GlanceAway for iPhone and Mac
+                </a>
+              </div>
+            )}
+          </div>
         ) : null}
       </div>
     </div>
