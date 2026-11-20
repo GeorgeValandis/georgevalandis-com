@@ -18,5 +18,5 @@ export default function GlanceAwayV2Page() {
   const app = getAppBySlug("glanceaway");
   const content = app ? getAppLandingPage(app.slug) : undefined;
   if (!app || !content) notFound();
-  return <GlanceAwayLandingV2 app={app} content={content} />;
+  return <GlanceAwayLandingV2 app={app} content={content} campaign="landing_v2" />;
 }

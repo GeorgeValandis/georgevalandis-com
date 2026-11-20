@@ -78,10 +78,10 @@ export default function V2FocusShift() {
           >
             <div className="rounded-[2rem] bg-[#0b1114] p-[0.4rem] shadow-[0_40px_90px_rgba(0,0,0,0.5)]">
               <Image
-                src="/apps/glanceaway/screens/timer.webp"
+                src="/apps/glanceaway/screens/ios-home.webp"
                 alt=""
                 width={720}
-                height={1565}
+                height={1564}
                 loading="lazy"
                 sizes="17rem"
                 className="block h-auto w-full rounded-[1.65rem]"

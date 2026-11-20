@@ -189,10 +189,10 @@ export default function V2Hero({
             />
             <div className="absolute -bottom-11 left-[5%] w-[25%] max-w-[10.5rem] rounded-[1.4rem] bg-[#0b1114] p-1 shadow-[0_36px_80px_rgba(2,12,18,0.45)] sm:-bottom-15 sm:rounded-[2rem] sm:p-[0.35rem]">
               <Image
-                src="/apps/glanceaway/screens/timer.webp"
-                alt="GlanceAway on iPhone counting down to the next eye break."
+                src="/apps/glanceaway/screens/ios-home.webp"
+                alt="GlanceAway on iPhone with the next 20-minute eye break ready to start."
                 width={720}
-                height={1565}
+                height={1564}
                 priority
                 sizes="10.5rem"
                 className="block h-auto w-full rounded-[1.15rem] sm:rounded-[1.7rem]"

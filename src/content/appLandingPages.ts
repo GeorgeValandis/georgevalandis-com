@@ -416,23 +416,23 @@ export const appLandingPages: Record<string, AppLandingPageContent> = {
     ],
     screenshots: [
       {
-        src: '/apps/glanceaway/screens/timer.png',
-        alt: 'GlanceAway timer during a 20-20-20 eye break session on iPhone.',
+        src: '/apps/glanceaway/screens/ios-home-running.webp',
+        alt: 'GlanceAway on iPhone counting down to the next 20-20-20 eye break, with today\'s breaks below the timer.',
         label: 'Timer',
       },
       {
-        src: '/apps/glanceaway/screens/break-countdown.png',
-        alt: 'GlanceAway break countdown screen reminding the user to glance away.',
+        src: '/apps/glanceaway/screens/ios-break.webp',
+        alt: 'GlanceAway eye break on iPhone: a 20-second countdown asking you to look at the farthest thing you can see.',
         label: 'Break',
       },
       {
-        src: '/apps/glanceaway/screens/statistics.png',
-        alt: 'GlanceAway statistics screen with completed sessions and streaks.',
+        src: '/apps/glanceaway/screens/ios-stats.webp',
+        alt: 'GlanceAway statistics on iPhone with breaks taken, minutes of eye rest, streak and daily breaks.',
         label: 'Progress',
       },
       {
-        src: '/apps/glanceaway/screens/settings.png',
-        alt: 'GlanceAway settings screen for customizing reminders and break intervals.',
+        src: '/apps/glanceaway/screens/ios-settings.webp',
+        alt: 'GlanceAway settings on iPhone for the screen interval, break duration and stand-up reminders.',
         label: 'Settings',
       },
     ],

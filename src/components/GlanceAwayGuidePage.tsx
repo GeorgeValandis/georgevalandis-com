@@ -150,10 +150,10 @@ function guideJsonLd(app: AppEntry, guide: GlanceAwayGuide) {
 }
 
 const iphoneShot = {
-  src: '/apps/glanceaway/screens/timer.webp',
-  alt: 'GlanceAway on iPhone counting down to the next eye break, with a reminder to look 20 feet away for 20 seconds.',
+  src: '/apps/glanceaway/screens/ios-home.webp',
+  alt: 'GlanceAway on iPhone with the next 20-minute eye break ready to start.',
   width: 720,
-  height: 1565,
+  height: 1564,
 };
 
 const RULE = [

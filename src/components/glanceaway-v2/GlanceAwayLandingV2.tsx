@@ -17,8 +17,8 @@ import { ArrowRight, ExternalLink } from "lucide-react";
 import Image from "next/image";
 import type { ReactNode } from "react";
 
-const SCREEN_WIDTH = 1206;
-const SCREEN_HEIGHT = 2622;
+const SCREEN_WIDTH = 720;
+const SCREEN_HEIGHT = 1564;
 
 const linkClass =
   "group inline-flex cursor-pointer items-center gap-2 font-semibold text-slate-950 underline decoration-slate-300 underline-offset-[6px] transition hover:decoration-slate-950 active:opacity-60";
@@ -79,9 +79,12 @@ function StoreLink({
 export default function GlanceAwayLandingV2({
   app,
   content,
+  campaign,
 }: {
   app: AppEntry;
   content: AppLandingPageContent;
+  /** Overrides the default store campaign, e.g. to keep preview clicks out of live stats. */
+  campaign?: string;
 }) {
   const storeLink = app.appStoreLink ?? "/apps/glanceaway/download/";
 
@@ -312,7 +315,7 @@ export default function GlanceAwayLandingV2({
       <script
         src="/apps/glanceaway/campaign.js"
         data-source-prefix="landing"
-        data-campaign="landing_v2"
+        data-campaign={campaign}
         defer
       />
     </main>
